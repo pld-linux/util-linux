@@ -210,8 +210,8 @@ echo	.so hwclock.8 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* 
-gzip -9fn */README.*
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
+	*/README.*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
