@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.9v
-Release:	1
+Release:	2
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -45,6 +45,7 @@ Patch3:		util-linux-utmpx.patch
 Patch4:		util-linux-fhs.patch
 Patch5:		util-linux-login.patch
 Patch6:		util-linux-more.patch
+Patch7:		util-linux-cipher.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel
 BuildRequires:	gettext-devel
@@ -239,6 +240,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 
