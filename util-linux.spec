@@ -54,6 +54,12 @@ Patch9:		ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch10:	ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10m-mount-rpc.patch
 Patch11:	%{name}-syscall.patch
 Patch12:	%{name}-2.10o-rawio.patch
+Patch13:	%{name}-fdisk-efi-dell.patch
+Patch14:	%{name}-sparcraid.patch
+Patch15:	%{name}-overflow.patch
+Patch16:	%{name}-gecos.patch
+Patch17:	%{name}-glibc.patch
+Patch18:	%{name}-s390.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -262,9 +268,14 @@ support for this feature built into them, however).
 %patch10 -p1
 %patch11 -p1
 %{!?bcond_off_rawio:%patch12 -p1}
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 %build
-
 CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
 %configure
 
