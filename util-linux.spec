@@ -133,9 +133,9 @@ Summary(uk):	Програми для конф╕гурац╕╖ loopback-пристро╖в
 Group:		Applications/System
 Release:	%{_rel}@%{_kernel_series}
 #%if %{_kernel24}
-#%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
+#%%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 #%else
-#%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
+#%%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
 #%endif
 
 %description -n losetup
@@ -207,9 +207,9 @@ Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
 Release:	%{_rel}@%{_kernel_series}
 #%if %{_kernel24}
-#%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
+#%%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 #%else
-#%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
+#%%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
 #%endif
 
 %description -n mount
