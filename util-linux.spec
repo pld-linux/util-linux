@@ -599,5 +599,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_bindir}/raw
 %attr(0750,root,root) /etc/rc.d/init.d/rawdevices
-%attr(0640,root,root) /etc/sysconfig/rawdevices
+%attr(0640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
 %{_mandir}/man8/raw.8*
