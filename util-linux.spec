@@ -28,7 +28,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.11z
-%define	_rel	1
+%define	_rel	2
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -56,7 +56,6 @@ Patch12:	%{name}-cryptoapi.patch
 Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
-Patch16:	%{name}-sparctoo.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -373,7 +372,6 @@ Obs³uga raw-device'ów.
 %endif
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 CC="%{__cc}"
@@ -772,15 +770,19 @@ fi
 %dir %{_examplesdir}/getopt
 %attr(755,root,root) %{_examplesdir}/getopt/*
 
-%{!?_with_uClibc:%attr(755,root,root) /sbin/cfdisk}
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/fsck.minix
 %attr(755,root,root) /sbin/mkfs.minix
+%ifnarch sparc sparc64
+%{!?_with_uClibc:%attr(755,root,root) /sbin/cfdisk}
 %attr(755,root,root) /sbin/sfdisk
+%endif
 
-%{!?_with_uClibc:%{_mandir}/man8/cfdisk.8*}
 %{_mandir}/man8/fdisk.8*
+%ifnarch sparc sparc64
+%{!?_with_uClibc:%{_mandir}/man8/cfdisk.8*}
 %{_mandir}/man8/sfdisk.8*
+%endif
 %{_mandir}/man8/fsck.minix.8*
 %{_mandir}/man8/mkfs.bfs.8*
 %{_mandir}/man8/mkfs.minix.8*
@@ -791,20 +793,26 @@ fi
 %lang(es) %{_mandir}/es/man8/mkfs.minix.8*
 %lang(es) %{_mandir}/es/man8/mkfs.8*
 
-%lang(fr) %{_mandir}/fr/man8/cfdisk.8*
 %lang(fr) %{_mandir}/fr/man8/fdisk.8*
+%ifnarch sparc sparc64
+%{!?_with_uClibc:%lang(fr) %{_mandir}/fr/man8/cfdisk.8*}
 %lang(fr) %{_mandir}/fr/man8/sfdisk.8*
+%endif
 %lang(fr) %{_mandir}/fr/man8/mkfs.minix.8*
 %lang(fr) %{_mandir}/fr/man8/mkfs.8*
 
 %lang(hu) %{_mandir}/hu/man8/mkfs.8*
 
-%lang(it) %{_mandir}/it/man8/cfdisk.8*
 %lang(it) %{_mandir}/it/man8/fdisk.8*
+%ifnarch sparc sparc64
+%{!?_with_uClibc:%lang(it) %{_mandir}/it/man8/cfdisk.8*}
+%endif
 
-%lang(ja) %{_mandir}/ja/man8/cfdisk.8*
 %lang(ja) %{_mandir}/ja/man8/fdisk.8*
+%ifnarch sparc sparc64
+%{!?_with_uClibc:%lang(ja) %{_mandir}/ja/man8/cfdisk.8*}
 %lang(ja) %{_mandir}/ja/man8/sfdisk.8*
+%endif
 %lang(ja) %{_mandir}/ja/man8/fsck.minix.8*
 %lang(ja) %{_mandir}/ja/man8/mkfs.bfs.8*
 %lang(ja) %{_mandir}/ja/man8/mkfs.minix.8*
