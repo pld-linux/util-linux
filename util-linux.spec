@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.9r
-Release:	3
+Release:	4
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -25,6 +25,7 @@ Patch7:		util-linux-po.patch
 Patch8:		util-linux-shutdown.patch
 Patch9:		util-linux-kernel23.patch
 Patch10:	util-linux-utmpx.patch
+Patch11:	util-linux-fhs.patch
 BuildPrereq:	pam-devel >= 0.66
 BuildPrereq:	ncurses-devel
 BuildPrereq:	gettext
@@ -180,7 +181,8 @@ Users programs for manipulate /etc/passwd file.
 %patch6  -p1 
 %patch7  -p1 
 %patch8  -p1 
-%patch10  -p1 
+%patch10 -p1 
+%patch11 -p1
 
 %build
 # First check running Linux release ... 
@@ -197,11 +199,12 @@ make OPT="$RPM_OPT_FLAGS"
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}}
-install -d $RPM_BUILD_ROOT/usr/{bin,sbin,lib,share/{info,man/man{1,5,6,8}}}
+install -d $RPM_BUILD_ROOT/usr/{bin,sbin,lib,share/{info,misc,man/man{1,5,6,8}}}
 
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 4711" \
+	DATAMISCDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
 	USE_TTY_GROUP=no
 
 %ifarch i386 i486 i586 i686
@@ -215,9 +218,10 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/login
 
-install -d $RPM_BUILD_ROOT/etc/security
+install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
 touch $RPM_BUILD_ROOT/etc/security/{chsh,chfn}
+:> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
 
@@ -231,10 +235,13 @@ ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 	*/README.* $RPM_BUILD_ROOT%{_infodir}/*
 
+%find_lang %{name}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
+
 %defattr(644,root,root,755)
 %doc */README.*
 
@@ -333,7 +340,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_libdir}/getopt
 %attr(755,root,root) %{_libdir}/getopt/*
-%{_libdir}/more.help
+%{_datadir}/misc/more.help
 
 %ifarch i386 i486 i586 i686 alpha
 %attr(755,root,root) /sbin/fdisk
@@ -367,12 +374,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ramsize.8.gz
 %endif
 
-%lang(de)    %{_datadir}/locale/de/LC_MESSAGES/util-linux.mo
-%lang(fr)    %{_datadir}/locale/fr/LC_MESSAGES/util-linux.mo
-%lang(nl)    %{_datadir}/locale/nl/LC_MESSAGES/util-linux.mo
-%lang(pt_BR) %{_datadir}/locale/pt_BR/LC_MESSAGES/util-linux.mo
-
 %{_infodir}/ipc*
+
+%ghost /var/lock/wtmpxlock
 
 %files -n mount
 %defattr(644,root,root,755)
