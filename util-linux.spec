@@ -60,7 +60,7 @@ BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	pam-devel >= 0.66}
 BuildRequires:	texinfo
 BuildRequires:	textutils
-BuildRequires:	zlib-devel
+%{!?_with_uClibc:BuildRequires:	zlib-devel}
 %{!?_with_uClibc:Requires:	pam >= 0.66}
 Provides:	fdisk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -401,7 +401,7 @@ mv -f fdisk/fdisk fdisk-BOOT
 %{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	%{!?_with_uClibc:ADD_RAW="yes"} \
-	%{?_with_uClibc:ADD_RAW="no" HAVE_PAM="no"}
+	%{?_with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
 
 %ifarch ppc
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
@@ -430,7 +430,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
 	%{!?_with_uClibc:ADD_RAW="yes"} \
-	%{?_with_uClibc:ADD_RAW="no" HAVE_PAM="no"}
+	%{?_with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
@@ -553,7 +553,7 @@ fi
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setfdprm
-%attr(0755,root,root) %{_bindir}/pg
+%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/pg}
 %attr(0755,root,root) %{_bindir}/line
 %attr(0755,root,root) %{_bindir}/rename
 %{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
@@ -578,7 +578,7 @@ fi
 %{_mandir}/man1/mcookie.1*
 %{!?_with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
-%{_mandir}/man1/pg.1*
+%{!?_with_uClibc:%{_mandir}/man1/pg.1*}
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/rename.1*
@@ -838,8 +838,8 @@ fi
 %lang(pl) %{_mandir}/pl/man8/mkfs.minix.8*
 %lang(pl) %{_mandir}/pl/man8/mkfs.8*
 
-%attr(755,root,root) /sbin/fsck.cramfs
-%attr(755,root,root) /sbin/mkfs.cramfs
+%{!?_with_uClibc:%attr(755,root,root) /sbin/fsck.cramfs}
+%{!?_with_uClibc:%attr(755,root,root) /sbin/mkfs.cramfs}
 %attr(755,root,root) /sbin/mkfs.bfs
 
 %attr(755,root,root) %{_bindir}/cytune
