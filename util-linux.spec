@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10r
-Release:	1
+Release:	2
 License:	Distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -349,6 +349,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /sbin/mkswap
 %attr(0755,root,root) /sbin/ctrlaltdel
 %attr(0755,root,root) /sbin/kbdrate
+%attr(0755,root,root) /sbin/blockdev
+%attr(0755,root,root) /sbin/elvtune
 %attr(0755,root,root) %{_bindir}/cal
 %attr(0755,root,root) %{_bindir}/col
 %attr(0755,root,root) %{_bindir}/colcrt
@@ -406,9 +408,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man6/banner.6*
 
+%{_mandir}/man8/blockdev.8*
 %{_mandir}/man8/cytune.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/dmesg.8*
+%{_mandir}/man8/elvtune.8*
 %{_mandir}/man8/ipcrm.8*
 %{_mandir}/man8/ipcs.8*
 %{_mandir}/man8/kbdrate.8*
@@ -480,6 +484,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(4755,root,root) /bin/mount
 %attr(4755,root,root) /bin/umount
+%attr(755,root,root) /sbin/pivot_root
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
@@ -488,6 +493,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/swapoff.8*
+%{_mandir}/man8/pivot_root.8*
 %{_mandir}/man8/swapon.8*
 %{_mandir}/man8/umount.8*
 
