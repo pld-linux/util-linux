@@ -276,9 +276,6 @@ support for this feature built into them, however).
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%if !%{_kernel24}
-%{!?_without_crypto:%patch17 -p1}
-%endif
 %patch20 -p1
 
 %build
