@@ -5,9 +5,15 @@
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
-%define		_kernel_ver	%(grep UTS_RELEASE /usr/src/linux/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
+%define		_kernel_ver	%(grep UTS_RELEASE %{_kernelsrcdir}/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
-%define		_kernel_series	%{?_kernel24:2.4}%{!?_kernel24:2.2}
+%if %{_kernel24}
+%define		_kernel_series	2.4
+%else
+%define		_kernel_series	2.2
+%endif
+
+%define		rel	5
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -16,7 +22,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11g
-Release:	4@%{_kernel_series}
+Release:	%{rel}
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -70,7 +76,6 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 BuildRequires:	texinfo
 Requires:	pam >= 0.66
-Conflicts:	kernel %{?_kernel24:<} {!?_kernel24:>=} 2.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
 
@@ -114,6 +119,12 @@ Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
+Release:	%{rel}@%{_kernel_series}
+%if %{_kernel24}
+Conflicts:	kernel < 2.3.0
+%else
+Conflicts:	kernel >= 2.3.0
+%endif
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -167,6 +178,12 @@ Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
+Release:	%{rel}@%{_kernel_series}
+%if %{_kernel24}
+Conflicts:	kernel < 2.3.0
+%else
+Conflicts:	kernel >= 2.3.0
+%endif
 
 %description -n mount
 Mount is used for adding new filesystems, both local and networked, to
@@ -322,7 +339,7 @@ Obs³uga raw-device'ów.
 %endif
 
 %build
-CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
 %configure2_13
 
 %{__make} OPT="%{rpmcflags}" \
