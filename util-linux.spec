@@ -328,9 +328,9 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %{_mandir}/man1/rev.1.gz
 %{_mandir}/man1/ul.1.gz
 
-%dir /usr/lib/getopt
-%attr(755,root,root) /usr/lib/getopt/*
-/usr/lib/more.help
+%dir %{_libdir}/getopt
+%attr(755,root,root) %{_libdir}/getopt/*
+%{_libdir}/more.help
 
 %ifarch i386 i486 i586 i686 alpha
 %attr(755,root,root) /sbin/fdisk
