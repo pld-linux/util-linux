@@ -4,7 +4,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10q
+Version:	2.10r
 Release:	1
 License:	Distributable
 Group:		Utilities/System
@@ -46,7 +46,7 @@ Patch8:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10f-mount-tcp.patch
 Patch9:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-compat.patch
 Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
 Patch11:	util-linux-syscall.patch 
-%{?norawio:#}Patch12:	util-linux-2.10o-rawio.patch
+Patch12:	util-linux-2.10o-rawio.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -241,14 +241,14 @@ support for this feature built into them, however).
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-%{?nocrypto:#}%patch5 -p1
+%{?bcond_off_crypto:#}%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%{?norawio:#}%patch12 -p1
+%{?bcond_off_rawio:#}%patch12 -p1
 
 
 %build
@@ -374,7 +374,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/renice
-%{?norawio:#}%attr(0755,root,root) %{_bindir}/raw
+%{?bcond_off_rawio:#}%attr(0755,root,root) %{_bindir}/raw
 %attr(0755,root,root) /usr/games/banner
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
@@ -418,7 +418,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/setfdprm.8*
-%{?norawio:#}%{_mandir}/man8/raw.8*
+%{?bcond_off_rawio:#}%{_mandir}/man8/raw.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
