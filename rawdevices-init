@@ -53,12 +53,12 @@ case "$1" in
   start)
   	if [ ! -f /var/lock/subsys/rawdevices ]; then
 		msg_starting rawdevices
+		echo
 		# Assign devices
 		echo $"Assigning devices: "
 		assign_raw
 		echo $"done"
-		RETVAL=$?
-		 $RETVAL -eq 0 ] && touch /var/lock/subsys/rawdevices
+		touch /var/lock/subsys/rawdevices
 	else
 		msg_Already_Running rawdevices
 	fi
