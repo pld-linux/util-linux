@@ -186,7 +186,7 @@ Ce paquetage est critique pour le fonctionnement de votre système.
 
 %description -l pl -n mount
 Program mount jest u¿ywany przez system do montowania systemu plików,
-zrówno lokalnych jak i sieciowych (np. NFS).
+zarówno lokalnych jak i sieciowych (np. NFS).
 
 Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuxa.
 
