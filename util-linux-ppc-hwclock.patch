@@ -1,7 +1,7 @@
 diff -urN util-linux-2.11n.org/clock-ppc.c util-linux-2.11n/clock-ppc.c
 --- util-linux-2.11n.org/clock-ppc.c	Thu Jan  1 01:00:00 1970
 +++ util-linux-2.11n/clock-ppc.c	Thu Mar  7 21:15:39 2002
-@@ -0,0 +1,466 @@
+@@ -0,0 +1,472 @@
 +#include <stdio.h>
 +#include <stdlib.h>
 +#include <string.h>
