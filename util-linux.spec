@@ -52,6 +52,7 @@ Patch9:		%{name}-mount-rpc.patch
 Patch10:	ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch11:	%{name}-syscall.patch
 Patch12:	%{name}-2.10o-rawio.patch
+Patch13:	%{name}-raw.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
@@ -255,10 +256,23 @@ login is used when signing onto a system. It can also be used to
 switch from one user to another at any time (most modern shells have
 support for this feature built into them, however).
 
-%description -n login
+%description -n login -l pl
 login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany do 
 prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 (jednak wiêkszo¶æ nowoczesnych shelli ma takie funkcje wbudowane).
+
+%package -n rawdevices
+Summary:        Support for raw-devices
+Summary(pl):    Obs³uga raw-device'ów
+Group:          Applications/System
+Group(de):      Applikationen/System
+Group(pl):      Aplikacje/System
+
+%description -n rawdevices
+Support for raw-devices.
+
+%description -n rawdevices -l pl
+Obs³uga raw-device'ów
 
 
 %prep
@@ -279,6 +293,7 @@ prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 %patch10 -p1
 %patch11 -p1
 %{!?_without_rawio:%patch12 -p1}
+%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
@@ -403,7 +418,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/namei
 %attr(0755,root,root) %{_bindir}/newgrp
 %attr(0755,root,root) %{_bindir}/renice
-%{!?_without_rawio:%attr(0755,root,root) %{_bindir}/raw}
 %attr(0755,root,root) %{_bindir}/rev
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
@@ -455,7 +469,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/renice.8*
 %{_mandir}/man8/setsid.8*
 %{_mandir}/man8/setfdprm.8*
-%{!?_without_rawio:%{_mandir}/man8/raw.8*}
 %{_mandir}/man8/vipw.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
@@ -561,3 +574,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /bin/login
 %{_mandir}/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
+
+%files -n rawdevices
+%{!?_without_rawio:%attr(0755,root,root) %{_bindir}/raw}
+%{!?_without_rawio:%{_mandir}/man8/raw.8*}
