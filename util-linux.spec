@@ -3,6 +3,7 @@
 # _without_crypto	- without kerneli cryptography
 # _with_pivot_root
 # _without_dist_kernel
+# _with_uClibc          - don't build few utilities
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -54,14 +55,11 @@ Patch16:	%{name}-posixsh.patch
 Patch17:	%{name}-ppc-hwclock.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
-BuildRequires:	ncurses-devel >= 5.0
-BuildRequires:	pam-devel >= 0.66
+%{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
+%{!?_with_uClibc:BuildRequires:	pam-devel >= 0.66}
 BuildRequires:	texinfo
 BuildRequires:	textutils
-%if %{?BOOT:1}%{!?BOOT:0}
-BuildRequires:	glibc-static
-%endif
-Requires:	pam >= 0.66
+%{!?_with_uClibc:Requires:	pam >= 0.66}
 Provides:	fdisk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
@@ -334,8 +332,12 @@ util-linux dla bootkietki.
 %patch17 -p1
 
 %build
-CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
-%configure2_13
+export CC="%{__cc}"
+export LDFLAGS="%{rpmldflags}"
+export CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+# using %%configure2_13 isn't very wise here, it is not autoconf generated
+# configure and it doesn't take any parameters
+./configure
 
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} -C fdisk fdisk OPT="%{rpmcflags}" LDFLAGS="-static"
@@ -343,9 +345,11 @@ mv -f fdisk/fdisk fdisk-BOOT
 %{__make} -C fdisk clean
 %endif
 
+%{?_with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
 %{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
-	ADD_RAW="yes"
+	%{!?_with_uClibc:ADD_RAW="yes"} \
+	%{?_with_uClibc:ADD_RAW="no" HAVE_PAM="no"}
 
 %ifarch ppc
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
@@ -372,7 +376,8 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
-	ADD_RAW="yes"
+	%{!?_with_uClibc:ADD_RAW="yes"} \
+	%{?_with_uClibc:ADD_RAW="no" HAVE_PAM="no"}
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
@@ -405,7 +410,7 @@ done
 
 gzip -9nf */README.*
 
-%find_lang %{name}
+%{!?_with_uClibc:%find_lang %{name}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -430,7 +435,7 @@ if [ -f /var/lock/subsys/rawdevices ]; then
 fi
 /sbin/chkconfig --del rawdevices
 
-%files -f %{name}.lang
+%files %{!?_with_uClibc:-f %{name}.lang}
 %defattr(644,root,root,755)
 %doc */README.*
 
@@ -449,7 +454,7 @@ fi
 %attr(0755,root,root) /bin/arch
 %attr(0755,root,root) /bin/dmesg
 %attr(0755,root,root) /bin/kill
-%attr(0755,root,root) /bin/more
+%{!?_with_uClibc:%attr(0755,root,root) /bin/more}
 %attr(0755,root,root) /sbin/blockdev
 %attr(0755,root,root) /sbin/mkfs
 %attr(0755,root,root) /sbin/mkswap
@@ -476,8 +481,8 @@ fi
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setfdprm
-%attr(0755,root,root) %{_bindir}/setterm
-%attr(0755,root,root) %{_bindir}/ul
+%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
+%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
 %attr(0755,root,root) %{_sbindir}/readprofile
@@ -495,13 +500,13 @@ fi
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/mcookie.1*
-%{_mandir}/man1/more.1*
+%{!?_with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/script.1*
-%{_mandir}/man1/setterm.1*
-%{_mandir}/man1/ul.1*
+%{!?_with_uClibc:%{_mandir}/man1/setterm.1*}
+%{!?_with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
 
@@ -705,13 +710,13 @@ fi
 %attr(755,root,root) %{_examplesdir}/getopt/*
 %{_datadir}/misc/more.help
 
-%attr(755,root,root) /sbin/cfdisk
+%{!?_with_uClibc:%attr(755,root,root) /sbin/cfdisk}
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/fsck.minix
 %attr(755,root,root) /sbin/mkfs.minix
 %attr(755,root,root) /sbin/sfdisk
 
-%{_mandir}/man8/cfdisk.8*
+%{!?_with_uClibc:%{_mandir}/man8/cfdisk.8*}
 %{_mandir}/man8/fdisk.8*
 %{_mandir}/man8/sfdisk.8*
 %{_mandir}/man8/fsck.minix.8*
@@ -898,6 +903,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/tunelp.8*
 %lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
+%if %{!?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n login
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
@@ -912,6 +918,7 @@ fi
 %lang(ja) %{_mandir}/ja/man1/login.1*
 %lang(ko) %{_mandir}/ko/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
+%endif
 
 %files -n agetty
 %defattr(644,root,root,755)
