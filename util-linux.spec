@@ -283,7 +283,7 @@ support for this feature built into them, however).
 %description -n login -l pl
 login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany
 do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
-(jednak wiêkszo¶æ nowoczesnych shelli ma takie funkcje wbudowane).
+(jednak wiêkszo¶æ nowoczesnych pow³ok ma takie funkcje wbudowane).
 
 %package -n agetty
 Summary:	Alternative Linux getty
