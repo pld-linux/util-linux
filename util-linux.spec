@@ -5,6 +5,7 @@
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
+
 %define		_kernel_ver	%(grep UTS_RELEASE %{_kernelsrcdir}/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 %if %{_kernel24}
@@ -50,9 +51,11 @@ Patch13:	%{name}-kerneli-2.4.patch
 Patch14:	%{name}-losetup-getpass.patch
 Patch15:	%{name}-login-problems.patch
 BuildRequires:	gettext-devel
+BuildRequires:	grep
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	texinfo
+BuildRequires:	textutils
 %if %{?BOOT:1}%{!?BOOT:0}
 BuildRequires:	glibc-static
 %endif
@@ -297,7 +300,7 @@ Summary(pl):	Obs³uga raw-device'ów
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Prereq:		/sbin/chkconfig
+PreReq:		/sbin/chkconfig
 
 %description -n rawdevices
 Support for raw-devices.
