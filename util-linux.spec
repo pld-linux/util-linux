@@ -213,12 +213,12 @@ strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
 
 %ifarch i386 i486 i586 i686 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
-echo	.so hwclock.8 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
+echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 %endif
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 	*/README.*
 
 %clean
@@ -228,14 +228,14 @@ gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
 %defattr(644,root,root,755)
 %doc */README.*
 
-/usr/info/ipc.info
+%{_infodir}/ipc.info
 
 %ifarch i386 i486 i586 i686
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock
 
-/usr/man/man8/hwclock.8.gz
-/usr/man/man8/clock.8.gz
+%{_mandir}/man8/hwclock.8.gz
+%{_mandir}/man8/clock.8.gz
 %endif
 
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
@@ -287,46 +287,46 @@ gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
 %attr(0755,root,root) /usr/sbin/vigr
 %attr(0755,root,root) /usr/sbin/readprofile
 
-/usr/man/man1/arch.1.gz
-/usr/man/man1/readprofile.1.gz
-/usr/man/man8/cytune.8.gz
-/usr/man/man8/ctrlaltdel.8.gz
-/usr/man/man8/dmesg.8.gz
-/usr/man/man8/ipcrm.8.gz
-/usr/man/man8/ipcs.8.gz
-/usr/man/man8/kbdrate.8.gz
-/usr/man/man8/renice.8.gz
-/usr/man/man8/setsid.8.gz
-/usr/man/man8/tunelp.8.gz
-/usr/man/man1/login.1.gz
-/usr/man/man1/newgrp.1.gz
-/usr/man/man1/ddate.1.gz
-/usr/man/man1/cal.1.gz
-/usr/man/man1/kill.1.gz
-/usr/man/man1/logger.1.gz
-/usr/man/man1/look.1.gz
-/usr/man/man1/mcookie.1.gz
-/usr/man/man1/more.1.gz
-/usr/man/man1/namei.1.gz
-/usr/man/man1/script.1.gz
-/usr/man/man1/setterm.1.gz
-/usr/man/man1/whereis.1.gz
-/usr/man/man1/write.1.gz
-/usr/man/man1/getopt.1.gz
-/usr/man/man1/chfn.1.gz
-/usr/man/man1/chsh.1.gz
-/usr/man/man6/banner.6.gz
-/usr/man/man8/vipw.8.gz
-/usr/man/man8/fdformat.8.gz
-/usr/man/man8/mkswap.8.gz
-/usr/man/man8/setfdprm.8.gz
-/usr/man/man1/col.1.gz
-/usr/man/man1/colcrt.1.gz
-/usr/man/man1/colrm.1.gz
-/usr/man/man1/column.1.gz
-/usr/man/man1/hexdump.1.gz
-/usr/man/man1/rev.1.gz
-/usr/man/man1/ul.1.gz
+%{_mandir}/man1/arch.1.gz
+%{_mandir}/man1/readprofile.1.gz
+%{_mandir}/man8/cytune.8.gz
+%{_mandir}/man8/ctrlaltdel.8.gz
+%{_mandir}/man8/dmesg.8.gz
+%{_mandir}/man8/ipcrm.8.gz
+%{_mandir}/man8/ipcs.8.gz
+%{_mandir}/man8/kbdrate.8.gz
+%{_mandir}/man8/renice.8.gz
+%{_mandir}/man8/setsid.8.gz
+%{_mandir}/man8/tunelp.8.gz
+%{_mandir}/man1/login.1.gz
+%{_mandir}/man1/newgrp.1.gz
+%{_mandir}/man1/ddate.1.gz
+%{_mandir}/man1/cal.1.gz
+%{_mandir}/man1/kill.1.gz
+%{_mandir}/man1/logger.1.gz
+%{_mandir}/man1/look.1.gz
+%{_mandir}/man1/mcookie.1.gz
+%{_mandir}/man1/more.1.gz
+%{_mandir}/man1/namei.1.gz
+%{_mandir}/man1/script.1.gz
+%{_mandir}/man1/setterm.1.gz
+%{_mandir}/man1/whereis.1.gz
+%{_mandir}/man1/write.1.gz
+%{_mandir}/man1/getopt.1.gz
+%{_mandir}/man1/chfn.1.gz
+%{_mandir}/man1/chsh.1.gz
+%{_mandir}/man6/banner.6.gz
+%{_mandir}/man8/vipw.8.gz
+%{_mandir}/man8/fdformat.8.gz
+%{_mandir}/man8/mkswap.8.gz
+%{_mandir}/man8/setfdprm.8.gz
+%{_mandir}/man1/col.1.gz
+%{_mandir}/man1/colcrt.1.gz
+%{_mandir}/man1/colrm.1.gz
+%{_mandir}/man1/column.1.gz
+%{_mandir}/man1/hexdump.1.gz
+%{_mandir}/man1/rev.1.gz
+%{_mandir}/man1/ul.1.gz
 
 %dir /usr/lib/getopt
 %attr(755,root,root) /usr/lib/getopt/*
@@ -339,12 +339,12 @@ gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
 %attr(755,root,root) /sbin/mkfs.minix
 %attr(755,root,root) /sbin/sfdisk
 
-/usr/man/man8/fdisk.8.gz
-/usr/man/man8/cfdisk.8.gz
-/usr/man/man8/sfdisk.8.gz
-/usr/man/man8/fsck.minix.8.gz
-/usr/man/man8/mkfs.minix.8.gz
-/usr/man/man8/mkfs.8.gz
+%{_mandir}/man8/fdisk.8.gz
+%{_mandir}/man8/cfdisk.8.gz
+%{_mandir}/man8/sfdisk.8.gz
+%{_mandir}/man8/fsck.minix.8.gz
+%{_mandir}/man8/mkfs.minix.8.gz
+%{_mandir}/man8/mkfs.8.gz
 %endif
 
 %ifnarch sparc
@@ -357,11 +357,11 @@ gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
 %attr(755,root,root) /usr/sbin/vidmode
 %attr(755,root,root) /usr/sbin/ramsize
 
-/usr/man/man8/rdev.8.gz
-/usr/man/man8/rootflags.8.gz
-/usr/man/man8/swapdev.8.gz
-/usr/man/man8/vidmode.8.gz
-/usr/man/man8/ramsize.8.gz
+%{_mandir}/man8/rdev.8.gz
+%{_mandir}/man8/rootflags.8.gz
+%{_mandir}/man8/swapdev.8.gz
+%{_mandir}/man8/vidmode.8.gz
+%{_mandir}/man8/ramsize.8.gz
 %endif
 
 %lang(de)    /usr/share/locale/de/LC_MESSAGES/util-linux.mo
@@ -377,17 +377,17 @@ gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
-/usr/man/man5/fstab.5.gz
-/usr/man/man5/nfs.5.gz
-/usr/man/man8/mount.8.gz
-/usr/man/man8/swapoff.8.gz
-/usr/man/man8/swapon.8.gz
-/usr/man/man8/umount.8.gz
+%{_mandir}/man5/fstab.5.gz
+%{_mandir}/man5/nfs.5.gz
+%{_mandir}/man8/mount.8.gz
+%{_mandir}/man8/swapoff.8.gz
+%{_mandir}/man8/swapon.8.gz
+%{_mandir}/man8/umount.8.gz
 
 %files -n losetup
 %defattr(644,root,root,755)
 
-/usr/man/man8/losetup.8.gz
+%{_mandir}/man8/losetup.8.gz
 %attr(755,root,root) /sbin/losetup
 
 %changelog
