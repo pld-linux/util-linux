@@ -13,7 +13,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	2
+%define		_release	1
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -23,7 +23,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.11m
+Version:	2.11n
 Release:	%{_release}
 License:	distributable
 Group:		Applications/System
@@ -61,6 +61,7 @@ Patch12:	%{name}-glibc.patch
 Patch13:	%{name}-kerneli-2.4.patch
 Patch14:	%{name}-losetup-getpass.patch
 Patch15:	%{name}-login-problems.patch
+Patch16:	%{name}-posixsh.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 BuildRequires:	ncurses-devel >= 5.0
@@ -443,6 +444,7 @@ util-linux dla bootkietki.
 %{!?_without_crypto:%patch14 -p1}
 %endif
 %patch15 -p1
+%patch16 -p1
 
 %build
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
