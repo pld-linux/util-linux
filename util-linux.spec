@@ -12,7 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	4
+%define		_release	1
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -22,7 +22,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
 Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Name:		util-linux
-Version:	2.11k
+Version:	2.11l
 Release:	%{_release}
 License:	Distributable
 Group:		Applications/System
@@ -457,7 +457,6 @@ fi
 %attr(0755,root,root) /sbin/mkswap
 %attr(0755,root,root) /sbin/ctrlaltdel
 %attr(0755,root,root) /sbin/elvtune
-%attr(0755,root,root) %{_bindir}/banner
 %attr(0755,root,root) %{_bindir}/cal
 %attr(0755,root,root) %{_bindir}/col
 %attr(0755,root,root) %{_bindir}/colcrt
@@ -508,8 +507,6 @@ fi
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
 
-%{_mandir}/man6/banner.6*
-
 %{_mandir}/man8/blockdev.8*
 %{_mandir}/man8/cytune.8*
 %{_mandir}/man8/ctrlaltdel.8*
@@ -535,8 +532,6 @@ fi
 %lang(fi) %{_mandir}/fi/man1/more.1*
 %lang(fi) %{_mandir}/fi/man1/whereis.1*
 %lang(fi) %{_mandir}/fi/man1/write.1*
-
-%lang(fi) %{_mandir}/fi/man6/banner.6*
 
 %lang(fr) %{_mandir}/fr/man1/arch.1*
 %lang(fr) %{_mandir}/fr/man1/cal.1*
@@ -597,8 +592,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/whereis.1*
 %lang(ja) %{_mandir}/ja/man1/write.1*
  
-%lang(ja) %{_mandir}/ja/man6/banner.6*
- 
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
@@ -635,8 +628,6 @@ fi
 %lang(ko) %{_mandir}/ko/man1/ul.1*
 %lang(ko) %{_mandir}/ko/man1/whereis.1*
 %lang(ko) %{_mandir}/ko/man1/write.1*
- 
-%lang(ko) %{_mandir}/ko/man6/banner.6*
  
 %lang(ko) %{_mandir}/ko/man8/ctrlaltdel.8*
 %lang(ko) %{_mandir}/ko/man8/dmesg.8*
