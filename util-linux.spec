@@ -10,7 +10,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.11b
+Version:	2.11d
 Release:	1
 License:	Distributable
 Group:		Applications/System
@@ -48,18 +48,15 @@ Patch4:		%{name}-login.patch
 Patch5:		%{name}-kerneli.patch
 Patch6:		%{name}-info.patch
 Patch7:		%{name}-fdisk2.patch
-Patch8:		%{name}-mount-tcp.patch
 Patch9:		%{name}-mount-rpc.patch
 Patch10:	ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch11:	%{name}-syscall.patch
 Patch12:	%{name}-2.10o-rawio.patch
-Patch13:	%{name}-sparcraid.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
 Patch17:	%{name}-kerneli-fix.patch
 Patch18:	%{name}-kerneli-2.4.patch
-Patch19:	%{name}-pam.patch
 Patch20:	%{name}-qnx4.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
@@ -272,19 +269,16 @@ support for this feature built into them, however).
 %endif
 %patch6 -p1
 %patch7 -p1
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %{!?_without_rawio:%patch12 -p1}
-%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %if !%{_kernel24}
 %{!?_without_crypto:%patch17 -p1}
 %endif
-%patch19 -p1
 %patch20 -p1
 
 %build
