@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_with	uClibc	# don't build few utilities
+%bcond_with	simpleinit # build simpleinit (an alternative to SysVinit)
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -47,6 +48,7 @@ Patch16:	%{name}-dev_t.patch
 Patch17:	%{name}-selinux.patch
 Patch18:	%{name}-blk.patch
 Patch19:	%{name}-io.patch
+Patch20:	%{name}-simpleinit.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 BuildRequires:	libselinux-devel
@@ -331,6 +333,18 @@ Support for raw-devices.
 %description -n rawdevices -l pl
 Obs³uga raw-device'ów.
 
+%package simpleinit
+Summary:	An alternative to SysVinit
+Summary(pl):	Alternatywa dla SysVinit
+Group:		Applications/System
+Conflicts:	SysVinit
+
+%description simpleinit
+An alternative to SysVinit.
+
+%description simpleinit -l pl
+Alternatywa dla SysVinit.
+
 %prep
 %setup -q -a1
 %patch0 -p1
@@ -353,6 +367,7 @@ Obs³uga raw-device'ów.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%{?with_simpleinit:%patch20 -p1}
 
 %build
 CC="%{__cc}"
@@ -1014,4 +1029,27 @@ fi
 
 %{_mandir}/man8/raw.8*
 %lang(ja) %{_mandir}/ja/man8/raw.8*
+%endif
+
+%if %{with simpleinit}
+%files simpleinit
+%defattr(644,root,root,755)
+/sbin/initctl
+/sbin/shutdown
+/sbin/simpleinit
+%attr(755,root,root) %{_bindir}/last
+%{_bindir}/mesg
+%{_bindir}/wall
+
+%{_mandir}/man1/last.1*
+%{_mandir}/man1/mesg.1*
+%{_mandir}/man1/wall.1*
+
+%{_mandir}/man8/fastboot.8*
+%{_mandir}/man8/fasthalt.8*
+%{_mandir}/man8/halt.8*
+%{_mandir}/man8/initctl.8*
+%{_mandir}/man8/reboot.8*
+%{_mandir}/man8/shutdown.8*
+%{_mandir}/man8/simpleinit.8*
 %endif
