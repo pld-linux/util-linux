@@ -13,8 +13,6 @@
 %define		_kernel_series	2.2
 %endif
 
-%define		rel	1
-
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
@@ -24,7 +22,7 @@ Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
 Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Name:		util-linux
 Version:	2.11k
-Release:	%{rel}
+Release:	2
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -136,7 +134,7 @@ Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Release:	%{rel}@%{_kernel_series}
+Release:	%{release}@%{_kernel_series}
 %if %{_kernel24}
 Conflicts:	kernel < 2.3.0
 %else
@@ -195,7 +193,7 @@ Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Release:	%{rel}@%{_kernel_series}
+Release:	%{release}@%{_kernel_series}
 %if %{_kernel24}
 Conflicts:	kernel < 2.3.0
 %else
@@ -216,7 +214,7 @@ zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme
 müssen bereits existieren. Außerdem können die Zugriffstypen geändert
 werden, die der Kernel für bereits montierte Dateisysteme verwendet.
 
-Dieses Paket ist für Ihr System unbedingt erforderlich .
+Dieses Paket ist für Ihr System unbedingt erforderlich.
 
 %description -n mount -l fr
 mount sert à ajouter de nouveaux systèmes de fichiers, locaux ou
@@ -347,7 +345,7 @@ Group(pl):	Aplikacje/System
 %patch3 -p1
 %patch4 -p1
 %if %{_kernel24}
-%{!?_without_crypto:%patch18 -p1}
+%{!?_without_crypto:%patch14 -p1}
 %else
 %{!?_without_crypto:%patch5 -p1}
 %endif
