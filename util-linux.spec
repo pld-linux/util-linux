@@ -18,7 +18,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	14
+Release:	15
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/
@@ -55,7 +55,6 @@ Patch20:	%{name}-managed.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
-BuildRequires:	fixed-usr-mount
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
@@ -201,6 +200,9 @@ Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
 Summary(uk):	Програми для монтування та розмонтування файлових систем
 Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
+Requires:	cryptsetup >= 0.2-1.pre1.4
+Requires:	libgcrypt >= 1.2.0-6
+Requires:	libgpg-error >= 1.0-4
 
 %description -n mount
 mount is used for adding new filesystems, both local and networked, to
