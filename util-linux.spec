@@ -9,7 +9,7 @@
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
-Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
+Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11g
@@ -93,7 +93,7 @@ systèmes comme logger.
 
 %description -l pl
 Util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi
-systemowych niezbêdnych do prawid³owego dzia³ania Linuxa. W pakiecie
+systemowych niezbêdnych do prawid³owego dzia³ania Linuksa. W pakiecie
 znajduj± siê miêdzy innymi, narzêdzia konfiguracyjne takie jak fdisk i
 programy systemowe takie jak logger.
 
@@ -121,13 +121,13 @@ files and loopback devices.
 Block loopback devices should not be confused with the networking
 loopback device, which is configured with the normal ifconfig command.
 
-%description -l de -n losetup
+%description -n losetup -l de
 Linux unterstützt ein spezielles Blockgerät, das sogenannte Loopback,
 das eine normale Datei auf ein virtuelles Blockgerät abbildet. Das
 Paket enthält Programme zum Einrichten und Entfernen der Zuordnung
 zwischen Dateien und Loopback-Geräten.
 
-%description -l fr -n losetup
+%description -n losetup -l fr
 Linux gère un périphérique bloc spécial appelé « loopback », qui
 correspond à un fichier normal sur un périphérique bloc virtuel. Ce
 paquetage contient les programmes pour configurer et supprimer la
@@ -137,7 +137,7 @@ Les périphériques bloc loopback ne doivent pas être confondus avec le
 périphérique loopback du réseau, configuré avec la commande ifconfig
 normale.
 
-%description -l pl -n losetup 
+%description -n losetup -l pl
 Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, które
 mapuje normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten
 zawiera program przy pomocy którego bêdziesz móg³ wykorzystaæ to
@@ -147,7 +147,7 @@ Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym
 interfejsem loopback, który jest konfigurowany przy pomocy polecenia
 ifconfig.
 
-%description -l tr -n losetup
+%description -n losetup -l tr
 Linux özel bir blok aygýt olan yerel-çevrim aygýtýný (loopback device)
 destekler. Bu aygýt normal bir dosyanýn sanal bir blok aygýtý üzerine
 haritasýný çýkarýr. Bu paket, dosyalar ve yerel-çevrim aygýtlarý
@@ -173,7 +173,7 @@ kernel uses for already-mounted filesystems.
 
 This package is critical for the functionality of your system.
 
-%description -l de -n mount
+%description -n mount -l de
 Mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk)
 zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme
 müssen bereits existieren. Außerdem können die Zugriffstypen geändert
@@ -181,7 +181,7 @@ werden, die der Kernel für bereits montierte Dateisysteme verwendet.
 
 Dieses Paket ist für Ihr System unbedingt erforderlich .
 
-%description -l fr -n mount
+%description -n mount -l fr
 mount sert à ajouter de nouveaux systèmes de fichiers, locaux ou
 réseaux, à votre structure de répertoire. Les systèmes de fichiers
 doivent déjà exister pour que cela fonctionne. Il peut aussi servir à
@@ -189,13 +189,13 @@ changer les types d'accès pour les systèmes de fichiers déjà montés.
 
 Ce paquetage est critique pour le fonctionnement de votre système.
 
-%description -l pl -n mount
+%description -n mount -l pl
 Program mount jest u¿ywany przez system do montowania systemu plików,
 zarówno lokalnych jak i sieciowych (np. NFS).
 
-Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuxa.
+Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuksa.
 
-%description -l tr -n mount
+%description -n mount -l tr
 mount, hem yerel hem de að dosya sistemlerinin dizin yapýsýna
 eklenmesi için kullanýlýr. Bunun için baðlanacak dosya sisteminin
 önceden hazýrlanmýþ olmasý gerekir. Ayný zamanda çekirdeðin baðlanmýþ
@@ -276,15 +276,15 @@ Requires:	chkconfig
 Support for raw-devices.
 
 %description -n rawdevices -l pl
-Obs³uga raw-device'ów
+Obs³uga raw-device'ów.
 
 
 %prep
-%setup  -q 
-%patch0 -p1 
+%setup -q
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1 
-%patch3 -p1 
+%patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %if %{_kernel24}
 %{!?_without_crypto:%patch18 -p1}
@@ -306,16 +306,16 @@ Obs³uga raw-device'ów
 CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
 %configure
 
-make	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
+%{__make}	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	ADD_RAW="yes"
 
 (cd sys-utils; makeinfo ipc.texi)
 
 %install
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
+%{__install} -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
 
@@ -328,50 +328,50 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}
 	USE_TTY_GROUP=no \
 	ADD_RAW="yes"
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
+%{__install} %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
-install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
-install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
-install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
-install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
-install %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
-install %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
-install %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
-install %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
-install %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
-install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
+%{__install} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
+%{__install} %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
+%{__install} %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
+%{__install} %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
+%{__install} %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
+%{__install} %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
+%{__install} %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
+%{__install} %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
+%{__install} %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
+%{__install} %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
 
-install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
-install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
-install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
-install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
-install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
-install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
-install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
-install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
-install %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
+%{__install} %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
+%{__install} %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
+%{__install} %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
+%{__install} %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
+%{__install} %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
+%{__install} %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
+%{__install} %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
+%{__install} %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
+%{__install} %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
-install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
+%{__install} %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
 
-install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
+%{__install} %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
 
-install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
+%{__install} %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
 
-install %{SOURCE25} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
-install %{SOURCE26} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
+%{__install} %{SOURCE25} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
+%{__install} %{SOURCE26} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 
-install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
+%{__install} -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
 touch $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
-ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
+%{__ln_s} -f hwclock $RPM_BUILD_ROOT/sbin/clock
 echo	'.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
-ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
+%{__ln_s} -f swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9nf */README.*
+%{__gzip} -9nf */README.*
 
 %find_lang %{name}
 
@@ -396,7 +396,7 @@ fi
 /sbin/chkconfig --del rawdevices
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -408,7 +408,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/hwclock.8*
 %{_mandir}/man8/clock.8*
 
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fdprm
+%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/fdprm
 
 %attr(0755,root,root) /bin/arch
 %attr(0755,root,root) /bin/dmesg
@@ -445,7 +445,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/setterm
 %attr(0755,root,root) %{_bindir}/ul
 %attr(0755,root,root) %{_bindir}/whereis
-%attr(2755,root, tty) %{_bindir}/write
+%attr(2755,root,tty) %{_bindir}/write
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
