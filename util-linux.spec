@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10m
-Release:	5
+Release:	6
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -219,15 +219,15 @@ Program do konfigurowania sterownika portu równoleg³ego.
 Paralel baðlantý noktasý sürücüsünü ayarlar.
 
 %package -n login
-Summary:        login is used when signing onto a system
-Group:          Utilities/System
+Summary:	login is used when signing onto a system
+Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Obsoletes:	heimdal-login
 
 %description -n login
 login is used when signing onto a system. It can also be used to
 switch from one user to another at any time (most modern shells have
-support for this feature built into them, however). 
+support for this feature built into them, however).
 
 %prep
 %setup  -q 
@@ -242,7 +242,7 @@ support for this feature built into them, however).
 
 %build
 
-CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"
+CFLAGS="$RPM_OPT_FLAGS -I%{_includedir}/ncurses"
 %configure
 
 make	OPT="$RPM_OPT_FLAGS" \
@@ -517,6 +517,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/tunelp.8*
 
 %files -n login
+%defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
 %attr(0755,root,root) /bin/login
