@@ -465,6 +465,17 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
     done
 done
 
+# cleanup, remove files not included in package
+rm -f $RPM_BUILD_ROOT/%{_bindir}/{chfn,chsh,newgrp}
+rm -f $RPM_BUILD_ROOT/%{_sbindir}/vipw
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/chfn.1*
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/chsh.1*
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/newgrp.1*
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man8/sln.8*
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man8/vigr.8*
+rm -f $RPM_BUILD_ROOT/%{_mandir}/man8/vipw.8*
+
+
 %{!?_with_uClibc:%find_lang %{name}}
 
 %clean
