@@ -1,0 +1,158 @@
+diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/login.c
+--- util-linux-2.9r/login-utils/login.c	Sun May  2 04:16:35 1999
++++ util-linux-2.9r.pld/login-utils/login.c	Sun May 23 13:49:11 1999
+@@ -154,7 +154,7 @@
+ 
+ #define SLEEP_EXIT_TIMEOUT 5
+ 
+-#ifdef __linux__
++#ifndef __linux__ /* sami se qrna masakrujcie logi -- ³obuzy jedne */
+ #define DO_PS_FIDDLING
+ #endif
+ 
+@@ -272,6 +272,41 @@
+     return 0;
+ }
+ 
++#if USE_PAM
++#define	_PATH_BTMPX	"/var/log/btmpx"
++static void logbtmp(const char *line, const char *username, const char *hostname)
++{
++	struct utmp ut;
++
++	memset(&ut, 0, sizeof(ut));
++
++	strncpy(ut.ut_user, username, sizeof(ut.ut_user));
++
++	strncpy(ut.ut_id, line + 3, sizeof(ut.ut_id));
++	strncpy(ut.ut_line, line, sizeof(ut.ut_line));
++	ut.ut_line[sizeof(ut.ut_line)-1] = 0;
++
++#if defined(_HAVE_UT_TV)
++	gettimeofday(&ut.ut_tv, NULL);
++#else
++	time(&t) ;
++	ut.ut_time = t;		/* ut_time is not always a time_t */
++#endif
++
++	ut.ut_type = LOGIN_PROCESS;	/* XXX doesn't matter */
++	ut.ut_pid = getpid();
++	if (hostname) {
++	    strncpy(ut.ut_host, hostname, sizeof(ut.ut_host));
++	    ut.ut_host[sizeof(ut.ut_host)-1] = 0;
++	    if (hostaddress.h_addr_list)
++	      memcpy(&ut.ut_addr, hostaddress.h_addr_list[0],
++		     sizeof(ut.ut_addr));
++	}
++	
++	updwtmp(_PATH_BTMPX, &ut);
++}
++#endif	/* USE_PAM */
++
+ 
+ int
+ main(int argc, char **argv)
+@@ -457,8 +492,6 @@
+     else
+       tty = ttyn;
+     
+-    openlog("login", LOG_ODELAY, LOG_AUTHPRIV);
+-
+ #if 0
+     /* other than iso-8859-1 */
+     printf("\033(K");
+@@ -516,7 +549,8 @@
+ 	       (retcode == PAM_AUTHINFO_UNAVAIL))) {
+ 	    pam_get_item(pamh, PAM_USER, (const void **) &username);
+ 	    syslog(LOG_NOTICE,_("FAILED LOGIN %d FROM %s FOR %s, %s"),
+-	    failcount, hostname, username, pam_strerror(pamh, retcode));
++		failcount, hostname, username, pam_strerror(pamh, retcode));
++	    logbtmp(ttyn + 5, username, hostname);
+ 	    fprintf(stderr,_("Login incorrect\n\n"));
+ 	    pam_set_item(pamh,PAM_USER,NULL);
+ 	    retcode = pam_authenticate(pamh, 0);
+@@ -525,13 +559,16 @@
+ 	if (retcode != PAM_SUCCESS) {
+ 	    pam_get_item(pamh, PAM_USER, (const void **) &username);
+ 
+-	    if (retcode == PAM_MAXTRIES) 
++	    if (retcode == PAM_MAXTRIES) {
+ 		syslog(LOG_NOTICE,_("TOO MANY LOGIN TRIES (%d) FROM %s FOR "
+ 			"%s, %s"), failcount, hostname, username,
+ 			 pam_strerror(pamh, retcode));
+-	    else
++		logbtmp(ttyn + 5, username, hostname);
++	    } else {
+ 		syslog(LOG_NOTICE,_("FAILED LOGIN SESSION FROM %s FOR %s, %s"),
+ 			hostname, username, pam_strerror(pamh, retcode));
++		logbtmp(ttyn + 5, username, hostname);
++	    }
+ 
+ 	    fprintf(stderr,_("\nLogin incorrect\n"));
+ 	    pam_end(pamh, retcode);
+@@ -561,8 +598,12 @@
+     retcode = pam_open_session(pamh, 0);
+     PAM_FAIL_CHECK;
+ 
++    openlog("login", LOG_ODELAY, LOG_AUTHPRIV);
++
+ #else /* ! USE_PAM */
+ 
++    openlog("login", LOG_ODELAY, LOG_AUTHPRIV);
++
+     for (cnt = 0;; ask = 1) {
+ #  ifndef __linux__
+ 	ioctlval = 0;
+@@ -838,6 +879,20 @@
+ 		    && utp->ut_type >= INIT_PROCESS
+ 		    && utp->ut_type <= DEAD_PROCESS)
+ 			break;
++
++	/*
++	 * XXX If we can't find a pre-existing entry by pid, try by line
++	 * XXX BSD network daemons may rely on this.
++	 */
++	if (utp == NULL) {
++	    endutent();
++	    setutent();
++	    memset(&ut, 0, sizeof(ut));
++	    ut.ut_type = LOGIN_PROCESS;	/* XXX doesn't matter */
++	    strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
++	    strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
++	    utp = getutid(&ut);
++	}
+ 	
+ 	if (utp) {
+ 	    memcpy(&ut, utp, sizeof(ut));
+@@ -848,14 +903,19 @@
+ 	/* endutent(); superfluous, error for glibc */
+ 	
+ 	if (ut.ut_id[0] == 0)
+-	  strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
++	    strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
+ 	
+ 	strncpy(ut.ut_user, username, sizeof(ut.ut_user));
+ 	strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
+ 	ut.ut_line[sizeof(ut.ut_line)-1] = 0;
+-	time(&t);
++
++#if defined(_HAVE_UT_TV)
++	gettimeofday(&ut.ut_tv, NULL);
++#else
++	time(&t) ;
+ 	ut.ut_time = t;		/* ut_time is not always a time_t */
+-				/* (we might test #ifdef _HAVE_UT_TV ) */
++#endif
++
+ 	ut.ut_type = USER_PROCESS;
+ 	ut.ut_pid = mypid;
+ 	if (hostname) {
+@@ -1068,6 +1128,8 @@
+ #endif
+     signal(SIGINT, SIG_DFL);
+     
++    openlog("login", LOG_ODELAY, LOG_AUTHPRIV);
++
+     /* discard permissions last so can't get killed and drop core */
+     if(setuid(pwd->pw_uid) < 0 && pwd->pw_uid) {
+ 	syslog(LOG_ALERT, _("setuid() failed"));

@@ -1,0 +1,18 @@
+diff -Nur util-linux-2.9r/fdisk/fdisk.c util-linux-2.9r.pld/fdisk/fdisk.c
+--- util-linux-2.9r/fdisk/fdisk.c	Sat May  1 13:49:47 1999
++++ util-linux-2.9r.pld/fdisk/fdisk.c	Sun May 23 13:47:46 1999
+@@ -2002,8 +2002,12 @@
+ 					printf(_("Boot file unchanged\n"));
+ 				else
+ 					sgi_set_bootfile(line_ptr);
+-			} else
+-				bselect();
++			} else {
++			    printf("Warning: starting partitions at cylinder 1"
++				   " will be bad for the health of your\n");
++			    printf("partition table -- start at cylinder 2 instead!\n\n");
++			    bselect();
++			}
+ 			break;
+ 		case 'c':
+ 			if (sun_label)

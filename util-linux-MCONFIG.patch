@@ -1,0 +1,85 @@
+diff -Nur util-linux-2.9r/MCONFIG util-linux-2.9r.pld/MCONFIG
+--- util-linux-2.9r/MCONFIG	Sat Mar 13 02:40:49 1999
++++ util-linux-2.9r.pld/MCONFIG	Sun May 23 13:53:57 1999
+@@ -16,17 +16,17 @@
+ # If HAVE_PAM is set to "yes", then login, chfn, chsh, and newgrp
+ # will use PAM for authentication. Additionally, passwd will not be
+ # installed as it is not PAM aware.
+-HAVE_PAM=no
++HAVE_PAM=yes
+ 
+ # If HAVE_SHADOW is set to "yes", then login, chfn, chsh, newgrp, passwd,
+ # and vipw will not be built or installed from the login-utils
+ # subdirectory.  
+-HAVE_SHADOW=yes
++HAVE_SHADOW=no
+ 
+ # If HAVE_PASSWD is set to "yes", then passwd will not be built or
+ # installed from the login-utils subdirectory (but login, chfn, chsh,
+ # newgrp, and vipw *will* be installed).
+-HAVE_PASSWD=no
++HAVE_PASSWD=yes
+ 
+ # If you use chfn and chsh from this package, REQUIRE_PASSWORD will require
+ # non-root users to enter the account password before updating /etc/passwd.
+@@ -66,7 +66,7 @@
+ USE_TTY_GROUP=yes
+ 
+ # If HAVE_OPENPTY is set to "yes", then script will use the Unix98 ptys
+-HAVE_OPENPTY=no
++HAVE_OPENPTY=yes
+ 
+ # If HAVE_RESET is set to "yes", then reset won't be installed.  The version
+ # of reset that comes with the ncurses package is less aggressive.
+@@ -75,7 +75,7 @@
+ # If HAVE_SLN is set to "yes", then sln won't be installed
+ # (but the man page sln.8 will be installed anyway).
+ # sln also comes with libc and glibc.
+-HAVE_SLN=no
++HAVE_SLN=yes
+ 
+ CC=		gcc
+ 
+@@ -114,7 +114,7 @@
+ # SLANGFLAGS=-I/usr/include/slang
+ # No such subdirectory - slcurses.h lives in /usr/include
+ #   (no extra definition required).
+-LIBSLANG=-lslang
++# LIBSLANG=-lslang
+ 
+ 
+ DEVDIR=		$(DESTDIR)/dev
+@@ -127,13 +127,13 @@
+ BINDIR=         $(DESTDIR)/bin
+ VARPATH=	$(DESTDIR)/var
+ LOGDIR=		$(DESTDIR)/var/log
+-MANDIR=		$(DESTDIR)/usr/man
++MANDIR=		$(DESTDIR)/usr/share/man
+ MAN1DIR=	$(MANDIR)/man1
+ MAN3DIR=	$(MANDIR)/man3
+ MAN5DIR=	$(MANDIR)/man5
+ MAN6DIR=	$(MANDIR)/man6
+ MAN8DIR=	$(MANDIR)/man8
+-INFODIR=	$(DESTDIR)/usr/info
++INFODIR=	$(DESTDIR)/usr/share/info
+ 
+ # Directory for shutdown, halt, reboot, etc.
+ SHUTDOWNDIR=	$(SBINDIR)
+@@ -150,7 +150,7 @@
+ MANMODE=	644
+ DATMODE=	644
+ INFOMODE=	644
+-SUIDMODE=      4755
++SUIDMODE=      4711
+ 
+ CHMOD=		chmod
+ INSTALL=	install
+@@ -158,7 +158,7 @@
+ INSTALLBIN=	$(INSTALL) -m $(BINMODE)
+ INSTALLMAN=	$(INSTALL) -m $(MANMODE)
+ INSTALLDAT=	$(INSTALL) -m $(DATMODE)
+-INSTALLSUID=    $(INSTALL) -m $(SUIDMODE) -o root
++INSTALLSUID=    $(INSTALL) -m $(SUIDMODE)
+ 
+ %.o: %.c
+ 	$(CC) -c $(CFLAGS) $< -o $@
