@@ -4,7 +4,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.9u
+Version:	2.9v
 Release:	1
 Copyright:	distributable
 Group:		Utilities/System
@@ -13,6 +13,31 @@ Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
+Source4:	kill.1.pl
+Source5:	arch.1.pl
+Source6:	login.1.pl
+Source7:	look.1.pl
+Source8:	script.1.pl
+Source9:	write.1.pl
+Source10:	getopt.1.pl
+Source11:	colrm.1.pl
+Source12:	hexdump.1.pl
+Source13:	ul.1.pl
+Source14:	ipcrm.8.pl
+Source15:	ipcs.8.pl
+Source16:	kbdrate.8.pl
+Source17:	fdformat.8.pl
+Source18:	mkswap.8.pl
+Source19:	fdisk.8.pl
+Source20:	umount.8.pl
+Source21:	mount.8.pl
+Source22:	swapon.8.pl
+Source23:	swapoff.8.pl
+Source24:	fstab.5.pl
+Source25:	chfn.1.pl
+Source26:	chsh.1.pl
+Source27:	chkdupexe.1.pl
+Source28:	tunelp.8.pl
 Patch0:		util-linux-MCONFIG.patch
 Patch1:		util-linux-fdisk.patch
 Patch2:		util-linux-po.patch
@@ -224,8 +249,9 @@ make OPT="$RPM_OPT_FLAGS"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}}
-install -d $RPM_BUILD_ROOT/usr/{bin,sbin,lib,share/{info,misc,man/man{1,5,6,8}}}
+install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
+	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_libdir},%{_infodir},%{_datadir}/misc} \
+	$RPM_BUILD_ROOT%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}
 
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
@@ -241,6 +267,40 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/login
 
+install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
+install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
+install %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
+install %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
+install %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
+install %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
+install %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
+install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
+install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
+install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
+
+install %{SOURCE14} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
+install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
+install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/kbdrate.8
+install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
+install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
+
+%ifarch %{ix86} alpha
+install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
+%endif
+
+install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
+install %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
+install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
+install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
+
+install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
+
+install %{SOURCE25} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chfn.1
+install %{SOURCE26} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chsh.1
+install %{SOURCE27} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
+
+install %{SOURCE28} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
+
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
 touch $RPM_BUILD_ROOT/etc/security/{chsh,chfn}
@@ -248,14 +308,14 @@ touch $RPM_BUILD_ROOT/etc/security/{chsh,chfn}
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
 
-%ifarch i386 i486 i586 i686 
+%ifarch %{ix86} 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
 echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 %endif
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
+gzip -9fn $RPM_BUILD_ROOT%{_mandir}/{man*/*,pl/man*/*} \
 	*/README.* $RPM_BUILD_ROOT%{_infodir}/*
 
 %find_lang %{name}
@@ -359,11 +419,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/mkswap.8.gz
 %{_mandir}/man8/setfdprm.8.gz
 
+%lang(pl) %{_mandir}/pl/man1/kill.1*
+%lang(pl) %{_mandir}/pl/man1/arch.1*
+%lang(pl) %{_mandir}/pl/man1/login.1*
+%lang(pl) %{_mandir}/pl/man1/look.1*
+%lang(pl) %{_mandir}/pl/man1/script.1*
+%lang(pl) %{_mandir}/pl/man1/write.1*
+%lang(pl) %{_mandir}/pl/man1/getopt.1*
+%lang(pl) %{_mandir}/pl/man1/colrm.1*
+%lang(pl) %{_mandir}/pl/man1/hexdump.1*
+%lang(pl) %{_mandir}/pl/man1/ul.1*
+
+
+%lang(pl) %{_mandir}/pl/man8/ipcrm.8*
+%lang(pl) %{_mandir}/pl/man8/ipcs.8*
+%lang(pl) %{_mandir}/pl/man8/kbdrate.8*
+%lang(pl) %{_mandir}/pl/man8/fdformat.8*
+%lang(pl) %{_mandir}/pl/man8/mkswap.8*
+
 %dir %{_libdir}/getopt
 %attr(755,root,root) %{_libdir}/getopt/*
 %{_datadir}/misc/more.help
 
-%ifarch i386 i486 i586 i686 alpha
+%ifarch %{ix86} alpha
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/cfdisk
 %attr(755,root,root) /sbin/fsck.minix
@@ -376,13 +454,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/fsck.minix.8.gz
 %{_mandir}/man8/mkfs.minix.8.gz
 %{_mandir}/man8/mkfs.8.gz
+
+%lang(pl) %{_mandir}/pl/man8/fdisk.8*
 %endif
 
 %ifnarch sparc
 %attr(755,root,root) %{_bindir}/cytune
 %endif
 
-%ifarch i386 i486 i586 i686
+%ifarch %{ix86}
 %attr(755,root,root) %{_sbindir}/rdev
 %attr(755,root,root) %{_sbindir}/swapdev
 %attr(755,root,root) %{_sbindir}/vidmode
@@ -415,6 +495,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/swapon.8.gz
 %{_mandir}/man8/umount.8.gz
 
+%lang(pl) %{_mandir}/pl/man8/umount.8*
+%lang(pl) %{_mandir}/pl/man8/mount.8*
+%lang(pl) %{_mandir}/pl/man8/swapon.8*
+%lang(pl) %{_mandir}/pl/man8/swapoff.8*
+
+%lang(pl) %{_mandir}/pl/man5/fstab.5*
+
 %files -n losetup
 %defattr(644,root,root,755)
 
@@ -434,10 +521,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(644,root,root) %{_mandir}/man1/chfn.1.gz
 %attr(644,root,root) %{_mandir}/man1/chsh.1.gz
 
+%lang(pl) %attr(644,root,root) %{_mandir}/pl/man1/chsh.1*
+%lang(pl) %attr(644,root,root) %{_mandir}/pl/man1/chfn.1*
+
 %files chkdupexe
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/chkdupexe
+%attr(0755,root,root) %{_bindir}/chkdupexe
 %{_mandir}/man1/chkdupexe.1*
+
+%lang(pl) %{_mandir}/pl/man1/chkdupexe.1*
 
 %files -n tunelp
 %defattr(644,root,root,755)
