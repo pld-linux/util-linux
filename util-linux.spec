@@ -50,6 +50,7 @@ Patch13:	%{name}-kerneli-2.4.patch
 Patch14:	%{name}-losetup-getpass.patch
 Patch15:	%{name}-login-problems.patch
 Patch16:	%{name}-posixsh.patch
+Patch17:	%{name}-ppc-hwclock.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 BuildRequires:	ncurses-devel >= 5.0
@@ -329,6 +330,7 @@ util-linux dla bootkietki.
 %endif
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
@@ -343,6 +345,10 @@ mv -f fdisk/fdisk fdisk-BOOT
 %{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	ADD_RAW="yes"
+
+%ifarch ppc
+%{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc.c
+%endif
 
 (cd sys-utils; makeinfo ipc.texi)
 
@@ -376,6 +382,11 @@ install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 > $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
+
+%ifarch ppc
+rm -f $RPM_BUILD_ROOT/sbin/hwclock
+install clock-ppc $RPM_BUILD_ROOT/sbin/hwclock
+%endif
 
 ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
