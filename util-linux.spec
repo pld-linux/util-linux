@@ -4,8 +4,8 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.9v
-Release:	2
+Version:	2.10b
+Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -44,8 +44,7 @@ Patch2:		util-linux-po.patch
 Patch3:		util-linux-utmpx.patch
 Patch4:		util-linux-fhs.patch
 Patch5:		util-linux-login.patch
-Patch6:		util-linux-more.patch
-#Patch7:		util-linux-cipher.patch
+#Patch6:		util-linux-cipher.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel
 BuildRequires:	gettext-devel
@@ -238,15 +237,16 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-#%patch7 -p1
+%patch5 -p1 
+#%patch6 -p1
 
 %build
 
 %configure
 
-make OPT="$RPM_OPT_FLAGS"
+make \
+	OPT="$RPM_OPT_FLAGS" \
+	MOREHELPDIR=%{_datadir}/misc
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -258,7 +258,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 4711" \
-	DATAMISCDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
+	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
 	localedir=$RPM_BUILD_ROOT%{_datadir}/locale \
 	USE_TTY_GROUP=no
 
@@ -381,45 +381,45 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
 
-%{_mandir}/man1/arch.1.gz
-%{_mandir}/man1/readprofile.1.gz
-%{_mandir}/man1/login.1.gz
-%{_mandir}/man1/newgrp.1.gz
-%{_mandir}/man1/ddate.1.gz
-%{_mandir}/man1/cal.1.gz
-%{_mandir}/man1/kill.1.gz
-%{_mandir}/man1/logger.1.gz
-%{_mandir}/man1/look.1.gz
-%{_mandir}/man1/mcookie.1.gz
-%{_mandir}/man1/more.1.gz
-%{_mandir}/man1/namei.1.gz
-%{_mandir}/man1/script.1.gz
-%{_mandir}/man1/setterm.1.gz
-%{_mandir}/man1/whereis.1.gz
-%{_mandir}/man1/write.1.gz
-%{_mandir}/man1/getopt.1.gz
-%{_mandir}/man1/col.1.gz
-%{_mandir}/man1/colcrt.1.gz
-%{_mandir}/man1/colrm.1.gz
-%{_mandir}/man1/column.1.gz
-%{_mandir}/man1/hexdump.1.gz
-%{_mandir}/man1/rev.1.gz
-%{_mandir}/man1/ul.1.gz
+%{_mandir}/man1/arch.1*
+%{_mandir}/man1/readprofile.1*
+%{_mandir}/man1/login.1*
+%{_mandir}/man1/newgrp.1*
+%{_mandir}/man1/ddate.1*
+%{_mandir}/man1/cal.1*
+%{_mandir}/man1/kill.1*
+%{_mandir}/man1/logger.1*
+%{_mandir}/man1/look.1*
+%{_mandir}/man1/mcookie.1*
+%{_mandir}/man1/more.1*
+%{_mandir}/man1/namei.1*
+%{_mandir}/man1/script.1*
+%{_mandir}/man1/setterm.1*
+%{_mandir}/man1/whereis.1*
+%{_mandir}/man1/write.1*
+%{_mandir}/man1/getopt.1*
+%{_mandir}/man1/col.1*
+%{_mandir}/man1/colcrt.1*
+%{_mandir}/man1/colrm.1*
+%{_mandir}/man1/column.1*
+%{_mandir}/man1/hexdump.1*
+%{_mandir}/man1/rev.1*
+%{_mandir}/man1/ul.1*
 
-%{_mandir}/man6/banner.6.gz
+%{_mandir}/man6/banner.6*
 
-%{_mandir}/man8/cytune.8.gz
-%{_mandir}/man8/ctrlaltdel.8.gz
-%{_mandir}/man8/dmesg.8.gz
-%{_mandir}/man8/ipcrm.8.gz
-%{_mandir}/man8/ipcs.8.gz
-%{_mandir}/man8/kbdrate.8.gz
-%{_mandir}/man8/renice.8.gz
-%{_mandir}/man8/setsid.8.gz
-%{_mandir}/man8/vipw.8.gz
-%{_mandir}/man8/fdformat.8.gz
-%{_mandir}/man8/mkswap.8.gz
-%{_mandir}/man8/setfdprm.8.gz
+%{_mandir}/man8/cytune.8*
+%{_mandir}/man8/ctrlaltdel.8*
+%{_mandir}/man8/dmesg.8*
+%{_mandir}/man8/ipcrm.8*
+%{_mandir}/man8/ipcs.8*
+%{_mandir}/man8/kbdrate.8*
+%{_mandir}/man8/renice.8*
+%{_mandir}/man8/setsid.8*
+%{_mandir}/man8/vipw.8*
+%{_mandir}/man8/fdformat.8*
+%{_mandir}/man8/mkswap.8*
+%{_mandir}/man8/setfdprm.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
@@ -450,12 +450,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/mkfs.minix
 %attr(755,root,root) /sbin/sfdisk
 
-%{_mandir}/man8/fdisk.8.gz
-%{_mandir}/man8/cfdisk.8.gz
-%{_mandir}/man8/sfdisk.8.gz
-%{_mandir}/man8/fsck.minix.8.gz
-%{_mandir}/man8/mkfs.minix.8.gz
-%{_mandir}/man8/mkfs.8.gz
+%{_mandir}/man8/fdisk.8*
+%{_mandir}/man8/cfdisk.8*
+%{_mandir}/man8/sfdisk.8*
+%{_mandir}/man8/fsck.minix.8*
+%{_mandir}/man8/mkfs.minix.8*
+%{_mandir}/man8/mkfs.8*
 
 %lang(pl) %{_mandir}/pl/man8/fdisk.8*
 %endif
@@ -470,11 +470,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/vidmode
 %attr(755,root,root) %{_sbindir}/ramsize
 
-%{_mandir}/man8/rdev.8.gz
-%{_mandir}/man8/rootflags.8.gz
-%{_mandir}/man8/swapdev.8.gz
-%{_mandir}/man8/vidmode.8.gz
-%{_mandir}/man8/ramsize.8.gz
+%{_mandir}/man8/rdev.8*
+%{_mandir}/man8/rootflags.8*
+%{_mandir}/man8/swapdev.8*
+%{_mandir}/man8/vidmode.8*
+%{_mandir}/man8/ramsize.8*
 %endif
 
 %{_infodir}/ipc*
@@ -489,13 +489,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
-%{_mandir}/man5/fstab.5.gz
-%{_mandir}/man5/nfs.5.gz
+%{_mandir}/man5/fstab.5*
+%{_mandir}/man5/nfs.5*
 
-%{_mandir}/man8/mount.8.gz
-%{_mandir}/man8/swapoff.8.gz
-%{_mandir}/man8/swapon.8.gz
-%{_mandir}/man8/umount.8.gz
+%{_mandir}/man8/mount.8*
+%{_mandir}/man8/swapoff.8*
+%{_mandir}/man8/swapon.8*
+%{_mandir}/man8/umount.8*
 
 %lang(pl) %{_mandir}/pl/man8/umount.8*
 %lang(pl) %{_mandir}/pl/man8/mount.8*
@@ -507,7 +507,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n losetup
 %defattr(644,root,root,755)
 
-%{_mandir}/man8/losetup.8.gz
+%{_mandir}/man8/losetup.8*
 %attr(755,root,root) /sbin/losetup
 
 %files uprogs
@@ -520,8 +520,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4755,root,root) %{_bindir}/chfn
 %attr(4755,root,root) %{_bindir}/chsh
 
-%attr(644,root,root) %{_mandir}/man1/chfn.1.gz
-%attr(644,root,root) %{_mandir}/man1/chsh.1.gz
+%attr(644,root,root) %{_mandir}/man1/chfn.1*
+%attr(644,root,root) %{_mandir}/man1/chsh.1*
 
 %lang(pl) %attr(644,root,root) %{_mandir}/pl/man1/chsh.1*
 %lang(pl) %attr(644,root,root) %{_mandir}/pl/man1/chfn.1*
@@ -536,4 +536,4 @@ rm -rf $RPM_BUILD_ROOT
 %files -n tunelp
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_sbindir}/tunelp
-%{_mandir}/man8/tunelp.8.gz
+%{_mandir}/man8/tunelp.8*
