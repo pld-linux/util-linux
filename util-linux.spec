@@ -182,6 +182,30 @@ chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane
 katalogi z plikami uruchamialnymi i informuje o powtarzaj±cych siê plikach
 w ró¿nych katalogach.
 
+%package -n	tunelp
+Summary:        configures kernel parallel port driver
+Summary(de):    konfiguriert den Kerneltreiber für den parallelen Port
+Summary(fr):    Configure le pilote du port parallèle dans le noyau
+Summary(tr):    Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
+Summary(pl):    Program do konfigurowania sterownika portu równoleg³ego
+Group:          Utilities/System
+Group(pl):      Narzêdzia/System
+
+%description -n tunelp
+`tunelp' aids in configuring the kernel parallel port driver.
+
+%description -n tunelp -l de
+TUNELP hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
+
+%description -n tunelp -l fr
+« tunelp » aide à configurer le pilote du noyau pour le port parallèle.
+
+%description -n tunelp -l tr
+Paralel baðlantý noktasý sürücüsünü ayarlar.
+
+%description -n tunelp -l pl
+Program do konfigurowania sterownika portu równoleg³ego.
+
 %prep
 %setup  -q 
 %patch0 -p1 
@@ -296,7 +320,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
-%attr(0755,root,root) %{_sbindir}/tunelp
 
 %{_mandir}/man1/arch.1.gz
 %{_mandir}/man1/readprofile.1.gz
@@ -333,7 +356,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/kbdrate.8.gz
 %{_mandir}/man8/renice.8.gz
 %{_mandir}/man8/setsid.8.gz
-%{_mandir}/man8/tunelp.8.gz
 %{_mandir}/man8/vipw.8.gz
 %{_mandir}/man8/fdformat.8.gz
 %{_mandir}/man8/mkswap.8.gz
@@ -418,3 +440,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/chkdupexe
 %{_mandir}/man1/chkdupexe.1*
+
+%files -n tunelp
+%defattr(644,root,root,755)
+%attr(0755,root,root) %{_sbindir}/tunelp
+%{_mandir}/man8/tunelp.8.gz
