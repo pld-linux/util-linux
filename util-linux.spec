@@ -4,13 +4,12 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.9i
-Release:	1d
+Version:	2.9o
+Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-URL:		ftp://sunsite.unc.edu/pub/Linux/system/misc
-Source0:	%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
@@ -172,6 +171,8 @@ cp login-utils/login.c login-utils/login.c.new
 sed -e "s/#define DO_PS_FIDDLING//" \
 login-utils/login.c.new > login-utils/login.c
 
+./configure
+
 make OPT="$RPM_OPT_FLAGS"
 
 %install
@@ -210,21 +211,23 @@ echo	.so hwclock.8 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
 gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* 
-bzip2 -9 ANNOUNCE */README.*
+gzip -9fn */README.*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ANNOUNCE.bz2 */README.*
+%doc */README.*
+
+/usr/info/ipc.info
 
 %ifarch i386
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock
 
-%attr(644,root, man) /usr/man/man8/hwclock.8.gz
-%attr(644,root, man) /usr/man/man8/clock.8.gz
+/usr/man/man8/hwclock.8.gz
+/usr/man/man8/clock.8.gz
 %endif
 
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
@@ -234,6 +237,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/cfdisk
 %attr(755,root,root) /sbin/fsck.minix
 %attr(755,root,root) /sbin/mkfs.minix
+%attr(755,root,root) /sbin/sfdisk
 %endif
 
 %attr(755,root,root) /sbin/mkfs
@@ -243,25 +247,26 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/setfdprm
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
 
-%attr(644,root, man) /usr/man/man8/fdformat.8.gz
-%attr(644,root, man) /usr/man/man8/mkswap.8.gz
-%attr(644,root, man) /usr/man/man8/setfdprm.8.gz
+/usr/man/man8/fdformat.8.gz
+/usr/man/man8/mkswap.8.gz
+/usr/man/man8/setfdprm.8.gz
 
 %attr(755,root,root) /usr/games/banner
-%attr(644,root, man) /usr/man/man6/banner.6.gz
+/usr/man/man6/banner.6.gz
 
 %attr(755,root,root) /usr/bin/ddate
-%attr(644,root, man) /usr/man/man1/ddate.1.gz
+/usr/man/man1/ddate.1.gz
 
 %attr(755,root,root) /bin/login
 
 
 %attr(755,root,root) /usr/bin/newgrp
 %attr(755,root,root) /usr/sbin/vipw
+%attr(755,root,root) /usr/sbin/vigr
 
-%attr(644,root, man) /usr/man/man1/login.1.gz
-%attr(644,root, man) /usr/man/man1/newgrp.1.gz
-%attr(644,root, man) /usr/man/man8/vipw.8.gz
+/usr/man/man1/login.1.gz
+/usr/man/man1/newgrp.1.gz
+/usr/man/man8/vipw.8.gz
 
 %attr(0755,root,root) /bin/kill
 %attr(0755,root,root) /usr/bin/cal
@@ -275,17 +280,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(2711,root, tty) /usr/bin/write
 %attr(0755,root,root) /usr/bin/getopt
 
-%attr(644,root, man) /usr/man/man1/cal.1.gz
-%attr(644,root, man) /usr/man/man1/kill.1.gz
-%attr(644,root, man) /usr/man/man1/logger.1.gz
-%attr(644,root, man) /usr/man/man1/look.1.gz
-%attr(644,root, man) /usr/man/man1/mcookie.1.gz
-%attr(644,root, man) /usr/man/man1/namei.1.gz
-%attr(644,root, man) /usr/man/man1/script.1.gz
-%attr(644,root, man) /usr/man/man1/setterm.1.gz
-%attr(644,root, man) /usr/man/man1/whereis.1.gz
-%attr(644,root, man) /usr/man/man1/write.1.gz
-%attr(644,root, man) /usr/man/man1/getopt.1.gz
+/usr/man/man1/cal.1.gz
+/usr/man/man1/kill.1.gz
+/usr/man/man1/logger.1.gz
+/usr/man/man1/look.1.gz
+/usr/man/man1/mcookie.1.gz
+/usr/man/man1/namei.1.gz
+/usr/man/man1/script.1.gz
+/usr/man/man1/setterm.1.gz
+/usr/man/man1/whereis.1.gz
+/usr/man/man1/write.1.gz
+/usr/man/man1/getopt.1.gz
 
 %attr(755,root,root) /bin/dmesg
 
@@ -299,6 +304,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/setsid
 %attr(755,root,root) /usr/sbin/ramsize
 
+%attr(755,root,root) /usr/bin/tunelp
+
 %ifnarch sparc
 %attr(755,root,root) /usr/bin/cytune
 %attr(755,root,root) /usr/sbin/swapdev
@@ -307,24 +314,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) /usr/sbin/rootflags
 
-%attr(644,root, man) /usr/man/man1/arch.1.gz
-%attr(644,root, man) /usr/man/man1/readprofile.1.gz
-%attr(644,root, man) /usr/man/man8/cytune.8.gz
-%attr(644,root, man) /usr/man/man8/ctrlaltdel.8.gz
-%attr(644,root, man) /usr/man/man8/dmesg.8.gz
-%attr(644,root, man) /usr/man/man8/ipcrm.8.gz
-%attr(644,root, man) /usr/man/man8/ipcs.8.gz
-%attr(644,root, man) /usr/man/man8/kbdrate.8.gz
-%attr(644,root, man) /usr/man/man8/ramsize.8.gz
-%attr(644,root, man) /usr/man/man8/renice.8.gz
-%attr(644,root, man) /usr/man/man8/rootflags.8.gz
-%attr(644,root, man) /usr/man/man8/setsid.8.gz
-%attr(644,root, man) /usr/man/man8/swapdev.8.gz
-%attr(644,root, man) /usr/man/man8/vidmode.8.gz
+/usr/man/man1/arch.1.gz
+/usr/man/man1/readprofile.1.gz
+/usr/man/man8/cytune.8.gz
+/usr/man/man8/ctrlaltdel.8.gz
+/usr/man/man8/dmesg.8.gz
+/usr/man/man8/ipcrm.8.gz
+/usr/man/man8/ipcs.8.gz
+/usr/man/man8/kbdrate.8.gz
+/usr/man/man8/ramsize.8.gz
+/usr/man/man8/renice.8.gz
+/usr/man/man8/rootflags.8.gz
+/usr/man/man8/setsid.8.gz
+/usr/man/man8/swapdev.8.gz
+/usr/man/man8/vidmode.8.gz
+/usr/man/man8/tunelp.8.gz
 
 %ifarch i386
 %attr(755,root,root) /usr/sbin/rdev
-%attr(644,root, man) /usr/man/man8/rdev.8.gz
+/usr/man/man8/rdev.8.gz
 %endif
 
 %attr(755,root,root) /usr/bin/col
@@ -335,16 +343,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/rev
 %attr(755,root,root) /usr/bin/ul
 
-%attr(644,root, man) /usr/man/man1/col.1.gz
-%attr(644,root, man) /usr/man/man1/colcrt.1.gz
-%attr(644,root, man) /usr/man/man1/colrm.1.gz
-%attr(644,root, man) /usr/man/man1/column.1.gz
-%attr(644,root, man) /usr/man/man1/hexdump.1.gz
-%attr(644,root, man) /usr/man/man1/rev.1.gz
-%attr(644,root, man) /usr/man/man1/ul.1.gz
+/usr/man/man1/col.1.gz
+/usr/man/man1/colcrt.1.gz
+/usr/man/man1/colrm.1.gz
+/usr/man/man1/column.1.gz
+/usr/man/man1/hexdump.1.gz
+/usr/man/man1/rev.1.gz
+/usr/man/man1/ul.1.gz
 
 %attr(755,root,root) /bin/more
-%attr(644,root, man) /usr/man/man1/more.1.gz
+/usr/man/man1/more.1.gz
 
 %dir /usr/lib/getopt
 %attr(755,root,root) /usr/lib/getopt/*
@@ -352,14 +360,15 @@ rm -rf $RPM_BUILD_ROOT
 %config /usr/lib/more.help
 
 %ifnarch sparc
-%attr(644,root, man) /usr/man/man8/fsck.minix.8.gz
-%attr(644,root, man) /usr/man/man8/mkfs.minix.8.gz
-%attr(644,root, man) /usr/man/man8/mkfs.8.gz
+/usr/man/man8/fsck.minix.8.gz
+/usr/man/man8/mkfs.minix.8.gz
+/usr/man/man8/mkfs.8.gz
 %endif
 
 %ifarch i386 alpha
-%attr(644,root, man) /usr/man/man8/fdisk.8.gz
-%attr(644,root, man) /usr/man/man8/cfdisk.8.gz
+/usr/man/man8/fdisk.8.gz
+/usr/man/man8/cfdisk.8.gz
+/usr/man/man8/sfdisk.8.gz
 %endif
 
 %files suid
@@ -372,8 +381,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4711,root,root) /usr/bin/chfn
 %attr(4711,root,root) /usr/bin/chsh
 
-%attr(644,root, man) /usr/man/man1/chfn.1.gz
-%attr(644,root, man) /usr/man/man1/chsh.1.gz
+/usr/man/man1/chfn.1.gz
+/usr/man/man1/chsh.1.gz
 
 %files -n mount
 %defattr(644,root,root,755)
@@ -383,20 +392,28 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
-%attr(644,root, man) /usr/man/man5/fstab.5.gz
-%attr(644,root, man) /usr/man/man5/nfs.5.gz
-%attr(644,root, man) /usr/man/man8/mount.8.gz
-%attr(644,root, man) /usr/man/man8/swapoff.8.gz
-%attr(644,root, man) /usr/man/man8/swapon.8.gz
-%attr(644,root, man) /usr/man/man8/umount.8.gz
+/usr/man/man5/fstab.5.gz
+/usr/man/man5/nfs.5.gz
+/usr/man/man8/mount.8.gz
+/usr/man/man8/swapoff.8.gz
+/usr/man/man8/swapon.8.gz
+/usr/man/man8/umount.8.gz
 
 %files -n losetup
 %defattr(644,root,root,755)
 
-%attr(644,root, man) /usr/man/man8/losetup.8.gz
+/usr/man/man8/losetup.8.gz
 %attr(755,root,root) /sbin/losetup
 
 %changelog
+* Thu Mar 25 1999 Artur Frysiak <wiget@pld.org.pl>
+  [2.9o-1]
+- changed Source URL
+- added calling ./configure script
+- gziping docs
+- removed ANNOUNCE from docs
+- removed man group from man pages
+
 * Mon Feb 15 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
 - updated to 2.9i,
 - fixed Group(pl),
