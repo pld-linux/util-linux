@@ -4,7 +4,7 @@
 # _with_pivot_root
 #
 # TODO:
-# - move raw to /sbin (potentially can be used before mount partitions)
+# - move raw to /sbin (potentially can be used before mount partitions)??
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -13,7 +13,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11g
-Release:	1
+Release:	2
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -584,5 +584,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_bindir}/raw
 %attr(0750,root,root) /etc/rc.d/init.d/rawdevices
-%attr(0650,root,root) /etc/sysconfig/rawdevices
+%attr(0640,root,root) /etc/sysconfig/rawdevices
 %{_mandir}/man8/raw.8*
