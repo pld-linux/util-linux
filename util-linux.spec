@@ -22,7 +22,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.11l
+Version:	2.11m
 Release:	%{_release}
 License:	distributable
 Group:		Applications/System
@@ -47,10 +47,8 @@ Patch10:	%{name}-raw.patch
 Patch11:	%{name}-gecos.patch
 Patch12:	%{name}-glibc.patch
 Patch13:	%{name}-s390.patch
-Patch14:	%{name}-kerneli-2.4.patch
-Patch15:	%{name}-qnx4.patch
-Patch16:	%{name}-losetup-getpass.patch
-Patch17:	%{name}-login-problems.patch
+Patch14:	%{name}-losetup-getpass.patch
+Patch15:	%{name}-login-problems.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -338,11 +336,10 @@ Group(pl):	Aplikacje/System
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch15 -p1
 %if !%{_kernel24}
-%{!?_without_crypto:%patch16 -p1}
+%{!?_without_crypto:%patch14 -p1}
 %endif
-%patch17 -p1
+%patch15 -p1
 
 %build
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
