@@ -1,6 +1,6 @@
-diff -urN util-linux-2.11b.org/mount/Makefile util-linux-2.11b/mount/Makefile
---- util-linux-2.11b.org/mount/Makefile	Wed Mar 21 10:07:38 2001
-+++ util-linux-2.11b/mount/Makefile	Wed Mar 21 10:09:42 2001
+diff -urN util-linux-2.11d.org/mount/Makefile util-linux-2.11d/mount/Makefile
+--- util-linux-2.11d.org/mount/Makefile	Sun Jun  3 22:25:41 2001
++++ util-linux-2.11d/mount/Makefile	Sun Jun  3 22:26:34 2001
 @@ -24,7 +24,7 @@
  
  MAYBE = pivot_root swapoff
@@ -10,7 +10,7 @@ diff -urN util-linux-2.11b.org/mount/Makefile util-linux-2.11b/mount/Makefile
  NFS_OBJS = nfsmount.o nfsmount_xdr.o nfsmount_clnt.o
  GEN_FILES = nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
  
-@@ -54,7 +54,7 @@
+@@ -54,10 +54,10 @@
  swapon:	swapon.o version.o
  	$(LINK) $^ -o $@
  
@@ -18,10 +18,14 @@ diff -urN util-linux-2.11b.org/mount/Makefile util-linux-2.11b/mount/Makefile
 +main_losetup.o: lomount.c rmd160.o
  	$(COMPILE) -DMAIN lomount.c -o $@
  
- losetup: main_losetup.o $(LIB)/xstrncpy.o
-diff -urN util-linux-2.11b.org/mount/lomount.c util-linux-2.11b/mount/lomount.c
---- util-linux-2.11b.org/mount/lomount.c	Wed Mar 21 10:07:38 2001
-+++ util-linux-2.11b/mount/lomount.c	Wed Mar 21 10:08:36 2001
+-losetup: main_losetup.o $(LIB)/xstrncpy.o
++losetup: main_losetup.o rmd160.o $(LIB)/xstrncpy.o
+ 	$(LINK) $^ -o $@
+ 
+ mount.o umount.o nfsmount.o losetup.o fstab.o realpath.o sundries.o: sundries.h
+diff -urN util-linux-2.11d.org/mount/lomount.c util-linux-2.11d/mount/lomount.c
+--- util-linux-2.11d.org/mount/lomount.c	Sun Jun  3 22:25:41 2001
++++ util-linux-2.11d/mount/lomount.c	Sun Jun  3 22:26:06 2001
 @@ -27,6 +27,7 @@
  
  #include "loop.h"
@@ -135,9 +139,9 @@ diff -urN util-linux-2.11b.org/mount/lomount.c util-linux-2.11b/mount/lomount.c
  	exit(1);
  }
  
-diff -urN util-linux-2.11b.org/mount/losetup.8 util-linux-2.11b/mount/losetup.8
---- util-linux-2.11b.org/mount/losetup.8	Wed Mar 21 10:07:38 2001
-+++ util-linux-2.11b/mount/losetup.8	Wed Mar 21 10:07:52 2001
+diff -urN util-linux-2.11d.org/mount/losetup.8 util-linux-2.11d/mount/losetup.8
+--- util-linux-2.11d.org/mount/losetup.8	Sun Jun  3 22:25:41 2001
++++ util-linux-2.11d/mount/losetup.8	Sun Jun  3 22:26:06 2001
 @@ -36,11 +36,47 @@
  .PD 0
  .IP \fBXOR\fP
@@ -222,9 +226,9 @@ diff -urN util-linux-2.11b.org/mount/losetup.8 util-linux-2.11b/mount/losetup.8
  .SH AUTHORS
  .nf
  Original version: Theodore Ts'o <tytso@athena.mit.edu>
-diff -urN util-linux-2.11b.org/mount/rmd160.c util-linux-2.11b/mount/rmd160.c
---- util-linux-2.11b.org/mount/rmd160.c	Thu Jan  1 01:00:00 1970
-+++ util-linux-2.11b/mount/rmd160.c	Wed Mar 21 10:07:52 2001
+diff -urN util-linux-2.11d.org/mount/rmd160.c util-linux-2.11d/mount/rmd160.c
+--- util-linux-2.11d.org/mount/rmd160.c	Thu Jan  1 01:00:00 1970
++++ util-linux-2.11d/mount/rmd160.c	Sun Jun  3 22:26:06 2001
 @@ -0,0 +1,532 @@
 +/* rmd160.c  -	RIPE-MD160
 + *	Copyright (C) 1998 Free Software Foundation, Inc.
@@ -758,9 +762,9 @@ diff -urN util-linux-2.11b.org/mount/rmd160.c util-linux-2.11b/mount/rmd160.c
 +    rmd160_final( &hd );
 +    memcpy( outbuf, hd.buf, 20 );
 +}
-diff -urN util-linux-2.11b.org/mount/rmd160.h util-linux-2.11b/mount/rmd160.h
---- util-linux-2.11b.org/mount/rmd160.h	Thu Jan  1 01:00:00 1970
-+++ util-linux-2.11b/mount/rmd160.h	Wed Mar 21 10:07:52 2001
+diff -urN util-linux-2.11d.org/mount/rmd160.h util-linux-2.11d/mount/rmd160.h
+--- util-linux-2.11d.org/mount/rmd160.h	Thu Jan  1 01:00:00 1970
++++ util-linux-2.11d/mount/rmd160.h	Sun Jun  3 22:26:06 2001
 @@ -0,0 +1,9 @@
 +#ifndef RMD160_H
 +#define RMD160_H
