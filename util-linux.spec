@@ -1,9 +1,11 @@
 #
 # Conditional build:	
 # _without_crypto	- without kerneli cryptography
-# _without_rawio
 # _with_pivot_root
 #
+# TODO:
+# - move raw to /sbin (potentially can be used before mount partitions)
+
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
@@ -53,7 +55,8 @@ Patch7:		%{name}-fdisk2.patch
 Patch9:		%{name}-mount-rpc.patch
 Patch10:	ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch11:	%{name}-syscall.patch
-Patch12:	%{name}-2.10o-rawio.patch
+# if there is raw.patch this one is obsolete
+#Patch12:	%{name}-2.10o-rawio.patch
 Patch13:	%{name}-raw.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
@@ -259,16 +262,16 @@ switch from one user to another at any time (most modern shells have
 support for this feature built into them, however).
 
 %description -n login -l pl
-login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany do 
-prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
+login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany
+do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 (jednak wiêkszo¶æ nowoczesnych shelli ma takie funkcje wbudowane).
 
 %package -n rawdevices
-Summary:        Support for raw-devices
-Summary(pl):    Obs³uga raw-device'ów
-Group:          Applications/System
-Group(de):      Applikationen/System
-Group(pl):      Aplikacje/System
+Summary:	Support for raw-devices
+Summary(pl):	Obs³uga raw-device'ów
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 
 %description -n rawdevices
 Support for raw-devices.
@@ -294,7 +297,8 @@ Obs³uga raw-device'ów
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%{!?_without_rawio:%patch12 -p1}
+# if there is raw.patch this one is obsolete
+#%{!?_without_rawio:%patch12 -p1}
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
@@ -307,7 +311,7 @@ CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
 
 make	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 	MOREHELPDIR=%{_datadir}/misc \
-	%{!?_without_rawio:ADD_RAW="yes"}
+	ADD_RAW="yes"
 
 (cd sys-utils; makeinfo ipc.texi)
 
@@ -325,7 +329,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d}} \
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
-	%{!?_without_rawio:ADD_RAW="yes"}
+	ADD_RAW="yes"
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
@@ -581,7 +585,8 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pl) %{_mandir}/pl/man1/login.1*
 
 %files -n rawdevices
-%{!?_without_rawio:%attr(0755,root,root) %{_bindir}/raw}
-%{!?_without_rawio:%{_mandir}/man8/raw.8*}
+%defattr(644,root,root,755)
+%attr(0755,root,root) %{_bindir}/raw
 %attr(0750,root,root) /etc/rc.d/init.d/rawdevices
 %attr(0650,root,root) /etc/sysconfig/rawdevices
+{_mandir}/man8/raw.8*
