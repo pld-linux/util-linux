@@ -270,6 +270,7 @@ Summary(pl):	Obs³uga raw-device'ów
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
+Requires:	chkconfig
 
 %description -n rawdevices
 Support for raw-devices.
@@ -379,6 +380,20 @@ gzip -9nf */README.*
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+%post rawdevices
+/sbin/chkconfig --add rawdevices
+if [ -f /var/lock/subsys/rawdevices ]; then
+	/etc/rc.d/init.d/rawdevices restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/rawdevices start\" to start rawdevices."
+fi
+
+%preun rawdevices
+if [ -f /var/lock/subsys/rawdevices ]; then
+	/etc/rc.d/init.d/rawdevices stop 1>&2
+fi
+/sbin/chkconfig --del rawdevices
 
 %clean
 rm -rf $RPM_BUILD_ROOT
