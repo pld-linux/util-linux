@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10o
-Release:	3
+Release:	4
 License:	Distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -241,7 +241,7 @@ support for this feature built into them, however).
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-#%patch5 -p1
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
