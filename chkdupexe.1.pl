@@ -25,7 +25,7 @@
 .\" Formatted or processed versions of this manual, if unaccompanied by
 .\" the source, must acknowledge the copyright and authors of this work.
 .\" 
-.TH CHKDUPEXE 1 "11 Mar 1995" "" "Podrêcznik programisty linuxowego"
+.TH CHKDUPEXE 1 "11 Mar 1995" "" "Podrêcznik programisty linuksowego"
 .SH NAZWA
 chkdupexe \- znajd¼ dubluj±ce siê pliki wykonywalne
 .SH SK£ADNIA

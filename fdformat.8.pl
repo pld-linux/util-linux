@@ -2,19 +2,20 @@
 .\" Translation (c) 1999 Przemek Borys <pborys@dione.ids.pl>
 .\" Copyright 1992, 1993 Rickard E. Faith (faith@cs.unc.edu)
 .\" May be distributed under the GNU General Public License
-.TH FDFORMAT 8 "1 Luty 1993" "Linux 0.99" "Podrêcznik programisty linuxowego"
+.TH FDFORMAT 8 "1 lutego 1993" "Linux 0.99" "Podrêcznik programisty linuksowego"
 .SH NAZWA
-fdformat \- Niskopoziomowe formatowanie dyskietki
+fdformat \- niskopoziomowe formatowanie dyskietki
 .SH SK£ADNIA
 .B fdformat
-.B "[ \-n ]"
-urz±dzenie
+.RB [ \-n ]
+.I urz±dzenie
 .SH OPIS
 .B fdformat
 formatuje niskopoziomowo dyskietkê.
 .I urz±dzenie
-jest zazwyczaj jednym z nastêpuj±cych (dla stacji dysków numer majorowy to
-dwa, a minorowy jest pokazany tylko dla celów informacyjnych):
+jest zazwyczaj jednym z nastêpuj±cych (dla stacji dysków numer g³ówny
+(major) to dwa, a poboczny (minor) jest pokazany tylko dla celów
+informacyjnych):
 .sp
 .nf
 .RS
@@ -42,7 +43,7 @@ dwa, a minorowy jest pokazany tylko dla celów informacyjnych):
 
 Standardowe stacje dysków, /dev/fd0 i /dev/fd1 nie bêd± dzia³a³y z
 .B fdformat
-kiedy u¿ywa siê niestandardowego formatu, lub kiedy format nie zosta³
+kiedy u¿ywa siê niestandardowego formatu lub kiedy format nie zosta³
 wcze¶niej automatycznie wykryty. W tym wypadku u¿yj
 .BR setfdprm (8)
 aby za³adowaæ parametry dysku.

@@ -3,7 +3,7 @@
 .\" May be distributed under the GNU General Public License
 .TH FDISK 8 "3 Czerwca 1995" "Linux 1.0" "Linux Programmer's Manual"
 .SH NAZWA
-fdisk \- Obs³uga tablicy partycji dla Linuxa
+fdisk \- Obs³uga tablicy partycji dla Linuksa
 .SH SK£ADNIA
 .B fdisk
 .B "[ \-l ] [ \-v ] [ \-s partition] ["
@@ -66,7 +66,7 @@ partycji) przed wyj¶ciem. Zapewnia to, ¿e wymienne dyski SCSI bêd± mia³y
 odnowion± tablicê. Je¶li j±dro nie od¶wierzy swojej tablicy partycji, fdisk
 zasugeruje reboot. Je¶li po otrzymaniu tego ostrze¿enia nie prze³adujesz
 systemu, mo¿esz straciæ, lub uszkodziæ dane na tym dysku. Czasami BLKRRPART
-nie zg³asza niepowodzenia, podczas instalowania Linuxa powiniene¶
+nie zg³asza niepowodzenia, podczas instalowania Linuksa powiniene¶
 .I zawsze
 prze³adowaæ system po edycji tablicy partycji.
 
@@ -94,7 +94,7 @@ gdy¿ ma³a pomy³ka mo¿e spowodowaæ zniszczenie wszystkich danych z dysku.
 
 Dla najlepszych wyników, zawsze powiniene¶ u¿ywaæ fdiska specyficznego danemu
 systemowi operacyjnemu. Na przyk³ad, partycje dosowe powiniene¶ tworzyæ
-dosowym FDISK-iem, a linuxowe linuxowym fdiskiem, lub cfdiskiem.
+dosowym FDISK-iem, a linuksowe linuksowym fdiskiem, lub cfdiskiem.
 
 .SH OPCJE
 .TP

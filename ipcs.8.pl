@@ -18,9 +18,7 @@ wywo³uj±cy.
 
 Opcja
 .B \-i
-umo¿liwia podanie konkretnego
-option allows a specific resource
-.I id
+umo¿liwia podanie konkretnego identyfikatora (\fIid\fR)
 zasobu. Wtedy drukowane bêd± tylko dane dotycz±ce tego
 .IR id .
 

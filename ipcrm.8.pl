@@ -2,7 +2,7 @@
 .\" Translation 1999 Przemek Borys <pborys@dione.ids.pl>
 .\" Copyright 1993 Rickard E. Faith (faith@cs.unc.edu)
 .\" May be distributed under the GNU General Public License
-.TH IPCRM 8 "9 Pa¼dziernik 1993" "Linux 0.99" "Podrêcznik programisty linuxowego"
+.TH IPCRM 8 "9 Pa¼dziernik 1993" "Linux 0.99" "Podrêcznik programisty linuksowego"
 .SH NAZWA
 ipcs \- udostêpnij informacje o urz±dzeniach ipc
 .SH SK£ADNIA

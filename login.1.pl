@@ -15,15 +15,15 @@ login \- zalogowanie siê w systemie
 .BR "login \-f " nazwa
 .SH OPIS
 .B login
-jest u¿ywany, aby dostaæ siê do systemu. Mo¿e byæ równie¿ u¿yty do
+jest u¿ywany, aby dostaæ siê do systemu. Mo¿e byæ równie¿ stosowany do
 prze³±czania siê miêdzy ró¿nymi kontami (jednak wiêkszo¶æ nowoczesnych
-shelli ma tê mo¿liwo¶æ wbudowan±).
+pow³ok ma tê mo¿liwo¶æ wbudowan±).
 
 Je¿eli nie podano ¿adnego argumentu,
 .B login
 prosi o nazwê u¿ytkownika.
 
-Je¿eli u¿ytkownik nie jest super-userem (rootem) oraz istnieje plik
+Je¿eli u¿ytkownik nie jest superu¿ytkownikiem (rootem) oraz istnieje plik
 .IR /etc/nologin ,
 wypisywana jest zawarto¶æ tego pliku i proces logowania jest koñczony
 (pora¿k±). Ten sposób jest zwykle u¿ywany podczas wy³±czania systemu.
@@ -32,9 +32,9 @@ Je¿eli danego u¿ytkownika dotycz± ograniczenia opisane w pliku
 .IR /etc/usertty ,
 musz± byæ spe³nione ich warunki; w przeciwnym wypadku wstêp do systemu
 zostanie uniemo¿liwiony i odpowiedni komunikat zostanie umieszczony w logu
-systemowym. Zajrzyj do sekcji "Special Access Restrictions".
+systemowym. Zajrzyj do sekcji "Wyj±tkowe ograniczenia dostêpu".
 
-Je¿eli u¿ytkownik jest super-userem, zalogowanie mo¿e doj¶æ do skutku tylko
+Je¿eli u¿ytkownik jest superu¿ytkownikiem, zalogowanie mo¿e doj¶æ do skutku tylko
 z jednej z konsol wymienionych w pliku
 .IR /etc/securetty .
 Nieudane próby zalogowania siê bêd± notowane za pomoc± funkcji
@@ -45,7 +45,7 @@ wymagane dla danego u¿ytkownika). Mo¿liwych jest dziesiêæ prób, ale po
 pierwszych trzech kolejne ¿±dania pojawiaj± siê po odczekaniu pewnego czasu.
 Nieudane próby zalogowania s± notowane funkcj±
 .BR syslog .
-Notowane s± równie¿ udane logowania super-usera.
+Notowane s± równie¿ udane logowania superu¿ytkownika.
 
 Je¿eli istnieje plik
 .IR .hushlogin ,
@@ -55,7 +55,7 @@ zalogowania oraz wiadomo¶æ dnia (message of the day). W przeciwnym wypadku,
 je¿eli istnieje plik
 .IR /var/log/lastlog ,
 wypisywany jest czas poprzedniego zalogowania oraz zapisywany jest czas
-bie¿±cego loginu.
+bie¿±cego rozpoczêcia sesji.
 
 Wykonywane s± rozmaite zadania administracyjne takie, jak ustawianie numerów
 UID oraz GID terminala (tty). Zachowywana jest zmienna ¶rodowiskowa TERM,
@@ -66,15 +66,15 @@ Zmienna PATH dostaje domy¶ln± warto¶æ
 .I /usr/local/bin:/bin:/usr/bin:.
 dla zwyk³ego u¿ytkownika, lub
 .I /sbin:/bin:/usr/sbin:/usr/bin
-dla super-usera. Na koñcu, je¿eli logowanie nie jest "ciche", wypisywana
+dla superu¿ytkownika. Na koñcu, je¿eli logowanie nie jest "ciche", wypisywana
 jest wiadomo¶æ dnia oraz sprawdzany jest plik o nazwie u¿ytkownika w katalogu
 .IR /usr/spool/mail ;
 je¿eli ma niezerow± d³ugo¶æ, wypisywana jest odpowiednia wiadomo¶æ ("You
 have new mail" - przyp. t³um.).
 
-Nastêpnie uruchamiany jest shell u¿ytkownika. Je¿eli w pliku
+Nastêpnie uruchamiana jest pow³oka u¿ytkownika. Je¿eli w pliku
 .B /etc/passwd 
-u¿ytkownikowi nie jest przypisany ¿aden shell, u¿ywany jest wówczas
+u¿ytkownikowi nie jest przypisany ¿adna pow³oka, u¿ywany jest wówczas
 .BR /bin/sh .
 Je¿eli w tym¿e pliku nie wymieniono nazwy katalogu domowego u¿ytkownika,
 u¿ywany jest katalog g³ówny (/). W katalogu domowym jest poszukiwany plik 
@@ -91,7 +91,7 @@ nie usuwa³ zmiennych ¶rodowiskowych.
 .TP
 .B \-f
 Opcja u¿ywana do ominiêcia drugiej autoryzacji u¿ytkownika. Ta opcja nie
-dzia³a dla super-usera i wydaje siê nie dzia³aæ pod Linuksem.
+dzia³a dla superu¿ytkownika i wydaje siê nie dzia³aæ pod Linuksem.
 .TP
 .B \-h
 Opcja u¿ywana przez inne serwery (np. 
@@ -99,14 +99,14 @@ Opcja u¿ywana przez inne serwery (np.
 do przekazania nazwy zdalnego komputera programowi
 .BR login ,
 by mo¿na j± by³o umie¶ciæ w plikach utmp oraz wtmp. Tej opcji mo¿e u¿ywaæ
-wy³acznie super-user.
+wy³±cznie superu¿ytkownik.
 
 .SH "WYJ¡TKOWE OGRANICZENIA DOSTÊPU"
-W pliku
-.I /etc/securetty
-wymienione s± nazwy terminali, z których wy³±cznie mo¿e siê logowaæ
-super-user. W ka¿dej linii podawana jest nazwa jednego urz±dzenia tty (bez
-przedrostka /dev/). Je¿eli ten plik nie istnieje, super-user mo¿e siê
+Superu¿ytkownik mo¿e logowaæ siê wy³±cznie z tych terminali, których nazwy
+wymieniono w pliku
+.IR /etc/securetty .
+W ka¿dej linii podawana jest nazwa jednego urz±dzenia tty (bez
+przedrostka /dev/). Je¿eli ten plik nie istnieje, superu¿ytkownik mo¿e siê
 zalogowaæ z dowolnego terminala.
 
 .PP
@@ -118,11 +118,11 @@ dostêpu. W pliku znajduj± siê kolejne sekcje. Istniej± ich trzy typy:
 CLASSES, GROUPS i USERS. 
 Sekcja CLASSES definiuje klasy terminali i wzorce dla nazw serwerów. Sekcja
 GROUPS definiuje dozwolone terminale i komputery w ramach grupy, natomiast
-sekcja USERS definuje powy¿sze dla konkretnych u¿ytkowników.
+sekcja USERS definiuje powy¿sze dla konkretnych u¿ytkowników.
 
 .PP
-D³ugo¶æ ¿adnej linii z tego pliku nie mo¿e przekroczyæ 255 znaków.
-Komentarze zaczynaj± siê od znaku #; wszystkie znaki po # a¿ do koñca linii s±
+D³ugo¶æ ¿adnej linii tego pliku nie mo¿e przekroczyæ 255 znaków.
+Komentarze zaczynaj± siê od znaku #; wszystkie nastêpne znaki a¿ do koñca linii s±
 ignorowane.
 
 .PP
@@ -168,7 +168,7 @@ wówczas mo¿e siê zalogowaæ, je¿eli jest to dozwolone dla grupy.
 
 .PP
 Sekcja GROUPS rozpoczyna siê od s³owa GROUPS na pocz±tku linii (same wielkie
-litery); ka¿da nastêpna linia sk³ada siê z ci±gu s³ów porodzielanych
+litery); ka¿da nastêpna linia sk³ada siê z ci±gu s³ów porozdzielanych
 spacjami lub tabulatorami. Pierwsze s³owo w linii jest nazw± grupy, a
 nastêpne okre¶laj± terminale i serwery, z których cz³onkowie tej grupy maj±
 dostêp. Mo¿e to wymagaæ u¿ycia klas zdefiniowanych w jednej z
@@ -195,7 +195,7 @@ terminala tty4.
 .PP
 .SS "Sekcja USERS"
 Sekcja USERS rozpoczyna siê od s³owa USERS na pocz±tku linii (same wielkie
-litery); ka¿da nastêpna linia sk³ada siê z ci±gu s³ów porodzielanych
+litery); ka¿da nastêpna linia sk³ada siê z ci±gu s³ów porozdzielanych
 spacjami lub tabulatorami. Pierwsze s³owo w linii jest nazw± u¿ytkownika,
 któremu wolno logowaæ siê z terminali i serwerów wymienionych w dalszej
 czê¶ci linii. Mo¿e to wymagaæ u¿ycia nazwy klasy zdefiniowanej w jednej z
@@ -219,7 +219,7 @@ klasie mojaklasa2.
 .PP
 W sekcji USERS mo¿e wyst±piæ linia rozpoczynaj±ca siê od *. Taka definicja
 bêdzie siê odnosi³a do wszystkich u¿ytkowników nie zdefiniowanych oddzielnie
-w ¿adnej linii (domy¶lny u¿ytkownik).
+w innej linii (domy¶lny u¿ytkownik).
 .PP
 Je¿eli u¿ytkownik odpowiada zarówno jednej z linii w sekcji USERS, jak i w
 sekcji GROUPS, ma on dostêp do systemu z wszystkich terminali/serwerów
@@ -302,15 +302,15 @@ programu
 .BR shutdown (8)
 .SH PROBLEMY
 
-Linux, w przeciwnieñstwie do innych systemów operacyjnych o drakoñskich
-restrykcjach, nie sprawdza kwot dyskowych.
+GNU/Linux, w przeciwieñstwie do innych systemów operacyjnych o drakoñskich
+restrykcjach, nie sprawdza udzia³ów (quotas) dyskowych.
 
 Nieudokumentowana opcja
 .B \-r
-z systemu BSD nie dzia³a. Mo¿e to byc wymagane przez niektóre programy
+z systemu BSD nie dzia³a. Mo¿e to byæ wymagane przez niektóre programy
 .BR rlogind "(8)."
 .SH AUTOR
 Program pochodzi od oryginalnej wersji BSD login 5.40 (9-5-89), 
 której autorem by³ Michael Glad (glad@daimi.dk) (dla systemu HP-UX).
 .br
-DOstosowanie do Linuxa 0.12: Peter Orbaek (poe@daimi.aau.dk)
+Dostosowanie do Linuksa 0.12: Peter Orbaek (poe@daimi.aau.dk)

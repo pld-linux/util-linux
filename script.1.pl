@@ -70,10 +70,10 @@ albo
 zachowuj±c uprzedni± zawarto¶æ.
 .El
 .Pp
-Skrypt koñczy siê kiedy wychodzisz z shella
+Skrypt koñczy siê kiedy wychodzisz z pow³oki
 .Em control-D,
 aby wyj¶æ z 
-Bourne shella
+pow³oki Bourne
 .Pf ( Xr sh 1 ) ,
 i
 .Em exit ,
@@ -83,7 +83,7 @@ albo
 (je¿eli
 .Em ignoreeof
 nie jest ustawiona) dla
-C-shella,
+pow³oki C,
 .Xr csh 1 ) .
 .Pp
 Pewne interakcyjne komendy, takie jak
@@ -99,12 +99,12 @@ Nastêpuj±ca zmienna ¶rodowiskowa jest wykorzystywana przez
 .It Ev SHELL
 Je¿eli zmienna
 .Ev SHELL
-istnieje, shell rozwidlony przez
+istnieje, pow³oka rozwidlona przez
 .Nm script
-bêdzie tym shellem. Je¿eli 
+bêdzie t± pow³ok±. Je¿eli 
 .Ev SHELL
-nie jest ustawiona, wówczas przybierana jest Bourne shell. (Wiêkszo¶æ shelli
-ustawia t± zmienn± automatycznie).
+nie jest ustawiona, wówczas przybierana jest pow³oka Bourne. (Wiêkszo¶æ
+pow³ok ustawia t± zmienn± automatycznie).
 .El
 .Sh ZOBACZ RÓWNIE¯
 .Xr csh 1

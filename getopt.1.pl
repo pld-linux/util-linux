@@ -11,7 +11,7 @@
 .Sh OPIS
 .Nm Getopt
 jest u¿ywany do rozbijania opcji w liniach komend dla ³atwej analizy przez
-procedury shellowe i do sprawdzania istnienia opcji legalnych.
+procedury pow³okowe i do sprawdzania istnienia opcji legalnych.
 .Op Optstring
 jest ci±gniem rozpoznawalnych liter opcyjnych (zobacz
 .Xr getopt 3
@@ -26,11 +26,11 @@ Podstawi
 .B \-\-
 w argumentach na samym koñcu opcji, lub rozpozna ten symbol, je¶li
 wstawiono go jawnie.
-Argumenty shellowe
+Argumenty pow³okowe
 (\fB$1 $2\fR ...) s± resetowane tak, ¿e ka¿da opcja jest poprzedzona znakiem
 .B \-
-i w swoim w³asnym argumencie shellowym; ka¿dy argument opcyjny jest tak¿e w
-swoim w³asnym argumencie shellowym.
+i w swoim w³asnym argumencie pow³okowym; ka¿dy argument opcyjny jest tak¿e w
+swoim w³asnym argumencie pow³okowym.
 .Sh PRZYK£AD
 Nastêpuj±cy fragment kodu pokazuj jak mo¿na przetworzyæ arumenty komendy,
 która mo¿e pobieraæ opcje
@@ -75,8 +75,8 @@ cmd \-a \-oarg \-\- plik plik
 .Xr getopt 3
 .Sh DIAGNOSTYKA
 .Nm Getopt
-drukuje wiadomo¶æ o b³edzie, je¶li napotka literê opcyjn± nieza³±czon± w
-stringu
+drukuje wiadomo¶æ o b³êdzie, je¶li napotka literê opcyjn± nieza³±czon± w
+napisie
 .Op optstring .
 .Sh HISTORIA
 Napisane przez Henry'ego Spencera, pracuj±cego na podstawie strony man Bell
@@ -85,18 +85,18 @@ Labs. Zachowanie powinno byæ identyczne jak w wersji Bell.
 Takie same jak w
 .Xr getopt 3 .
 .Pp
-Arugmenty zawieraj±ce bia³e spacje, lub za³±czone metaznaki shella nie
+Arugmenty zawieraj±ce bia³e spacje, lub za³±czone metaznaki pow³oki nie
 prze¿yj± nienaruszone; wygl±da to na ³atwy do naprawienia b³±d, lecz tak nie
 jest.
 .Pp
 Wiadomo¶æ o b³êdzie dla nieprawid³owej opcji jest wskazywana jako pochodz±ca
 z programu
 .Nm getopt
-a nie z procedury shellowej, zawieraj±cej wywo³anie
+a nie z procedury pow³okowej, zawieraj±cej wywo³anie
 .Nm getopt ;
 jest to znowu trudne do naprawienia.
 .Pp
 Najlepsza droga, czyli
 .Nm set
-, do ustawiania argumentów bez rozrywania warto¶ci opcji shellowych zmienia
-siê z jednej wersji shella na inn±.
+, do ustawiania argumentów bez rozrywania warto¶ci opcji pow³okowych zmienia
+siê z jednej wersji pow³oki na inn±.

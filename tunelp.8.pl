@@ -4,7 +4,7 @@
 .\" any higher version.  See section COPYING of the GNU Public license
 .\" for conditions under which this file may be redistributed.
 .\" $Id$
-.TH tunelp 8 "26 Sierpieñ 1992" "Cohesive Systems" "Podrêcznik programisty linuxowego"
+.TH tunelp 8 "26 Sierpieñ 1992" "Cohesive Systems" "Podrêcznik programisty linuksowego"
 .SH NAZWA
 tunelp \- ustaw ró¿ne parametry urz±dzenia lp
 .SH SK£ADNIA
@@ -71,9 +71,9 @@ gdy s± wy³aczone.
 jako listê aktywnych flag. Gdy ta opcja jest podana, implikowane jest -q
 off, wy³±czaj±ce wy¶wietlanie bie¿±cego IRQ.
 
--o, -C, i -s wymagaj± j±dra Linuxa w wersji 1.1.76 lub pó¼niejszej.
+-o, -C, i -s wymagaj± j±dra Linuksa w wersji 1.1.76 lub pó¼niejszej.
 
--r Opcja ta resetuje port. Wymaga j±dra linuxa w wersji 1.1.80 lub
+-r Opcja ta resetuje port. Wymaga j±dra Linuksa w wersji 1.1.80 lub
 pó¼niejszej.
 
 -q [on|off] Opcja ta w³±cza wy¶wietlanie bie¿±cego ustawienia IRQ.

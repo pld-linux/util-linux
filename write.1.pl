@@ -37,11 +37,12 @@
 .\"
 .\" Modified for Linux, Sun Mar 12 10:21:01 1995, faith@cs.unc.edu
 .\"
-.TH WRITE 1 "12 Marca 1995" "" "Podrêcznik programisty Linuxa"
+.TH WRITE 1 "12 Marca 1995" "" "Podrêcznik programisty Linuksa"
 .SH NAZWA
 write \- wy¶lij komunikat do innego u¿ytkownika
 .SH SK£ADNIA
-.BI write " u¿ytkownik " [ nazwatty ]
+.BI write " u¿ytkownik "
+.RI [ nazwatty ]
 .SH OPIS
 .B Write
 umo¿liwia komunikowanie siê z innymi u¿ytkownikami poprzez kopiowanie linii
@@ -50,13 +51,11 @@ z twojego terminala na ichnie.
 Gdy pracujesz z komend± 
 .BR write ,
 u¿ytkownik otrzyma komunikat w postaci:
-.PP
 .RS
-Message from yourname@yourhost on yourtty at hh:mm ...
+Message from toty@tenhost on twójtty at hh:mm ...
 .RE
-.PP
 Wszelkie dalsze linie, które wprowadzisz, zostan± skopiowane na podany
-terminal u¿ytkownika. Je¶li drugi u¿ytkownik chce odpowiedzieæ, to musi
+terminal u¿ytkownika. Je¶li u¿ytkownik chce ci odpowiedzieæ, to musi
 równie¿ uruchomiæ 
 .BR write .
 .PP
@@ -64,7 +63,7 @@ Gdy skoñczysz, wpisz znak koñca pliku. Drugi u¿ytkownik zobaczy komunikat
 .BR EOF ,
 wskazuj±cy na koniec konweracji.
 .PP
-Mo¿esz uchroniæ ludzi (innych ni¿ superu¿ytkownik) od pisania do ciebie,
+Mo¿esz zabroniæ ludziom (innym ni¿ superu¿ytkownik) pisania do ciebie,
 u¿ywaj±c komendy
 .BR mesg (1).
 Niektóre komendy, np.
@@ -75,23 +74,22 @@ mog± automatycznie uniemo¿liwiæ pisanie, aby twoje wyj¶cie nie by³o
 nadpisane.
 .PP
 Je¶li u¿ytkownik, do którego chcesz pisaæ jest zalogowany na wiêcej ni¿
-jednym terminalu, to mo¿esz podaæ na który terminal piszesz, podaj±c nazwê
+jednym terminalu, to mo¿esz podaæ, na który terminal piszesz, podaj±c nazwê
 terminala jako drugi parametr
 .BR write .
 W innym wypadku,
 .B write
-wybierze jeden z terminali \- wybierze ten, z najkrótszym czasem idle
-(nieaktywno¶ci u¿ytkownika). Tak wiêc wiadomo¶æ pójdzie we w³a¶ciwe miejsce.
+wybierze jeden z terminali \- ten z najkrótszym czasem nieaktywno¶ci
+u¿ytkownika (idle). Tak wiêc wiadomo¶æ pójdzie we w³a¶ciwe miejsce.
 .PP
-Tradycyjnym protoko³em pisania do kogo¶ jest ¿e string `-o', znajduj±cy siê
-na koñcu linii, lub w linii oznacza, ¿e nastêpuje czas, by druga osoba
-powróci³a do rozmowy. String `oo' oznacza, ¿e osoba uwa¿a konwersacjê za
-skoñczon±.
+Tradycyjnie przyjêto w pisaniu do innych, ¿e ³añcuch `-o' znajduj±cy siê
+na koñcu linii lub stanowi±cy odrêbn± liniê oznacza, ¿e nadesz³a kolej
+na wypowied¼ naszego rozmówcy. £añcuch `oo' oznacza, ¿e osoba uwa¿a
+konwersacjê za skoñczon±.
 .SH "ZOBACZ TAK¯E"
+.BR wall (1),
 .BR mesg (1),
 .BR talk (1),
 .BR who (1)
 .SH HISTORIA
-Komenda
-.B write
-pojawi³a siê w wersji 6 AT&T UNIX.
+Komenda \fBwrite\fR pojawi³a siê w wersji 6 AT&T UNIX.

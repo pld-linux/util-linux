@@ -40,7 +40,7 @@
 .\" Mon Sep 25 14:12:38 1995: Added -v and -p information
 .\" Tue Apr 30 03:32:07 1996: Added some text from A. Koppenhoefer
 .\"
-.TH SWAPON 8 "25 Wrzesieñ 1995" "Linux 1.x" "Podrêcznik programisty linuxowego"
+.TH SWAPON 8 "25 Wrzesieñ 1995" "Linux 1.x" "Podrêcznik programisty linuksowego"
 .SH NAZWA
 swapon, swapoff \- w³±cz/wy³±cz urz±dzenia i pliki swapu
 .SH SK£ADNIA

@@ -39,7 +39,7 @@
 .\" Tue Apr  2 00:38:28 1996: added info about "noauto", "user", etc.
 .\" Translation (c) 1998 "Wiktor J. Lukasik" <wiktorlu@technologist.com>
 .\"
-.TH FSTAB 5 "27 Grudnia 1993" "Linux 0.99" "Poradnik Programisty Linux'a"
+.TH FSTAB 5 "27 grudnia 1993" "Linux 0.99" "Poradnik Programisty Linuksa"
 .SH NAZWA
 fstab \- statyczna informacja o systemach plików
 .SH SK£ADNIA
@@ -49,32 +49,32 @@ Plik
 .B fstab
 zawiera opisowe informacje na temat ró¿nych systemów plików.
 .B fstab
-jest czytany wy³±cznie przez programy i nie jest przez nie zapisywany;
-zadaniem administratora jest prawid³owe stworzenie tego pliku i
-zarz±dzanie nim. Ka¿dy system plików jest opisywany przez osobne linie;
-pola w ka¿dej linii s± oddzielane przez znak spacji, lub tabulatora.
-Uk³ad pól w pliku
+jest wy³±cznie czytany przez programy i nie jest przez nie zapisywany.
+Prawid³owe stworzenie tego pliku i zarz±dzanie nim jest obowi±zkiem
+administratora. Ka¿dy system plików jest opisywany przez osobn± liniê;
+pola w ka¿dej linii s± oddzielane przez znak spacji lub tabulacji.
+Kolejno¶æ rekordów w pliku
 .B fstab
-jest wa¿ny, poniewa¿
-.BR fsck "(8), " mount "(8), and " umount "(8)"
-sekwencyjnie pobieraj± dane z pliku
-.B fstab
-w celu wykonania swoich zadañ.
+jest istotna, poniewa¿
+.BR fsck "(8), " mount "(8) i " umount "(8)"
+w celu wykonania swoich zadañ dane z pliku
+.B fstab 
+pobieraj± sekwencyjnie.
 
 Pierwsze pole,
 .RI ( fs_spec ),
-opisje specjalne urz±dzenie blokowe, lub zdalny system plików,
+opisuje specjalne urz±dzenie blokowe lub zdalny system plików
 przeznaczony do zamontowania.
 
 Drugie pole,
 .RI ( fs_file ),
-wskazuje na miejsce, w którym ma byæ dany system plików zamoontowany. Dla
+wskazuje na miejsce, w którym ma byæ zamontowany dany system plików. Dla
 partycji wymiany (ang. "swap partition") to pole powinno zawieraæ warto¶æ
 ``none''.
 
 Trzecie pole,
 .RI ( fs_vfstype ),
-opisuje typ systemy plików. Obecnie system obs³uguje trzy rodzaje systemów
+opisuje typ systemu plików. Obecnie system obs³uguje poni¿sze rodzaje systemów
 plików:
 .TP
 .I minix
@@ -82,17 +82,17 @@ lokalny system plików, obs³uguj±cy nazwy plików o d³ugo¶ci 14, lub 30
 znaków.
 .TP
 .I ext
-lokalny system plików z d³u¿szymi nazwami plików i wiêkszymi "inodes".
+lokalny system plików z d³u¿szymi nazwami plików i wiêkszymi i-wêz³±mi.
 Ten system plików zosta³ zast±piony systemem plików
 .I ext2
-i nie powinien byæ u¿ywany.
+i nie powinien ju¿ byæ u¿ywany.
 .TP
 .I ext2
-lokalny system plików z d³u¿szymi nazwami plików, wiêkszymi "inodes" i
+lokalny system plików z d³u¿szymi nazwami plików, wiêkszymi i-wêz³ami i
 wieloma innymi dodatkami.
 .TP
 .I xiafs
-lokalny system plików z d³u¿szymi nazwami plików, wiêkszymi "inodes" i
+lokalny system plików z d³u¿szymi nazwami plików, wiêkszymi i-wêz³ami i
 wieloma innymi dodatkami.
 .TP
 .I msdos
@@ -102,33 +102,33 @@ lokalny system plików dla partycji MS-DOS.
 lokalny system plików dla partycji HPFS.
 .TP
 .I iso9660
-lokalny system plików, u¿ywany przez stacje CD-ROM.
+lokalny system plików u¿ywany przez napêdy CD-ROM.
 .TP
 .I nfs
-system plików, s³u¿±cy do montowania partycji z systemów zdalnych.
+system plików s³u¿±cy do montowania partycji z systemów zdalnych.
 .TP
 .I swap 
-partycja dysku, u¿¿ywana jako przestrzeñ wymiany.
+partycja dysku u¿ywana jako przestrzeñ wymiany.
 .PP
 Je¿eli
 .I vfs_fstype
 jest ustawiony jako ``ignore'', to pole jest ignorowane. Jest to
-u¿yteczne, aby pokazaæ, które partycje dysku s± aktualnie nieu¿ywane.
+przydatne do wskazania, które partycje dysku s± aktualnie nieu¿ywane.
 
 Czwarte pole,
 .RI ( fs_mntops ),
-opisuje opcje montowania, zwi±zane z danymi systemami plików.
+opisuje opcje montowania zwi±zane z danymi systemami plików.
 
 Jest sformatowane jako lista opcji, oddzielonych przecinkami. Zawiera co
-najmniej typ montowania oraz jakiekolwiek opcje, odpowiednie do danego
+najmniej typ montowania oraz dodatkowe opcje, odpowiednie do danego
 typu systemu plików.
 Aby uzyskaæ dokumentacjê dostêpnych opcji dla nie-nfs'owych systemów
 plików, zobacz
 .BR mount (8).
-Aby uzyskaæ dokumentacjê wszystkich opcji, specyficznych dla nfs, zobacz
+Aby uzyskaæ dokumentacjê wszystkich opcji specyficznych dla nfs, zobacz
 .BR nfs (5).
 Wspóln± opcj± dla wszystkich typów systemów plików jest opcja ``noauto''
-(nie montuj, gdy "mount -a" jest dane, np. podczas ³adowania systemu),
+(nie montuj gdy podano "mount -a", np. podczas ³adowania systemu),
 i ``user'' (pozwala u¿ytkownikowi na montowanie). Aby dowiedzieæ siê
 wiêcej, zobacz
 .BR mount (8).
@@ -140,13 +140,13 @@ jest u¿ywane przez komendê
 aby wykryæ, który system plików musi byæ od³±czony. Je¿eli nie ma
 informacji o tym polu, zwracana jest warto¶æ 0 i 
 .B dump
-przujmie, ¿e dany sustem plików nie musi byæ od³±czany.
+przyjmuje, ¿e dany system plików nie musi byæ od³±czany.
 
 Szóste pole,
 .RI ( fs_passno ),
 jest u¿ywane przez program
 .BR fsck (8)
-aby zadecydowaæ, jaka powinna byæ kolejno¶æ spradzania systemów plików
+aby zadecydowaæ, jaka powinna byæ kolejno¶æ sprawdzania systemów plików
 podczas ³adowania systemu. G³ówny system plików powinien mieæ
 .I fs_passno
 równ± 1, za¶ inne systemy plików powinny mieæ
@@ -169,9 +169,8 @@ Plik
 jest przechowywany w 
 .IR /etc .
 .SH B£ÊDY
-Dokumentacja w 
-.BR mount (8)
-jest czê¶ciej aktualna.
+Czê¶ciej aktualniejsza jest dokumentacja w 
+.BR mount (8).
 .SH "ZOBACZ TAK¯E"
 .BR getmntent "(3), " mount "(8), " swapon "(8), " nfs (5)
 .SH HISTORIA
