@@ -218,6 +218,17 @@ Program do konfigurowania sterownika portu równoleg³ego.
 %description -n tunelp -l tr
 Paralel baðlantý noktasý sürücüsünü ayarlar.
 
+%package -n login
+Summary:        login is used when signing onto a system
+Group:          Utilities/System
+Group(pl):	Narzêdzia/System
+Obsoletes:	heimdal-login
+
+%description login
+login is used when signing onto a system. It can also be used to
+switch from one user to another at any time (most modern shells have
+support for this feature built into them, however). 
+
 %prep
 %setup  -q 
 %patch0 -p1 
@@ -326,14 +337,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/clock.8.gz
 %endif
 
-%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
 
 %attr(0755,root,root) /bin/arch
 %attr(0755,root,root) /bin/dmesg
 %attr(0755,root,root) /bin/kill
-%attr(0755,root,root) /bin/login
 %attr(0755,root,root) /bin/more
 %attr(0755,root,root) /sbin/mkfs
 %attr(0755,root,root) /sbin/mkswap
@@ -371,7 +379,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/readprofile.1*
-%{_mandir}/man1/login.1*
 %{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/ddate.1*
 %{_mandir}/man1/cal.1*
@@ -411,7 +418,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
-%lang(pl) %{_mandir}/pl/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/look.1*
 %lang(pl) %{_mandir}/pl/man1/script.1*
 %lang(pl) %{_mandir}/pl/man1/write.1*
@@ -509,3 +515,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_sbindir}/tunelp
 %{_mandir}/man8/tunelp.8*
+
+%files -n login
+%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
+%attr(0755,root,root) /bin/login
+%{_mandir}/man1/login.1*
+%lang(pl) %{_mandir}/pl/man1/login.1*
