@@ -12,6 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
+%define		_release	2
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -22,7 +23,7 @@ Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
 Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Name:		util-linux
 Version:	2.11k
-Release:	2
+Release:	%{_release}
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -134,7 +135,7 @@ Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Release:	%{release}@%{_kernel_series}
+Release:	%{_release}@%{_kernel_series}
 %if %{_kernel24}
 Conflicts:	kernel < 2.3.0
 %else
@@ -193,7 +194,7 @@ Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Release:	%{release}@%{_kernel_series}
+Release:	%{_release}@%{_kernel_series}
 %if %{_kernel24}
 Conflicts:	kernel < 2.3.0
 %else
