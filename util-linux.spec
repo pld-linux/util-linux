@@ -13,7 +13,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11g
-Release:	2
+Release:	3
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -61,6 +61,7 @@ Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
 Patch18:	%{name}-kerneli-2.4.patch
 Patch20:	%{name}-qnx4.patch
+Patch21:	%{name}-losetup-getpass.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -314,6 +315,7 @@ Obs³uga raw-device'ów.
 %patch15 -p1
 %patch16 -p1
 %patch20 -p1
+%patch21 -p1
 
 %build
 CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
