@@ -16,7 +16,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	11
+Release:	12
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
