@@ -12,7 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	3
+%define		_release	4
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -396,16 +396,13 @@ echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-for d in cs de es fi fr hu it ja ko pl ; do
+for d in cs da de es fi fr hu id it ja ko nl pl ; do
     for m in man1 man5 man8 ; do
 	if [ -d man/$d/$m ]; then
 	    install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
 	    install man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
 	fi
     done
-    if [ -f $RPM_BUILD_ROOT%{_mandir}/$d/man8/hwclock.8 ]; then
-	echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/$d/man8/clock.8
-    fi
 done
 
 gzip -9nf */README.*
@@ -511,8 +508,8 @@ fi
 %{_mandir}/man1/write.1*
 
 %{_mandir}/man8/blockdev.8*
-%{_mandir}/man8/cytune.8*
 %{_mandir}/man8/ctrlaltdel.8*
+%{_mandir}/man8/cytune.8*
 %{_mandir}/man8/dmesg.8*
 %{_mandir}/man8/elvtune.8*
 %{_mandir}/man8/fdformat.8*
@@ -524,9 +521,15 @@ fi
 %{_mandir}/man8/setfdprm.8*
 %{_mandir}/man8/setsid.8*
 
+%lang(da) %{_mandir}/da/man1/kill.1*
+%lang(da) %{_mandir}/da/man1/more.1*
+%lang(da) %{_mandir}/da/man1/write.1*
+
 %lang(de) %{_mandir}/de/man1/kill.1*
 %lang(de) %{_mandir}/de/man1/more.1*
 %lang(de) %{_mandir}/de/man1/write.1*
+
+%lang(da) %{_mandir}/da/man8/fdformat.8*
 
 %lang(es) %{_mandir}/es/man1/arch.1*
 %lang(es) %{_mandir}/es/man1/colrm.1*
@@ -591,6 +594,15 @@ fi
 %lang(hu) %{_mandir}/hu/man8/fdformat.8*
 %lang(hu) %{_mandir}/hu/man8/mkswap.8*
 
+%lang(id) %{_mandir}/id/man1/cal.1*
+%lang(id) %{_mandir}/id/man1/kill.1*
+%lang(id) %{_mandir}/id/man1/logger.1*
+%lang(id) %{_mandir}/id/man1/more.1*
+%lang(id) %{_mandir}/id/man1/script.1*
+%lang(id) %{_mandir}/id/man1/write.1*
+
+%lang(id) %{_mandir}/id/man8/fdformat.8*
+
 %lang(it) %{_mandir}/it/man1/arch.1*
 %lang(it) %{_mandir}/it/man1/kill.1*
 
@@ -621,8 +633,8 @@ fi
 %lang(ja) %{_mandir}/ja/man1/write.1*
 
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*
-%lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
+%lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/dmesg.8*
 %lang(ja) %{_mandir}/ja/man8/elvtune.8*
 %lang(ja) %{_mandir}/ja/man8/fdformat.8*
@@ -666,6 +678,8 @@ fi
 %lang(ko) %{_mandir}/ko/man8/renice.8*
 %lang(ko) %{_mandir}/ko/man8/setfdprm.8*
 %lang(ko) %{_mandir}/ko/man8/setsid.8*
+
+%lang(nl) %{_mandir}/nl/man1/kill.1*
 
 %lang(pl) %{_mandir}/pl/man1/arch.1*
 %lang(pl) %{_mandir}/pl/man1/cal.1*
@@ -756,7 +770,15 @@ fi
 %{_mandir}/man8/rootflags.8*
 %{_mandir}/man8/vidmode.8*
 
+%lang(da) %{_mandir}/da/man8/ramsize.8*
+%lang(da) %{_mandir}/da/man8/rdev.8*
+%lang(da) %{_mandir}/da/man8/rootflags.8*
+%lang(da) %{_mandir}/da/man8/vidmode.8*
+
+%lang(de) %{_mandir}/de/man8/ramsize.8*
 %lang(de) %{_mandir}/de/man8/rdev.8*
+%lang(de) %{_mandir}/de/man8/rootflags.8*
+%lang(de) %{_mandir}/de/man8/vidmode.8*
 
 %lang(es) %{_mandir}/es/man8/ramsize.8*
 %lang(es) %{_mandir}/es/man8/rdev.8*
@@ -894,9 +916,11 @@ fi
 %attr(0755,root,root) /bin/login
 
 %{_mandir}/man1/login.1*
+%lang(da) %{_mandir}/da/man1/login.1*
 %lang(de) %{_mandir}/de/man1/login.1*
 %lang(es) %{_mandir}/es/man1/login.1*
 %lang(hu) %{_mandir}/hu/man1/login.1*
+%lang(id) %{_mandir}/id/man1/login.1*
 %lang(ja) %{_mandir}/ja/man1/login.1*
 %lang(ko) %{_mandir}/ko/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
