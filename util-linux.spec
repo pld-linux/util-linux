@@ -28,7 +28,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12
-%define	_rel	1
+%define	_rel	2
 %define _pre pre
 Release:	0.%{_pre}.%{_rel}
 License:	distributable
@@ -58,6 +58,8 @@ Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
 Patch16:	%{name}-no_multiline.patch
+#http://panopticon.csustan.edu/thood/mount-2.12pre-symlink_20030809.diff
+Patch17:	mount-2.12pre-symlink_20030809.diff
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -376,6 +378,7 @@ Obs³uga raw-device'ów.
 %patch14 -p1
 %patch15 -p1
 %patch16
+%patch17 -p1
 
 %build
 CC="%{__cc}"
