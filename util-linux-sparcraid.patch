@@ -1,0 +1,12 @@
+--- util-linux-2.10k/fdisk/fdisksunlabel.c.sparcraid	Fri Mar 24 13:47:53 2000
++++ util-linux-2.10k/fdisk/fdisksunlabel.c	Mon Apr 17 10:50:12 2000
+@@ -52,6 +52,9 @@
+ 	{LINUX_SWAP, N_("Linux swap")},
+ 	{LINUX_NATIVE, N_("Linux native")},
+ 	{0x8e, N_("Linux LVM")},
++	{0xfd, N_("Linux raid autodetect")},/* New (2.2.x) raid partition
++					       with autodetect using
++					       persistent superblock */
+ 	{ 0, NULL }
+ };
+ 

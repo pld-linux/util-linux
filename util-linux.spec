@@ -1,59 +1,44 @@
 #
-# Conditional build:	
+# Conditional build:
 # _without_crypto	- without kerneli cryptography
-# _with_pivot_root
+# _with_pivot_root	- build pivot_root utility (auto-selected if 2.4 kernel)
+# _without_dist_kernel	- do nothing for now
+# _with_uClibc          - don't build few utilities
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
+
 %define		_kernel_ver	%(grep UTS_RELEASE %{_kernelsrcdir}/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 %if %{_kernel24}
 %define		_kernel_series	2.4
+%define		_with_pivot_root 1
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	2
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen f¸r Linux
+Summary(es):	Colect·nea de utilitarios b·sicos de sistema para Linux
 Summary(fr):	Ensemble d'utilitaires systËme de base pour Linux
 Summary(pl):	ZbiÛr podstawowych narzÍdzi systemowych dla Linuksa
-Summary(tr):	Temel sistem araÁlar˝
 Summary(pt_BR):	Colet‚nea de utilit·rios b·sicos de sistema para Linux
-Summary(es):	Colect·nea de utilitarios b·sicos de sistema para Linux
+Summary(ru):	Ó¡¬œ“ ¬¡⁄œ◊Ÿ» ”…”‘≈ÕŒŸ» ’‘…Ã…‘ ƒÃ— Linux
+Summary(tr):	Temel sistem araÁlar˝
+Summary(uk):	Ó¡¬¶“ ¬¡⁄œ◊…» ”…”‘≈ÕŒ…» ’‘…Ã¶‘ ƒÃ— Linux
 Name:		util-linux
-Version:	2.11k
-Release:	%{_release}
-License:	Distributable
+Version:	2.11w
+%define	_rel	3
+Release:	%{_rel}
+License:	distributable
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
-Source1:	login.pamd
-Source2:	kill.1.pl
-Source3:	arch.1.pl
-Source4:	login.1.pl
-Source5:	look.1.pl
-Source6:	script.1.pl
-Source7:	write.1.pl
-Source8:	getopt.1.pl
-Source9:	colrm.1.pl
-Source10:	hexdump.1.pl
-Source11:	ul.1.pl
-Source12:	ipcrm.8.pl
-Source13:	ipcs.8.pl
-Source15:	fdformat.8.pl
-Source16:	mkswap.8.pl
-Source17:	fdisk.8.pl
-Source18:	umount.8.pl
-Source19:	mount.8.pl
-Source20:	swapon.8.pl
-Source21:	swapoff.8.pl
-Source22:	fstab.5.pl
-Source23:	chkdupexe.1.pl
-Source24:	tunelp.8.pl
-Source25:	rawdevices-init
-Source26:	rawdevices-sysconfig
+# Source0-md5:	36d6bcdf415d6b486205cc64abb7af77
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
+Source2:	login.pamd
+Source3:	rawdevices.init
+Source4:	rawdevices.sysconfig
 Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
@@ -61,27 +46,29 @@ Patch3:		%{name}-fhs.patch
 Patch4:		%{name}-login.patch
 Patch5:		%{name}-kerneli.patch
 Patch6:		%{name}-info.patch
-Patch7:		%{name}-fdisk2.patch
-Patch8:		ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
-Patch9:		%{name}-syscall.patch
-Patch10:	%{name}-raw.patch
-Patch11:	%{name}-gecos.patch
-Patch12:	%{name}-glibc.patch
-Patch13:	%{name}-s390.patch
-Patch14:	%{name}-kerneli-2.4.patch
-Patch15:	%{name}-qnx4.patch
-Patch16:	%{name}-losetup-getpass.patch
-Patch17:	%{name}-login-problems.patch
-BuildRequires:	pam-devel >= 0.66
-BuildRequires:	ncurses-devel >= 5.0
+Patch7:		ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/%{name}-2.10m-mount-compat.patch
+Patch8:		%{name}-syscall.patch
+Patch9:		%{name}-raw.patch
+Patch10:	%{name}-gecos.patch
+Patch11:	%{name}-glibc.patch
+#based on:	http://www.kernel.org/pub/linux/kernel/people/hvr/util-linux-patch-int/%{name}-2.11n.patch.bz2
+Patch12:	%{name}-cryptoapi.patch
+Patch13:	%{name}-losetup-getpass.patch
+Patch14:	%{name}-posixsh.patch
+Patch15:	%{name}-ppc-hwclock.patch
+Patch16:	%{name}-chfn_exploid.patch
 BuildRequires:	gettext-devel
+BuildRequires:	grep
+%{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
+%{!?_with_uClibc:BuildRequires:	pam-devel >= 0.66}
 BuildRequires:	texinfo
-%if %{?BOOT:1}%{!?BOOT:0}
-BuildRequires:	glibc-static
-%endif
-Requires:	pam >= 0.66
+BuildRequires:	textutils
+BuildRequires:	zlib-devel
+%{!?_with_uClibc:Requires:	pam >= 0.66}
+Provides:	fdisk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
+Obsoletes:	cramfs
 
 %define		debugcflags	-O1 -g
 
@@ -97,6 +84,12 @@ low-level-Systemdienstprogrammen, die f¸r ein funktionierendes
 Linux-System erforderlich sind. Dazu gehˆren Konfigurationstools wie
 'fdisk' und Systemprogramme wie 'logger'.
 
+%description -l es
+util-linux contiene una gran variedad de utilitarios de sistema de
+bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
+entre otras cosas, herramientas de configuraciÛn como fdisk y
+programas de sistema como login.
+
 %description -l fr
 util-linux contient une grande variÈtÈ d'utilitaire systËme bas niveau
 nÈcessaires au fonctionnement d'un systËme Linux. Cela comprend, entre
@@ -104,27 +97,33 @@ autres, les outils de configuration comme fdisk et des programmes
 systËmes comme logger.
 
 %description -l pl
-Util-linux zawiera wiele rÛønych, niskopoziomowych narzÍdzi
+util-linux zawiera wiele rÛønych, niskopoziomowych narzÍdzi
 systemowych niezbÍdnych do prawid≥owego dzia≥ania Linuksa. W pakiecie
-znajduj± siÍ miÍdzy innymi, narzÍdzia konfiguracyjne takie jak fdisk i
-programy systemowe takie jak logger.
+znajduj± siÍ miÍdzy innymi narzÍdzia konfiguracyjne, takie jak fdisk i
+programy systemowe, takie jak logger.
+
+%description -l pt_BR
+util-linux contÈm uma grande variedade de utilit·rios de sistema de
+baixo-nÌvel necess·rios para um sistema Linux funcional. Isso inclui,
+entre outras coisas, ferramentas de configuraÁ„o como fdisk e
+programas de sistema como login.
 
 %description -l tr
 ˛levsel durumdaki bir Linux sistemi iÁin gerekli birÁok alt d¸zey
 sistem araÁlar˝n˝ iÁerir. Bunlar aras˝nda fdisk gibi yap˝land˝rma
 uygulamalar˝ ve logger gibi sistem programlar˝ say˝labilir.
 
-%description -l pt_BR
-util-Linux contÈm uma grande variedade de utilit·rios de sistema
-de baixo-nÌvel necess·rios para um sistema Linux funcional. Isso
-inclui, entre outras coisas, ferramentas de configuraÁ„o como fdisk
-e programas de sistema como login.
+%description -l uk
+„≈  –¡À≈‘ Õ¶”‘…‘ÿ ◊≈Ã…À…  Œ¡¬¶“ ”…”‘≈ÕŒ…» ’‘…Ã¶‘ Œ…⁄ÿÀœ«œ “¶◊Œ—, —À¶
+Œ≈œ¬»¶ƒŒ¶ ƒÃ— ∆’ŒÀ√¶œŒ’◊¡ŒŒ— ”…”‘≈Õ… Linux. ˜¶Œ Õ¶”‘…‘ÿ, œÀ“¶Õ ¶Œ€…»,
+ÀœŒ∆¶«’“¡√¶ Œ¶ ¶Œ”‘“’Õ≈Œ‘… (‘¡À¶ —À fdisk) ‘¡ ”…”‘≈ÕŒ¶ –“œ«“¡Õ… (‘¡À¶
+—À login).
 
-%description -l es
-util-Linux contiene una gran variedad de utilitarios de sistema de
-bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
-entre otras cosas, herramientas de configuraciÛn como fdisk y
-programas de sistema como login.
+%description -l ru
+¸‘œ‘ –¡À≈‘ ”œƒ≈“÷…‘ ¬œÃÿ€œ  Œ¡¬œ“ ”…”‘≈ÕŒŸ» ’‘…Ã…‘ Œ…⁄Àœ«œ ’“œ◊Œ—,
+Àœ‘œ“Ÿ≈ Œ≈œ¬»œƒ…ÕŸ ƒÃ— ∆’ŒÀ√…œŒ…“œ◊¡Œ…— ”…”‘≈ÕŸ Linux. ÔŒ ◊ÀÃ¿ﬁ¡≈‘, ◊
+ﬁ…”Ã≈ –“œﬁ…», …Œ”‘“’Õ≈Œ‘Ÿ ÀœŒ∆…«’“¡√……, ‘¡À…≈ À¡À fdisk, … ”…”‘≈ÕŒŸ≈
+–“œ«“¡ÕÕŸ, ‘¡À…≈ À¡À login.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
@@ -132,15 +131,15 @@ Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Ger‰ten
 Summary(fr):	Programmes pour mettre en place et configurer les loopback
 Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
 Summary(tr):	Yerel-Áevrim ayg˝tlar˝n˝n kurulmas˝ ve ayarlanmas˝ iÁin programlar
+Summary(ru):	“œ«“¡ÕÕŸ ƒÃ— Œ¡”‘“œ À… loopback-’”‘“œ ”‘◊
+Summary(uk):	“œ«“¡Õ… ƒÃ— ÀœŒ∆¶«’“¡√¶ß loopback-–“…”‘“œß◊
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
-Release:	%{_release}@%{_kernel_series}
-%if %{_kernel24}
-Conflicts:	kernel < 2.3.0
-%else
-Conflicts:	kernel >= 2.3.0
-%endif
+Release:	%{_rel}@%{_kernel_series}
+#%if %{_kernel24}
+#%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
+#%else
+#%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
+#%endif
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -168,10 +167,9 @@ pÈriphÈrique loopback du rÈseau, configurÈ avec la commande ifconfig
 normale.
 
 %description -n losetup -l pl
-Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, ktÛre
-mapuje normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten
-zawiera program przy pomocy ktÛrego bÍdziesz mÛg≥ wykorzystaÊ to
-urz±dzenie.
+Linux wspiera specjalne urz±dzenie blokowe loopback, ktÛre mapuje
+normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera
+program, przy pomocy ktÛrego bÍdziesz mÛg≥ je skonfigurowaÊ.
 
 Urz±dzenie blokowe loopback nie powinno byÊ mylone z sieciowym
 interfejsem loopback, ktÛry jest konfigurowany przy pomocy polecenia
@@ -185,24 +183,40 @@ aras˝ndaki haritalama i˛leminin kurulmas˝ ve kald˝r˝lmas˝ iÁin
 programlar iÁerir. Blok yerel-Áevrim ayg˝t˝ ifconfig komutu ile
 yap˝land˝r˝lan a yerel-Áevrim ayg˝t˝ ile kar˝˛t˝r˝lmamal˝d˝r.
 
+%description -n losetup -l ru
+Linux –œƒƒ≈“÷…◊¡≈‘ ”–≈√…¡ÃÿŒœ≈ ¬ÃœﬁŒœ≈ ’”‘“œ ”‘◊œ, Œ¡⁄Ÿ◊¡≈Õœ≈
+loopback, Àœ‘œ“œ≈ œ‘œ¬“¡÷¡≈‘ œ¬ŸﬁŒŸ  ∆¡ Ã ◊ ◊…“‘’¡ÃÿŒœ≈ ¬ÃœﬁŒœ≈
+’”‘“œ ”‘◊œ. ¸‘œ –œ⁄◊œÃ—≈‘ …”–œÃÿ⁄œ◊¡‘ÿ ∆¡ Ã À¡À ◊…“‘’¡ÃÿŒ’¿ ∆¡ Ãœ◊’¿
+”…”‘≈Õ’. Losetup …”–œÃÿ⁄’≈‘”— ƒÃ— ”◊—⁄… loopback-’”‘“œ ”‘◊ ” œ¬ŸﬁŒŸÕ…
+∆¡ Ã¡Õ… …Ã… ¬ÃœﬁŒŸÕ… ’”‘“œ ”‘◊¡Õ…, ƒÃ— œ‘”œ≈ƒ…Œ≈Œ…— loopback-’”‘“œ ”‘◊
+… ⁄¡–“œ”œ◊ …» ”‘¡‘’”¡.
+
+%description -n losetup -l uk
+Linux –¶ƒ‘“…Õ’§ ”–≈√¶¡ÃÿŒ…  ¬ÃœﬁŒ…  –“…”‘“¶ , loopback, —À… 
+◊¶ƒœ¬“¡÷’§ ⁄◊…ﬁ¡ Œ…  ∆¡ Ã ’ ◊¶“‘’¡ÃÿŒ…  ¬ÃœﬁŒ…  –“…”‘“¶ . „≈ ƒœ⁄◊œÃ—§
+◊…Àœ“…”‘œ◊’◊¡‘… ∆¡ Ã —À ◊¶“‘’¡ÃÿŒ’ ∆¡ Ãœ◊’ ”…”‘≈Õ’. Losetup
+◊…Àœ“…”‘œ◊’¿‘ÿ ƒÃ— ⁄◊'—⁄À’ loopback-–“…”‘“œß◊ ⁄¶ ⁄◊…ﬁ¡ Œ…Õ… ∆¡ Ã¡Õ…
+¡¬œ ¬ÃœﬁŒ…Õ… –“…”‘“œ—Õ…, ƒÃ— ◊¶ƒ'§ƒŒ¡ŒŒ— loopback-–“…”‘“œß◊ ‘¡
+⁄¡–“œ”¶◊ ß» ”‘¡Œ’.
+
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
-Summary(de):	Programme zum Montieren und Abmontieren von Dateisystemen
+Summary(de):	Programme zum montieren und abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et dÈmonter des systËmes de fichiers.
-Summary(pl):	Programy do montowania i odmontowywania systemu plikÛw
+Summary(pl):	Programy do montowania i odmontowywania systemÛw plikÛw
 Summary(tr):	Dosya sistemlerini balamak ve Áˆzmek iÁin programlar
+Summary(uk):	“œ«“¡Õ… ƒÃ— ÕœŒ‘’◊¡ŒŒ— ‘¡ “œ⁄ÕœŒ‘’◊¡ŒŒ— ∆¡ Ãœ◊…» ”…”‘≈Õ
+Summary(ru):	“œ«“¡ÕÕŸ ƒÃ— ÕœŒ‘…“œ◊¡Œ…— … “¡⁄ÕœŒ‘…“œ◊¡Œ…— ∆¡ Ãœ◊Ÿ» ”…”‘≈Õ
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
-Release:	%{_release}@%{_kernel_series}
-%if %{_kernel24}
-Conflicts:	kernel < 2.3.0
-%else
-Conflicts:	kernel >= 2.3.0
-%endif
+Release:	%{_rel}@%{_kernel_series}
+#%if %{_kernel24}
+#%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
+#%else
+#%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
+#%endif
 
 %description -n mount
-Mount is used for adding new filesystems, both local and networked, to
+mount is used for adding new filesystems, both local and networked, to
 your current directory structure. The filesystems must already exist
 for this to work. It can also be used to change the access types the
 kernel uses for already-mounted filesystems.
@@ -210,7 +224,7 @@ kernel uses for already-mounted filesystems.
 This package is critical for the functionality of your system.
 
 %description -n mount -l de
-Mount wird zum Hinzuf¸gen neuer Dateisysteme (lokal und im Netzwerk)
+mount wird zum Hinzuf¸gen neuer Dateisysteme (lokal und im Netzwerk)
 zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme
 m¸ssen bereits existieren. Auﬂerdem kˆnnen die Zugriffstypen ge‰ndert
 werden, die der Kernel f¸r bereits montierte Dateisysteme verwendet.
@@ -226,7 +240,7 @@ changer les types d'accËs pour les systËmes de fichiers dÈj‡ montÈs.
 Ce paquetage est critique pour le fonctionnement de votre systËme.
 
 %description -n mount -l pl
-Program mount jest uøywany przez system do montowania systemu plikÛw,
+Program mount jest uøywany przez system do montowania systemÛw plikÛw,
 zarÛwno lokalnych jak i sieciowych (np. NFS).
 
 Pakiet ten jest niezbÍdny do prawid≥owej pracy twojego Linuksa.
@@ -238,12 +252,28 @@ eklenmesi iÁin kullan˝l˝r. Bunun iÁin balanacak dosya sisteminin
 dosya sistemlerine eri˛imini dei˛tirmek iÁin de kullan˝l˝r. Bu paket
 sisteminizin i˛levsellii aÁ˝s˝ndan kritiktir.
 
+%description -n mount -l ru
+¡À≈‘ mount ”œƒ≈“÷…‘ –“œ«“¡ÕÕŸ mount, umount, swapon … swapoff. Ê¡ ÃŸ
+◊ ◊¡€≈  ”…”‘≈Õ≈ œ“«¡Œ…⁄œ◊¡ŒŸ ◊ ◊…ƒ≈ œƒŒœ«œ ¬œÃÿ€œ«œ ƒ≈“≈◊¡ …Ã…
+…≈“¡“»……. ¸‘… ∆¡ ÃŸ Õœ«’‘ ¬Ÿ‘ÿ “¡⁄Õ≈›≈ŒŸ Œ¡ “¡⁄ŒŸ» ’”‘“œ ”‘◊¡».
+ÎœÕ¡Œƒ¡ mount –“…”œ≈ƒ…Œ—≈‘ ∆¡ Ãœ◊’¿ ”…”‘≈Õ’ Œ¡ Œ≈Àœ‘œ“œÕ ’”‘“œ ”‘◊≈ À
+ƒ≈“≈◊’ ∆¡ Ãœ◊ ◊¡€≈  ”…”‘≈ÕŸ. ÎœÕ¡Œƒ¡ umount œ‘”œ≈ƒ…Œ—≈‘ ∆¡ Ãœ◊’¿
+”…”‘≈Õ’ œ‘ ƒ≈“≈◊¡. Swapon … swapoff, ”œœ‘◊≈‘”‘◊≈ŒŒœ, “¡⁄“≈€¡≈‘ …
+⁄¡–“≈›¡≈‘ ”◊œ––…Œ« ◊ œ–“≈ƒ≈Ã≈ŒŒŸ≈ ∆¡ ÃŸ … ’”‘“œ ”‘◊¡.
+
+%description -n mount -l uk
+¡À≈‘ mount Õ¶”‘…‘ÿ –“œ«“¡Õ… mount, umount, swapon ‘¡ swapoff. Ê¡ Ã… ’
+◊¡€¶  ”…”‘≈Õ¶ œ“«¡Œ¶⁄œ◊¡Œ¶ ’ ◊…«Ã—ƒ¶ œƒŒœ«œ ◊≈Ã…Àœ«œ ƒ≈“≈◊¡ ¡¬œ
+¶§“¡“»¶ß. „¶ ∆¡ Ã… Õœ÷’‘ÿ ¬’‘… “œ⁄‘¡€œ◊¡Œ¶ Œ¡ “¶⁄Œ…» –“…”‘“œ—».
+ÎœÕ¡Œƒ¡ mount –¶ƒ'§ƒŒ’§ ∆¡ Ãœ◊’ ”…”‘≈Õ’ Œ¡ ƒ≈—ÀœÕ’ –“…”‘“œß ƒœ ƒ≈“≈◊¡
+∆¡ Ã¶◊ ◊¡€œß ”…”‘≈Õ…. ÎœÕ¡Œƒ¡ umount ◊¶ƒ'§ƒŒ’§ ∆¡ Ãœ◊’ ”…”‘≈Õ’ ◊¶ƒ
+ƒ≈“≈◊¡. Swapon ‘¡ swapoff, ◊¶ƒ–œ◊¶ƒŒœ, ƒœ⁄◊œÃ—§ ‘¡ ⁄¡¬œ“œŒ¿§ ”◊œ–¶Œ« ’
+◊…⁄Œ¡ﬁ≈Œ¶ ∆¡ Ã… ¡¬œ –“…”‘“œß.
+
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
 Summary(pl):	chkdupexe odszukuje powtarzaj±ce siÍ pliki uruchamialne
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 
 %description chkdupexe
 chkdupexe will scan the union of $PATH and a hardcoded list of common
@@ -262,14 +292,12 @@ Summary(fr):	Configure le pilote du port parallËle dans le noyau
 Summary(pl):	Program do konfigurowania sterownika portu rÛwnoleg≥ego
 Summary(tr):	«ekirdein paralel balant˝ noktas˝ s¸r¸c¸s¸n¸ ayarlar
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 
 %description -n tunelp
-`tunelp' aids in configuring the kernel parallel port driver.
+tunelp aids in configuring the kernel parallel port driver.
 
 %description -n tunelp -l de
-TUNELP hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
+tunelp hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
 
 %description -n tunelp -l fr
 ´ tunelp ª aide ‡ configurer le pilote du noyau pour le port
@@ -285,8 +313,6 @@ Paralel balant˝ noktas˝ s¸r¸c¸s¸n¸ ayarlar.
 Summary:	login is used when signing onto a system
 Summary(pl):	login jest uøywany do rozpoczÍcia pracy w systemie
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Obsoletes:	heimdal-login
 Requires:	pam-pld
 
@@ -302,10 +328,8 @@ do prze≥±czania z jednego uøytkownika na innego w kaødym momencie
 
 %package -n agetty
 Summary:	Alternative Linux getty
-Summary(pl):	Alternatywny getty 
+Summary(pl):	Alternatywny getty
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 Requires:	login
 
 %description -n agetty
@@ -318,9 +342,7 @@ agetty jest prostym linuksowym getty z obs≥ug± portu szeregowego.
 Summary:	Support for raw-devices
 Summary(pl):	Obs≥uga raw-device'Ûw
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
-Prereq:		/sbin/chkconfig
+PreReq:		/sbin/chkconfig
 
 %description -n rawdevices
 Support for raw-devices.
@@ -328,25 +350,26 @@ Support for raw-devices.
 %description -n rawdevices -l pl
 Obs≥uga raw-device'Ûw.
 
-%if %{?BOOT:1}%{!?BOOT:0}
 %package BOOT
 Summary:	util-linux for bootdisk
+Summary(pl):	util-linux dla bootkietki
 Group:		Applications/System
-Group(de):	Applikationen/System
-Group(pl):	Aplikacje/System
 
 %description BOOT
-%endif
+util-linux for bootdisk.
+
+%description BOOT -l pl
+util-linux dla bootkietki.
 
 %prep
-%setup -q
+%setup -q -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %if %{_kernel24}
-%{!?_without_crypto:%patch14 -p1}
+%{!?_without_crypto:%patch12 -p0}
 %else
 %{!?_without_crypto:%patch5 -p1}
 %endif
@@ -356,17 +379,21 @@ Group(pl):	Aplikacje/System
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch15 -p1
 %if !%{_kernel24}
-%patch16 -p1
+%{!?_without_crypto:%patch13 -p1}
 %endif
-%patch17 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 %build
-CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
-%configure2_13
+CC="%{__cc}"
+LDFLAGS="%{rpmldflags}"
+CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+export CC CFLAGS LDFLAGS
+# using %%configure2_13 isn't very wise here, it is not autoconf generated
+# configure and it doesn't take any parameters
+./configure
 
 %if %{?BOOT:1}%{!?BOOT:0}
 %{__make} -C fdisk fdisk OPT="%{rpmcflags}" LDFLAGS="-static"
@@ -374,11 +401,18 @@ mv -f fdisk/fdisk fdisk-BOOT
 %{__make} -C fdisk clean
 %endif
 
+%{?_with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
 %{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
-	ADD_RAW="yes"
+	%{!?_with_uClibc:ADD_RAW="yes"} \
+	%{?_with_uClibc:ADD_RAW="no" HAVE_PAM="no"}
 
-(cd sys-utils; makeinfo ipc.texi)
+%ifarch ppc
+%{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
+%endif
+
+cd sys-utils
+makeinfo ipc.texi
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -390,63 +424,55 @@ install fdisk-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/fdisk
 
 install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
-	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
+	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/man{1,5,6,8}}
 
 %{__make} install \
-	DESTDIR="$RPM_BUILD_ROOT" \
+	DESTDIR=$RPM_BUILD_ROOT \
 	INSTALLSUID="install -m 755" \
 	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
-	ADD_RAW="yes"
+	%{!?_with_uClibc:ADD_RAW="yes"} \
+	%{?_with_uClibc:ADD_RAW="no" HAVE_PAM="no"}
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
-
-install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
-install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
-install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
-install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
-install %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
-install %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
-install %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
-install %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
-install %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
-install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
-
-install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
-install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
-install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
-install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
-install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
-install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
-install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
-install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
-install %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
-
-install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
-
-install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
-
-install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
-
-install %{SOURCE25} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
-install %{SOURCE26} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
-touch $RPM_BUILD_ROOT/etc/security/blacklist.login
+> $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
+
+%ifarch ppc
+mv -f $RPM_BUILD_ROOT/sbin/hwclock $RPM_BUILD_ROOT/sbin/hwclock.rtc
+install clock-ppc $RPM_BUILD_ROOT/sbin/hwclock.adb
+#yneed fix: 
+# hwclock.adb is for PowerMac (default)
+# hwclock.rtc is for RS/6000 (PreP,CHRP)
+ln -sf hwclock.adb $RPM_BUILD_ROOT/sbin/hwclock
+%endif
 
 ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9nf */README.*
+for d in cs de es fi fr hu id it ja ko nl pl ; do
+    for m in man1 man5 man8 ; do
+	if [ -d man/$d/$m ]; then
+	    install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
+	    install man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
+	fi
+    done
+done
 
-%find_lang %{name}
+%{!?_with_uClibc:%find_lang %{name}}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
@@ -468,60 +494,66 @@ if [ -f /var/lock/subsys/rawdevices ]; then
 fi
 /sbin/chkconfig --del rawdevices
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%files -f %{name}.lang
+%files %{!?_with_uClibc:-f %{name}.lang}
 %defattr(644,root,root,755)
-%doc */README.*
+%doc */README.* text-utils/LICENSE.pg
 
 %attr(755,root,root) /sbin/clock
-%attr(755,root,root) /sbin/hwclock
+%ifarch ppc
+%attr(755,root,root) %config(noreplace) /sbin/hwclock
+%attr(755,root,root) /sbin/hwclock.adb
+%attr(755,root,root) /sbin/hwclock.rtc
+%else
+%attr(755,root,root) /sbin/hwclock*
+%endif
 
 %{_mandir}/man8/clock.8*
 %{_mandir}/man8/hwclock.8*
+%lang(es) %{_mandir}/es/man8/clock.8*
+%lang(es) %{_mandir}/es/man8/hwclock.8*
+%lang(ja) %{_mandir}/ja/man8/clock.8*
+%lang(ja) %{_mandir}/ja/man8/hwclock.8*
 
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/fdprm
 
-%attr(0755,root,root) /bin/arch
-%attr(0755,root,root) /bin/dmesg
-%attr(0755,root,root) /bin/kill
-%attr(0755,root,root) /bin/more
-%attr(0755,root,root) /sbin/blockdev
-%attr(0755,root,root) /sbin/mkfs
-%attr(0755,root,root) /sbin/mkswap
-%attr(0755,root,root) /sbin/ctrlaltdel
-%attr(0755,root,root) /sbin/elvtune
-%attr(0755,root,root) %{_bindir}/banner
-%attr(0755,root,root) %{_bindir}/cal
-%attr(0755,root,root) %{_bindir}/col
-%attr(0755,root,root) %{_bindir}/colcrt
-%attr(0755,root,root) %{_bindir}/colrm
-%attr(0755,root,root) %{_bindir}/column
-%attr(0755,root,root) %{_bindir}/ddate
-%attr(0755,root,root) %{_bindir}/fdformat
-%attr(0755,root,root) %{_bindir}/getopt
-%attr(0755,root,root) %{_bindir}/hexdump
-%attr(0755,root,root) %{_bindir}/ipcrm
-%attr(0755,root,root) %{_bindir}/ipcs
-%attr(0755,root,root) %{_bindir}/isosize
-%attr(0755,root,root) %{_bindir}/logger
-%attr(0755,root,root) %{_bindir}/look
-%attr(0755,root,root) %{_bindir}/mcookie
-%attr(0755,root,root) %{_bindir}/namei
-%attr(4755,root,root) %{_bindir}/newgrp
-%attr(0755,root,root) %{_bindir}/renice
-%attr(0755,root,root) %{_bindir}/rev
-%attr(0755,root,root) %{_bindir}/script
-%attr(0755,root,root) %{_bindir}/setsid
-%attr(0755,root,root) %{_bindir}/setfdprm
-%attr(0755,root,root) %{_bindir}/setterm
-%attr(0755,root,root) %{_bindir}/ul
-%attr(0755,root,root) %{_bindir}/whereis
+%attr(755,root,root) /bin/arch
+%attr(755,root,root) /bin/dmesg
+%attr(755,root,root) /bin/kill
+%{!?_with_uClibc:%attr(755,root,root) /bin/more}
+%attr(755,root,root) /sbin/blockdev
+%attr(755,root,root) /sbin/mkfs
+%attr(755,root,root) /sbin/mkswap
+%attr(755,root,root) /sbin/ctrlaltdel
+%attr(755,root,root) /sbin/elvtune
+%attr(755,root,root) %{_bindir}/cal
+%attr(755,root,root) %{_bindir}/col
+%attr(755,root,root) %{_bindir}/colcrt
+%attr(755,root,root) %{_bindir}/colrm
+%attr(755,root,root) %{_bindir}/column
+%attr(755,root,root) %{_bindir}/ddate
+%attr(755,root,root) %{_bindir}/fdformat
+%attr(755,root,root) %{_bindir}/getopt
+%attr(755,root,root) %{_bindir}/hexdump
+%attr(755,root,root) %{_bindir}/ipcrm
+%attr(755,root,root) %{_bindir}/ipcs
+%attr(755,root,root) %{_bindir}/isosize
+%attr(755,root,root) %{_bindir}/logger
+%attr(755,root,root) %{_bindir}/look
+%attr(755,root,root) %{_bindir}/mcookie
+%attr(755,root,root) %{_bindir}/namei
+%attr(755,root,root) %{_bindir}/renice
+%attr(755,root,root) %{_bindir}/rev
+%attr(755,root,root) %{_bindir}/script
+%attr(755,root,root) %{_bindir}/setsid
+%attr(755,root,root) %{_bindir}/setfdprm
+%attr(755,root,root) %{_bindir}/pg
+%attr(755,root,root) %{_bindir}/line
+%attr(755,root,root) %{_bindir}/rename
+%{!?_with_uClibc:%attr(755,root,root) %{_bindir}/setterm}
+%{!?_with_uClibc:%attr(755,root,root) %{_bindir}/ul}
+%attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
-%attr(0755,root,root) %{_sbindir}/readprofile
-%attr(0755,root,root) %{_sbindir}/vigr
-%attr(0755,root,root) %{_sbindir}/vipw
+%attr(755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
@@ -536,22 +568,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/mcookie.1*
-%{_mandir}/man1/more.1*
+%{!?_with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
-%{_mandir}/man1/newgrp.1*
-%{_mandir}/man1/script.1*
-%{_mandir}/man1/setterm.1*
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
-%{_mandir}/man1/ul.1*
+%{_mandir}/man1/rename.1*
+%{_mandir}/man1/script.1*
+%{!?_with_uClibc:%{_mandir}/man1/setterm.1*}
+%{!?_with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
-
-%{_mandir}/man6/banner.6*
+%{_mandir}/man1/pg.1*
+%{_mandir}/man1/line.1*
 
 %{_mandir}/man8/blockdev.8*
-%{_mandir}/man8/cytune.8*
 %{_mandir}/man8/ctrlaltdel.8*
+%{_mandir}/man8/cytune.8*
 %{_mandir}/man8/dmesg.8*
 %{_mandir}/man8/elvtune.8*
 %{_mandir}/man8/fdformat.8*
@@ -560,43 +592,247 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/isosize.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/renice.8*
-%{_mandir}/man8/setsid.8*
 %{_mandir}/man8/setfdprm.8*
-%{_mandir}/man8/vipw.8*
+%{_mandir}/man8/setsid.8*
+
+%lang(de) %{_mandir}/de/man1/kill.1*
+%lang(de) %{_mandir}/de/man1/more.1*
+%lang(de) %{_mandir}/de/man1/write.1*
+
+%lang(de) %{_mandir}/de/man8/fdformat.8*
+
+%lang(es) %{_mandir}/es/man1/arch.1*
+%lang(es) %{_mandir}/es/man1/colrm.1*
+%lang(es) %{_mandir}/es/man1/column.1*
+%lang(es) %{_mandir}/es/man1/ddate.1*
+%lang(es) %{_mandir}/es/man1/getopt.1*
+%lang(es) %{_mandir}/es/man1/look.1*
+%lang(es) %{_mandir}/es/man1/more.1*
+%lang(es) %{_mandir}/es/man1/namei.1*
+%lang(es) %{_mandir}/es/man1/readprofile.1*
+%lang(es) %{_mandir}/es/man1/rev.1*
+%lang(es) %{_mandir}/es/man1/script.1*
+%lang(es) %{_mandir}/es/man1/setterm.1*
+%lang(es) %{_mandir}/es/man1/ul.1*
+%lang(es) %{_mandir}/es/man1/whereis.1*
+%lang(es) %{_mandir}/es/man1/write.1*
+
+%lang(es) %{_mandir}/es/man8/cytune.8*
+%lang(es) %{_mandir}/es/man8/ctrlaltdel.8*
+%lang(es) %{_mandir}/es/man8/ipcrm.8*
+%lang(es) %{_mandir}/es/man8/ipcs.8*
+%lang(es) %{_mandir}/es/man8/mkswap.8*
+%lang(es) %{_mandir}/es/man8/renice.8*
+%lang(es) %{_mandir}/es/man8/setfdprm.8*
+%lang(es) %{_mandir}/es/man8/setsid.8*
+
+%lang(fi) %{_mandir}/fi/man1/arch.1*
+%lang(fi) %{_mandir}/fi/man1/cal.1*
+%lang(fi) %{_mandir}/fi/man1/column.1*
+%lang(fi) %{_mandir}/fi/man1/kill.1*
+%lang(fi) %{_mandir}/fi/man1/more.1*
+%lang(fi) %{_mandir}/fi/man1/whereis.1*
+%lang(fi) %{_mandir}/fi/man1/write.1*
+
+%lang(fr) %{_mandir}/fr/man1/arch.1*
+%lang(fr) %{_mandir}/fr/man1/cal.1*
+%lang(fr) %{_mandir}/fr/man1/col.1*
+%lang(fr) %{_mandir}/fr/man1/kill.1*
+%lang(fr) %{_mandir}/fr/man1/more.1*
+%lang(fr) %{_mandir}/fr/man1/whereis.1*
+%lang(fr) %{_mandir}/fr/man1/write.1*
+
+%lang(fr) %{_mandir}/fr/man8/ctrlaltdel.8*
+%lang(fr) %{_mandir}/fr/man8/dmesg.8*
+%lang(fr) %{_mandir}/fr/man8/fdformat.8*
+%lang(fr) %{_mandir}/fr/man8/ipcrm.8*
+%lang(fr) %{_mandir}/fr/man8/ipcs.8*
+%lang(fr) %{_mandir}/fr/man8/setsid.8*
+
+%lang(hu) %{_mandir}/hu/man1/arch.1*
+%lang(hu) %{_mandir}/hu/man1/cal.1*
+%lang(hu) %{_mandir}/hu/man1/colrm.1*
+%lang(hu) %{_mandir}/hu/man1/hexdump.1*
+%lang(hu) %{_mandir}/hu/man1/kill.1*
+%lang(hu) %{_mandir}/hu/man1/logger.1*
+%lang(hu) %{_mandir}/hu/man1/more.1*
+%lang(hu) %{_mandir}/hu/man1/setterm.1*
+%lang(hu) %{_mandir}/hu/man1/whereis.1*
+%lang(hu) %{_mandir}/hu/man1/write.1*
+
+%lang(hu) %{_mandir}/hu/man8/ctrlaltdel.8*
+%lang(hu) %{_mandir}/hu/man8/fdformat.8*
+%lang(hu) %{_mandir}/hu/man8/mkswap.8*
+
+%lang(id) %{_mandir}/id/man1/cal.1*
+%lang(id) %{_mandir}/id/man1/kill.1*
+%lang(id) %{_mandir}/id/man1/logger.1*
+%lang(id) %{_mandir}/id/man1/more.1*
+%lang(id) %{_mandir}/id/man1/script.1*
+%lang(id) %{_mandir}/id/man1/write.1*
+
+%lang(id) %{_mandir}/id/man8/fdformat.8*
+
+%lang(it) %{_mandir}/it/man1/arch.1*
+%lang(it) %{_mandir}/it/man1/kill.1*
+
+%lang(it) %{_mandir}/it/man8/mkswap.8*
+%lang(it) %{_mandir}/it/man8/setsid.8*
+
+%lang(ja) %{_mandir}/ja/man1/arch.1*
+%lang(ja) %{_mandir}/ja/man1/cal.1*
+%lang(ja) %{_mandir}/ja/man1/col.1*
+%lang(ja) %{_mandir}/ja/man1/colcrt.1*
+%lang(ja) %{_mandir}/ja/man1/colrm.1*
+%lang(ja) %{_mandir}/ja/man1/column.1*
+%lang(ja) %{_mandir}/ja/man1/ddate.1*
+%lang(ja) %{_mandir}/ja/man1/getopt.1*
+%lang(ja) %{_mandir}/ja/man1/hexdump.1*
+%lang(ja) %{_mandir}/ja/man1/kill.1*
+%lang(ja) %{_mandir}/ja/man1/logger.1*
+%lang(ja) %{_mandir}/ja/man1/look.1*
+%lang(ja) %{_mandir}/ja/man1/mcookie.1*
+%lang(ja) %{_mandir}/ja/man1/more.1*
+%lang(ja) %{_mandir}/ja/man1/namei.1*
+%lang(ja) %{_mandir}/ja/man1/readprofile.1*
+%lang(ja) %{_mandir}/ja/man1/rev.1*
+%lang(ja) %{_mandir}/ja/man1/script.1*
+%lang(ja) %{_mandir}/ja/man1/setterm.1*
+%lang(ja) %{_mandir}/ja/man1/ul.1*
+%lang(ja) %{_mandir}/ja/man1/whereis.1*
+%lang(ja) %{_mandir}/ja/man1/write.1*
+
+%lang(ja) %{_mandir}/ja/man8/blockdev.8*
+%lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
+%lang(ja) %{_mandir}/ja/man8/cytune.8*
+%lang(ja) %{_mandir}/ja/man8/dmesg.8*
+%lang(ja) %{_mandir}/ja/man8/elvtune.8*
+%lang(ja) %{_mandir}/ja/man8/fdformat.8*
+%lang(ja) %{_mandir}/ja/man8/ipcrm.8*
+%lang(ja) %{_mandir}/ja/man8/ipcs.8*
+%lang(ja) %{_mandir}/ja/man8/isosize.8*
+%lang(ja) %{_mandir}/ja/man8/mkswap.8*
+%lang(ja) %{_mandir}/ja/man8/renice.8*
+%lang(ja) %{_mandir}/ja/man8/setfdprm.8*
+%lang(ja) %{_mandir}/ja/man8/setsid.8*
+
+%lang(ko) %{_mandir}/ko/man1/arch.1*
+%lang(ko) %{_mandir}/ko/man1/cal.1*
+%lang(ko) %{_mandir}/ko/man1/col.1*
+%lang(ko) %{_mandir}/ko/man1/colcrt.1*
+%lang(ko) %{_mandir}/ko/man1/colrm.1*
+%lang(ko) %{_mandir}/ko/man1/column.1*
+%lang(ko) %{_mandir}/ko/man1/ddate.1*
+%lang(ko) %{_mandir}/ko/man1/getopt.1*
+%lang(ko) %{_mandir}/ko/man1/hexdump.1*
+%lang(ko) %{_mandir}/ko/man1/kill.1*
+%lang(ko) %{_mandir}/ko/man1/logger.1*
+%lang(ko) %{_mandir}/ko/man1/look.1*
+%lang(ko) %{_mandir}/ko/man1/mcookie.1*
+%lang(ko) %{_mandir}/ko/man1/more.1*
+%lang(ko) %{_mandir}/ko/man1/namei.1*
+%lang(ko) %{_mandir}/ko/man1/readprofile.1*
+%lang(ko) %{_mandir}/ko/man1/rev.1*
+%lang(ko) %{_mandir}/ko/man1/script.1*
+%lang(ko) %{_mandir}/ko/man1/setterm.1*
+%lang(ko) %{_mandir}/ko/man1/ul.1*
+%lang(ko) %{_mandir}/ko/man1/whereis.1*
+%lang(ko) %{_mandir}/ko/man1/write.1*
+
+%lang(ko) %{_mandir}/ko/man8/ctrlaltdel.8*
+%lang(ko) %{_mandir}/ko/man8/dmesg.8*
+%lang(ko) %{_mandir}/ko/man8/fdformat.8*
+%lang(ko) %{_mandir}/ko/man8/ipcrm.8*
+%lang(ko) %{_mandir}/ko/man8/ipcs.8*
+%lang(ko) %{_mandir}/ko/man8/mkswap.8*
+%lang(ko) %{_mandir}/ko/man8/renice.8*
+%lang(ko) %{_mandir}/ko/man8/setfdprm.8*
+%lang(ko) %{_mandir}/ko/man8/setsid.8*
+
+%lang(nl) %{_mandir}/nl/man1/kill.1*
 
 %lang(pl) %{_mandir}/pl/man1/arch.1*
+%lang(pl) %{_mandir}/pl/man1/cal.1*
+%lang(pl) %{_mandir}/pl/man1/col.1*
+%lang(pl) %{_mandir}/pl/man1/colcrt.1*
 %lang(pl) %{_mandir}/pl/man1/colrm.1*
 %lang(pl) %{_mandir}/pl/man1/getopt.1*
 %lang(pl) %{_mandir}/pl/man1/hexdump.1*
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/look.1*
+%lang(pl) %{_mandir}/pl/man1/logger.1*
+%lang(pl) %{_mandir}/pl/man1/more.1*
+%lang(pl) %{_mandir}/pl/man1/rev.1*
 %lang(pl) %{_mandir}/pl/man1/script.1*
+%lang(pl) %{_mandir}/pl/man1/setterm.1*
 %lang(pl) %{_mandir}/pl/man1/ul.1*
+%lang(pl) %{_mandir}/pl/man1/whereis.1*
 %lang(pl) %{_mandir}/pl/man1/write.1*
 
+%lang(pl) %{_mandir}/pl/man8/ctrlaltdel.8*
+%lang(pl) %{_mandir}/pl/man8/dmesg.8*
 %lang(pl) %{_mandir}/pl/man8/fdformat.8*
 %lang(pl) %{_mandir}/pl/man8/ipcrm.8*
 %lang(pl) %{_mandir}/pl/man8/ipcs.8*
 %lang(pl) %{_mandir}/pl/man8/mkswap.8*
+%lang(pl) %{_mandir}/pl/man8/renice.8*
+%lang(pl) %{_mandir}/pl/man8/setfdprm.8*
 
 %dir %{_examplesdir}/getopt
 %attr(755,root,root) %{_examplesdir}/getopt/*
 %{_datadir}/misc/more.help
 
-%attr(755,root,root) /sbin/cfdisk
+%{!?_with_uClibc:%attr(755,root,root) /sbin/cfdisk}
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/fsck.minix
 %attr(755,root,root) /sbin/mkfs.minix
 %attr(755,root,root) /sbin/sfdisk
 
-%{_mandir}/man8/cfdisk.8*
+%{!?_with_uClibc:%{_mandir}/man8/cfdisk.8*}
 %{_mandir}/man8/fdisk.8*
 %{_mandir}/man8/sfdisk.8*
 %{_mandir}/man8/fsck.minix.8*
+%{_mandir}/man8/mkfs.bfs.8*
 %{_mandir}/man8/mkfs.minix.8*
 %{_mandir}/man8/mkfs.8*
 
+%lang(es) %{_mandir}/es/man8/fdisk.8*
+%lang(es) %{_mandir}/es/man8/fsck.minix.8*
+%lang(es) %{_mandir}/es/man8/mkfs.minix.8*
+%lang(es) %{_mandir}/es/man8/mkfs.8*
+
+%lang(fr) %{_mandir}/fr/man8/cfdisk.8*
+%lang(fr) %{_mandir}/fr/man8/fdisk.8*
+%lang(fr) %{_mandir}/fr/man8/sfdisk.8*
+%lang(fr) %{_mandir}/fr/man8/mkfs.minix.8*
+%lang(fr) %{_mandir}/fr/man8/mkfs.8*
+
+%lang(hu) %{_mandir}/hu/man8/mkfs.8*
+
+%lang(it) %{_mandir}/it/man8/cfdisk.8*
+%lang(it) %{_mandir}/it/man8/fdisk.8*
+
+%lang(ja) %{_mandir}/ja/man8/cfdisk.8*
+%lang(ja) %{_mandir}/ja/man8/fdisk.8*
+%lang(ja) %{_mandir}/ja/man8/sfdisk.8*
+%lang(ja) %{_mandir}/ja/man8/fsck.minix.8*
+%lang(ja) %{_mandir}/ja/man8/mkfs.bfs.8*
+%lang(ja) %{_mandir}/ja/man8/mkfs.minix.8*
+%lang(ja) %{_mandir}/ja/man8/mkfs.8*
+
+%lang(ko) %{_mandir}/ko/man8/fdisk.8*
+%lang(ko) %{_mandir}/ko/man8/fsck.minix.8*
+%lang(ko) %{_mandir}/ko/man8/mkfs.minix.8*
+%lang(ko) %{_mandir}/ko/man8/mkfs.8*
+
 %lang(pl) %{_mandir}/pl/man8/fdisk.8*
+%lang(pl) %{_mandir}/pl/man8/fsck.minix.8*
+%lang(pl) %{_mandir}/pl/man8/mkfs.minix.8*
+%lang(pl) %{_mandir}/pl/man8/mkfs.8*
+
+%attr(755,root,root) /sbin/fsck.cramfs
+%attr(755,root,root) /sbin/mkfs.cramfs
+%attr(755,root,root) /sbin/mkfs.bfs
 
 %attr(755,root,root) %{_bindir}/cytune
 
@@ -610,6 +846,31 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/rdev.8*
 %{_mandir}/man8/rootflags.8*
 %{_mandir}/man8/vidmode.8*
+
+%lang(de) %{_mandir}/de/man8/ramsize.8*
+%lang(de) %{_mandir}/de/man8/rdev.8*
+%lang(de) %{_mandir}/de/man8/rootflags.8*
+%lang(de) %{_mandir}/de/man8/vidmode.8*
+
+%lang(es) %{_mandir}/es/man8/ramsize.8*
+%lang(es) %{_mandir}/es/man8/rdev.8*
+%lang(es) %{_mandir}/es/man8/rootflags.8*
+%lang(es) %{_mandir}/es/man8/vidmode.8*
+
+%lang(ja) %{_mandir}/ja/man8/ramsize.8*
+%lang(ja) %{_mandir}/ja/man8/rdev.8*
+%lang(ja) %{_mandir}/ja/man8/rootflags.8*
+%lang(ja) %{_mandir}/ja/man8/vidmode.8*
+
+%lang(ko) %{_mandir}/ko/man8/ramsize.8*
+%lang(ko) %{_mandir}/ko/man8/rdev.8*
+%lang(ko) %{_mandir}/ko/man8/rootflags.8*
+%lang(ko) %{_mandir}/ko/man8/vidmode.8*
+
+%lang(pl) %{_mandir}/pl/man8/ramsize.8*
+%lang(pl) %{_mandir}/pl/man8/rdev.8*
+%lang(pl) %{_mandir}/pl/man8/rootflags.8*
+%lang(pl) %{_mandir}/pl/man8/vidmode.8*
 %endif
 
 %{_infodir}/ipc*
@@ -634,54 +895,124 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/swapon.8*
 %{_mandir}/man8/swapoff.8*
 
+%lang(cs) %{_mandir}/cs/man5/fstab.5*
+
+%lang(de) %{_mandir}/de/man5/fstab.5*
+%lang(de) %{_mandir}/de/man5/nfs.5*
+
+%lang(es) %{_mandir}/es/man5/fstab.5*
+%lang(es) %{_mandir}/es/man5/nfs.5*
+
+%lang(es) %{_mandir}/es/man8/mount.8*
+%lang(es) %{_mandir}/es/man8/umount.8*
+%lang(es) %{_mandir}/es/man8/swapon.8*
+%lang(es) %{_mandir}/es/man8/swapoff.8*
+
+%lang(fr) %{_mandir}/fr/man5/fstab.5*
+%lang(fr) %{_mandir}/fr/man5/nfs.5*
+
+%lang(fr) %{_mandir}/fr/man8/mount.8*
+%lang(fr) %{_mandir}/fr/man8/umount.8*
+
+%lang(hu) %{_mandir}/hu/man5/fstab.5*
+
+%lang(hu) %{_mandir}/hu/man8/mount.8*
+%lang(hu) %{_mandir}/hu/man8/umount.8*
+
+%lang(it) %{_mandir}/it/man5/fstab.5*
+%lang(it) %{_mandir}/it/man5/nfs.5*
+
+%lang(it) %{_mandir}/it/man8/mount.8*
+%lang(it) %{_mandir}/it/man8/umount.8*
+%lang(it) %{_mandir}/it/man8/swapon.8*
+%lang(it) %{_mandir}/it/man8/swapoff.8*
+
+%lang(ja) %{_mandir}/ja/man5/fstab.5*
+%lang(ja) %{_mandir}/ja/man5/nfs.5*
+
+%lang(ja) %{_mandir}/ja/man8/mount.8*
+%lang(ja) %{_mandir}/ja/man8/umount.8*
+%{?_with_pivot_root:%lang(ja) %{_mandir}/ja/man8/pivot_root.8*}
+%lang(ja) %{_mandir}/ja/man8/swapon.8*
+%lang(ja) %{_mandir}/ja/man8/swapoff.8*
+
+%lang(ko) %{_mandir}/ko/man5/fstab.5*
+%lang(ko) %{_mandir}/ko/man5/nfs.5*
+
+%lang(ko) %{_mandir}/ko/man8/mount.8*
+%lang(ko) %{_mandir}/ko/man8/umount.8*
+%lang(ko) %{_mandir}/ko/man8/swapon.8*
+%lang(ko) %{_mandir}/ko/man8/swapoff.8*
+
+%lang(pl) %{_mandir}/pl/man5/fstab.5*
+%lang(pl) %{_mandir}/pl/man5/nfs.5*
+
 %lang(pl) %{_mandir}/pl/man8/mount.8*
 %lang(pl) %{_mandir}/pl/man8/umount.8*
 %lang(pl) %{_mandir}/pl/man8/swapon.8*
 %lang(pl) %{_mandir}/pl/man8/swapoff.8*
 
-%lang(pl) %{_mandir}/pl/man5/fstab.5*
-
 %files -n losetup
 %defattr(644,root,root,755)
+%attr(755,root,root) /sbin/losetup
 
 %{_mandir}/man8/losetup.8*
-%attr(755,root,root) /sbin/losetup
+%lang(fr) %{_mandir}/fr/man8/losetup.8*
+%lang(it) %{_mandir}/it/man8/losetup.8*
+%lang(ja) %{_mandir}/ja/man8/losetup.8*
+%lang(ko) %{_mandir}/ko/man8/losetup.8*
+%lang(pl) %{_mandir}/pl/man8/losetup.8*
 
 %files chkdupexe
 %defattr(644,root,root,755)
-%attr(0755,root,root) %{_bindir}/chkdupexe
-%{_mandir}/man1/chkdupexe.1*
+%attr(755,root,root) %{_bindir}/chkdupexe
 
+%{_mandir}/man1/chkdupexe.1*
+%lang(ja) %{_mandir}/ja/man1/chkdupexe.1*
+%lang(ko) %{_mandir}/ko/man1/chkdupexe.1*
 %lang(pl) %{_mandir}/pl/man1/chkdupexe.1*
 
 %files -n tunelp
 %defattr(644,root,root,755)
-%attr(0755,root,root) %{_sbindir}/tunelp
+%attr(755,root,root) %{_sbindir}/tunelp
+
 %{_mandir}/man8/tunelp.8*
+%lang(es) %{_mandir}/es/man8/tunelp.8*
+%lang(ja) %{_mandir}/ja/man8/tunelp.8*
 %lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
+%if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n login
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
-%attr(0755,root,root) /bin/login
+%attr(755,root,root) /bin/login
+
 %{_mandir}/man1/login.1*
+%lang(de) %{_mandir}/de/man1/login.1*
+%lang(es) %{_mandir}/es/man1/login.1*
+%lang(hu) %{_mandir}/hu/man1/login.1*
+%lang(id) %{_mandir}/id/man1/login.1*
+%lang(ja) %{_mandir}/ja/man1/login.1*
+%lang(ko) %{_mandir}/ko/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
+%endif
 
 %files -n agetty
 %defattr(644,root,root,755)
-%attr(0755,root,root) /sbin/agetty
-%{_mandir}/man8/agetty.8*
+%attr(755,root,root) /sbin/agetty
 
+%{_mandir}/man8/agetty.8*
+%lang(es) %{_mandir}/es/man8/agetty.8*
+%lang(ja) %{_mandir}/ja/man8/agetty.8*
+
+%if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n rawdevices
 %defattr(644,root,root,755)
-%attr(0755,root,root) %{_bindir}/raw
-%attr(0750,root,root) /etc/rc.d/init.d/rawdevices
-%attr(0640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
-%{_mandir}/man8/raw.8*
+%attr(755,root,root) %{_bindir}/raw
+%attr(750,root,root) /etc/rc.d/init.d/rawdevices
+%attr(640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
 
-%if %{?BOOT:1}%{!?BOOT:0}
-%files BOOT
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/bootdisk/sbin/*
+%{_mandir}/man8/raw.8*
+%lang(ja) %{_mandir}/ja/man8/raw.8*
 %endif

@@ -1,0 +1,64 @@
+--- util-linux-2.10f/mount/rpcsvc/nfsmount.x.rpc	Mon Feb 28 16:00:44 2000
++++ util-linux-2.10f/mount/rpcsvc/nfsmount.x	Mon Feb 28 16:01:15 2000
+@@ -48,7 +48,6 @@
+ #endif
+ %#include <asm/types.h>
+ 
+-const MOUNTPORT = 635;
+ const MNTPATHLEN = 1024;	/* maximum bytes in a pathname argument */
+ const MNTNAMLEN = 255;		/* maximum bytes in a name argument */
+ const FHSIZE = 32;		/* size in bytes of a file handle */
+--- util-linux-2.10f/mount/nfsmount.x.rpc	Mon Feb 28 15:53:09 2000
++++ util-linux-2.10f/mount/nfsmount.x	Mon Feb 28 16:01:20 2000
+@@ -48,7 +48,6 @@
+ #endif
+ %#include <asm/types.h>
+ 
+-const MOUNTPORT = 635;
+ const MNTPATHLEN = 1024;	/* maximum bytes in a pathname argument */
+ const MNTNAMLEN = 255;		/* maximum bytes in a name argument */
+ const FHSIZE = 32;		/* size in bytes of a file handle */
+--- util-linux-2.10f/mount/rpcsvc/nfsmount.h.rpc	Mon Feb 28 15:53:19 2000
++++ util-linux-2.10f/mount/rpcsvc/nfsmount.h	Mon Feb 28 16:01:26 2000
+@@ -45,7 +45,6 @@
+ #ifndef _rpcsvc_mount_h
+ #define _rpcsvc_mount_h
+ #include <asm/types.h>
+-#define MOUNTPORT 635
+ #define MNTPATHLEN 1024
+ #define MNTNAMLEN 255
+ #define FHSIZE 32
+--- util-linux-2.10f/mount/nfsmount.c.rpc	Mon Feb 28 16:01:40 2000
++++ util-linux-2.10f/mount/nfsmount.c	Mon Feb 28 16:07:34 2000
+@@ -149,6 +149,9 @@ static struct pmap p = {0, 0, 0, 0};
+ server_addr->sin_port = PMAPPORT;
+ pmap = pmap_getmaps(server_addr);
+ 
++if (!pmap)
++	return NULL;
++
+ if (version > MAX_NFSPROT)
+ 	version = MAX_NFSPROT;
+ if (!prog)
+@@ -177,8 +180,6 @@ next:
+ }
+ if (!p.pm_vers)
+ 	p.pm_vers = MOUNTVERS;
+-if (!p.pm_port)
+-	p.pm_port = MOUNTPORT;
+ if (!p.pm_prot)
+ 	p.pm_prot = IPPROTO_TCP;
+ return &p;
+@@ -575,6 +576,12 @@ int nfsmount(const char *spec, const cha
+ 				       mountvers,
+ 				       proto,
+  				       mountport);
++
++			if (pm_mnt == NULL) {
++			  fprintf(stderr, _("mount: cannot access portmapper on %s: %s\n"),
++				  hostname, strerror (errno));
++			  goto fail;
++			}
+ 
+ 			/* contact the mount daemon via TCP */
+ 			mount_server_addr.sin_port = htons(pm_mnt->pm_port);

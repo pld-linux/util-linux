@@ -1,0 +1,11 @@
+--- util-linux-2.11t/configure.wiget	Tue Jul  9 12:43:58 2002
++++ util-linux-2.11t/configure	Tue Jul  9 12:46:47 2002
+@@ -494,7 +494,7 @@
+ # Many Linux systems do not have "which". Maybe "env" can be used.
+ # Writing /usr/bin/xgettext is no good: one may have xgettext elsewhere.
+ #
+-if (test $MAY_ENABLE_NLS = yes && type xgettext > /dev/null 2>&1); then
++if (test $MAY_ENABLE_NLS = yes && test -x /usr/bin/xgettext > /dev/null 2>&1); then
+ 	msg=`xgettext --foreign-user 2>&1 | grep unrecognized`
+ 	if test -n "$msg"; then
+ 		echo "FOREIGN = " >> make_include
