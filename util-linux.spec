@@ -1,8 +1,8 @@
 #
 # Conditional build:
 # _without_crypto	- without kerneli cryptography
-# _with_pivot_root
-# _without_dist_kernel
+# _with_pivot_root	- build pivot_root utility (auto-selected if 2.4 kernel)
+# _without_dist_kernel	- do nothing for now
 # _with_uClibc          - don't build few utilities
 #
 # TODO:
@@ -12,10 +12,11 @@
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 %if %{_kernel24}
 %define		_kernel_series	2.4
+%define		_with_pivot_root 1
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	1
+%define		_release	2
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -51,9 +52,8 @@ Patch11:	%{name}-glibc.patch
 #based on:	http://www.kernel.org/pub/linux/kernel/people/hvr/util-linux-patch-int/%{name}-2.11n.patch.bz2
 Patch12:	%{name}-cryptoapi.patch
 Patch13:	%{name}-losetup-getpass.patch
-Patch14:	%{name}-login-problems.patch
-Patch15:	%{name}-posixsh.patch
-Patch16:	%{name}-ppc-hwclock.patch
+Patch14:	%{name}-posixsh.patch
+Patch15:	%{name}-ppc-hwclock.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -377,14 +377,14 @@ util-linux dla bootkietki.
 %if !%{_kernel24}
 %{!?_without_crypto:%patch13 -p1}
 %endif
-#%patch14 -p1
+%patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
-export CC="%{__cc}"
-export LDFLAGS="%{rpmldflags}"
-export CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+CC="%{__cc}"
+LDFLAGS="%{rpmldflags}"
+CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+export CC CFLAGS LDFLAGS
 # using %%configure2_13 isn't very wise here, it is not autoconf generated
 # configure and it doesn't take any parameters
 ./configure
@@ -405,7 +405,8 @@ mv -f fdisk/fdisk fdisk-BOOT
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
 %endif
 
-(cd sys-utils; makeinfo ipc.texi)
+cd sys-utils
+makeinfo ipc.texi
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -457,8 +458,6 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 	fi
     done
 done
-
-gzip -9nf */README.*
 
 %{!?_with_uClibc:%find_lang %{name}}
 
