@@ -1,7 +1,6 @@
-diff -Nur util-linux-2.9r/lib/pathnames.h util-linux-2.9r.pld/lib/pathnames.h
---- util-linux-2.9r/lib/pathnames.h	Thu Jun 10 12:46:57 1999
-+++ util-linux-2.9r.pld/lib/pathnames.h	Thu Jun 10 12:23:57 1999
-@@ -51,6 +51,10 @@
+--- util-linux-2.10a/lib/pathnames.h.wiget	Fri Nov 12 00:24:49 1999
++++ util-linux-2.10a/lib/pathnames.h	Fri Nov 12 00:47:51 1999
+@@ -86,6 +86,10 @@
  #define LOGDIR                  "/var/log"
  #endif
  
@@ -12,65 +11,29 @@ diff -Nur util-linux-2.9r/lib/pathnames.h util-linux-2.9r.pld/lib/pathnames.h
  #ifndef VARPATH
  #define VARPATH			"/var"
  #endif
-@@ -66,14 +70,14 @@
+@@ -101,7 +105,7 @@
  #define SECURETTY       	"/etc/securetty"
  #define _PATH_UTMP      	"/var/run/utmpx"
  #define _PATH_WTMP      	LOGDIR "/wtmpx"
 -#define _PATH_WTMPLOCK		"/etc/wtmplock"
-+#define _PATH_WTMPLOCK		"/var/lock/wtmpxlock"
++#define _PATH_WTMPLOCK		"/var/log/wtmpxlock"
  
  /* no more . in DEFPATH */
  #define	_PATH_DEFPATH	        "/usr/local/bin:/bin:/usr/bin"
- #define	_PATH_DEFPATH_ROOT	SBINDIR ":/bin:" USRSBINDIR ":/usr/bin"
- #define	_PATH_HUSHLOGIN		".hushlogin"
+@@ -110,7 +114,7 @@
  #define	_PATH_LASTLOG		LOGDIR "/lastlog"
+ 
+ #ifndef _PATH_MAILDIR
 -#define	_PATH_MAILDIR		VARPATH "/spool/mail"
 +#define	_PATH_MAILDIR		VARPATH "/mail"
+ #endif
  #define	_PATH_MOTDFILE		"/etc/motd"
  #define	_PATH_NOLOGIN		"/etc/nologin"
- 
-@@ -100,5 +104,5 @@
- #define _PATH_GTMP              "/etc/gtmp"
+@@ -142,5 +146,5 @@
  #define _PATH_GTMPTMP           "/etc/gtmptmp"
  
+ /* used in misc-utils/look.c */
 -#define _PATH_WORDS             "/usr/dict/words"
 -#define _PATH_WORDS_ALT         "/usr/dict/web2"
 +#define _PATH_WORDS             "/usr/share/dict/words"
 +#define _PATH_WORDS_ALT         "/usr/share/dict/web2"
-diff -Nur util-linux-2.9r/text-utils/Makefile util-linux-2.9r.pld/text-utils/Makefile
---- util-linux-2.9r/text-utils/Makefile	Wed Feb 24 19:48:48 1999
-+++ util-linux-2.9r.pld/text-utils/Makefile	Thu Jun 10 12:26:19 1999
-@@ -20,7 +20,7 @@
- 
- # Where to put datebase files?
- 
--USRLIB=		more.help
-+DATAMISC=	more.help
- 
- # Programs requiring special compilation
- 
-@@ -60,10 +60,10 @@
- endif
- 
- install install.shadow install.text-utils: all
--	$(INSTALLDIR) $(BINDIR) $(USRBINDIR) $(USRLIBDIR) $(MAN1DIR)
-+	$(INSTALLDIR) $(BINDIR) $(USRBINDIR) $(DATAMISCDIR) $(MAN1DIR)
- 	$(INSTALLBIN) $(BIN) $(BINDIR)
- 	$(INSTALLBIN) $(USRBIN) $(USRBINDIR)
--	$(INSTALLDAT) $(USRLIB) $(USRLIBDIR)
-+	$(INSTALLDAT) $(DATAMISC) $(DATAMISCDIR)
- 	$(INSTALLMAN) $(MAN1) $(MAN1DIR)
- 
- .PHONY: clean distclean
-diff -Nur util-linux-2.9r/text-utils/more.c util-linux-2.9r.pld/text-utils/more.c
---- util-linux-2.9r/text-utils/more.c	Thu Jun 10 12:46:56 1999
-+++ util-linux-2.9r.pld/text-utils/more.c	Thu Jun 10 12:21:02 1999
-@@ -57,7 +57,7 @@
- #include <locale.h>
- #include "nls.h"
- 
--#define HELPFILE	"/usr/lib/more.help"
-+#define HELPFILE	"/usr/share/misc/more.help"
- #define VI		"/usr/bin/vi"
- 
- #define Fopen(s,m)	(Currline = 0,file_pos=0,fopen(s,m))
