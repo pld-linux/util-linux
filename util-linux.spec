@@ -239,7 +239,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 4711" \
-	MOREHELPDIR=%{_datadir}/misc \
+	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
 	localedir=%{_datadir}/locale \
 	USE_TTY_GROUP=no
 
