@@ -1,5 +1,5 @@
---- util-linux-2.10b/lib/pathnames.h.wiget	Fri Nov 19 08:16:28 1999
-+++ util-linux-2.10b/lib/pathnames.h	Fri Nov 19 08:36:51 1999
+--- util-linux-2.10l/lib/pathnames.h.wiget	Wed Apr 26 20:17:29 2000
++++ util-linux-2.10l/lib/pathnames.h	Wed Apr 26 20:17:29 2000
 @@ -105,7 +105,7 @@
  #define SECURETTY       	"/etc/securetty"
  #define _PATH_UTMP      	"/var/run/utmpx"
@@ -9,8 +9,8 @@
  
  /* no more . in DEFPATH */
  #define	_PATH_DEFPATH	        "/usr/local/bin:/bin:/usr/bin"
---- util-linux-2.10b/login-utils/login.c.wiget	Sun Nov 14 22:55:55 1999
-+++ util-linux-2.10b/login-utils/login.c	Fri Nov 19 08:16:28 1999
+--- util-linux-2.10l/login-utils/login.c.wiget	Tue Mar 21 00:18:38 2000
++++ util-linux-2.10l/login-utils/login.c	Wed Apr 26 20:22:32 2000
 @@ -154,7 +154,7 @@
  
  #define SLEEP_EXIT_TIMEOUT 5
@@ -63,14 +63,14 @@
  main(int argc, char **argv)
 @@ -485,8 +519,6 @@
      else
-       tty = ttyn;
-     
+ 	tty = ttyn;
+ 
 -    openlog("login", LOG_ODELAY, LOG_AUTHPRIV);
 -
  #if 0
      /* other than iso-8859-1 */
      printf("\033(K");
-@@ -550,7 +582,8 @@
+@@ -555,7 +587,8 @@
  	       (retcode == PAM_AUTHINFO_UNAVAIL))) {
  	    pam_get_item(pamh, PAM_USER, (const void **) &username);
  	    syslog(LOG_NOTICE,_("FAILED LOGIN %d FROM %s FOR %s, %s"),
@@ -80,7 +80,7 @@
  	    fprintf(stderr,_("Login incorrect\n\n"));
  	    pam_set_item(pamh,PAM_USER,NULL);
  	    retcode = pam_authenticate(pamh, 0);
-@@ -559,13 +592,16 @@
+@@ -564,13 +597,16 @@
  	if (retcode != PAM_SUCCESS) {
  	    pam_get_item(pamh, PAM_USER, (const void **) &username);
  
@@ -99,7 +99,7 @@
  
  	    fprintf(stderr,_("\nLogin incorrect\n"));
  	    pam_end(pamh, retcode);
-@@ -595,8 +631,12 @@
+@@ -600,8 +636,12 @@
      retcode = pam_open_session(pamh, 0);
      PAM_FAIL_CHECK;
  
@@ -112,7 +112,7 @@
      for (cnt = 0;; ask = 1) {
  #  ifndef __linux__
  	ioctlval = 0;
-@@ -875,7 +915,9 @@
+@@ -880,7 +920,9 @@
  	/* If we can't find a pre-existing entry by pid, try by line.
  	   BSD network daemons may rely on this. (anonymous) */
  	if (utp == NULL) {
@@ -123,7 +123,7 @@
  	     ut.ut_type = LOGIN_PROCESS;
  	     strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
  	     strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
-@@ -1118,6 +1160,8 @@
+@@ -1127,6 +1169,8 @@
  #endif
      signal(SIGINT, SIG_DFL);
      
