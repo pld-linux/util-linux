@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10o
-Release:	4
+Release:	5
 License:	Distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -47,6 +47,7 @@ Patch9:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-compat.patch
 Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-nfsv3.patch
 Patch11:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
 Patch12:	util-linux-syscall.patch 
+Patch13:	util-linux-2.10o-rawio.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -249,6 +250,8 @@ support for this feature built into them, however).
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+
 
 %build
 
@@ -373,6 +376,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/renice
+%attr(0755,root,root) %{_bindir}/raw
 %attr(0755,root,root) /usr/games/banner
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
@@ -416,6 +420,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/setfdprm.8*
+%{_mandir}/man8/raw.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
