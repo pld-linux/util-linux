@@ -34,10 +34,8 @@ Source21:	mount.8.pl
 Source22:	swapon.8.pl
 Source23:	swapoff.8.pl
 Source24:	fstab.5.pl
-Source25:	chfn.1.pl
-Source26:	chsh.1.pl
-Source27:	chkdupexe.1.pl
-Source28:	tunelp.8.pl
+Source25:	chkdupexe.1.pl
+Source26:	tunelp.8.pl
 Patch0:		util-linux-MCONFIG.patch
 Patch1:		util-linux-fdisk.patch
 Patch2:		util-linux-po.patch
@@ -46,7 +44,7 @@ Patch4:		util-linux-fhs.patch
 Patch5:		util-linux-login.patch
 #Patch6:		util-linux-cipher.patch
 BuildRequires:	pam-devel >= 0.66
-BuildRequires:	ncurses-devel
+BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 Requires:	pam >= 0.66
 Requires:	/sbin/install-info
@@ -54,10 +52,9 @@ Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	util-linux-suids
 
 %description
-util-linux contains a large variety of low-level system utilities
-necessary for a functional Linux system. This includes, among other
-things, configuration tools such as fdisk and system programs such
-as login.
+util-linux contains a large variety of low-level system utilities necessary
+for a functional Linux system. This includes, among other things,
+configuration tools such as fdisk and system programs such as login.
 
 %description -l de
 util-linux enthält eine große Anzahl an low-level-Systemdienstprogrammen,
@@ -99,27 +96,11 @@ devices.
 Block loopback devices should not be confused with the networking loopback
 device, which is configured with the normal ifconfig command.
 
-%description -l pl -n losetup 
-Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, które mapuje
-normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera program przy
-pomocy którego bêdziesz móg³ wykorzystaæ to urz±dzenie. 
-
-Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym interfejsem 
-loopback, który jest konfigurowany przy pomocy polecenia ifconfig.
-
 %description -l de -n losetup
 Linux unterstützt ein spezielles Blockgerät, das sogenannte Loopback, das 
 eine normale Datei auf ein virtuelles Blockgerät abbildet. Das Paket 
 enthält Programme zum Einrichten und Entfernen der Zuordnung zwischen 
 Dateien und Loopback-Geräten.  
-
-%description -l tr -n losetup
-Linux özel bir blok aygýt olan yerel-çevrim aygýtýný (loopback device)
-destekler. Bu aygýt normal bir dosyanýn sanal bir blok aygýtý üzerine
-haritasýný çýkarýr. Bu paket, dosyalar ve yerel-çevrim aygýtlarý arasýndaki
-haritalama iþleminin kurulmasý ve kaldýrýlmasý için programlar içerir.
-Blok yerel-çevrim aygýtý ifconfig komutu ile yapýlandýrýlan að yerel-çevrim
-aygýtý ile karýþtýrýlmamalýdýr.
 
 %description -l fr -n losetup
 Linux gère un périphérique bloc spécial appelé « loopback », qui correspond
@@ -129,6 +110,22 @@ fichiers et les périphériques loopback.
 
 Les périphériques bloc loopback ne doivent pas être confondus avec le
 périphérique loopback du réseau, configuré avec la commande ifconfig normale.
+
+%description -l pl -n losetup 
+Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, które mapuje
+normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera program przy
+pomocy którego bêdziesz móg³ wykorzystaæ to urz±dzenie. 
+
+Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym interfejsem 
+loopback, który jest konfigurowany przy pomocy polecenia ifconfig.
+
+%description -l tr -n losetup
+Linux özel bir blok aygýt olan yerel-çevrim aygýtýný (loopback device)
+destekler. Bu aygýt normal bir dosyanýn sanal bir blok aygýtý üzerine
+haritasýný çýkarýr. Bu paket, dosyalar ve yerel-çevrim aygýtlarý arasýndaki
+haritalama iþleminin kurulmasý ve kaldýrýlmasý için programlar içerir.
+Blok yerel-çevrim aygýtý ifconfig komutu ile yapýlandýrýlan að yerel-çevrim
+aygýtý ile karýþtýrýlmamalýdýr.
 
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
@@ -147,12 +144,6 @@ uses for already-mounted filesystems.
 
 This package is critical for the functionality of your system.
 
-%description -l pl -n mount
-Program mount jest u¿ywany przez system do montowania systemu plików, zrówno
-lokalnych jak i sieciowych (np. NFS). 
-
-Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuxa.
-
 %description -l de -n mount
 Mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk)
 zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme müssen
@@ -169,26 +160,18 @@ d'accès pour les systèmes de fichiers déjà montés.
 
 Ce paquetage est critique pour le fonctionnement de votre système.   
 
+%description -l pl -n mount
+Program mount jest u¿ywany przez system do montowania systemu plików, zrówno
+lokalnych jak i sieciowych (np. NFS). 
+
+Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuxa.
+
 %description -l tr -n mount
 mount, hem yerel hem de að dosya sistemlerinin dizin yapýsýna eklenmesi için
 kullanýlýr. Bunun için baðlanacak dosya sisteminin önceden hazýrlanmýþ olmasý
 gerekir. Ayný zamanda çekirdeðin baðlanmýþ dosya sistemlerine eriþimini
 deðiþtirmek için de kullanýlýr. Bu paket sisteminizin iþlevselliði açýsýndan
 kritiktir.
-
-%package uprogs
-Summary:	Users programs for manipulate /etc/passwd
-Summary(pl):	Programy u¿ytkowników do manipulacji /etc/passwd 
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
-Requires:	pam >= 0.66
-Obsoletes:	util-linux-suid
-
-%description uprogs -l pl
-Programy do manipulacji plikiem /etc/passwd. 
-
-%description uprogs
-Users programs for manipulate /etc/passwd file.
 
 %package	chkdupexe
 Summary:	chkdupexe - find duplicate executables
@@ -244,8 +227,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 
 %configure
 
-make \
-	OPT="$RPM_OPT_FLAGS" \
+make	OPT="$RPM_OPT_FLAGS" \
 	MOREHELPDIR=%{_datadir}/misc
 
 %install
@@ -297,11 +279,9 @@ install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
 install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
 
-install %{SOURCE25} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chfn.1
-install %{SOURCE26} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chsh.1
-install %{SOURCE27} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
+install %{SOURCE25} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
 
-install %{SOURCE28} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
+install %{SOURCE26} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
 
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
@@ -370,7 +350,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setterm
 %attr(0755,root,root) %{_bindir}/whereis
-%attr(2711,root, tty) %{_bindir}/write
+%attr(2755,root, tty) %{_bindir}/write
 %attr(0755,root,root) %{_bindir}/getopt
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
@@ -509,22 +489,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man8/losetup.8*
 %attr(755,root,root) /sbin/losetup
-
-%files uprogs
-%defattr(640,root,root,755)
-
-%config(noreplace) %verify(not mtime size md5) /etc/pam.d/chfn
-%config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
-%config(noreplace) %verify(not mtime size md5) /etc/security/*
-
-%attr(4755,root,root) %{_bindir}/chfn
-%attr(4755,root,root) %{_bindir}/chsh
-
-%attr(644,root,root) %{_mandir}/man1/chfn.1*
-%attr(644,root,root) %{_mandir}/man1/chsh.1*
-
-%lang(pl) %attr(644,root,root) %{_mandir}/pl/man1/chsh.1*
-%lang(pl) %attr(644,root,root) %{_mandir}/pl/man1/chfn.1*
 
 %files chkdupexe
 %defattr(644,root,root,755)
