@@ -347,17 +347,6 @@ Support for raw-devices.
 %description -n rawdevices -l pl
 Obs³uga raw-device'ów.
 
-%package BOOT
-Summary:	util-linux for bootdisk
-Summary(pl):	util-linux dla bootkietki
-Group:		Applications/System
-
-%description BOOT
-util-linux for bootdisk.
-
-%description BOOT -l pl
-util-linux dla bootkietki.
-
 %prep
 %setup -q -a1
 %patch0 -p1
@@ -391,12 +380,6 @@ export CC CFLAGS LDFLAGS
 # configure and it doesn't take any parameters
 ./configure
 
-%if %{?BOOT:1}%{!?BOOT:0}
-%{__make} -C fdisk fdisk OPT="%{rpmcflags}" LDFLAGS="-static"
-mv -f fdisk/fdisk fdisk-BOOT
-%{__make} -C fdisk clean
-%endif
-
 %{?_with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
 %{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
@@ -412,11 +395,6 @@ makeinfo ipc.texi
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%if %{?BOOT:1}%{!?BOOT:0}
-install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
-install fdisk-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/fdisk
-%endif
 
 install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
