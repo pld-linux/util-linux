@@ -57,7 +57,7 @@ jak login.
 araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma uygulamalarý ve
 login gibi sistem programlarý sayýlabilir.
 
-%package -n	losetup
+%package -n losetup
 Summary:	programs for setting up and configuring loopback devices
 Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
 Summary(fr):	programmes pour mettre en place et configurer les loopback
@@ -106,7 +106,7 @@ fichiers et les périphériques loopback.
 Les périphériques bloc loopback ne doivent pas être confondus avec le
 périphérique loopback du réseau, configuré avec la commande ifconfig normale.
 
-%package -n	mount
+%package -n mount
 Summary:	Programs for mounting and unmounting filesystems
 Summary(de):	Programme zum Montieren und Abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
@@ -152,7 +152,7 @@ gerekir. Ayný zamanda çekirdeðin baðlanmýþ dosya sistemlerine eriþimini
 deðiþtirmek için de kullanýlýr. Bu paket sisteminizin iþlevselliði açýsýndan
 kritiktir.
 
-%package	uprogs
+%package uprogs
 Summary:	Users programs for manipulate /etc/passwd
 Summary(pl):	Programy u¿ytkowników do manipulacji /etc/passwd 
 Group:		Utilities/System
@@ -182,7 +182,7 @@ chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane
 katalogi z plikami uruchamialnymi i informuje o powtarzaj±cych siê plikach
 w ró¿nych katalogach.
 
-%package -n	tunelp
+%package -n tunelp
 Summary:        configures kernel parallel port driver
 Summary(de):    konfiguriert den Kerneltreiber für den parallelen Port
 Summary(fr):    Configure le pilote du port parallèle dans le noyau
@@ -235,9 +235,8 @@ make install \
 	localedir=$RPM_BUILD_ROOT%{_datadir}/locale \
 	USE_TTY_GROUP=no
 
-make -C po \
-	prefix=$RPM_BUILD_ROOT%{_prefix} \
-	install 
+make -C po install \
+	prefix=$RPM_BUILD_ROOT%{_prefix}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
@@ -430,8 +429,8 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
 %config(noreplace) %verify(not mtime size md5) /etc/security/*
 
-%attr(4711,root,root) %{_bindir}/chfn
-%attr(4711,root,root) %{_bindir}/chsh
+%attr(4755,root,root) %{_bindir}/chfn
+%attr(4755,root,root) %{_bindir}/chsh
 
 %attr(644,root,root) %{_mandir}/man1/chfn.1.gz
 %attr(644,root,root) %{_mandir}/man1/chsh.1.gz
