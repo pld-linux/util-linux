@@ -199,7 +199,7 @@ Linux п╕дтриму╓ спец╕альний блочний пристр╕й, loopback, який
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
 Summary(de):	Programme zum montieren und abmontieren von Dateisystemen
-Summary(fr):	Programme pour monter et dИmonter des systХmes de fichiers.
+Summary(fr):	Programme pour monter et dИmonter des systХmes de fichiers
 Summary(pl):	Programy do montowania i odmontowywania systemСw plikСw
 Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
 Summary(uk):	Програми для монтування та розмонтування файлових систем
