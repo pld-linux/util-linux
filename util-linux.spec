@@ -493,14 +493,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %ifarch %{ix86}
 %attr(755,root,root) %{_sbindir}/rdev
-%attr(755,root,root) %{_sbindir}/swapdev
 %attr(755,root,root) %{_sbindir}/vidmode
 %attr(755,root,root) %{_sbindir}/ramsize
 %attr(755,root,root) %{_sbindir}/rootflags
 
 %{_mandir}/man8/rdev.8*
 %{_mandir}/man8/rootflags.8*
-%{_mandir}/man8/swapdev.8*
 %{_mandir}/man8/vidmode.8*
 %{_mandir}/man8/ramsize.8*
 %endif
