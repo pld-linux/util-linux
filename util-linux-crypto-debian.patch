@@ -18,8 +18,8 @@
  	$(LINK) $^ -o $@
  
  mount.o umount.o nfsmount.o losetup.o fstab.o realpath.o sundries.o: sundries.h
---- util-linux-2.12.orig/mount/lomount.c
-+++ util-linux-2.12/mount/lomount.c
+--- util-linux-2.12/mount/lomount.c.orig	2003-07-17 01:56:53.000000000 +0200
++++ util-linux-2.12/mount/lomount.c	2004-08-04 19:27:23.000000000 +0200
 @@ -33,15 +33,80 @@
  
  #include "loop.h"
@@ -102,18 +102,17 @@
  static int
  loop_info64_to_old(const struct loop_info64 *info64, struct loop_info *info)
  {
-@@ -135,6 +200,10 @@
- 	}
+@@ -126,7 +191,8 @@
+ 			printf(_(", offset %d"), loopinfo.lo_offset);
  
- 	errsv = errno;
-+	printf (_("%s: [%04x]:%ld (%s) offset %d, %s encryption\n"),
-+		device, loopinfo.lo_device, loopinfo.lo_inode,
-+		loopinfo.lo_name, loopinfo.lo_offset,
-+		id_to_name(loopinfo.lo_encrypt_type));
- 	fprintf(stderr, _("loop: can't get info on device %s: %s\n"),
- 		device, strerror (errsv));
- 	close (fd);
-@@ -189,10 +258,9 @@
+ 		if (loopinfo.lo_encrypt_type)
+-			printf(_(", encryption type %d\n"),
++			printf(_(", encryption %s (type %d)\n"),
++			       id_to_name(loopinfo.lo_encrypt_type),
+ 			       loopinfo.lo_encrypt_type);
+ 
+ 		printf("\n");
+@@ -189,10 +255,9 @@
  		error(_("mount: could not find any device /dev/loop#"));
  	else if (!someloop) {
  		error(_(
@@ -127,7 +126,7 @@
  	} else
  		error(_("mount: could not find any free loop device"));
  	return 0;
-@@ -247,10 +315,20 @@
+@@ -247,10 +312,20 @@
  
  int
  set_loop(const char *device, const char *file, int offset,
@@ -149,7 +148,7 @@
  
  	mode = (*loopro ? O_RDONLY : O_RDWR);
  	if ((ffd = open(file, mode)) < 0) {
-@@ -276,8 +354,13 @@
+@@ -276,8 +351,13 @@
  			loopinfo64.lo_encrypt_type = atoi(encryption);
  		} else {
  			loopinfo64.lo_encrypt_type = LO_CRYPT_CRYPTOAPI;
@@ -164,7 +163,7 @@
  		}
  	}
  
-@@ -296,29 +379,98 @@
+@@ -296,29 +376,98 @@
  	}
  #endif
  
@@ -270,7 +269,7 @@
  		struct loop_info loopinfo;
  		int errsv = errno;
  
-@@ -333,8 +485,10 @@
+@@ -333,8 +482,10 @@
  			perror("ioctl: LOOP_SET_STATUS");
  			goto fail;
  		}
@@ -281,7 +280,7 @@
  	close (fd);
  	if (verbose > 1)
  		printf(_("set_loop(%s,%s,%d): success\n"),
-@@ -343,6 +497,7 @@
+@@ -343,6 +494,7 @@
  
   fail:
  	(void) ioctl (fd, LOOP_CLR_FD, 0);
@@ -289,7 +288,7 @@
  	close (fd);
  	return 1;
  }
-@@ -411,8 +566,24 @@
+@@ -411,8 +563,24 @@
  	fprintf(stderr, _("usage:\n\
    %s loop_device                                      # give info\n\
    %s -d loop_device                                   # delete\n\
@@ -316,7 +315,7 @@
  	exit(1);
  }
  
-@@ -445,20 +616,23 @@
+@@ -445,20 +613,23 @@
  
  int
  main(int argc, char **argv) {
@@ -343,7 +342,7 @@
  		switch (c) {
  		case 'd':
  			delete = 1;
-@@ -467,6 +641,12 @@
+@@ -467,6 +638,12 @@
  		case 'e':
  			encryption = optarg;
  			break;
@@ -356,7 +355,7 @@
  		case 'o':
  			offset = optarg;
  			break;
-@@ -494,8 +674,10 @@
+@@ -494,8 +671,10 @@
  			usage();
  		if (passfd && sscanf(passfd,"%d",&pfd) != 1)
  			usage();
