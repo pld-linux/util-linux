@@ -27,15 +27,16 @@ Summary(ru):	îÁÂÏÒ ÂÁÚÏ×ÙÈ ÓÉÓÔÅÍÎÙÈ ÕÔÉÌÉÔ ÄÌÑ Linux
 Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
-Version:	2.11z
-%define	_rel	2
-Release:	%{_rel}
+Version:	2.12
+%define	_rel	1
+%define _pre pre
+Release:	0.%{_pre}.%{_rel}
 License:	distributable
 Group:		Applications/System
-Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
-# Source0-md5: c669467901c77a9a0e84f37cee477bbe
+Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}%{_pre}.tar.gz
+# Source0-md5:	5e749587cd61d22296689611b1271e5e
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source1-md5: 3c940c7e7fe699eaa2ddb1bffb3de2fe
+# Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
 Source3:	rawdevices.init
 Source4:	rawdevices.sysconfig
@@ -66,9 +67,9 @@ BuildRequires:	textutils
 %{!?_with_uClibc:BuildRequires:	zlib-devel}
 %{!?_with_uClibc:Requires:	pam >= 0.66}
 Provides:	fdisk
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	util-linux-suids
 Obsoletes:	cramfs
+Obsoletes:	util-linux-suids
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		debugcflags	-O1 -g
 
@@ -313,8 +314,8 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 Summary:	login is used when signing onto a system
 Summary(pl):	login jest u¿ywany do rozpoczêcia pracy w systemie
 Group:		Applications/System
-Obsoletes:	heimdal-login
 Requires:	pam-pld
+Obsoletes:	heimdal-login
 
 %description -n login
 login is used when signing onto a system. It can also be used to
@@ -351,7 +352,7 @@ Support for raw-devices.
 Obs³uga raw-device'ów.
 
 %prep
-%setup -q -a1
+%setup -q -n %{name}-%{version}%{_pre} -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -385,7 +386,8 @@ export CC CFLAGS LDFLAGS
 ./configure
 
 %{?_with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
-%{__make} OPT="%{rpmcflags}" \
+%{__make} \
+	OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	%{!?_with_uClibc:ADD_RAW="yes"} \
 	%{?_with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
@@ -542,6 +544,7 @@ fi
 %{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
+%attr(0755,root,root) %{_bindir}/tailf
 %attr(0755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/arch.1*
@@ -569,6 +572,7 @@ fi
 %{!?_with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
+%{_mandir}/man1/tailf.1*
 
 %{_mandir}/man8/blockdev.8*
 %{_mandir}/man8/ctrlaltdel.8*
