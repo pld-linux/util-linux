@@ -1,0 +1,26 @@
+diff -urN util-linux-2.11b.org/login-utils/login.c util-linux-2.11b/login-utils/login.c
+--- util-linux-2.11b.org/login-utils/login.c	Wed May  2 19:09:39 2001
++++ util-linux-2.11b/login-utils/login.c	Wed May  2 19:06:08 2001
+@@ -312,6 +312,9 @@
+ 
+ 	memset(&ut, 0, sizeof(ut));
+ 
++	if (!username)
++	    username = "unknown";
++
+ 	strncpy(ut.ut_user, username, sizeof(ut.ut_user));
+ 
+ 	strncpy(ut.ut_id, line + 3, sizeof(ut.ut_id));
+@@ -576,6 +579,12 @@
+ 
+     if(passwd_req == 1) {
+ 	int failcount=0;
++	
++	/* if we didn't get a user on the command line,
++	   set it to NULL */
++	pam_get_item(pamh, PAM_USER, (const void **) &username);
++	if (!username || username[0] == '\0')
++	    pam_set_item(pamh, PAM_USER, NULL);   
+ 
+ 	/* there may be better ways to deal with some of these
+ 	   conditions, but at least this way I don't think we'll
