@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12
-%define _rel 4
+%define _rel 5
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -42,6 +42,7 @@ Patch10:	%{name}-glibc.patch
 Patch11:	%{name}-posixsh.patch
 Patch12:	%{name}-ppc-hwclock.patch
 Patch13:	%{name}-no_multiline.patch
+Patch14:	%{name}-amd64.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -340,6 +341,7 @@ Obs³uga raw-device'ów.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p0
+%patch14 -p1
 
 %build
 CC="%{__cc}"
