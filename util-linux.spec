@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10o
-Release:	1
+Release:	2
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -446,7 +446,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_examplesdir}/getopt/*
 %{_datadir}/misc/more.help
 
-%ifarch %{ix86} alpha
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/cfdisk
 %attr(755,root,root) /sbin/fsck.minix
@@ -461,11 +460,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/mkfs.8*
 
 %lang(pl) %{_mandir}/pl/man8/fdisk.8*
-%endif
 
-%ifnarch sparc
 %attr(755,root,root) %{_bindir}/cytune
-%endif
 
 %ifarch %{ix86}
 %attr(755,root,root) %{_sbindir}/rdev
