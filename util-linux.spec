@@ -195,11 +195,11 @@ make install \
 	USE_TTY_GROUP=no
 
 %ifarch i386 i486 i586 i686
-mv -f $RPM_BUILD_ROOT/usr/bin/{swapdev,vidmode,ramsize,rootflags,rdev} \
+mv -f $RPM_BUILD_ROOT%{_bindir}/{swapdev,vidmode,ramsize,rootflags,rdev} \
 	$RPM_BUILD_ROOT/usr/sbin
 %endif
 
-mv $RPM_BUILD_ROOT/usr/bin/readprofile $RPM_BUILD_ROOT/usr/sbin
+mv $RPM_BUILD_ROOT%{_bindir}/readprofile $RPM_BUILD_ROOT/usr/sbin
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
@@ -253,34 +253,34 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %attr(0755,root,root) /sbin/mkswap
 %attr(0755,root,root) /sbin/ctrlaltdel
 %attr(0755,root,root) /sbin/kbdrate
-%attr(0755,root,root) /usr/bin/cal
-%attr(4755,root,root) /usr/bin/chfn
-%attr(4755,root,root) /usr/bin/chsh
-%attr(0755,root,root) /usr/bin/col
-%attr(0755,root,root) /usr/bin/colcrt
-%attr(0755,root,root) /usr/bin/colrm
-%attr(0755,root,root) /usr/bin/column
-%attr(0755,root,root) /usr/bin/hexdump
-%attr(0755,root,root) /usr/bin/rev
-%attr(0755,root,root) /usr/bin/ul
-%attr(0755,root,root) /usr/bin/ddate
-%attr(0755,root,root) /usr/bin/fdformat
-%attr(0755,root,root) /usr/bin/newgrp
-%attr(0755,root,root) /usr/bin/setfdprm
-%attr(0755,root,root) /usr/bin/logger
-%attr(0755,root,root) /usr/bin/look
-%attr(0755,root,root) /usr/bin/mcookie
-%attr(0755,root,root) /usr/bin/namei
-%attr(0755,root,root) /usr/bin/script
-%attr(0755,root,root) /usr/bin/setsid
-%attr(0755,root,root) /usr/bin/setterm
-%attr(0755,root,root) /usr/bin/tunelp
-%attr(0755,root,root) /usr/bin/whereis
-%attr(2755,root, tty) /usr/bin/write
-%attr(0755,root,root) /usr/bin/getopt
-%attr(0755,root,root) /usr/bin/ipcrm
-%attr(0755,root,root) /usr/bin/ipcs
-%attr(0755,root,root) /usr/bin/renice
+%attr(0755,root,root) %{_bindir}/cal
+%attr(4755,root,root) %{_bindir}/chfn
+%attr(4755,root,root) %{_bindir}/chsh
+%attr(0755,root,root) %{_bindir}/col
+%attr(0755,root,root) %{_bindir}/colcrt
+%attr(0755,root,root) %{_bindir}/colrm
+%attr(0755,root,root) %{_bindir}/column
+%attr(0755,root,root) %{_bindir}/hexdump
+%attr(0755,root,root) %{_bindir}/rev
+%attr(0755,root,root) %{_bindir}/ul
+%attr(0755,root,root) %{_bindir}/ddate
+%attr(0755,root,root) %{_bindir}/fdformat
+%attr(0755,root,root) %{_bindir}/newgrp
+%attr(0755,root,root) %{_bindir}/setfdprm
+%attr(0755,root,root) %{_bindir}/logger
+%attr(0755,root,root) %{_bindir}/look
+%attr(0755,root,root) %{_bindir}/mcookie
+%attr(0755,root,root) %{_bindir}/namei
+%attr(0755,root,root) %{_bindir}/script
+%attr(0755,root,root) %{_bindir}/setsid
+%attr(0755,root,root) %{_bindir}/setterm
+%attr(0755,root,root) %{_bindir}/tunelp
+%attr(0755,root,root) %{_bindir}/whereis
+%attr(2755,root, tty) %{_bindir}/write
+%attr(0755,root,root) %{_bindir}/getopt
+%attr(0755,root,root) %{_bindir}/ipcrm
+%attr(0755,root,root) %{_bindir}/ipcs
+%attr(0755,root,root) %{_bindir}/renice
 %attr(0755,root,root) /usr/sbin/rootflags
 %attr(0755,root,root) /usr/games/banner
 %attr(0755,root,root) /usr/sbin/vipw
@@ -348,7 +348,7 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %endif
 
 %ifnarch sparc
-%attr(755,root,root) /usr/bin/cytune
+%attr(755,root,root) %{_bindir}/cytune
 %endif
 
 %ifarch i386 i486 i586 i686
