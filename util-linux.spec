@@ -292,11 +292,7 @@ install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
 install %{SOURCE14} $RPM_BUILD_ROOT%{_mandir}/pl/man8/kbdrate.8
 install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
 install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
-
-%ifarch %{ix86} alpha
 install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
-%endif
-
 install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
 install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
 install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
