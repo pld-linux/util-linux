@@ -243,6 +243,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 
 %package -n login
 Summary:	login is used when signing onto a system
+Summary(pl):	login jest u¿ywany do rozpoczêcia pracy w systemie
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
@@ -253,6 +254,12 @@ Requires:	pam-pld
 login is used when signing onto a system. It can also be used to
 switch from one user to another at any time (most modern shells have
 support for this feature built into them, however).
+
+%description -n login
+login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany do 
+prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
+(jednak wiêkszo¶æ nowoczesnych shelli ma takie funkcje wbudowane).
+
 
 %prep
 %setup  -q 
