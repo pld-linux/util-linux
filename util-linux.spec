@@ -27,8 +27,19 @@ Version:	2.11m
 Release:	%{_release}
 License:	distributable
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	login.pamd
@@ -93,14 +104,14 @@ systèmes comme logger.
 %description -l pl
 util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi
 systemowych niezbêdnych do prawid³owego dzia³ania Linuksa. W pakiecie
-znajduj± siê miêdzy innymi narzêdzia konfiguracyjne, takie jak fdisk
-i programy systemowe, takie jak logger.
+znajduj± siê miêdzy innymi narzêdzia konfiguracyjne, takie jak fdisk i
+programy systemowe, takie jak logger.
 
 %description -l pt_BR
-util-linux contém uma grande variedade de utilitários de sistema
-de baixo-nível necessários para um sistema Linux funcional. Isso
-inclui, entre outras coisas, ferramentas de configuração como fdisk
-e programas de sistema como login.
+util-linux contém uma grande variedade de utilitários de sistema de
+baixo-nível necessários para um sistema Linux funcional. Isso inclui,
+entre outras coisas, ferramentas de configuração como fdisk e
+programas de sistema como login.
 
 %description -l tr
 þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey
@@ -114,8 +125,19 @@ Summary(fr):	Programmes pour mettre en place et configurer les loopback
 Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
 Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 Release:	%{_release}@%{_kernel_series}
 %if %{_kernel24}
 Conflicts:	kernel < 2.3.0
@@ -172,8 +194,19 @@ Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
 Summary(pl):	Programy do montowania i odmontowywania systemów plików
 Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 Release:	%{_release}@%{_kernel_series}
 %if %{_kernel24}
 Conflicts:	kernel < 2.3.0
@@ -222,8 +255,19 @@ sisteminizin iþlevselliði açýsýndan kritiktir.
 Summary:	chkdupexe - find duplicate executables
 Summary(pl):	chkdupexe odszukuje powtarzaj±ce siê pliki uruchamialne
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 
 %description chkdupexe
 chkdupexe will scan the union of $PATH and a hardcoded list of common
@@ -242,8 +286,19 @@ Summary(fr):	Configure le pilote du port parallèle dans le noyau
 Summary(pl):	Program do konfigurowania sterownika portu równoleg³ego
 Summary(tr):	Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 
 %description -n tunelp
 tunelp aids in configuring the kernel parallel port driver.
@@ -265,8 +320,19 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 Summary:	login is used when signing onto a system
 Summary(pl):	login jest u¿ywany do rozpoczêcia pracy w systemie
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 Obsoletes:	heimdal-login
 Requires:	pam-pld
 
@@ -284,8 +350,19 @@ do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 Summary:	Alternative Linux getty
 Summary(pl):	Alternatywny getty
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 Requires:	login
 
 %description -n agetty
@@ -298,8 +375,19 @@ agetty jest prostym linuksowym getty z obs³ug± portu szeregowego.
 Summary:	Support for raw-devices
 Summary(pl):	Obs³uga raw-device'ów
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 PreReq:		/sbin/chkconfig
 
 %description -n rawdevices
@@ -312,8 +400,19 @@ Obs³uga raw-device'ów.
 Summary:	util-linux for bootdisk
 Summary(pl):	util-linux dla bootkietki
 Group:		Applications/System
+Group(cs):	Aplikace/Systém
+Group(da):	Programmer/System
 Group(de):	Applikationen/System
+Group(es):	Aplicaciones/Sistema
+Group(fr):	Applications/Système
+Group(it):	Applicazioni/Sistema
+Group(ja):	¥¢¥×¥ê¥±¡¼¥·¥ç¥ó/¥·¥¹¥Æ¥à
+Group(no):	Applikasjoner/System
 Group(pl):	Aplikacje/System
+Group(pt):	Aplicações/Sistema
+Group(pt_BR):	Aplicações/Sistema
+Group(ru):	ðÒÉÌÏÖÅÎÉÑ/óÉÓÔÅÍÁ
+Group(sv):	Tillämpningar/System
 
 %description BOOT
 util-linux for bootdisk.
