@@ -33,6 +33,7 @@ Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
+# Source0-md5:	36d6bcdf415d6b486205cc64abb7af77
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	login.pamd
 Source3:	rawdevices.init
