@@ -1,7 +1,6 @@
 #
 # Conditional build:
 %bcond_with	uClibc	# don't build few utilities
-%bcond_without	selinux		# build without SELinux support
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -17,13 +16,13 @@ Summary(ru):	Набор базовых системных утилит для Linux
 Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
-Version:	2.12
-Release:	15
+Version:	2.12q
+Release:	1
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
 Source0:	ftp://ftp.kernel.org/pub/linux/utils/util-linux/%{name}-%{version}.tar.gz
-# Source0-md5:	997adf78b98d9d1c5db4f37ea982acff
+# Source0-md5:	004b971441ef89e0b93076c21806cc7d
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	81bbcc9a820512ecde87a8f31de0b745
@@ -45,14 +44,10 @@ Patch11:	%{name}-posixsh.patch
 Patch12:	%{name}-ppc-hwclock.patch
 Patch13:	%{name}-no_multiline.patch
 Patch14:	%{name}-amd64.patch
-#Patch15:	%{name}-crypto-debian.patch
 Patch15:	%{name}-dm_crypt.patch
-Patch16:	%{name}-dev_t.patch
-Patch17:	%{name}-selinux.patch
-Patch18:	%{name}-blk.patch
-Patch19:	%{name}-io.patch
-Patch20:	%{name}-managed.patch
-Patch21:	%{name}-fdisk-sunlabel.patch
+Patch16:	%{name}-blk.patch
+Patch17:	%{name}-managed.patch
+Patch18:	%{name}-page.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -360,11 +355,8 @@ ObsЁuga raw-device'Сw.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%{?with_selinux:%patch17 -p1}
+%patch17 -p1
 %patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p0
 
 %build
 CC="%{__cc}"
@@ -516,6 +508,7 @@ fi
 %attr(755,root,root) %{_bindir}/column
 %attr(755,root,root) %{_bindir}/ddate
 %attr(755,root,root) %{_bindir}/fdformat
+%attr(755,root,root) %{_bindir}/flock
 %attr(755,root,root) %{_bindir}/getopt
 %attr(755,root,root) %{_bindir}/hexdump
 %attr(755,root,root) %{_bindir}/ipcrm
@@ -547,6 +540,7 @@ fi
 %{_mandir}/man1/colrm.1*
 %{_mandir}/man1/column.1*
 %{_mandir}/man1/ddate.1*
+%{_mandir}/man1/flock.1*
 %{_mandir}/man1/getopt.1*
 %{_mandir}/man1/hexdump.1*
 %{_mandir}/man1/kill.1*
