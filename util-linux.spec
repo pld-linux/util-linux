@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.9s
-Release:	4
+Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -26,6 +26,8 @@ Patch8:		util-linux-shutdown.patch
 Patch9:		util-linux-kernel23.patch
 Patch10:	util-linux-utmpx.patch
 Patch11:	util-linux-fhs.patch
+Patch12:	util-linux-login.diff
+Patch13:	util-linux-more.diff
 BuildPrereq:	pam-devel >= 0.66
 BuildPrereq:	ncurses-devel
 BuildPrereq:	gettext
@@ -175,21 +177,18 @@ Users programs for manipulate /etc/passwd file.
 %patch0  -p1 
 %patch1  -p1 
 %patch2  -p1 
-%patch3  -p1 
+#%patch3  -p1 
 %patch4  -p1 
-%patch5  -p1 
-%patch6  -p1 
+#%patch5  -p1 
+#%patch6  -p1 
 %patch7  -p1 
-%patch8  -p1 
+#%patch8  -p1 
 %patch10 -p1 
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %build
-# First check running Linux release ... 
-RELEASE=`uname -r | head -c 3`
-if [ "$RELEASE" = "2.3" ]; then
-    patch -p1 < $RPM_SOURCE_DIR/%{name}-kernel23.patch
-fi
 
 %configure
 
@@ -205,14 +204,12 @@ make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 4711" \
 	DATAMISCDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
+	localedir=$RPM_BUILD_ROOT%{_datadir}/locale \
 	USE_TTY_GROUP=no
 
-%ifarch i386 i486 i586 i686
-mv -f $RPM_BUILD_ROOT%{_bindir}/{swapdev,vidmode,ramsize,rootflags,rdev} \
-	$RPM_BUILD_ROOT%{_sbindir}
-%endif
-
-mv $RPM_BUILD_ROOT%{_bindir}/readprofile $RPM_BUILD_ROOT%{_sbindir}
+make -C po \
+	prefix=$RPM_BUILD_ROOT%{_prefix} \
+	install 
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
@@ -284,7 +281,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setterm
-%attr(0755,root,root) %{_bindir}/tunelp
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2711,root, tty) %{_bindir}/write
 %attr(0755,root,root) %{_bindir}/getopt
@@ -296,6 +292,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
+%attr(0755,root,root) %{_sbindir}/tunelp
 
 %{_mandir}/man1/arch.1.gz
 %{_mandir}/man1/readprofile.1.gz
@@ -410,8 +407,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4711,root,root) %{_bindir}/chfn
 %attr(4711,root,root) %{_bindir}/chsh
 
-%{_mandir}/man1/chfn.1.gz
-%{_mandir}/man1/chsh.1.gz
+%attr(644,root,root) %{_mandir}/man1/chfn.1.gz
+%attr(644,root,root) %{_mandir}/man1/chsh.1.gz
 
 %changelog
 * Sun May 23 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
