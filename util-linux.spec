@@ -814,8 +814,6 @@ fi
 
 %attr(755,root,root) /sbin/fsck.cramfs
 %attr(755,root,root) /sbin/mkfs.cramfs
-%{_mandir}/man8/fsck.cramfs.8*
-%{_mandir}/man8/mkfs.cramfs.8*
 
 %attr(755,root,root) /sbin/mkfs.bfs
 %{_mandir}/man8/mkfs.bfs.8*
