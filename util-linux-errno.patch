@@ -1,0 +1,10 @@
+--- util-linux-2.11y/mount/pivot_root.c.wiget	Thu Mar  6 14:51:43 2003
++++ util-linux-2.11y/mount/pivot_root.c	Thu Mar  6 15:00:55 2003
+@@ -5,6 +5,7 @@
+ #define __LIBRARY__
+ 
+ #include <stdio.h>
++#include <errno.h>
+ 
+ #ifdef __ia64__
+ # include <sys/syscall.h>
