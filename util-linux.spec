@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12
-%define _rel 5.1
+%define _rel 6
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -45,10 +45,12 @@ Patch13:	%{name}-no_multiline.patch
 Patch14:	%{name}-amd64.patch
 Patch15:	%{name}-crypto-debian.patch
 Patch16:	%{name}-dev_t.patch
+Patch17:	%{name}-selinux.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?_with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
+BuildRequires:	libselinux-devel
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?_with_uClibc:BuildRequires:	zlib-devel}
@@ -346,6 +348,7 @@ Obs³uga raw-device'ów.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 CC="%{__cc}"
