@@ -28,10 +28,10 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	0.pre.4
+Release:	0.1
 License:	distributable
 Group:		Applications/System
-Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}%{_pre}.tar.gz
+Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
 # Source0-md5:	5e749587cd61d22296689611b1271e5e
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
