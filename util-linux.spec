@@ -42,8 +42,7 @@ Patch10:	%{name}-glibc.patch
 Patch11:	%{name}-posixsh.patch
 Patch12:	%{name}-ppc-hwclock.patch
 Patch13:	%{name}-no_multiline.patch
-Patch14:	http://www.stwing.org/~sluskyb/util-linux/losetup-combined.patch
-Patch15:	http://www.stwing.org/~sluskyb/util-linux/losetup-variable-key-size-mk6.patch
+Patch14:	%{name}-cryptoapi.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -345,7 +344,6 @@ Obs³uga raw-device'ów.
 %patch12 -p1
 %patch13 -p0
 %patch14 -p1
-%patch15 -p1
 
 %build
 CC="%{__cc}"
