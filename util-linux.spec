@@ -66,30 +66,30 @@ Obsoletes:	util-linux-suids
 util-linux contains a large variety of low-level system utilities
 necessary for a functional Linux system. This includes, among other
 things, configuration tools such as fdisk and system programs such as
-login.
+logger.
 
 %description -l de
 util-linux enthält eine große Anzahl an
 low-level-Systemdienstprogrammen, die für ein funktionierendes
 Linux-System erforderlich sind. Dazu gehören Konfigurationstools wie
-'fdisk' und Systemprogramme wie 'login'.
+'fdisk' und Systemprogramme wie 'logger'.
 
 %description -l fr
 util-linux contient une grande variété d'utilitaire système bas niveau
 nécessaires au fonctionnement d'un système Linux. Cela comprend, entre
 autres, les outils de configuration comme fdisk et des programmes
-systèmes comme login.
+systèmes comme logger.
 
 %description -l pl
 Util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi
 systemowych niezbêdnych do prawid³owego dzia³ania Linuxa. W pakiecie
 znajduj± siê miêdzy innymi, narzêdzia konfiguracyjne takie jak fdisk i
-programy systemowe takie jak login.
+programy systemowe takie jak logger.
 
 %description -l tr
 þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey
 sistem araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma
-uygulamalarý ve login gibi sistem programlarý sayýlabilir.
+uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
 
 %package -n losetup
 Summary:	programs for setting up and configuring loopback devices
@@ -240,6 +240,7 @@ Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Obsoletes:	heimdal-login
+Requires:	pam-pld
 
 %description -n login
 login is used when signing onto a system. It can also be used to
@@ -533,6 +534,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_sbindir}/tunelp
 %{_mandir}/man8/tunelp.8*
+%lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
 %files -n login
 %defattr(644,root,root,755)
