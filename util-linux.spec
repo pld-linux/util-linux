@@ -4,8 +4,8 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10b
-Release:	2
+Version:	2.10c
+Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -223,6 +223,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 
 %build
 
+CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"
 %configure
 
 make	OPT="$RPM_OPT_FLAGS" \
