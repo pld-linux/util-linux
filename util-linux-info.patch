@@ -1,7 +1,7 @@
 diff -Nru util-linux-2.10l/sys-utils/ipc.texi util-linux-2.10l.new/sys-utils/ipc.texi
---- util-linux-2.10l/sys-utils/ipc.texi	Thu May  4 22:31:35 2000
-+++ util-linux-2.10l.new/sys-utils/ipc.texi	Thu May  4 22:33:45 2000
-@@ -31,10 +31,20 @@
+--- util-linux-2.10l/sys-utils/ipc.texi	Thu May  4 23:25:42 2000
++++ util-linux-2.10l.new/sys-utils/ipc.texi	Thu May  4 23:26:00 2000
+@@ -31,6 +31,14 @@
  @end titlepage
  
  
@@ -16,13 +16,7 @@ diff -Nru util-linux-2.10l/sys-utils/ipc.texi util-linux-2.10l.new/sys-utils/ipc
  
  @node top, Overview, Notes, (dir)
  @chapter System V IPC.
- 
-+@top System V IPC
-+
- These facilities are provided to maintain compatibility with
- programs developed on system V unix systems and others 
- that rely on these system V mechanisms to accomplish inter 
-@@ -91,8 +101,8 @@
+@@ -91,8 +99,8 @@
  There are system and implementation defined limits on the number and
  sizes of resources of any given type. Some of these are imposed by the
  implementation and others by the system administrator 
@@ -33,7 +27,7 @@ diff -Nru util-linux-2.10l/sys-utils/ipc.texi util-linux-2.10l.new/sys-utils/ipc
  
  There is an @code{msqid_ds}, @code{semid_ds} or @code{shmid_ds} struct 
  associated with each message queue, semaphore array or shared segment. 
-@@ -355,7 +365,7 @@
+@@ -355,7 +363,7 @@
  
  @example
  struct msgbuf 
@@ -42,7 +36,7 @@ diff -Nru util-linux-2.10l/sys-utils/ipc.texi util-linux-2.10l.new/sys-utils/ipc
      char mtext[1];   message text .. why is this not a ptr?
  @end example
  
-@@ -558,7 +568,7 @@
+@@ -558,7 +566,7 @@
  @item
  buf    : allocated by user for reading/writing info.
  @item
@@ -51,7 +45,7 @@ diff -Nru util-linux-2.10l/sys-utils/ipc.texi util-linux-2.10l.new/sys-utils/ipc
  @end itemize
  
  IPC_STAT results in the copy of the queue data structure
-@@ -1149,7 +1159,7 @@
+@@ -1149,7 +1157,7 @@
  @item
  shmid : id got from call to shmget.
  @item
