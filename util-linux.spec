@@ -59,6 +59,7 @@ Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
 Patch17:	%{name}-kerneli-fix.patch
 Patch18:	%{name}-kerneli-2.4.patch
+Patch19:	%{name}-pam.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -281,6 +282,7 @@ support for this feature built into them, however).
 %if !%{_kernel24}
 %{!?bcond_off_crypto:%patch17 -p1}
 %endif
+%patch19 -p1
 
 %build
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
