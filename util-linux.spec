@@ -15,7 +15,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	0.2
+%define		_release	1
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen fЭr Linux
@@ -24,6 +24,8 @@ Summary(fr):	Ensemble d'utilitaires systХme de base pour Linux
 Summary(pl):	ZbiСr podstawowych narzЙdzi systemowych dla Linuksa
 Summary(pt_BR):	ColetБnea de utilitАrios bАsicos de sistema para Linux
 Summary(tr):	Temel sistem araГlarЩ
+Summary(uk):	Наб╕р базових системних утил╕т для Linux
+Summary(ru):	Набор базовых системных утилит для Linux
 Name:		util-linux
 Version:	2.11r
 Release:	%{_release}
@@ -107,12 +109,26 @@ programas de sistema como login.
 sistem araГlarЩnЩ iГerir. Bunlar arasЩnda fdisk gibi yapЩlandЩrma
 uygulamalarЩ ve logger gibi sistem programlarЩ sayЩlabilir.
 
+%description -l uk
+Цей пакет м╕стить великий наб╕р системних утил╕т низького р╕вня, як╕
+необх╕дн╕ для функц╕онування системи Linux. В╕н м╕стить, окр╕м ╕нших,
+конф╕гурац╕йн╕ ╕нструменти (так╕ як fdisk) та системн╕ програми (так╕
+як login).
+
+%description -l ru
+Этот пакет содержит большой набор системных утилит низкого уровня,
+которые необходимы для функционирования системы Linux. Он включает, в
+числе прочих, инструменты конфигурации, такие как fdisk, и системные
+программы, такие как login.
+
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
 Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-GerДten
 Summary(fr):	Programmes pour mettre en place et configurer les loopback
 Summary(pl):	Program do konfiguracji urz╠dzenia blokowego loopback
 Summary(tr):	Yerel-Гevrim aygЩtlarЩnЩn kurulmasЩ ve ayarlanmasЩ iГin programlar
+Summary(ru):	Программы для настройки loopback-устройств
+Summary(uk):	Програми для конф╕гурац╕╖ loopback-пристро╖в
 Group:		Applications/System
 Release:	%{_release}@%{_kernel_series}
 #%if %{_kernel24}
@@ -163,12 +179,31 @@ arasЩndaki haritalama iЧleminin kurulmasЩ ve kaldЩrЩlmasЩ iГin
 programlar iГerir. Blok yerel-Гevrim aygЩtЩ ifconfig komutu ile
 yapЩlandЩrЩlan aП yerel-Гevrim aygЩtЩ ile karЩЧtЩrЩlmamalЩdЩr.
 
+%description -n losetup -l ru
+Linux поддерживает специальное блочное устройство, называемое
+loopback, которое отображает обычный файл в виртуальное блочное
+устройство. Это позволяет использовать файл как виртуальную файловую
+систему. Losetup используется для связи loopback-устройств с обычными
+файлами или блочными устройствами, для отсоединения loopback-устройств
+и запросов их статуса.
+
+%description -n losetup -l uk
+Linux п╕дтриму╓ спец╕альний блочний пристр╕й, loopback, який
+в╕дображу╓ звичайний файл у в╕ртуальний блочний пристр╕й. Це дозволя╓
+використовувати файл як в╕ртуальну файлову систему. Losetup
+використовують для зв'язку loopback-пристро╖в з╕ звичайними файлами
+або блочними пристроями, для в╕д'╓днання loopback-пристро╖в та
+запрос╕в ╖х стану.
+%endif
+
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
 Summary(de):	Programme zum montieren und abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et dИmonter des systХmes de fichiers.
 Summary(pl):	Programy do montowania i odmontowywania systemСw plikСw
 Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
+Summary(uk):	Програми для монтування та розмонтування файлових систем
+Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
 Release:	%{_release}@%{_kernel_series}
 #%if %{_kernel24}
@@ -213,6 +248,24 @@ eklenmesi iГin kullanЩlЩr. Bunun iГin baПlanacak dosya sisteminin
 Жnceden hazЩrlanmЩЧ olmasЩ gerekir. AynЩ zamanda ГekirdeПin baПlanmЩЧ
 dosya sistemlerine eriЧimini deПiЧtirmek iГin de kullanЩlЩr. Bu paket
 sisteminizin iЧlevselliПi aГЩsЩndan kritiktir.
+
+%description -n mount -l ru
+Пакет mount содержит программы mount, umount, swapon и swapoff. Файлы
+в вашей системе организованы в виде одного большого дерева или
+иерархии. Эти файлы могут быть размещены на разных устройствах.
+Команда mount присоединяет файловую систему на некотором устройстве к
+дереву файлов вашей системы. Команда umount отсоединяет файловую
+систему от дерева. Swapon и swapoff, соответственно, разрешает и
+запрещает своппинг в определенные файлы и устройства.
+
+%description -n mount -l uk
+Пакет mount м╕стить програми mount, umount, swapon та swapoff. Файли у
+ваш╕й систем╕ орган╕зован╕ у вигляд╕ одного великого дерева або
+╕╓рарх╕╖. Ц╕ файли можуть бути розташован╕ на р╕зних пристроях.
+Команда mount п╕д'╓дну╓ файлову систему на деякому пристро╖ до дерева
+файл╕в вашо╖ системи. Команда umount в╕д'╓дну╓ файлову систему в╕д
+дерева. Swapon та swapoff, в╕дпов╕дно, дозволя╓ та забороню╓ своп╕нг у
+визначен╕ файли або пристро╖.
 
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
