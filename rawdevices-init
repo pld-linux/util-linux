@@ -60,7 +60,7 @@ case "$1" in
 		assign_raw
 		touch /var/lock/subsys/rawdevices
 	else
-		msg_Already_Running rawdevices
+		msg_already_running rawdevices
 	fi
         ;;
   stop)
@@ -71,7 +71,7 @@ case "$1" in
 		deltext
 		ok
 	else
-		msg_Not_Running rawdevices
+		msg_not_running rawdevices
 		exit 1
 	fi
         ;;
@@ -91,7 +91,7 @@ case "$1" in
         ;;
 
   *)
-        echo $"Usage: $0 {start|stop|status|restart}"
+        msg_usage "$0 {start|stop|status|restart}"
         exit 1
 esac
 
