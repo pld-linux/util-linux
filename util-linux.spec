@@ -903,7 +903,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/tunelp.8*
 %lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
-%if %{!?_with_uClibc:0}%{!?_with_uClibc:1}
+%if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n login
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
