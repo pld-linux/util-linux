@@ -55,7 +55,6 @@ Patch12:	%{name}-2.10o-rawio.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
-Patch17:	%{name}-kerneli-fix.patch
 Patch18:	%{name}-kerneli-2.4.patch
 Patch20:	%{name}-qnx4.patch
 BuildRequires:	pam-devel >= 0.66
