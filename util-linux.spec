@@ -388,24 +388,16 @@ gzip -9nf */README.*
 %find_lang %{name}
 
 %post
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%fix_info_dir
 
 %postun
-[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+%fix_info_dir
 
 %post -n rawdevices
-/sbin/chkconfig --add rawdevices
-if [ -f /var/lock/subsys/rawdevices ]; then
-	/etc/rc.d/init.d/rawdevices restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/rawdevices start\" to start rawdevices."
-fi
+NAME=rawdevices; %chkconfig_add
 
 %preun -n rawdevices
-if [ -f /var/lock/subsys/rawdevices ]; then
-	/etc/rc.d/init.d/rawdevices stop 1>&2
-fi
-/sbin/chkconfig --del rawdevices
+NAME=rawdevices; %chkconfig_del
 
 %clean
 rm -rf $RPM_BUILD_ROOT
