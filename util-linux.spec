@@ -1,3 +1,9 @@
+#
+# Conditional build:	
+# bcond_off_crypto - without kerneli cryptography
+# bcond_off_rawio
+# bcond_on_pivot_root
+#
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
@@ -7,8 +13,9 @@ Name:		util-linux
 Version:	2.10r
 Release:	2
 License:	Distributable
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 Source1:	login.pamd
 Source2:	kill.1.pl
@@ -34,19 +41,19 @@ Source21:	swapoff.8.pl
 Source22:	fstab.5.pl
 Source23:	chkdupexe.1.pl
 Source24:	tunelp.8.pl
-Patch0:		util-linux-MCONFIG.patch
-Patch1:		util-linux-fdisk.patch
-Patch2:		util-linux-utmpx.patch
-Patch3:		util-linux-fhs.patch
-Patch4:		util-linux-login.patch
-%{?nocrypto:#}Patch5:		util-linux-kerneli.patch
-Patch6:		util-linux-info.patch
-Patch7:		util-linux-fdisk2.patch
-Patch8:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10f-mount-tcp.patch
-Patch9:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-compat.patch
-Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
-Patch11:	util-linux-syscall.patch 
-Patch12:	util-linux-2.10o-rawio.patch
+Patch0:		%{name}-MCONFIG.patch
+Patch1:		%{name}-fdisk.patch
+Patch2:		%{name}-utmpx.patch
+Patch3:		%{name}-fhs.patch
+Patch4:		%{name}-login.patch
+%{!?bcond_off_crypto:Patch5: %{name}-kerneli.patch}
+Patch6:		%{name}-info.patch
+Patch7:		%{name}-fdisk2.patch
+Patch8:		ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10f-mount-tcp.patch
+Patch9:		ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10m-mount-compat.patch
+Patch10:	ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10m-mount-rpc.patch
+Patch11:	%{name}-syscall.patch
+Patch12:	%{name}-2.10o-rawio.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -90,8 +97,9 @@ Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
 Summary(fr):	programmes pour mettre en place et configurer les loopback
 Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
 Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -142,8 +150,9 @@ Summary(de):	Programme zum Montieren und Abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
 Summary(pl):	Programy do montowania i odmontowywania systemu plików
 Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 
 %description -n mount
 Mount is used for adding new filesystems, both local and networked, to
@@ -185,8 +194,9 @@ sisteminizin iþlevselliði açýsýndan kritiktir.
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
 Summary(pl):	chkdupexe odszukuje powtarzaj±ce sie pliki uruchamialne
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 
 %description chkdupexe
 chkdupexe will scan the union of $PATH and a hardcoded list of common
@@ -204,8 +214,9 @@ Summary(de):	konfiguriert den Kerneltreiber für den parallelen Port
 Summary(fr):	Configure le pilote du port parallèle dans le noyau
 Summary(pl):	Program do konfigurowania sterownika portu równoleg³ego
 Summary(tr):	Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 
 %description -n tunelp
 `tunelp' aids in configuring the kernel parallel port driver.
@@ -225,8 +236,9 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 
 %package -n login
 Summary:	login is used when signing onto a system
-Group:		Utilities/System
-Group(pl):	Narzêdzia/System
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
 Obsoletes:	heimdal-login
 
 %description -n login
@@ -241,14 +253,14 @@ support for this feature built into them, however).
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-%{?bcond_off_crypto:#}%patch5 -p1
+%{!?bcond_off_crypto:%patch5 -p1}
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%{?bcond_off_rawio:#}%patch12 -p1
+%{!?bcond_off_rawio:%patch12 -p1}
 
 
 %build
@@ -316,7 +328,7 @@ echo	'.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9fn */README.*
+gzip -9nf */README.*
 
 %find_lang %{name}
 
@@ -339,7 +351,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/hwclock.8*
 %{_mandir}/man8/clock.8*
 
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/fdprm
 
 %attr(0755,root,root) /bin/arch
 %attr(0755,root,root) /bin/dmesg
@@ -376,8 +388,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/renice
-%{?bcond_off_rawio:#}%attr(0755,root,root) %{_bindir}/raw
-%attr(0755,root,root) /usr/games/banner
+%{!?bcond_off_rawio:%attr(0755,root,root) %{_bindir}/raw}
+%attr(0755,root,root) %{_prefix}/games/banner
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
@@ -422,7 +434,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/setfdprm.8*
-%{?bcond_off_rawio:#}%{_mandir}/man8/raw.8*
+%{!?bcond_off_rawio:%{_mandir}/man8/raw.8*}
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
