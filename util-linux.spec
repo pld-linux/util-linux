@@ -19,6 +19,14 @@ Patch2:		util-linux-nochkdupexe.patch
 Patch3:		util-linux-shutdown.patch
 Patch4:		util-linux-chfn.patch
 Patch5:		util-linux-DESTDIR.patch
+Patch6:		util-linux-btmp.patch
+Patch7:		util-linux-moretc.patch
+Patch8:		util-linux-openlog.patch
+#Patch9:		util-linux-gecos.patch
+Patch10:	util-linux-sigjmp.patch
+Patch11:	util-linux-fdiskwarning.patch
+Patch12:	util-linux-jbj.patch
+Patch13:	util-linux-mkswap.patch
 BuildPrereq:	pam-devel >= 0.66
 BuildPrereq:	ncurses-devel
 BuildPrereq:	gettext
@@ -152,11 +160,19 @@ kritiktir.
 %prep
 %setup -q 
 #%patch0 -p1 
-%patch1 -p1 
-%patch2 -p1 
-%patch3 -p1 
-%patch4 -p1 
-%patch5 -p1 
+%patch1  -p1 
+%patch2  -p1 
+%patch3  -p1 
+%patch4  -p1 
+%patch5  -p1 
+%patch6  -p1 
+%patch7  -p1 
+%patch8  -p1 
+#%patch9  -p1 
+%patch10 -p1 
+%patch11 -p1 
+%patch12 -p1 
+%patch13 -p1 
 
 %build
 cp login-utils/login.c login-utils/login.c.new
