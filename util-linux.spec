@@ -163,7 +163,7 @@ cp login-utils/login.c login-utils/login.c.new
 sed -e "s/#define DO_PS_FIDDLING//" \
 login-utils/login.c.new > login-utils/login.c
 
-./configure
+%configure
 
 make OPT="$RPM_OPT_FLAGS"
 
