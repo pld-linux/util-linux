@@ -13,7 +13,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11g
-Release:	3
+Release:	3@%{_kernel_series}
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -67,12 +67,9 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 BuildRequires:	texinfo
 Requires:	pam >= 0.66
+%conflicts_kernel_series
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
-
-%define		_kernel_ver	%(grep UTS_RELEASE /usr/src/linux/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
-%define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
-
 
 %description
 util-linux contains a large variety of low-level system utilities
