@@ -372,7 +372,7 @@ CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
 %configure2_13
 
 %if %{?BOOT:1}%{!?BOOT:0}
-%{__make} -C fdisk OPT="%{rpmcflags}" LDFLAGS="-static"
+%{__make} -C fdisk fdisk OPT="%{rpmcflags}" LDFLAGS="-static"
 mv -f fdisk/fdisk fdisk-BOOT
 %{__make} -C fdisk clean
 %endif
