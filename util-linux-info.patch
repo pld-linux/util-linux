@@ -1,6 +1,6 @@
-diff -Nur util-linux-2.11g.orig/sys-utils/ipc.texi util-linux-2.11g/sys-utils/ipc.texi
---- util-linux-2.11g.orig/sys-utils/ipc.texi	Thu Apr 12 23:11:42 2001
-+++ util-linux-2.11g/sys-utils/ipc.texi	Sat Aug  4 19:07:44 2001
+diff -urN util-linux-2.11n.org/sys-utils/ipc.texi util-linux-2.11n/sys-utils/ipc.texi
+--- util-linux-2.11n.org/sys-utils/ipc.texi	Wed Feb 20 13:35:02 2002
++++ util-linux-2.11n/sys-utils/ipc.texi	Wed Feb 20 13:35:10 2002
 @@ -30,9 +30,9 @@
  programs within the terms of the GNU GPL.
  @end titlepage
@@ -12,16 +12,7 @@ diff -Nur util-linux-2.11g.orig/sys-utils/ipc.texi util-linux-2.11g/sys-utils/ip
 +* ipc: (ipc).				System V style inter process communication
  @end direntry
  
- @node top, Overview, Notes, (dir)
-@@ -358,7 +358,7 @@
- 
- @example
- struct msgbuf 
--    long mtype;      type of message (@xref{msgrcv}).
-+    long mtype;      type of message (@xref{msgrcv}.)
-     char mtext[1];   message text .. why is this not a ptr?
- @end example
- 
+ @node Top, Overview, Notes, (dir)
 @@ -561,7 +561,7 @@
  @item
  buf    : allocated by user for reading/writing info.
