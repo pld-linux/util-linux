@@ -49,6 +49,7 @@ Patch16:	%{name}-dev_t.patch
 Patch17:	%{name}-selinux.patch
 Patch18:	%{name}-blk.patch
 Patch19:	%{name}-io.patch
+BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 BuildRequires:	libselinux-devel
