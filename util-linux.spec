@@ -372,7 +372,7 @@ CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
 %configure2_13
 
 %if %{?BOOT:1}%{!?BOOT:0}
-%{__make} -C fdisk OPT="%{rpmcflags} -static"
+%{__make} -C fdisk CFLAGS="%{rpmcflags} -static"
 mv -f fdisk/fdisk fdisk-BOOT
 %{__make} -C fdisk clean
 %endif
@@ -388,7 +388,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{?BOOT:1}%{!?BOOT:0}
 install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
-install fdisk-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/%{name}
+install fdisk-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/fdisk
 %endif
 
 install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
