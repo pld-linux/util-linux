@@ -1,21 +1,10 @@
 #
 # Conditional build:
-# _without_crypto	- without kerneli cryptography
-# _with_pivot_root	- build pivot_root utility (auto-selected if 2.4 kernel)
 # _without_dist_kernel	- do nothing for now
 # _with_uClibc		- don't build few utilities
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
-
-%define		_kernel_ver	%(grep UTS_RELEASE %{_kernelsrcdir}/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
-%define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
-%if %{_kernel24}
-%define		_kernel_series	2.4
-%define		_with_pivot_root 1
-%else
-%define		_kernel_series	2.2
-%endif
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen fЭr Linux
@@ -28,11 +17,12 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	0.1
+%define _rel 4
+Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
-# Source0-md5:	5e749587cd61d22296689611b1271e5e
+# Source0-md5:	997adf78b98d9d1c5db4f37ea982acff
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -43,21 +33,18 @@ Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
 Patch3:		%{name}-fhs.patch
 Patch4:		%{name}-login.patch
-Patch5:		%{name}-kerneli.patch
-Patch6:		%{name}-info.patch
-Patch7:		ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/%{name}-2.10m-mount-compat.patch
-Patch8:		%{name}-syscall.patch
-Patch9:		%{name}-raw.patch
-Patch10:	%{name}-gecos.patch
-Patch11:	%{name}-glibc.patch
-#based on:	http://www.kernel.org/pub/linux/kernel/people/hvr/util-linux-patch-int/%{name}-2.11n.patch.bz2
-Patch12:	%{name}-cryptoapi.patch
-Patch13:	%{name}-losetup-getpass.patch
-Patch14:	%{name}-posixsh.patch
-Patch15:	%{name}-ppc-hwclock.patch
-Patch16:	%{name}-no_multiline.patch
-#http://panopticon.csustan.edu/thood/mount-2.12pre-symlink_20030809.diff
-Patch17:	mount-2.12pre-symlink_20030809.diff
+Patch5:		%{name}-info.patch
+Patch6:		ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/%{name}-2.10m-mount-compat.patch
+Patch7:		%{name}-syscall.patch
+Patch8:		%{name}-raw.patch
+Patch9:		%{name}-gecos.patch
+Patch10:	%{name}-glibc.patch
+Patch11:	%{name}-posixsh.patch
+Patch12:	%{name}-ppc-hwclock.patch
+Patch13:	%{name}-no_multiline.patch
+Patch14:	http://www.stwing.org/~sluskyb/util-linux/losetup-combined.patch
+Patch15:	http://www.stwing.org/~sluskyb/util-linux/losetup-keygen-prog-mk7.patch
+Patch16:	http://www.stwing.org/~sluskyb/util-linux/losetup-variable-key-size-mk6.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -135,12 +122,7 @@ Summary(tr):	Yerel-Гevrim aygЩtlarЩnЩn kurulmasЩ ve ayarlanmasЩ iГin programlar
 Summary(ru):	Программы для настройки loopback-устройств
 Summary(uk):	Програми для конф╕гурац╕╖ loopback-пристро╖в
 Group:		Applications/System
-Release:	1
-#%if %{_kernel24}
-#%%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
-#%else
-#%%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
-#%endif
+Release:      %{_rel}@%{_kernel_ver_str}
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -209,12 +191,7 @@ Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
 Summary(uk):	Програми для монтування та розмонтування файлових систем
 Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
-Release:	1
-#%if %{_kernel24}
-#%%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
-#%else
-#%%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
-#%endif
+Release:      %{_rel}@%{_kernel_ver_str}
 
 %description -n mount
 mount is used for adding new filesystems, both local and networked, to
@@ -353,30 +330,23 @@ Support for raw-devices.
 ObsЁuga raw-device'Сw.
 
 %prep
-%setup -q -n %{name}-%{version}%{_pre} -a1
+%setup -q -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%if %{_kernel24}
-%{!?_without_crypto:%patch12 -p1}
-%else
-%{!?_without_crypto:%patch5 -p1}
-%endif
+%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%if !%{_kernel24}
-%{!?_without_crypto:%patch13 -p1}
-%endif
+%patch12 -p1
+%patch13 -p0
 %patch14 -p1
-%patch15 -p1
-%patch16
-%patch17 -p1
+#%patch16 -p1
 
 %build
 CC="%{__cc}"
@@ -887,7 +857,7 @@ fi
 
 %attr(4755,root,root) /bin/mount
 %attr(4755,root,root) /bin/umount
-%{?_with_pivot_root:%attr(755,root,root) /sbin/pivot_root}
+%attr(755,root,root) /sbin/pivot_root
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
@@ -896,7 +866,7 @@ fi
 
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/umount.8*
-%{?_with_pivot_root:%{_mandir}/man8/pivot_root.8*}
+%{_mandir}/man8/pivot_root.8*
 %{_mandir}/man8/swapon.8*
 %{_mandir}/man8/swapoff.8*
 
@@ -937,7 +907,7 @@ fi
 
 %lang(ja) %{_mandir}/ja/man8/mount.8*
 %lang(ja) %{_mandir}/ja/man8/umount.8*
-%{?_with_pivot_root:%lang(ja) %{_mandir}/ja/man8/pivot_root.8*}
+%lang(ja) %{_mandir}/ja/man8/pivot_root.8*
 %lang(ja) %{_mandir}/ja/man8/swapon.8*
 %lang(ja) %{_mandir}/ja/man8/swapoff.8*
 
