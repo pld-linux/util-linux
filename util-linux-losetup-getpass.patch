@@ -307,9 +307,9 @@ diff -Naur util-linux-2.11r-o/mount/mount.c util-linux-2.11r/mount/mount.c
  	{ "rw", 0, 0, 'w' },
  	{ "options", 1, 0, 'o' },
 +        { "pass-fd", 1, 0, 'p' },
+	{ "test-opts", 1, 0, 'O' },
  	{ "types", 1, 0, 't' },
  	{ "bind", 0, 0, 128 },
- 	{ "replace", 0, 0, 129 },
 @@ -1337,7 +1341,7 @@
  	  "       mount --bind olddir newdir\n"
  	  "A device can be given by name, say /dev/hda1 or /dev/cdrom,\n"
@@ -331,8 +331,8 @@ diff -Naur util-linux-2.11r-o/mount/mount.c util-linux-2.11r/mount/mount.c
  	initproctitle(argc, argv);
  #endif
  
--	while ((c = getopt_long (argc, argv, "afFhlL:no:rsU:vVwt:",
-+	while ((c = getopt_long (argc, argv, "afFhlL:no:p:rsU:vVwt:",
+-	while ((c = getopt_long (argc, argv, "afFhlL:no:O:rsU:vVwt:",
++	while ((c = getopt_long (argc, argv, "afFhlL:no:O:p:rsU:vVwt:",
  				 longopts, NULL)) != -1) {
  		switch (c) {
  		case 'a':		/* mount everything in fstab */
