@@ -1,5 +1,5 @@
 #
-# Conditional build:	
+# Conditional build:
 # _without_crypto	- without kerneli cryptography
 # _with_pivot_root
 #
@@ -16,11 +16,11 @@
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
+Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
-Summary(tr):	Temel sistem araçlarý
 Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
-Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
+Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11l
 Release:	%{_release}
@@ -76,6 +76,12 @@ low-level-Systemdienstprogrammen, die für ein funktionierendes
 Linux-System erforderlich sind. Dazu gehören Konfigurationstools wie
 'fdisk' und Systemprogramme wie 'logger'.
 
+%description -l es
+util-Linux contiene una gran variedad de utilitarios de sistema de
+bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
+entre otras cosas, herramientas de configuración como fdisk y
+programas de sistema como login.
+
 %description -l fr
 util-linux contient une grande variété d'utilitaire système bas niveau
 nécessaires au fonctionnement d'un système Linux. Cela comprend, entre
@@ -88,22 +94,16 @@ systemowych niezbêdnych do prawid³owego dzia³ania Linuksa. W pakiecie
 znajduj± siê miêdzy innymi, narzêdzia konfiguracyjne takie jak fdisk i
 programy systemowe takie jak logger.
 
-%description -l tr
-þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey
-sistem araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma
-uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
-
 %description -l pt_BR
 util-Linux contém uma grande variedade de utilitários de sistema
 de baixo-nível necessários para um sistema Linux funcional. Isso
 inclui, entre outras coisas, ferramentas de configuração como fdisk
 e programas de sistema como login.
 
-%description -l es
-util-Linux contiene una gran variedad de utilitarios de sistema de
-bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
-entre otras cosas, herramientas de configuración como fdisk y
-programas de sistema como login.
+%description -l tr
+þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey
+sistem araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma
+uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
@@ -281,7 +281,7 @@ do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 
 %package -n agetty
 Summary:	Alternative Linux getty
-Summary(pl):	Alternatywny getty 
+Summary(pl):	Alternatywny getty
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
