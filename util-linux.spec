@@ -3,7 +3,7 @@
 # _without_crypto	- without kerneli cryptography
 # _with_pivot_root	- build pivot_root utility (auto-selected if 2.4 kernel)
 # _without_dist_kernel	- do nothing for now
-# _with_uClibc          - don't build few utilities
+# _with_uClibc		- don't build few utilities
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -445,12 +445,12 @@ echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
 for d in cs de es fi fr hu id it ja ko nl pl ; do
-    for m in man1 man5 man8 ; do
-	if [ -d man/$d/$m ]; then
-	    install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
-	    install man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
-	fi
-    done
+	for m in man1 man5 man8 ; do
+		if [ -d man/$d/$m ]; then
+			install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
+			install man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
+		fi
+	done
 done
 
 # cleanup, remove files not included in package
