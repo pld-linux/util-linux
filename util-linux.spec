@@ -12,7 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	5
+%define		_release	1
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -46,7 +46,7 @@ Patch9:		%{name}-syscall.patch
 Patch10:	%{name}-raw.patch
 Patch11:	%{name}-gecos.patch
 Patch12:	%{name}-glibc.patch
-Patch13:	%{name}-s390.patch
+Patch13:	%{name}-kerneli-2.4.patch
 Patch14:	%{name}-losetup-getpass.patch
 Patch15:	%{name}-login-problems.patch
 BuildRequires:	pam-devel >= 0.66
@@ -306,15 +306,18 @@ Support for raw-devices.
 %description -n rawdevices -l pl
 Obs³uga raw-device'ów.
 
-%if %{?BOOT:1}%{!?BOOT:0}
 %package BOOT
 Summary:	util-linux for bootdisk
+Summary(pl):	util-linux dla bootkietki
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 
 %description BOOT
-%endif
+util-linux for bootdisk.
+
+%description BOOT -l pl
+util-linux dla bootkietki.
 
 %prep
 %setup -q -a1
@@ -324,7 +327,7 @@ Group(pl):	Aplikacje/System
 %patch3 -p1
 %patch4 -p1
 %if %{_kernel24}
-%{!?_without_crypto:%patch14 -p1}
+%{!?_without_crypto:%patch13 -p1}
 %else
 %{!?_without_crypto:%patch5 -p1}
 %endif
@@ -335,7 +338,6 @@ Group(pl):	Aplikacje/System
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 %if !%{_kernel24}
 %{!?_without_crypto:%patch14 -p1}
 %endif
