@@ -20,9 +20,9 @@ Patch3:		util-linux-utmpx.patch
 Patch4:		util-linux-fhs.patch
 Patch5:		util-linux-login.patch
 Patch6:		util-linux-more.patch
-BuildPrereq:	pam-devel >= 0.66
-BuildPrereq:	ncurses-devel
-BuildPrereq:	gettext
+BuildRequires:	pam-devel >= 0.66
+BuildRequires:	ncurses-devel
+BuildRequires:	gettext
 Requires:	pam >= 0.66
 Requires:	/sbin/install-info
 Buildroot:	/tmp/%{name}-%{version}-root
