@@ -16,7 +16,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-%define _rel 6
+%define _rel 7
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -59,6 +59,7 @@ BuildRequires:	textutils
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
+Conflicts:	shadow < 1:4.0.3-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		debugcflags	-O1 -g
@@ -426,6 +427,10 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 	done
 done
 
+# symlink that existed in shadow
+ln -sf newgrp $RPM_BUILD_ROOT%{_bindir}/sg
+echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
+
 # cleanup, remove files not included in package
 rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh}
 rm -f $RPM_BUILD_ROOT%{_sbindir}/vipw
@@ -503,19 +508,21 @@ fi
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/isosize
+%attr(0755,root,root) %{_bindir}/line
 %attr(0755,root,root) %{_bindir}/logger
 %attr(0755,root,root) %{_bindir}/look
 %attr(0755,root,root) %{_bindir}/mcookie
 %attr(0755,root,root) %{_bindir}/namei
+%attr(0755,root,root) %{_bindir}/newgrp
+%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/pg}
 %attr(0755,root,root) %{_bindir}/renice
 %attr(0755,root,root) %{_bindir}/rev
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setfdprm
-%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/pg}
-%attr(0755,root,root) %{_bindir}/line
 %attr(0755,root,root) %{_bindir}/rename
 %{!?with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
+%attr(0755,root,root) %{_bindir}/sg
 %{!?with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
@@ -538,12 +545,14 @@ fi
 %{_mandir}/man1/mcookie.1*
 %{!?with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
+%{_mandir}/man1/newgrp.1*
 %{!?with_uClibc:%{_mandir}/man1/pg.1*}
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/rename.1*
 %{_mandir}/man1/script.1*
 %{!?with_uClibc:%{_mandir}/man1/setterm.1*}
+%{_mandir}/man1/sg.1*
 %{!?with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
