@@ -374,9 +374,9 @@ util-linux dla bootkietki.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-#%if !%{_kernel24}
-#%{!?_without_crypto:%patch13 -p1}
-#%endif
+%if !%{_kernel24}
+%{!?_without_crypto:%patch13 -p1}
+%endif
 #%patch14 -p1
 %patch15 -p1
 %patch16 -p1
