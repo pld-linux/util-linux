@@ -1,7 +1,6 @@
-diff -urN util-linux-2.11b.org/mount/nfsmount.c util-linux-2.11b/mount/nfsmount.c
---- util-linux-2.11b.org/mount/nfsmount.c	Wed Mar 21 10:16:36 2001
-+++ util-linux-2.11b/mount/nfsmount.c	Wed Mar 21 10:22:00 2001
-@@ -138,6 +138,8 @@
+--- util-linux-2.11e/mount/nfsmount.c.orig     Tue Jun  5 00:20:57 2001
++++ util-linux-2.11e/mount/nfsmount.c  Sun Jun 10 22:07:09 2001
+@@ -135,6 +135,8 @@
  	server_addr->sin_port = PMAPPORT;
  	pmap = pmap_getmaps(server_addr);
  
@@ -10,7 +9,7 @@ diff -urN util-linux-2.11b.org/mount/nfsmount.c util-linux-2.11b/mount/nfsmount.
  	if (version > MAX_NFSPROT)
  		version = MAX_NFSPROT;
  	if (!prog)
-@@ -166,8 +168,6 @@
+@@ -163,8 +165,6 @@
  	}
  	if (!p.pm_vers)
  		p.pm_vers = MOUNTVERS;
@@ -19,19 +18,18 @@ diff -urN util-linux-2.11b.org/mount/nfsmount.c util-linux-2.11b/mount/nfsmount.
  	if (!p.pm_prot)
  		p.pm_prot = IPPROTO_TCP;
  	return &p;
-@@ -574,6 +574,12 @@
- 					       mountvers,
- 					       proto,
- 					       mountport);
-+
+@@ -563,6 +563,11 @@
+ 					       mountport,
+ 					       nfs_mount_version);
+ 
 +			if (pm_mnt == NULL) {
 +			    	fprintf(stderr, _("mount: cannot access portmapper on %s: %s\n"),
 +					hostname, strerror (errno));
 +				goto fail;
 +			}
- 
  			/* contact the mount daemon via TCP */
  			mount_server_addr.sin_port = htons(pm_mnt->pm_port);
+ 			msock = RPC_ANYSOCK;
 diff -urN util-linux-2.11b.org/mount/nfsmount.x util-linux-2.11b/mount/nfsmount.x
 --- util-linux-2.11b.org/mount/nfsmount.x	Wed Mar 21 10:16:36 2001
 +++ util-linux-2.11b/mount/nfsmount.x	Wed Mar 21 10:17:01 2001
