@@ -28,7 +28,7 @@ Summary(ru):	Набор базовых системных утилит для Linux
 Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
-Version:	2.11r
+Version:	2.11t
 Release:	%{_release}
 License:	distributable
 Group:		Applications/System
@@ -64,6 +64,7 @@ BuildRequires:	textutils
 Provides:	fdisk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
+Obsoletes:	cramfs
 
 %define		debugcflags	-O1 -g
 
@@ -486,7 +487,7 @@ fi
 
 %files %{!?_with_uClibc:-f %{name}.lang}
 %defattr(644,root,root,755)
-%doc */README.*
+%doc */README.* text-utils/LICENSE.pg
 
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock*
@@ -530,6 +531,9 @@ fi
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setfdprm
+%attr(0755,root,root) %{_bindir}/pg
+%attr(0755,root,root) %{_bindir}/line
+%attr(0755,root,root) %{_bindir}/rename
 %{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
 %{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
 %attr(0755,root,root) %{_bindir}/whereis
@@ -558,6 +562,8 @@ fi
 %{!?_with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
+%{_mandir}/man1/pg.1*
+%{_mandir}/man1/line.1*
 
 %{_mandir}/man8/blockdev.8*
 %{_mandir}/man8/ctrlaltdel.8*
@@ -738,6 +744,7 @@ fi
 %lang(pl) %{_mandir}/pl/man1/hexdump.1*
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/look.1*
+%lang(pl) %{_mandir}/pl/man1/logger.1*
 %lang(pl) %{_mandir}/pl/man1/more.1*
 %lang(pl) %{_mandir}/pl/man1/rev.1*
 %lang(pl) %{_mandir}/pl/man1/script.1*
@@ -804,6 +811,14 @@ fi
 %lang(pl) %{_mandir}/pl/man8/fsck.minix.8*
 %lang(pl) %{_mandir}/pl/man8/mkfs.minix.8*
 %lang(pl) %{_mandir}/pl/man8/mkfs.8*
+
+%attr(755,root,root) /sbin/fsck.cramfs
+%attr(755,root,root) /sbin/mkfs.cramfs
+%{_mandir}/man8/fsck.cramfs.8*
+%{_mandir}/man8/mkfs.cramfs.8*
+
+%attr(755,root,root) /sbin/mkfs.bfs
+%{_mandir}/man8/mkfs.bfs.8*
 
 %attr(755,root,root) %{_bindir}/cytune
 
