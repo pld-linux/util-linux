@@ -1,0 +1,38 @@
+--- fdisk/fdisksunlabel.c	2003-07-13 15:21:52.000000000 +0200
++++ fdisk/fdisksunlabel.c	2004-12-22 16:36:24.000000000 +0100
+@@ -379,8 +379,8 @@
+ 	}
+ 
+ 	set_all_unchanged();
+-	set_changed(0);
+ 	get_boot(create_empty_sun);
++	set_changed(0);
+ }
+ 
+ void
+@@ -524,9 +524,14 @@
+ 					 scround(stop), 0, mesg);
+ 		if (display_in_cyl_units)
+ 			first *= units_per_sector;
+-		else
++		else {
+ 			/* Starting sector has to be properly aligned */
+-			first = (first + heads * sectors - 1) / (heads * sectors);
++			int cs = heads * sectors;
++			int x = first % cs;
++
++			if (x)
++				first += cs - x;
++		}
+ 		if (n == 2 && first != 0)
+ 			printf ("\
+ It is highly recommended that the third partition covers the whole disk\n\
+@@ -560,7 +565,7 @@
+ 		} else
+ 			break;
+ 	}
+-	stop = cylinders * heads * sectors;
++	stop = cylinders * heads * sectors;	/* ancient */
+ 	stop2 = stop;
+ 	for (i = 0; i < partitions; i++) {
+ 		if (starts[i] > first && starts[i] < stop)

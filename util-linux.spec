@@ -52,6 +52,7 @@ Patch17:	%{name}-selinux.patch
 Patch18:	%{name}-blk.patch
 Patch19:	%{name}-io.patch
 Patch20:	%{name}-managed.patch
+Patch21:	%{name}-fdisk-sunlabel.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -363,6 +364,7 @@ Obs³uga raw-device'ów.
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p0
 
 %build
 CC="%{__cc}"
