@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.9r
-Release:	2
+Release:	3
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -24,6 +24,7 @@ Patch6:		util-linux-more.patch
 Patch7:		util-linux-po.patch
 Patch8:		util-linux-shutdown.patch
 Patch9:		util-linux-kernel23.patch
+Patch10:	util-linux-utmpx.patch
 BuildPrereq:	pam-devel >= 0.66
 BuildPrereq:	ncurses-devel
 BuildPrereq:	gettext
@@ -179,6 +180,7 @@ Users programs for manipulate /etc/passwd file.
 %patch6  -p1 
 %patch7  -p1 
 %patch8  -p1 
+%patch10  -p1 
 
 %build
 # First check running Linux release ... 
