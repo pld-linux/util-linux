@@ -30,7 +30,6 @@ Source10:	hexdump.1.pl
 Source11:	ul.1.pl
 Source12:	ipcrm.8.pl
 Source13:	ipcs.8.pl
-Source14:	kbdrate.8.pl
 Source15:	fdformat.8.pl
 Source16:	mkswap.8.pl
 Source17:	fdisk.8.pl
@@ -314,7 +313,6 @@ install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
 
 install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
 install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
-install %{SOURCE14} $RPM_BUILD_ROOT%{_mandir}/pl/man8/kbdrate.8
 install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
 install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
 install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
@@ -460,7 +458,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %lang(pl) %{_mandir}/pl/man8/ipcrm.8*
 %lang(pl) %{_mandir}/pl/man8/ipcs.8*
-%lang(pl) %{_mandir}/pl/man8/kbdrate.8*
 %lang(pl) %{_mandir}/pl/man8/fdformat.8*
 %lang(pl) %{_mandir}/pl/man8/mkswap.8*
 
