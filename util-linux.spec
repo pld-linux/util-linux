@@ -18,14 +18,17 @@ Patch1:		util-linux-config.patch
 Patch2:		util-linux-nochkdupexe.patch
 Patch3:		util-linux-shutdown.patch
 Patch4:		util-linux-chfn.patch
-BuildPrereq:	pam >= 0.66
+Patch5:		util-linux-DESTDIR.patch
+BuildPrereq:	pam-devel >= 0.66
+BuildPrereq:	ncurses-devel
+BuildPrereq:	gettext
 Requires:	pam >= 0.66
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	util-linux-suids
 
 %description
 util-linux contains a large variety of low-level system utilities
-necessary for a functional Linux system.  This includes, among other
+necessary for a functional Linux system. This includes, among other
 things, configuration tools such as fdisk and system programs such
 as login.
 
@@ -153,6 +156,7 @@ kritiktir.
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1 
+%patch5 -p1 
 
 %build
 cp login-utils/login.c login-utils/login.c.new
@@ -222,93 +226,51 @@ rm -rf $RPM_BUILD_ROOT
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chfn
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/security/*
-
-%ifarch i386 alpha
-%attr(755,root,root) /sbin/fdisk
-%attr(755,root,root) /sbin/cfdisk
-%attr(755,root,root) /sbin/fsck.minix
-%attr(755,root,root) /sbin/mkfs.minix
-%attr(755,root,root) /sbin/sfdisk
-%endif
-
-%attr(755,root,root) /sbin/mkfs
-%attr(755,root,root) /sbin/mkswap
-
-%attr(755,root,root) /usr/bin/fdformat
-%attr(755,root,root) /usr/bin/setfdprm
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
 
-/usr/man/man8/fdformat.8.gz
-/usr/man/man8/mkswap.8.gz
-/usr/man/man8/setfdprm.8.gz
-
-%attr(755,root,root) /usr/games/banner
-/usr/man/man6/banner.6.gz
-
-%attr(755,root,root) /usr/bin/ddate
-/usr/man/man1/ddate.1.gz
-
-%attr(755,root,root) /bin/login
-
-
-%attr(755,root,root) /usr/bin/newgrp
-%attr(755,root,root) /usr/sbin/vipw
-%attr(755,root,root) /usr/sbin/vigr
-
-/usr/man/man1/login.1.gz
-/usr/man/man1/newgrp.1.gz
-/usr/man/man8/vipw.8.gz
-
+%attr(0755,root,root) /bin/arch
+%attr(0755,root,root) /bin/dmesg
 %attr(0755,root,root) /bin/kill
+%attr(0755,root,root) /bin/login
+%attr(0755,root,root) /bin/more
+%attr(0755,root,root) /sbin/mkfs
+%attr(0755,root,root) /sbin/mkswap
+%attr(0755,root,root) /sbin/ctrlaltdel
+%attr(0755,root,root) /sbin/kbdrate
 %attr(0755,root,root) /usr/bin/cal
+%attr(4755,root,root) /usr/bin/chfn
+%attr(4755,root,root) /usr/bin/chsh
+%attr(0755,root,root) /usr/bin/col
+%attr(0755,root,root) /usr/bin/colcrt
+%attr(0755,root,root) /usr/bin/colrm
+%attr(0755,root,root) /usr/bin/column
+%attr(0755,root,root) /usr/bin/hexdump
+%attr(0755,root,root) /usr/bin/rev
+%attr(0755,root,root) /usr/bin/ul
+%attr(0755,root,root) /usr/bin/ddate
+%attr(0755,root,root) /usr/bin/fdformat
+%attr(0755,root,root) /usr/bin/newgrp
+%attr(0755,root,root) /usr/bin/setfdprm
 %attr(0755,root,root) /usr/bin/logger
 %attr(0755,root,root) /usr/bin/look
 %attr(0755,root,root) /usr/bin/mcookie
 %attr(0755,root,root) /usr/bin/namei
 %attr(0755,root,root) /usr/bin/script
+%attr(0755,root,root) /usr/bin/setsid
 %attr(0755,root,root) /usr/bin/setterm
+%attr(0755,root,root) /usr/bin/tunelp
 %attr(0755,root,root) /usr/bin/whereis
 %attr(2755,root, tty) /usr/bin/write
 %attr(0755,root,root) /usr/bin/getopt
-%attr(4755,root,root) /usr/bin/chfn
-%attr(4755,root,root) /usr/bin/chsh
-
-/usr/man/man1/cal.1.gz
-/usr/man/man1/kill.1.gz
-/usr/man/man1/logger.1.gz
-/usr/man/man1/look.1.gz
-/usr/man/man1/mcookie.1.gz
-/usr/man/man1/namei.1.gz
-/usr/man/man1/script.1.gz
-/usr/man/man1/setterm.1.gz
-/usr/man/man1/whereis.1.gz
-/usr/man/man1/write.1.gz
-/usr/man/man1/getopt.1.gz
-/usr/man/man1/chfn.1.gz
-/usr/man/man1/chsh.1.gz
-
-
-%attr(755,root,root) /bin/dmesg
-
-%attr(755,root,root) /sbin/ctrlaltdel
-%attr(755,root,root) /sbin/kbdrate
-%attr(755,root,root) /bin/arch
-%attr(755,root,root) /usr/bin/ipcrm
-%attr(755,root,root) /usr/bin/ipcs
-%attr(755,root,root) /usr/bin/renice
-%attr(755,root,root) /usr/sbin/readprofile
-%attr(755,root,root) /usr/bin/setsid
-%attr(755,root,root) /usr/sbin/ramsize
-
-%attr(755,root,root) /usr/bin/tunelp
-
-%ifnarch sparc
-%attr(755,root,root) /usr/bin/cytune
-%attr(755,root,root) /usr/sbin/swapdev
-%attr(755,root,root) /usr/sbin/vidmode
-%endif
-
-%attr(755,root,root) /usr/sbin/rootflags
+%attr(0755,root,root) /usr/bin/ipcrm
+%attr(0755,root,root) /usr/bin/ipcs
+%attr(0755,root,root) /usr/bin/renice
+%attr(0755,root,root) /usr/sbin/rootflags
+%attr(0755,root,root) /usr/games/banner
+%attr(0755,root,root) /usr/sbin/vipw
+%attr(0755,root,root) /usr/sbin/vigr
+%attr(0755,root,root) /usr/sbin/readprofile
+%attr(0755,root,root) /usr/sbin/ramsize
 
 /usr/man/man1/arch.1.gz
 /usr/man/man1/readprofile.1.gz
@@ -325,20 +287,28 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man8/swapdev.8.gz
 /usr/man/man8/vidmode.8.gz
 /usr/man/man8/tunelp.8.gz
-
-%ifarch i386
-%attr(755,root,root) /usr/sbin/rdev
-/usr/man/man8/rdev.8.gz
-%endif
-
-%attr(755,root,root) /usr/bin/col
-%attr(755,root,root) /usr/bin/colcrt
-%attr(755,root,root) /usr/bin/colrm
-%attr(755,root,root) /usr/bin/column
-%attr(755,root,root) /usr/bin/hexdump
-%attr(755,root,root) /usr/bin/rev
-%attr(755,root,root) /usr/bin/ul
-
+/usr/man/man1/login.1.gz
+/usr/man/man1/newgrp.1.gz
+/usr/man/man1/ddate.1.gz
+/usr/man/man1/cal.1.gz
+/usr/man/man1/kill.1.gz
+/usr/man/man1/logger.1.gz
+/usr/man/man1/look.1.gz
+/usr/man/man1/mcookie.1.gz
+/usr/man/man1/more.1.gz
+/usr/man/man1/namei.1.gz
+/usr/man/man1/script.1.gz
+/usr/man/man1/setterm.1.gz
+/usr/man/man1/whereis.1.gz
+/usr/man/man1/write.1.gz
+/usr/man/man1/getopt.1.gz
+/usr/man/man1/chfn.1.gz
+/usr/man/man1/chsh.1.gz
+/usr/man/man6/banner.6.gz
+/usr/man/man8/vipw.8.gz
+/usr/man/man8/fdformat.8.gz
+/usr/man/man8/mkswap.8.gz
+/usr/man/man8/setfdprm.8.gz
 /usr/man/man1/col.1.gz
 /usr/man/man1/colcrt.1.gz
 /usr/man/man1/colrm.1.gz
@@ -347,25 +317,41 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man1/rev.1.gz
 /usr/man/man1/ul.1.gz
 
-%attr(755,root,root) /bin/more
-/usr/man/man1/more.1.gz
-
 %dir /usr/lib/getopt
 %attr(755,root,root) /usr/lib/getopt/*
+/usr/lib/more.help
 
-%config /usr/lib/more.help
+%ifarch i386 alpha
+%attr(755,root,root) /sbin/fdisk
+%attr(755,root,root) /sbin/cfdisk
+%attr(755,root,root) /sbin/fsck.minix
+%attr(755,root,root) /sbin/mkfs.minix
+%attr(755,root,root) /sbin/sfdisk
+
+/usr/man/man8/fdisk.8.gz
+/usr/man/man8/cfdisk.8.gz
+/usr/man/man8/sfdisk.8.gz
+%endif
 
 %ifnarch sparc
+%attr(755,root,root) /usr/bin/cytune
+%attr(755,root,root) /usr/sbin/swapdev
+%attr(755,root,root) /usr/sbin/vidmode
+
 /usr/man/man8/fsck.minix.8.gz
 /usr/man/man8/mkfs.minix.8.gz
 /usr/man/man8/mkfs.8.gz
 %endif
 
-%ifarch i386 alpha
-/usr/man/man8/fdisk.8.gz
-/usr/man/man8/cfdisk.8.gz
-/usr/man/man8/sfdisk.8.gz
+%ifarch i386
+%attr(755,root,root) /usr/sbin/rdev
+
+/usr/man/man8/rdev.8.gz
 %endif
+
+%lang(fr)    /usr/share/locale/fr/LC_MESSAGES/util-linux.mo
+%lang(nl)    /usr/share/locale/nl/LC_MESSAGES/util-linux.mo
+%lang(pt_BR) /usr/share/locale/pt_BR/LC_MESSAGES/util-linux.mo
 
 %files -n mount
 %defattr(644,root,root,755)
@@ -391,6 +377,7 @@ rm -rf $RPM_BUILD_ROOT
 %changelog
 * Thu Apr 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.9o-1]
+- fixed installing .mo files (util-linux-DESTDIR.patch),
 - removed suid subpackage (added to Obsoletes),
 - recompiles on new rpm.
 
