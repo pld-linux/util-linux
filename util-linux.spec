@@ -13,13 +13,15 @@ Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
-Patch0:		%{name}-openpty.patch
-Patch1:		%{name}-config.patch
-Patch2:		%{name}-nochkdupexe.patch
-Patch3:		%{name}-shutdown.patch
-Patch4:		%{name}-chfn.patch
+Patch0:		util-linux-openpty.patch
+Patch1:		util-linux-config.patch
+Patch2:		util-linux-nochkdupexe.patch
+Patch3:		util-linux-shutdown.patch
+Patch4:		util-linux-chfn.patch
+BuidPrereq:	pam >= 0.66
 Requires:	pam >= 0.66
 Buildroot:	/tmp/%{name}-%{version}-root
+Obsoletes:	util-linux-suid
 
 %description
 util-linux contains a large variety of low-level system utilities
@@ -49,28 +51,14 @@ jak login.
 araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma uygulamalarý ve
 login gibi sistem programlarý sayýlabilir.
 
-%package	suid
-Summary:	Programs: chfn and chsh -- use it on own risc..
-Summary(pl):	Programy: chfn and chsh -- skrajnie niebezpiecznie.
+%package -n losetup
+Summary:	programs for setting up and configuring loopback devices
+Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
+Summary(fr):	programmes pour mettre en place et configurer les loopback
+Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
+Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Requires:	pam >= 0.66
-
-%description suid -l pl
-Programy: chfn and chsh -- skrajnie niebezpiecznie. 
-Mo¿esz ich u¿ywaæ tylko na w³asne ryzyko ;)
-
-%description suid 
-Programs: chfn and chsh -- use it on own risc...
-
-%package -n losetup
-Summary:     programs for setting up and configuring loopback devices
-Summary(de): Programme zum Einrichten und Konfigurieren von Loopback-Geräten
-Summary(fr): programmes pour mettre en place et configurer les loopback
-Summary(pl): Program do konfiguracji urz±dzenia blokowego loopback
-Summary(tr): Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
-Group:       Utilities/System
-Group(pl):   Narzêdzia/System
 
 %description -n losetup
 Linux supports a special block device called the loopback device, which
@@ -112,7 +100,7 @@ fichiers et les périphériques loopback.
 Les périphériques bloc loopback ne doivent pas être confondus avec le
 périphérique loopback du réseau, configuré avec la commande ifconfig normale.
 
-%package -n	mount
+%package -n mount
 Summary:	Programs for mounting and unmounting filesystems
 Summary(de):	Programme zum Montieren und Abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
@@ -182,9 +170,9 @@ install -d $RPM_BUILD_ROOT/{bin,etc/pam.d,sbin}
 install -d $RPM_BUILD_ROOT/usr/{bin,info,lib,man/man1,man/man6,man/man8,sbin}
 
 make install \
-    DESTDIR=$RPM_BUILD_ROOT \
-    INSTALLSUID="install -m 4711" \
-    USE_TTY_GROUP=no 
+	DESTDIR=$RPM_BUILD_ROOT \
+	INSTALLSUID="install -m 4711" \
+	USE_TTY_GROUP=no
 
 %ifarch i386
 mv -f $RPM_BUILD_ROOT/usr/bin/rdev $RPM_BUILD_ROOT/usr/sbin
@@ -231,6 +219,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
+%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chfn
+%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
+%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/security/*
 
 %ifarch i386 alpha
 %attr(755,root,root) /sbin/fdisk
@@ -277,8 +268,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /usr/bin/script
 %attr(0755,root,root) /usr/bin/setterm
 %attr(0755,root,root) /usr/bin/whereis
-%attr(2711,root, tty) /usr/bin/write
+%attr(2755,root, tty) /usr/bin/write
 %attr(0755,root,root) /usr/bin/getopt
+%attr(4755,root,root) /usr/bin/chfn
+%attr(4755,root,root) /usr/bin/chsh
 
 /usr/man/man1/cal.1.gz
 /usr/man/man1/kill.1.gz
@@ -291,6 +284,9 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man1/whereis.1.gz
 /usr/man/man1/write.1.gz
 /usr/man/man1/getopt.1.gz
+/usr/man/man1/chfn.1.gz
+/usr/man/man1/chsh.1.gz
+
 
 %attr(755,root,root) /bin/dmesg
 
@@ -370,19 +366,6 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man8/cfdisk.8.gz
 /usr/man/man8/sfdisk.8.gz
 %endif
-
-%files suid
-%defattr(640,root,root,755)
-
-%config(noreplace) %verify(not mtime size md5) /etc/pam.d/chfn
-%config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
-%config(noreplace) %verify(not mtime size md5) /etc/security/*
-
-%attr(4711,root,root) /usr/bin/chfn
-%attr(4711,root,root) /usr/bin/chsh
-
-/usr/man/man1/chfn.1.gz
-/usr/man/man1/chsh.1.gz
 
 %files -n mount
 %defattr(644,root,root,755)
