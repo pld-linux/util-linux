@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	12
+Release:	12.1
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
@@ -43,7 +43,8 @@ Patch11:	%{name}-posixsh.patch
 Patch12:	%{name}-ppc-hwclock.patch
 Patch13:	%{name}-no_multiline.patch
 Patch14:	%{name}-amd64.patch
-Patch15:	%{name}-crypto-debian.patch
+#Patch15:	%{name}-crypto-debian.patch
+Patch15:	%{name}-dm_crypt.patch
 Patch16:	%{name}-dev_t.patch
 Patch17:	%{name}-selinux.patch
 Patch18:	%{name}-blk.patch
