@@ -61,7 +61,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
   */
  
  #define PROC_DEVICES	"/proc/devices"
-@@ -21,54 +26,109 @@
+@@ -21,6 +26,7 @@
  #include <errno.h>
  #include <stdlib.h>
  #include <unistd.h>
@@ -69,6 +69,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  #include <sys/ioctl.h>
  #include <sys/stat.h>
  #include <sys/mman.h>
+@@ -27,48 +33,102 @@
  
  #include "loop.h"
  #include "lomount.h"
@@ -993,9 +994,9 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	  printf(_("mount: failed setting up loop device\n"));
  	return EX_FAIL;
 @@ -1305,6 +1313,7 @@
- 	{ "read-write", 0, 0, 'w' },
  	{ "rw", 0, 0, 'w' },
  	{ "options", 1, 0, 'o' },
+	{ "test-opts", 1, 0, 'O' },
 +	{ "pass-fd", 1, 0, 'p' },
  	{ "types", 1, 0, 't' },
  	{ "bind", 0, 0, 128 },
@@ -1021,8 +1022,8 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	initproctitle(argc, argv);
  #endif
  
--	while ((c = getopt_long (argc, argv, "afFhlL:no:rsU:vVwt:",
-+	while ((c = getopt_long (argc, argv, "afFhlL:no:p:rsU:vVwt:",
+-	while ((c = getopt_long (argc, argv, "afFhlL:no:O:rsU:vVwt:",
++	while ((c = getopt_long (argc, argv, "afFhlL:no:O:p:rsU:vVwt:",
  				 longopts, NULL)) != -1) {
  		switch (c) {
  		case 'a':		/* mount everything in fstab */
