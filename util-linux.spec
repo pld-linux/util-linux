@@ -15,7 +15,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	0.1
+%define		_release	0.2
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -324,9 +324,9 @@ util-linux dla bootkietki.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%if !%{_kernel24}
-%{!?_without_crypto:%patch14 -p1}
-%endif
+#%if !%{_kernel24}
+#%{!?_without_crypto:%patch14 -p1}
+#%endif
 #%patch15 -p1
 %patch16 -p1
 %patch17 -p1
