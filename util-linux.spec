@@ -13,7 +13,7 @@
 %define		_kernel_series	2.2
 %endif
 
-%define		rel	6
+%define		rel	7
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -322,7 +322,7 @@ Summary(pl):	Obs³uga raw-device'ów
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
-Requires:	chkconfig
+Prereq:		/sbin/chkconfig
 
 %description -n rawdevices
 Support for raw-devices.
