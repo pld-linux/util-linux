@@ -1,0 +1,693 @@
+diff -urN util-linux-2.9v/MCONFIG util-linux-2.9v.int/MCONFIG
+--- util-linux-2.9v/MCONFIG	Tue Aug 24 01:33:35 1999
++++ util-linux-2.9v.int/MCONFIG	Mon Sep  6 14:05:07 1999
+@@ -16,7 +16,7 @@
+ # If HAVE_PAM is set to "yes", then login, chfn, chsh, and newgrp
+ # will use PAM for authentication. Additionally, passwd will not be
+ # installed as it is not PAM aware.
+-HAVE_PAM=no
++HAVE_PAM=yes
+ 
+ # If HAVE_SHADOW is set to "yes", then login, chfn, chsh, newgrp, passwd,
+ # and vipw will not be built or installed from the login-utils
+diff -urN util-linux-2.9v/mount/Makefile util-linux-2.9v.int/mount/Makefile
+--- util-linux-2.9v/mount/Makefile	Fri Jul  9 04:56:39 1999
++++ util-linux-2.9v.int/mount/Makefile	Mon Sep  6 14:05:07 1999
+@@ -36,7 +36,7 @@
+ GEN_FILES = nfsmount.x nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
+ 
+ # comment these out if you are not compiling in loop support
+-LO_OBJS=lomount.o
++LO_OBJS=lomount.o rmd160.o
+ 
+ all: $(PROGS)
+ 
+@@ -64,7 +64,7 @@
+ swapon:	swapon.o version.o
+ 	$(LINK) $^ -o $@
+ 
+-losetup: losetup.o
++losetup: losetup.o rmd160.o
+ 	$(LINK) $^ -o $@
+ 
+ mount.o umount.o nfsmount.o losetup.o fstab.o sundries.o: sundries.h
+diff -urN util-linux-2.9v/mount/lomount.c util-linux-2.9v.int/mount/lomount.c
+--- util-linux-2.9v/mount/lomount.c	Fri Jul  9 04:56:39 1999
++++ util-linux-2.9v.int/mount/lomount.c	Mon Sep  6 14:05:07 1999
+@@ -26,6 +26,7 @@
+ 
+ #include "loop.h"
+ #include "lomount.h"
++#include "rmd160.h"
+ #include "nls.h"
+ 
+ char *xstrdup (const char *s);		/* not: #include "sundries.h" */
+@@ -40,6 +41,14 @@
+   { LO_CRYPT_NONE, "none" },
+   { LO_CRYPT_XOR, "xor" },
+   { LO_CRYPT_DES, "DES" },
++  { LO_CRYPT_FISH2, "twofish" },
++  { LO_CRYPT_BLOW, "blowfish"},
++  { LO_CRYPT_CAST128, "cast128"},
++  { LO_CRYPT_SERPENT, "serpent"},
++  { LO_CRYPT_MARS, "mars" },
++  { LO_CRYPT_RC6, "rc6" },
++  { LO_CRYPT_DFC, "dfc" },
++  { LO_CRYPT_IDEA, "idea"},
+   { -1, NULL   }
+ };
+ 
+@@ -218,6 +227,24 @@
+ 	return 1;
+       }
+     break;
++  case LO_CRYPT_FISH2:
++  case LO_CRYPT_BLOW:
++    pass = getpass("Password :");
++    MDcalc((byte *)loopinfo.lo_encrypt_key,pass,strlen(pass));
++    loopinfo.lo_encrypt_key_size=20; /* 160 Bit key */
++    break;
++    
++  case LO_CRYPT_IDEA:
++  case LO_CRYPT_CAST128:
++  case LO_CRYPT_SERPENT:
++  case LO_CRYPT_MARS:
++  case LO_CRYPT_RC6:
++  case LO_CRYPT_DFC:
++    pass = getpass("Password :");
++    MDcalc((byte *)loopinfo.lo_encrypt_key,pass,strlen(pass));
++    loopinfo.lo_encrypt_key_size=16; /* 128 Bit key */
++    break;
++    
+   default:
+     fprintf (stderr,
+ 	     _("Don't know how to get key for encryption system %d\n"),
+diff -urN util-linux-2.9v/mount/losetup.8 util-linux-2.9v.int/mount/losetup.8
+--- util-linux-2.9v/mount/losetup.8	Fri Jul  9 04:56:39 1999
++++ util-linux-2.9v.int/mount/losetup.8	Mon Sep  6 14:05:24 1999
+@@ -36,11 +36,47 @@
+ .PD 0
+ .IP \fBXOR\fP
+ use a simple XOR encryption.
++.IP \fBBlowfish\fP
++use Blowfish encryption. Blowfish encryption is only available if you
++are using the international kernel and Blowfish encryption has been
++enabled in the Crypto API.
++.IP \fBTwofish\fP
++use Twofish encryption. Twofish encryption is only available if you
++are using the international kernel and Twofish encryption has been
++enabled in the Crypto API.
++.IP \fBCAST\fP
++use CAST encryption. CAST encryption is only available if you
++are using the international kernel and CAST encryption has been
++enabled in the Crypto API.
+ .IP \fBDES\fP
+ use DES encryption. DES encryption is only available if the optional
+ DES package has been added to the kernel. DES encryption uses an additional
+ start value that is used to protect passwords against dictionary
+-attacks.
++attacks. Use of DES is deprecated.
++.IP \fBDFC\fP
++use DFC encryption. DFC encryption is only available if you
++are using the international kernel and DFC encryption has been
++enabled in the Crypto API.
++.IP \fBIDEA\fP
++use IDEA encryption. IDEA encryption is only available if you
++are using the international kernel and IDEA encryption has been
++enabled in the Crypto API.
++.IP \fBMARS\fP
++use MARS encryption. MARS encryption is only available if you
++are using the international kernel and MARS encryption has been
++enabled in the Crypto API.
++.IP \fBRC5\fP
++use RC5 encryption. RC5 encryption is only available if you
++are using the international kernel and RC5 encryption has been
++enabled in the Crypto API.
++.IP \fBRC6\fP
++use RC6 encryption. RC6 encryption is only available if you
++are using the international kernel and RC6 encryption has been
++enabled in the Crypto API.
++.IP \fBSerpent\fP
++use Serpent encryption. Serpent encryption is only available if you
++are using the international kernel and Serpent encryption has been
++enabled in the Crypto API.
+ .PD
+ .RE
+ .IP "\fB\-o \fIoffset\fP"
+@@ -49,6 +85,7 @@
+ .SH FILES
+ .nf
+ /dev/loop0,/dev/loop1,...   loop devices (major=7)
++/proc/cipher/*              available ciphers
+ .fi
+ .SH EXAMPLE
+ If you are using the loadable module you must have the module loaded
+@@ -60,9 +97,8 @@
+ .nf
+ .IP
+ dd if=/dev/zero of=/file bs=1k count=100
+-losetup -e des /dev/loop0 /file
+-Password:
+-Init (up to 16 hex digits):
++losetup -e blowfish /dev/loop0 /file
++Password :
+ mkfs -t ext2 /dev/loop0 100
+ mount -t ext2 /dev/loop0 /mnt
+  ...
+@@ -76,8 +112,12 @@
+ # rmmod loop
+ .LP
+ .fi
+-.SH RESTRICTION
+-DES encryption is painfully slow. On the other hand, XOR is terribly weak.
++.SH RESTRICTIONS
++DES encryption is painfully slow. On the other hand, XOR is terribly
++weak. Both are insecure nowadays. Some ciphers require a licence for
++you to be allowed to use them.
++.SH BUGS
++CAST, DES, RC5 and Twofish are currently broken and cannot be used.
+ .SH AUTHORS
+ .nf
+ Original version: Theodore Ts'o <tytso@athena.mit.edu>
+diff -urN util-linux-2.9v/mount/losetup.c util-linux-2.9v.int/mount/losetup.c
+--- util-linux-2.9v/mount/losetup.c	Fri Jul  9 04:56:39 1999
++++ util-linux-2.9v.int/mount/losetup.c	Mon Sep  6 14:19:53 1999
+@@ -17,6 +17,7 @@
+ 
+ #include "loop.h"
+ #include "lomount.h"
++#include "rmd160.h"
+ #include "nls.h"
+ 
+ #ifdef LOOP_SET_FD
+@@ -31,6 +32,14 @@
+ 	{ LO_CRYPT_NONE,"none" },
+ 	{ LO_CRYPT_XOR,	"xor" },
+ 	{ LO_CRYPT_DES,	"DES" },
++	{ LO_CRYPT_FISH2, "twofish" },
++	{ LO_CRYPT_BLOW, "blowfish" },
++	{ LO_CRYPT_CAST128, "cast128" },
++	{ LO_CRYPT_SERPENT, "serpent" },
++	{ LO_CRYPT_MARS, "mars" },
++	{ LO_CRYPT_RC6, "rc6" },
++	{ LO_CRYPT_DFC, "dfc" },
++	{ LO_CRYPT_IDEA, "idea" },
+ 	{ -1,		NULL }
+ };
+ 
+@@ -85,7 +94,7 @@
+ 	struct loop_info loopinfo;
+ 	int	fd, ffd, mode, i;
+ 	char	*pass;
+-
++        
+ 	mode = *loopro ? O_RDONLY : O_RDWR;
+ 	if ((ffd = open (file, mode)) < 0 && !*loopro
+ 	    && (errno != EROFS || (ffd = open (file, mode = O_RDONLY)) < 0)) {
+@@ -118,6 +127,7 @@
+ 		loopinfo.lo_encrypt_key_size = strlen(loopinfo.lo_encrypt_key);
+ 		break;
+ 	case LO_CRYPT_DES:
++		printf(_("WARNING: Use of DES is depreciated.\n"));
+ 		pass = getpass(_("Password: "));
+ 		strncpy(loopinfo.lo_encrypt_key, pass, 8);
+ 		loopinfo.lo_encrypt_key[8] = 0;
+@@ -133,6 +143,22 @@
+ 				exit(1);
+ 			}
+ 		break;
++	case LO_CRYPT_FISH2:
++	case LO_CRYPT_BLOW:
++	        pass = getpass("Password :");
++	        MDcalc((byte *)loopinfo.lo_encrypt_key,pass,strlen(pass));
++	        loopinfo.lo_encrypt_key_size=20; /* 160 Bit key */
++	        break;
++	case LO_CRYPT_CAST128:
++	case LO_CRYPT_SERPENT:
++	case LO_CRYPT_MARS:
++	case LO_CRYPT_RC6:
++	case LO_CRYPT_DFC:
++	case LO_CRYPT_IDEA:
++	        pass = getpass("Passphrase :");
++	        MDcalc((byte *)loopinfo.lo_encrypt_key,pass,strlen(pass));
++	        loopinfo.lo_encrypt_key_size=16; /* 128 Bit key */
++	        break;
+ 	default:
+ 		fprintf(stderr,
+ 			_("Don't know how to get key for encryption system %d\n"),
+@@ -171,11 +197,18 @@
+ 
+ static int usage(void)
+ {
++        struct crypt_type_struct *c;
+ 	fprintf(stderr, _("usage:\n\
+   %s loop_device                                      # give info\n\
+   %s -d loop_device                                   # delete\n\
+   %s [ -e encryption ] [ -o offset ] loop_device file # setup\n"),
+ 		progname, progname, progname);
++  	fprintf(stderr, "    where encryption is one of:\n");
++  	c = &crypt_type_tbl[0];
++  	while(c->name) {
++  		fprintf(stderr, "       %s\n", c->name);
++  		c++;
++  	}
+ 	exit(1);
+ }
+ 
+diff -urN util-linux-2.9v/mount/rmd160.c util-linux-2.9v.int/mount/rmd160.c
+--- util-linux-2.9v/mount/rmd160.c	Thu Jan  1 01:00:00 1970
++++ util-linux-2.9v.int/mount/rmd160.c	Mon Sep  6 14:05:07 1999
+@@ -0,0 +1,371 @@
++/********************************************************************\
++ *
++ *      FILE:     rmd160.c
++ *
++ *      CONTENTS: A sample C-implementation of the RIPEMD-160
++ *                hash-function.
++ *      TARGET:   any computer with an ANSI C compiler
++ *
++ *      AUTHOR:   Antoon Bosselaers, ESAT-COSIC
++ *      DATE:     1 March 1996
++ *      VERSION:  1.0
++ *
++ *      Copyright (c) Katholieke Universiteit Leuven
++ *      1996, All Rights Reserved
++ *
++\********************************************************************/
++
++/*  header files */
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include "rmd160.h"      
++
++/********************************************************************/
++
++/* macro definitions */
++
++/* collect four bytes into one word: */
++#define BYTES_TO_DWORD(strptr)                    \
++            (((dword) *((strptr)+3) << 24) | \
++             ((dword) *((strptr)+2) << 16) | \
++             ((dword) *((strptr)+1) <<  8) | \
++             ((dword) *(strptr)))
++
++/* ROL(x, n) cyclically rotates x over n bits to the left */
++/* x must be of an unsigned 32 bits type and 0 <= n < 32. */
++#define ROL(x, n)        (((x) << (n)) | ((x) >> (32-(n))))
++
++/* the five basic functions F(), G() and H() */
++#define F(x, y, z)        ((x) ^ (y) ^ (z)) 
++#define G(x, y, z)        (((x) & (y)) | (~(x) & (z))) 
++#define H(x, y, z)        (((x) | ~(y)) ^ (z))
++#define I(x, y, z)        (((x) & (z)) | ((y) & ~(z))) 
++#define J(x, y, z)        ((x) ^ ((y) | ~(z)))
++  
++/* the ten basic operations FF() through III() */
++#define FF(a, b, c, d, e, x, s)        {\
++      (a) += F((b), (c), (d)) + (x);\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define GG(a, b, c, d, e, x, s)        {\
++      (a) += G((b), (c), (d)) + (x) + 0x5a827999UL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define HH(a, b, c, d, e, x, s)        {\
++      (a) += H((b), (c), (d)) + (x) + 0x6ed9eba1UL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define II(a, b, c, d, e, x, s)        {\
++      (a) += I((b), (c), (d)) + (x) + 0x8f1bbcdcUL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define JJ(a, b, c, d, e, x, s)        {\
++      (a) += J((b), (c), (d)) + (x) + 0xa953fd4eUL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define FFF(a, b, c, d, e, x, s)        {\
++      (a) += F((b), (c), (d)) + (x);\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define GGG(a, b, c, d, e, x, s)        {\
++      (a) += G((b), (c), (d)) + (x) + 0x7a6d76e9UL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define HHH(a, b, c, d, e, x, s)        {\
++      (a) += H((b), (c), (d)) + (x) + 0x6d703ef3UL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define III(a, b, c, d, e, x, s)        {\
++      (a) += I((b), (c), (d)) + (x) + 0x5c4dd124UL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++#define JJJ(a, b, c, d, e, x, s)        {\
++      (a) += J((b), (c), (d)) + (x) + 0x50a28be6UL;\
++      (a) = ROL((a), (s)) + (e);\
++      (c) = ROL((c), 10);\
++   }
++
++
++/********************************************************************/
++
++void MDinit(dword *MDbuf)
++{
++   MDbuf[0] = 0x67452301UL;
++   MDbuf[1] = 0xefcdab89UL;
++   MDbuf[2] = 0x98badcfeUL;
++   MDbuf[3] = 0x10325476UL;
++   MDbuf[4] = 0xc3d2e1f0UL;
++
++   return;
++}
++
++/********************************************************************/
++
++void compress(dword *MDbuf, dword *X)
++{
++   dword aa = MDbuf[0],  bb = MDbuf[1],  cc = MDbuf[2],
++         dd = MDbuf[3],  ee = MDbuf[4];
++   dword aaa = MDbuf[0], bbb = MDbuf[1], ccc = MDbuf[2],
++         ddd = MDbuf[3], eee = MDbuf[4];
++
++   /* round 1 */
++   FF(aa, bb, cc, dd, ee, X[ 0], 11);
++   FF(ee, aa, bb, cc, dd, X[ 1], 14);
++   FF(dd, ee, aa, bb, cc, X[ 2], 15);
++   FF(cc, dd, ee, aa, bb, X[ 3], 12);
++   FF(bb, cc, dd, ee, aa, X[ 4],  5);
++   FF(aa, bb, cc, dd, ee, X[ 5],  8);
++   FF(ee, aa, bb, cc, dd, X[ 6],  7);
++   FF(dd, ee, aa, bb, cc, X[ 7],  9);
++   FF(cc, dd, ee, aa, bb, X[ 8], 11);
++   FF(bb, cc, dd, ee, aa, X[ 9], 13);
++   FF(aa, bb, cc, dd, ee, X[10], 14);
++   FF(ee, aa, bb, cc, dd, X[11], 15);
++   FF(dd, ee, aa, bb, cc, X[12],  6);
++   FF(cc, dd, ee, aa, bb, X[13],  7);
++   FF(bb, cc, dd, ee, aa, X[14],  9);
++   FF(aa, bb, cc, dd, ee, X[15],  8);
++                             
++   /* round 2 */
++   GG(ee, aa, bb, cc, dd, X[ 7],  7);
++   GG(dd, ee, aa, bb, cc, X[ 4],  6);
++   GG(cc, dd, ee, aa, bb, X[13],  8);
++   GG(bb, cc, dd, ee, aa, X[ 1], 13);
++   GG(aa, bb, cc, dd, ee, X[10], 11);
++   GG(ee, aa, bb, cc, dd, X[ 6],  9);
++   GG(dd, ee, aa, bb, cc, X[15],  7);
++   GG(cc, dd, ee, aa, bb, X[ 3], 15);
++   GG(bb, cc, dd, ee, aa, X[12],  7);
++   GG(aa, bb, cc, dd, ee, X[ 0], 12);
++   GG(ee, aa, bb, cc, dd, X[ 9], 15);
++   GG(dd, ee, aa, bb, cc, X[ 5],  9);
++   GG(cc, dd, ee, aa, bb, X[ 2], 11);
++   GG(bb, cc, dd, ee, aa, X[14],  7);
++   GG(aa, bb, cc, dd, ee, X[11], 13);
++   GG(ee, aa, bb, cc, dd, X[ 8], 12);
++
++   /* round 3 */
++   HH(dd, ee, aa, bb, cc, X[ 3], 11);
++   HH(cc, dd, ee, aa, bb, X[10], 13);
++   HH(bb, cc, dd, ee, aa, X[14],  6);
++   HH(aa, bb, cc, dd, ee, X[ 4],  7);
++   HH(ee, aa, bb, cc, dd, X[ 9], 14);
++   HH(dd, ee, aa, bb, cc, X[15],  9);
++   HH(cc, dd, ee, aa, bb, X[ 8], 13);
++   HH(bb, cc, dd, ee, aa, X[ 1], 15);
++   HH(aa, bb, cc, dd, ee, X[ 2], 14);
++   HH(ee, aa, bb, cc, dd, X[ 7],  8);
++   HH(dd, ee, aa, bb, cc, X[ 0], 13);
++   HH(cc, dd, ee, aa, bb, X[ 6],  6);
++   HH(bb, cc, dd, ee, aa, X[13],  5);
++   HH(aa, bb, cc, dd, ee, X[11], 12);
++   HH(ee, aa, bb, cc, dd, X[ 5],  7);
++   HH(dd, ee, aa, bb, cc, X[12],  5);
++
++   /* round 4 */
++   II(cc, dd, ee, aa, bb, X[ 1], 11);
++   II(bb, cc, dd, ee, aa, X[ 9], 12);
++   II(aa, bb, cc, dd, ee, X[11], 14);
++   II(ee, aa, bb, cc, dd, X[10], 15);
++   II(dd, ee, aa, bb, cc, X[ 0], 14);
++   II(cc, dd, ee, aa, bb, X[ 8], 15);
++   II(bb, cc, dd, ee, aa, X[12],  9);
++   II(aa, bb, cc, dd, ee, X[ 4],  8);
++   II(ee, aa, bb, cc, dd, X[13],  9);
++   II(dd, ee, aa, bb, cc, X[ 3], 14);
++   II(cc, dd, ee, aa, bb, X[ 7],  5);
++   II(bb, cc, dd, ee, aa, X[15],  6);
++   II(aa, bb, cc, dd, ee, X[14],  8);
++   II(ee, aa, bb, cc, dd, X[ 5],  6);
++   II(dd, ee, aa, bb, cc, X[ 6],  5);
++   II(cc, dd, ee, aa, bb, X[ 2], 12);
++
++   /* round 5 */
++   JJ(bb, cc, dd, ee, aa, X[ 4],  9);
++   JJ(aa, bb, cc, dd, ee, X[ 0], 15);
++   JJ(ee, aa, bb, cc, dd, X[ 5],  5);
++   JJ(dd, ee, aa, bb, cc, X[ 9], 11);
++   JJ(cc, dd, ee, aa, bb, X[ 7],  6);
++   JJ(bb, cc, dd, ee, aa, X[12],  8);
++   JJ(aa, bb, cc, dd, ee, X[ 2], 13);
++   JJ(ee, aa, bb, cc, dd, X[10], 12);
++   JJ(dd, ee, aa, bb, cc, X[14],  5);
++   JJ(cc, dd, ee, aa, bb, X[ 1], 12);
++   JJ(bb, cc, dd, ee, aa, X[ 3], 13);
++   JJ(aa, bb, cc, dd, ee, X[ 8], 14);
++   JJ(ee, aa, bb, cc, dd, X[11], 11);
++   JJ(dd, ee, aa, bb, cc, X[ 6],  8);
++   JJ(cc, dd, ee, aa, bb, X[15],  5);
++   JJ(bb, cc, dd, ee, aa, X[13],  6);
++
++   /* parallel round 1 */
++   JJJ(aaa, bbb, ccc, ddd, eee, X[ 5],  8);
++   JJJ(eee, aaa, bbb, ccc, ddd, X[14],  9);
++   JJJ(ddd, eee, aaa, bbb, ccc, X[ 7],  9);
++   JJJ(ccc, ddd, eee, aaa, bbb, X[ 0], 11);
++   JJJ(bbb, ccc, ddd, eee, aaa, X[ 9], 13);
++   JJJ(aaa, bbb, ccc, ddd, eee, X[ 2], 15);
++   JJJ(eee, aaa, bbb, ccc, ddd, X[11], 15);
++   JJJ(ddd, eee, aaa, bbb, ccc, X[ 4],  5);
++   JJJ(ccc, ddd, eee, aaa, bbb, X[13],  7);
++   JJJ(bbb, ccc, ddd, eee, aaa, X[ 6],  7);
++   JJJ(aaa, bbb, ccc, ddd, eee, X[15],  8);
++   JJJ(eee, aaa, bbb, ccc, ddd, X[ 8], 11);
++   JJJ(ddd, eee, aaa, bbb, ccc, X[ 1], 14);
++   JJJ(ccc, ddd, eee, aaa, bbb, X[10], 14);
++   JJJ(bbb, ccc, ddd, eee, aaa, X[ 3], 12);
++   JJJ(aaa, bbb, ccc, ddd, eee, X[12],  6);
++
++   /* parallel round 2 */
++   III(eee, aaa, bbb, ccc, ddd, X[ 6],  9); 
++   III(ddd, eee, aaa, bbb, ccc, X[11], 13);
++   III(ccc, ddd, eee, aaa, bbb, X[ 3], 15);
++   III(bbb, ccc, ddd, eee, aaa, X[ 7],  7);
++   III(aaa, bbb, ccc, ddd, eee, X[ 0], 12);
++   III(eee, aaa, bbb, ccc, ddd, X[13],  8);
++   III(ddd, eee, aaa, bbb, ccc, X[ 5],  9);
++   III(ccc, ddd, eee, aaa, bbb, X[10], 11);
++   III(bbb, ccc, ddd, eee, aaa, X[14],  7);
++   III(aaa, bbb, ccc, ddd, eee, X[15],  7);
++   III(eee, aaa, bbb, ccc, ddd, X[ 8], 12);
++   III(ddd, eee, aaa, bbb, ccc, X[12],  7);
++   III(ccc, ddd, eee, aaa, bbb, X[ 4],  6);
++   III(bbb, ccc, ddd, eee, aaa, X[ 9], 15);
++   III(aaa, bbb, ccc, ddd, eee, X[ 1], 13);
++   III(eee, aaa, bbb, ccc, ddd, X[ 2], 11);
++
++   /* parallel round 3 */
++   HHH(ddd, eee, aaa, bbb, ccc, X[15],  9);
++   HHH(ccc, ddd, eee, aaa, bbb, X[ 5],  7);
++   HHH(bbb, ccc, ddd, eee, aaa, X[ 1], 15);
++   HHH(aaa, bbb, ccc, ddd, eee, X[ 3], 11);
++   HHH(eee, aaa, bbb, ccc, ddd, X[ 7],  8);
++   HHH(ddd, eee, aaa, bbb, ccc, X[14],  6);
++   HHH(ccc, ddd, eee, aaa, bbb, X[ 6],  6);
++   HHH(bbb, ccc, ddd, eee, aaa, X[ 9], 14);
++   HHH(aaa, bbb, ccc, ddd, eee, X[11], 12);
++   HHH(eee, aaa, bbb, ccc, ddd, X[ 8], 13);
++   HHH(ddd, eee, aaa, bbb, ccc, X[12],  5);
++   HHH(ccc, ddd, eee, aaa, bbb, X[ 2], 14);
++   HHH(bbb, ccc, ddd, eee, aaa, X[10], 13);
++   HHH(aaa, bbb, ccc, ddd, eee, X[ 0], 13);
++   HHH(eee, aaa, bbb, ccc, ddd, X[ 4],  7);
++   HHH(ddd, eee, aaa, bbb, ccc, X[13],  5);
++
++   /* parallel round 4 */   
++   GGG(ccc, ddd, eee, aaa, bbb, X[ 8], 15);
++   GGG(bbb, ccc, ddd, eee, aaa, X[ 6],  5);
++   GGG(aaa, bbb, ccc, ddd, eee, X[ 4],  8);
++   GGG(eee, aaa, bbb, ccc, ddd, X[ 1], 11);
++   GGG(ddd, eee, aaa, bbb, ccc, X[ 3], 14);
++   GGG(ccc, ddd, eee, aaa, bbb, X[11], 14);
++   GGG(bbb, ccc, ddd, eee, aaa, X[15],  6);
++   GGG(aaa, bbb, ccc, ddd, eee, X[ 0], 14);
++   GGG(eee, aaa, bbb, ccc, ddd, X[ 5],  6);
++   GGG(ddd, eee, aaa, bbb, ccc, X[12],  9);
++   GGG(ccc, ddd, eee, aaa, bbb, X[ 2], 12);
++   GGG(bbb, ccc, ddd, eee, aaa, X[13],  9);
++   GGG(aaa, bbb, ccc, ddd, eee, X[ 9], 12);
++   GGG(eee, aaa, bbb, ccc, ddd, X[ 7],  5);
++   GGG(ddd, eee, aaa, bbb, ccc, X[10], 15);
++   GGG(ccc, ddd, eee, aaa, bbb, X[14],  8);
++
++   /* parallel round 5 */
++   FFF(bbb, ccc, ddd, eee, aaa, X[12] ,  8);
++   FFF(aaa, bbb, ccc, ddd, eee, X[15] ,  5);
++   FFF(eee, aaa, bbb, ccc, ddd, X[10] , 12);
++   FFF(ddd, eee, aaa, bbb, ccc, X[ 4] ,  9);
++   FFF(ccc, ddd, eee, aaa, bbb, X[ 1] , 12);
++   FFF(bbb, ccc, ddd, eee, aaa, X[ 5] ,  5);
++   FFF(aaa, bbb, ccc, ddd, eee, X[ 8] , 14);
++   FFF(eee, aaa, bbb, ccc, ddd, X[ 7] ,  6);
++   FFF(ddd, eee, aaa, bbb, ccc, X[ 6] ,  8);
++   FFF(ccc, ddd, eee, aaa, bbb, X[ 2] , 13);
++   FFF(bbb, ccc, ddd, eee, aaa, X[13] ,  6);
++   FFF(aaa, bbb, ccc, ddd, eee, X[14] ,  5);
++   FFF(eee, aaa, bbb, ccc, ddd, X[ 0] , 15);
++   FFF(ddd, eee, aaa, bbb, ccc, X[ 3] , 13);
++   FFF(ccc, ddd, eee, aaa, bbb, X[ 9] , 11);
++   FFF(bbb, ccc, ddd, eee, aaa, X[11] , 11);
++
++   /* combine results */
++   ddd += cc + MDbuf[1];               /* final result for MDbuf[0] */
++   MDbuf[1] = MDbuf[2] + dd + eee;
++   MDbuf[2] = MDbuf[3] + ee + aaa;
++   MDbuf[3] = MDbuf[4] + aa + bbb;
++   MDbuf[4] = MDbuf[0] + bb + ccc;
++   MDbuf[0] = ddd;
++
++   return;
++}
++
++/********************************************************************/
++
++void MDfinish(dword *MDbuf, byte *strptr, dword lswlen, dword mswlen)
++{
++   unsigned int i;                                 /* counter       */
++   dword        X[16];                             /* message words */
++
++   memset(X, 0, 16*sizeof(dword));
++
++   /* put bytes from strptr into X */
++   for (i=0; i<(lswlen&63); i++) {
++      /* byte i goes into word X[i div 4] at pos.  8*(i mod 4)  */
++      X[i>>2] ^= (dword) *strptr++ << (8 * (i&3));
++   }
++
++   /* append "1" bit to the message. Be careful :
++      message = "" -> "10000000" = 128 */
++   X[(lswlen>>2)&15] ^= (dword)1 << (8*(lswlen&3)+7);
++
++   if ((lswlen & 63) > 55) {
++      /* length goes to next block */
++      compress(MDbuf, X);
++      memset(X, 0, 16*sizeof(dword));
++   }
++
++   /* append length in bits*/
++   X[14] = lswlen << 3;
++   X[15] = (lswlen >> 29) | (mswlen << 3);
++   compress(MDbuf, X);
++
++   return;
++}
++
++void MDcalc(byte *MD,byte *sp,dword sl)
++{ dword X[16];
++  dword MDbuf[5];
++  int i,j;
++   
++  MDinit(MDbuf);
++  
++  while (sl >= 64)
++  {
++    memset(X,0,16*sizeof(dword));
++    
++    for (i=0; i<64; i++)
++        X[i>>2] |= ((dword)(*sp++)) << (8 * (i&3));
++  
++    sl-=64;
++    compress(MDbuf,X);
++    
++  };
++  MDfinish(MDbuf,sp,sl,0);
++  
++  for (i=0;i<5;i++)
++    for (j=0;j<4;j++)
++      *MD++=(byte)((MDbuf[i]>>(j*8))&0xFF);
++}
++    
++/************************ end of file rmd160.c **********************/
++
+diff -urN util-linux-2.9v/mount/rmd160.h util-linux-2.9v.int/mount/rmd160.h
+--- util-linux-2.9v/mount/rmd160.h	Thu Jan  1 01:00:00 1970
++++ util-linux-2.9v.int/mount/rmd160.h	Mon Sep  6 14:05:07 1999
+@@ -0,0 +1,58 @@
++/********************************************************************\
++ *
++ *      FILE:     rmd160.h
++ *
++ *      CONTENTS: Header file for a sample C-implementation of the
++ *                RIPEMD-160 hash-function. 
++ *      TARGET:   any computer with an ANSI C compiler
++ *
++ *      AUTHOR:   Antoon Bosselaers, ESAT-COSIC
++ *      DATE:     1 March 1996
++ *      VERSION:  1.0
++ *
++ *      Copyright (c) Katholieke Universiteit Leuven
++ *      1996, All Rights Reserved
++ *
++\********************************************************************/
++
++#ifndef  RMD160H           /* make sure this file is read only once */
++#define  RMD160H
++
++/********************************************************************/
++
++/* typedef 8 and 32 bit types, resp.  */
++/* adapt these, if necessary, 
++   for your operating system and compiler */
++
++typedef    unsigned char        byte;
++typedef    unsigned long        dword;
++
++/********************************************************************/
++
++/* function prototypes */
++
++void MDinit(dword *MDbuf);
++/*
++ *  initializes MDbuffer to "magic constants"
++ */
++
++void compress(dword *MDbuf, dword *X);
++/*
++ *  the compression function.
++ *  transforms MDbuf using message bytes X[0] through X[15]
++ */
++
++void MDfinish(dword *MDbuf, byte *strptr, dword lswlen, dword mswlen);
++/*
++ *  puts bytes from strptr into X and pad out; appends length 
++ *  and finally, compresses the last block(s)
++ *  note: length in bits == 8 * (lswlen + 2^32 mswlen).
++ *  note: there are (lswlen mod 64) bytes left in strptr.
++ */
++
++void MDcalc(byte *MDbuf,byte *sp,dword sl);
++
++#endif  /* RMD160H */
++
++/*********************** end of file rmd160.h ***********************/
++
