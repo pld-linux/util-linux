@@ -119,7 +119,6 @@ Summary(tr):	Yerel-Гevrim aygЩtlarЩnЩn kurulmasЩ ve ayarlanmasЩ iГin programlar
 Summary(ru):	Программы для настройки loopback-устройств
 Summary(uk):	Програми для конф╕гурац╕╖ loopback-пристро╖в
 Group:		Applications/System
-Release:      %{_rel}@%{_kernel_ver_str}
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -188,7 +187,6 @@ Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
 Summary(uk):	Програми для монтування та розмонтування файлових систем
 Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
-Release:      %{_rel}@%{_kernel_ver_str}
 
 %description -n mount
 mount is used for adding new filesystems, both local and networked, to
