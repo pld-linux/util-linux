@@ -649,7 +649,7 @@ fi
 %lang(ko) %{_mandir}/ko/man1/ul.1*
 %lang(ko) %{_mandir}/ko/man1/whereis.1*
 %lang(ko) %{_mandir}/ko/man1/write.1*
- 
+
 %lang(ko) %{_mandir}/ko/man8/ctrlaltdel.8*
 %lang(ko) %{_mandir}/ko/man8/dmesg.8*
 %lang(ko) %{_mandir}/ko/man8/fdformat.8*
