@@ -18,7 +18,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	13
+Release:	14
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
@@ -50,6 +50,7 @@ Patch16:	%{name}-dev_t.patch
 Patch17:	%{name}-selinux.patch
 Patch18:	%{name}-blk.patch
 Patch19:	%{name}-io.patch
+Patch20:	%{name}-managed.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -357,6 +358,7 @@ ObsЁuga raw-device'Сw.
 %{?with_selinux:%patch17 -p1}
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 CC="%{__cc}"
