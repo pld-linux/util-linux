@@ -1,0 +1,10 @@
+--- util-linux-2.10o/mount/pivot_root.c~	Fri Aug 11 20:50:16 2000
++++ util-linux-2.10o/mount/pivot_root.c	Fri Aug 25 16:02:15 2000
+@@ -2,6 +2,7 @@
+ 
+ /* Written 2000 by Werner Almesberger */
+ 
++#define __LIBRARY__
+ 
+ #include <stdio.h>
+ #include <linux/unistd.h>
