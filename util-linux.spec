@@ -47,7 +47,6 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 BuildRequires:	texinfo
 Requires:	pam >= 0.66
-Requires:	/sbin/install-info
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
 
