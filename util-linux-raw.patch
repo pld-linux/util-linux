@@ -9,9 +9,9 @@
  #include <linux/major.h>
  
  #ifdef OLD_RAW_DEVS
-@@ -30,6 +30,8 @@
- #define RAWDEVDIR "/dev/raw/"
+@@ -31,6 +31,8 @@
  #endif
+ #define DEVFS_RAWCTLDEV "/dev/raw/rawctl"
  
 +#undef __LINUX_RAW_H
 +#define __LINUX_RAW_H __SYSTEM_RAW_H
@@ -21,24 +21,23 @@
 
 --- util-linux-2.10q.org/configure      Tue Nov 21 22:08:46 2000
 +++ util-linux-2.10q/configure  Tue Nov 21 22:10:35 2000
-@@ -32,6 +32,7 @@
- # 11. For pivot_root.c: does <linux/unistd.h> define __NR_pivot_root?
+@@ -33,6 +33,7 @@
  # 12. For hwclock.c: does struct tm have a field tm_gmtoff?
  # 13. For nfsmount: does the output of rpcgen compile?
-+# 14. For raw.c: does <sys/raw.h> exist?
+ # 14. For fsck.cramfs, mkfs.cramfs: do we have libz?
++# 15. For raw.c: does <sys/raw.h> exist?
 
  rm -f make_include defines.h
 
-@@ -558,3 +559,11 @@
+@@ -680,4 +681,11 @@
+         echo "You don't have zlib"
  fi
- rm -f conftest conftestx.c conftestl.c conftest.h conftest.x conferrs
- rm -f conftestx.o conftestl.o
+ rm -f conftest conftest.c
 +
 +#
-+# 14. For raw.c: does <sys/raw.h> exist?
++# 15. For raw.c: does <sys/raw.h> exist?
 +#
 +if ./testincl "sys/raw.h"; then
 +       echo "ADD_RAW=yes" >> make_include
 +fi
-+
-       
+ 

@@ -16,7 +16,6 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	5
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen fЭr Linux
@@ -28,8 +27,9 @@ Summary(ru):	Набор базовых системных утилит для Linux
 Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
-Version:	2.11t
-Release:	%{_release}
+Version:	2.11u
+%define	_rel	1
+Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
@@ -55,7 +55,6 @@ Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
 Patch16:	%{name}-chfn_exploid.patch
-Patch17:	%{name}-alpha.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -133,7 +132,7 @@ Summary(tr):	Yerel-Гevrim aygЩtlarЩnЩn kurulmasЩ ve ayarlanmasЩ iГin programlar
 Summary(ru):	Программы для настройки loopback-устройств
 Summary(uk):	Програми для конф╕гурац╕╖ loopback-пристро╖в
 Group:		Applications/System
-Release:	%{_release}@%{_kernel_series}
+Release:	%{_rel}@%{_kernel_series}
 #%if %{_kernel24}
 #%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 #%else
@@ -207,7 +206,7 @@ Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
 Summary(uk):	Програми для монтування та розмонтування файлових систем
 Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
-Release:	%{_release}@%{_kernel_series}
+Release:	%{_rel}@%{_kernel_series}
 #%if %{_kernel24}
 #%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 #%else
@@ -384,7 +383,6 @@ util-linux dla bootkietki.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
 
 %build
 CC="%{__cc}"
