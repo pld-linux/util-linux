@@ -1,5 +1,31 @@
---- ./disk-utils/raw.c.orig	Sat Jun 30 13:03:56 2001
-+++ ./disk-utils/raw.c	Sat Jun 30 13:54:54 2001
+diff -ur util-linux-2.12q.org/configure util-linux-2.12q/configure
+--- util-linux-2.12q.org/configure	2004-12-20 23:20:35.000000000 +0100
++++ util-linux-2.12q/configure	2005-02-27 19:22:06.000000000 +0100
+@@ -45,6 +45,7 @@
+ # 13. For nfsmount: does the output of rpcgen compile?
+ # 14. For fsck.cramfs, mkfs.cramfs: do we have libz?
+ # 15. For mount, do we have blkid?
++# 16. For raw.c: does <sys/raw.h> exist?
+ 
+ rm -f make_include defines.h
+ 
+@@ -662,6 +663,13 @@
+ rm -f conftest conftest.c
+ 
+ #
++# 16. For raw.c: does <sys/raw.h> exist?
++#
++if ./testincl "sys/raw.h"; then
++       echo "ADD_RAW=yes" >> make_include
++fi
++
++#
+ # 13. For nfsmount: does the output of rpcgen compile?
+ #
+ # On some systems the output of rpcgen compiles with warnings
+diff -ur util-linux-2.12q.org/disk-utils/raw.c util-linux-2.12q/disk-utils/raw.c
+--- util-linux-2.12q.org/disk-utils/raw.c	2002-03-08 23:58:37.000000000 +0100
++++ util-linux-2.12q/disk-utils/raw.c	2005-02-27 19:21:29.000000000 +0100
 @@ -19,7 +19,7 @@
  #include <sys/stat.h>
  #include <sys/ioctl.h>
@@ -18,26 +44,3 @@
  
  char *	progname;
  int	do_query = 0;
-
---- util-linux-2.10q.org/configure      Tue Nov 21 22:08:46 2000
-+++ util-linux-2.10q/configure  Tue Nov 21 22:10:35 2000
-@@ -33,6 +33,7 @@
- # 12. For hwclock.c: does struct tm have a field tm_gmtoff?
- # 13. For nfsmount: does the output of rpcgen compile?
- # 14. For fsck.cramfs, mkfs.cramfs: do we have libz?
-+# 15. For raw.c: does <sys/raw.h> exist?
-
- rm -f make_include defines.h
-
-@@ -680,4 +681,11 @@
-         echo "You don't have zlib"
- fi
- rm -f conftest conftest.c
-+
-+#
-+# 15. For raw.c: does <sys/raw.h> exist?
-+#
-+if ./testincl "sys/raw.h"; then
-+       echo "ADD_RAW=yes" >> make_include
-+fi
- 

@@ -1,32 +1,7 @@
---- util-linux-2.12/disk-utils/elvtune.c.orig	2002-03-08 23:57:49.000000000 +0100
-+++ util-linux-2.12/disk-utils/elvtune.c	2004-02-23 23:07:41.428306200 +0100
-@@ -27,6 +27,7 @@
- #include <unistd.h>
- #include <stdlib.h>
- #include "nls.h"
-+#include <linux/version.h>
- 
- /* this has to match with the kernel structure */
- /* current version for ac19 and 2.2.16 */
-@@ -37,8 +38,13 @@
- 	int max_bomb_segments;
- } blkelv_ioctl_arg_t;
- 
--#define BLKELVGET   _IOR(0x12,106,sizeof(blkelv_ioctl_arg_t))
--#define BLKELVSET   _IOW(0x12,107,sizeof(blkelv_ioctl_arg_t))
-+#ifdef LIBC_HEADERS_VERSION 
-+/* Fixed headers detected */
-+#include <linux/fs.h>
-+#else
-+#define BLKELVGET   _IOR(0x12,106,size_t) /* blkelv_ioctl_arg_t broken by sizeof */
-+#define BLKELVSET   _IOW(0x12,107,size_t) /* blkelv_ioctl_arg_t broken by sizeof */
-+#endif
- 
- static void
- usage(void) {
---- util-linux-2.12/disk-utils/blockdev.c.orig	2002-03-08 23:57:02.000000000 +0100
-+++ util-linux-2.12/disk-utils/blockdev.c	2004-02-23 23:08:09.053106592 +0100
-@@ -9,12 +9,14 @@
+diff -urN util-linux-2.12q.org/disk-utils/blockdev.c util-linux-2.12q/disk-utils/blockdev.c
+--- util-linux-2.12q.org/disk-utils/blockdev.c	2004-08-18 19:52:20.000000000 +0200
++++ util-linux-2.12q/disk-utils/blockdev.c	2005-02-27 19:35:19.000000000 +0100
+@@ -9,9 +9,14 @@
  #include <string.h>
  #include <unistd.h>
  #include <sys/ioctl.h>
@@ -34,34 +9,53 @@
  
  #include "nls.h"
  
--/* Since it is impossible to include <linux/fs.h>, let us
--   give the ioctls explicitly. */
--
 +#ifdef LIBC_HEADERS_VERSION
 +/* Fixed headers detected */
 +#include <linux/fs.h>
 +#else
- #ifndef BLKROSET
- #define BLKROSET   _IO(0x12,93)
- #define BLKROGET   _IO(0x12,94)
-@@ -24,8 +26,9 @@
- #define BLKRASET   _IO(0x12,98)
- #define BLKRAGET   _IO(0x12,99)
- #define BLKSSZGET  _IO(0x12,104)
--#define BLKBSZGET  _IOR(0x12,112,sizeof(int))
--#define BLKBSZSET  _IOW(0x12,113,sizeof(int))
-+#define BLKBSZGET  _IOR(0x12,112,size_t) /* int broken by sizeof */
-+#define BLKBSZSET  _IOW(0x12,113,size_t) /* int broken by sizeof */
-+#endif
+ /* Since it is impossible to include <linux/fs.h>, let us
+    give the ioctls explicitly. */
+ 
+@@ -28,6 +33,7 @@
+ #define BLKBSZSET  _IOW(0x12,113,size_t)
+ #define BLKGETSIZE64 _IOR(0x12,114,size_t)
  #endif
++#endif
  
  /* Maybe <linux/hdreg.h> could be included */
---- util-linux-2.12/fdisk/common.h.orig	2003-07-13 15:59:53.000000000 +0200
-+++ util-linux-2.12/fdisk/common.h	2004-02-23 23:09:39.330382360 +0100
-@@ -1,12 +1,18 @@
- /* common stuff for fdisk, cfdisk, sfdisk */
+ #ifndef HDIO_GETGEO
+diff -urN util-linux-2.12q.org/disk-utils/elvtune.c util-linux-2.12q/disk-utils/elvtune.c
+--- util-linux-2.12q.org/disk-utils/elvtune.c	2004-09-19 15:57:09.000000000 +0200
++++ util-linux-2.12q/disk-utils/elvtune.c	2005-02-27 19:34:27.000000000 +0100
+@@ -29,6 +29,7 @@
+ #include <string.h>
+ #include <sys/ioctl.h>
+ #include <sys/utsname.h>
++#include <linux/version.h>
+ #include "nls.h"
  
--/* including <linux/fs.h> fails */
+ /* this has to match with the kernel structure */
+@@ -40,9 +41,14 @@
+ 	int max_bomb_segments;
+ } blkelv_ioctl_arg_t;
+ 
++#ifdef LIBC_HEADERS_VERSION
++/* Fixed headers detected */
++#include <linux/fs.h>
++#else
+ /* ioctls introduced in 2.2.16, removed in 2.5.58 */
+ #define BLKELVGET   _IOR(0x12,106,size_t)
+ #define BLKELVSET   _IOW(0x12,107,size_t)
++#endif
+ 
+ static void
+ usage(void) {
+diff -urN util-linux-2.12q.org/fdisk/common.h util-linux-2.12q/fdisk/common.h
+--- util-linux-2.12q.org/fdisk/common.h	2004-09-06 20:07:11.000000000 +0200
++++ util-linux-2.12q/fdisk/common.h	2005-02-27 19:35:53.000000000 +0100
+@@ -3,11 +3,18 @@
+ /* including <linux/fs.h> fails */
+ #include <sys/types.h>
  #include <sys/ioctl.h>
 +#include <linux/version.h>
 +
@@ -73,8 +67,7 @@
  #define BLKGETSIZE   _IO(0x12,96)    /* return device size */
  #define BLKFLSBUF    _IO(0x12,97)    /* flush buffer cache */
  #define BLKSSZGET    _IO(0x12,104)   /* get block device sector size */
--#define BLKGETSIZE64 _IOR(0x12,114,8)	/* 8 = sizeof(u64) */
-+#define BLKGETSIZE64 _IOR(0x12,114,size_t)	/* u64 broken by sizeof; NOT 8(==int)!!! */
+ #define BLKGETSIZE64 _IOR(0x12,114,size_t)	/* size in bytes */
 +#endif
  
  /* including <linux/hdreg.h> also fails */
