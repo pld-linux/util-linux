@@ -10,7 +10,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.11f
+Version:	2.11g
 Release:	1
 License:	Distributable
 Group:		Applications/System
