@@ -494,7 +494,7 @@ fi
 
 %attr(755,root,root) /sbin/clock
 %ifarch ppc
-%attr(755,root,root) %config(noreplace) /sbin/hwclock
+%attr(755,root,root) %config(noreplace) %verify(not link) /sbin/hwclock
 %attr(755,root,root) /sbin/hwclock.adb
 %attr(755,root,root) /sbin/hwclock.rtc
 %else
@@ -991,9 +991,9 @@ fi
 %if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n login
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/login
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
-%attr(0755,root,root) /bin/login
+%attr(755,root,root) /bin/login
 
 %{_mandir}/man1/login.1*
 %lang(de) %{_mandir}/de/man1/login.1*
@@ -1018,7 +1018,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/raw
 %attr(754,root,root) /etc/rc.d/init.d/rawdevices
-%attr(640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rawdevices
 
 %{_mandir}/man8/raw.8*
 %lang(ja) %{_mandir}/ja/man8/raw.8*
