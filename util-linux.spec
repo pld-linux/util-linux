@@ -525,7 +525,7 @@ fi
 %lang(de) %{_mandir}/de/man1/more.1*
 %lang(de) %{_mandir}/de/man1/write.1*
 
-%lang(de) %{_mandir}/da/man8/fdformat.8*
+%lang(de) %{_mandir}/de/man8/fdformat.8*
 
 %lang(es) %{_mandir}/es/man1/arch.1*
 %lang(es) %{_mandir}/es/man1/colrm.1*
@@ -766,11 +766,6 @@ fi
 %{_mandir}/man8/rootflags.8*
 %{_mandir}/man8/vidmode.8*
 
-%lang(da) %{_mandir}/da/man8/ramsize.8*
-%lang(da) %{_mandir}/da/man8/rdev.8*
-%lang(da) %{_mandir}/da/man8/rootflags.8*
-%lang(da) %{_mandir}/da/man8/vidmode.8*
-
 %lang(de) %{_mandir}/de/man8/ramsize.8*
 %lang(de) %{_mandir}/de/man8/rdev.8*
 %lang(de) %{_mandir}/de/man8/rootflags.8*
@@ -912,7 +907,6 @@ fi
 %attr(0755,root,root) /bin/login
 
 %{_mandir}/man1/login.1*
-%lang(da) %{_mandir}/da/man1/login.1*
 %lang(de) %{_mandir}/de/man1/login.1*
 %lang(es) %{_mandir}/es/man1/login.1*
 %lang(hu) %{_mandir}/hu/man1/login.1*
