@@ -41,6 +41,7 @@ Patch3:		util-linux-fhs.patch
 Patch4:		util-linux-login.patch
 Patch5:		util-linux-kerneli.patch
 Patch6:		util-linux-info.patch
+Patch7:		util-linux-fdisk2.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -221,6 +222,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch4 -p1
 #%patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 
