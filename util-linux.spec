@@ -5,8 +5,8 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10o
-Release:	2
-Copyright:	distributable
+Release:	3
+License:	Distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
@@ -314,10 +314,8 @@ touch $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
-%ifarch %{ix86} 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
 echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
-%endif
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
@@ -339,13 +337,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc */README.*
 
-%ifarch i386 i486 i586 i686
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock
 
-%{_mandir}/man8/hwclock.8.gz
-%{_mandir}/man8/clock.8.gz
-%endif
+%{_mandir}/man8/hwclock.8*
+%{_mandir}/man8/clock.8*
 
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
 
