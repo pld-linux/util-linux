@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10m
-Release:	1
+Release:	2
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -359,7 +359,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/renice
-%attr(0755,root,root) %{_sbindir}/rootflags
 %attr(0755,root,root) /usr/games/banner
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
@@ -452,6 +451,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/swapdev
 %attr(755,root,root) %{_sbindir}/vidmode
 %attr(755,root,root) %{_sbindir}/ramsize
+%attr(755,root,root) %{_sbindir}/rootflags
 
 %{_mandir}/man8/rdev.8*
 %{_mandir}/man8/rootflags.8*
