@@ -436,7 +436,7 @@ fi
 %attr(0755,root,root) %{_bindir}/look
 %attr(0755,root,root) %{_bindir}/mcookie
 %attr(0755,root,root) %{_bindir}/namei
-%attr(0755,root,root) %{_bindir}/newgrp
+%attr(4755,root,root) %{_bindir}/newgrp
 %attr(0755,root,root) %{_bindir}/renice
 %attr(0755,root,root) %{_bindir}/rev
 %attr(0755,root,root) %{_bindir}/script
