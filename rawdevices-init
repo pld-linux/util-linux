@@ -11,7 +11,7 @@
 # config: /etc/sysconfig/rawdevices
 
 # Source function library.
-. /etc/init.d/functions
+. /etc/rc.d/init.d/functions
 
 TEXTDOMAIN=initscripts
 
@@ -58,6 +58,7 @@ case "$1" in
         ;;
   stop)
         # No action to be taken here
+	echo $"No action can be taken"
         ;;
 
   status)
