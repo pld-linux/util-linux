@@ -266,10 +266,10 @@ support for this feature built into them, however).
 
 %build
 
-CFLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
+CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
 %configure
 
-make	OPT="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}" \
+make	OPT="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
 	MOREHELPDIR=%{_datadir}/misc
 
 (cd sys-utils; makeinfo ipc.texi)
