@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10m
-Release:	3
+Release:	4
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -306,10 +306,10 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/{man*/*,pl/man*/*} \
 %find_lang %{name}
 
 %post
-[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %postun
-[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+[ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
