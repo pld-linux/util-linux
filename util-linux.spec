@@ -27,7 +27,7 @@ Summary(ru):	Набор базовых системных утилит для Linux
 Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
-Version:	2.11x
+Version:	2.11y
 %define	_rel	1
 Release:	%{_rel}
 License:	distributable
@@ -789,7 +789,6 @@ fi
 
 %dir %{_examplesdir}/getopt
 %attr(755,root,root) %{_examplesdir}/getopt/*
-%{_datadir}/misc/more.help
 
 %{!?_with_uClibc:%attr(755,root,root) /sbin/cfdisk}
 %attr(755,root,root) /sbin/fdisk
