@@ -39,7 +39,7 @@ Patch1:		util-linux-fdisk.patch
 Patch2:		util-linux-utmpx.patch
 Patch3:		util-linux-fhs.patch
 Patch4:		util-linux-login.patch
-Patch5:		util-linux-kerneli.patch
+%{?nocrypto:#}Patch5:		util-linux-kerneli.patch
 Patch6:		util-linux-info.patch
 Patch7:		util-linux-fdisk2.patch
 Patch8:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10f-mount-tcp.patch
@@ -47,7 +47,7 @@ Patch9:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-compat.patch
 Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-nfsv3.patch
 Patch11:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
 Patch12:	util-linux-syscall.patch 
-Patch13:	util-linux-2.10o-rawio.patch
+%{?norawio:#}Patch13:	util-linux-2.10o-rawio.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -242,7 +242,7 @@ support for this feature built into them, however).
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-%patch5 -p1
+%{?nocrypto:#}%patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -250,7 +250,7 @@ support for this feature built into them, however).
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
+%{?norawio:#}%patch13 -p1
 
 
 %build
@@ -376,7 +376,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/renice
-%attr(0755,root,root) %{_bindir}/raw
+%{?norawio:#}%attr(0755,root,root) %{_bindir}/raw
 %attr(0755,root,root) /usr/games/banner
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
@@ -420,7 +420,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/setfdprm.8*
-%{_mandir}/man8/raw.8*
+%{?norawio:#}%{_mandir}/man8/raw.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
