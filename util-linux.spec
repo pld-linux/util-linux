@@ -34,7 +34,7 @@ License:	distributable
 Group:		Applications/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 # Source0-md5: c669467901c77a9a0e84f37cee477bbe
-Source1:	%{name}-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5: 3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
 Source3:	rawdevices.init
