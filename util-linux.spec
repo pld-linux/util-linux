@@ -16,8 +16,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-%define _rel 7
-Release:	%{_rel}
+Release:	8
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
@@ -59,7 +58,7 @@ BuildRequires:	textutils
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
-Conflicts:	shadow < 1:4.0.3-6
+Conflicts:	shadow-extras < 1:4.0.3-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		debugcflags	-O1 -g
