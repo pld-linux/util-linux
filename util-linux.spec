@@ -13,7 +13,7 @@
 %define		_kernel_series	2.2
 %endif
 
-%define		rel	7
+%define		rel	1
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -23,7 +23,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
 Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Name:		util-linux
-Version:	2.11g
+Version:	2.11k
 Release:	%{rel}
 License:	Distributable
 Group:		Applications/System
@@ -63,17 +63,16 @@ Patch4:		%{name}-login.patch
 Patch5:		%{name}-kerneli.patch
 Patch6:		%{name}-info.patch
 Patch7:		%{name}-fdisk2.patch
-Patch9:		%{name}-mount-rpc.patch
-Patch10:	ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
-Patch11:	%{name}-syscall.patch
-Patch13:	%{name}-raw.patch
-Patch14:	%{name}-gecos.patch
-Patch15:	%{name}-glibc.patch
-Patch16:	%{name}-s390.patch
-Patch18:	%{name}-kerneli-2.4.patch
-Patch20:	%{name}-qnx4.patch
-Patch21:	%{name}-losetup-getpass.patch
-Patch22:	%{name}-login-problems.patch
+Patch8:		ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
+Patch9:		%{name}-syscall.patch
+Patch10:	%{name}-raw.patch
+Patch11:	%{name}-gecos.patch
+Patch12:	%{name}-glibc.patch
+Patch13:	%{name}-s390.patch
+Patch14:	%{name}-kerneli-2.4.patch
+Patch15:	%{name}-qnx4.patch
+Patch16:	%{name}-losetup-getpass.patch
+Patch17:	%{name}-login-problems.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -354,18 +353,17 @@ Group(pl):	Aplikacje/System
 %endif
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 %patch13 -p1
-%patch14 -p1
 %patch15 -p1
-%patch16 -p1
-%patch20 -p1
 %if !%{_kernel24}
-%patch21 -p1
+%patch16 -p1
 %endif
-%patch22 -p1
+%patch17 -p1
 
 %build
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
