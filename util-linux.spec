@@ -311,7 +311,7 @@ touch $RPM_BUILD_ROOT/etc/security/blacklist.login
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
-echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
+echo	'.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
