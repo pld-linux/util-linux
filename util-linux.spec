@@ -42,8 +42,8 @@ Source21:	swapoff.8.pl
 Source22:	fstab.5.pl
 Source23:	chkdupexe.1.pl
 Source24:	tunelp.8.pl
-Source25:	rawdevice.init
-Source26:	rawdevice.sysconfig
+Source25:	rawdevices-init
+Source26:	rawdevices-sysconfig
 Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
@@ -55,8 +55,6 @@ Patch7:		%{name}-fdisk2.patch
 Patch9:		%{name}-mount-rpc.patch
 Patch10:	ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch11:	%{name}-syscall.patch
-# if there is raw.patch this one is obsolete
-#Patch12:	%{name}-2.10o-rawio.patch
 Patch13:	%{name}-raw.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
@@ -297,8 +295,6 @@ Obs³uga raw-device'ów
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-# if there is raw.patch this one is obsolete
-#%{!?_without_rawio:%patch12 -p1}
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
@@ -318,7 +314,7 @@ make	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d}} \
+install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
 
@@ -589,4 +585,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/raw
 %attr(0750,root,root) /etc/rc.d/init.d/rawdevices
 %attr(0650,root,root) /etc/sysconfig/rawdevices
-{_mandir}/man8/raw.8*
+%{_mandir}/man8/raw.8*
