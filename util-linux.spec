@@ -51,7 +51,7 @@ Patch18:	%{name}-page.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
-%{?with_selinux:BuildRequires:	libselinux-devel}
+BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
 BuildRequires:	texinfo
