@@ -13,7 +13,7 @@
 %define		_kernel_series	2.2
 %endif
 
-%define		rel	5
+%define		rel	6
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -71,6 +71,7 @@ Patch16:	%{name}-s390.patch
 Patch18:	%{name}-kerneli-2.4.patch
 Patch20:	%{name}-qnx4.patch
 Patch21:	%{name}-losetup-getpass.patch
+Patch22:	%{name}-login-problems.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -337,6 +338,7 @@ Obs³uga raw-device'ów.
 %if !%{_kernel24}
 %patch21 -p1
 %endif
+%patch22 -p1
 
 %build
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"

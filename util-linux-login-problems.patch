@@ -1,0 +1,33 @@
+--- util-linux-2.11g/login-utils/login.c.orig	Thu Aug 16 20:21:01 2001
++++ util-linux-2.11g/login-utils/login.c	Thu Aug 16 20:23:07 2001
+@@ -1080,6 +1080,9 @@
+      * setsid() or setpgrp(), then a ctrl-\, sending SIGQUIT to every
+      * process in the pgrp, will kill us.
+      * Solution: use TIOCNOTTY and setsid().
++     *
++     * removed "Solution" - caused serious problems with ash/csh/ksh/zsh
++     * as login shell  -- qboosh
+      */
+     signal(SIGINT, SIG_IGN);
+     signal(SIGHUP, SIG_IGN);	/* ignore signal from TIOCNOTTY below */
+@@ -1093,7 +1096,7 @@
+        exit(0);
+     } else if (childPid) {
+        /* parent - wait for child to finish, then cleanup session */
+-       ioctl(0, TIOCNOTTY, NULL);
++    /* ioctl(0, TIOCNOTTY, NULL); */
+        signal(SIGHUP, SIG_DFL);
+ 
+        wait(NULL);
+@@ -1101,9 +1104,9 @@
+        exit(0);
+     }
+     /* child */
+-    setsid();
++/*  setsid(); */
+     /* reopen, as we need controlling tty in the child */
+-    opentty(ttyn);
++/*  opentty(ttyn); */
+ #endif
+     signal(SIGHUP, SIG_DFL);
+     signal(SIGINT, SIG_DFL);
