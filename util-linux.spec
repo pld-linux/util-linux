@@ -4,19 +4,21 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.9h
+Version:	2.9i
 Release:	1d
 Copyright:	distributable
 Group:		Utilities/System
-Group(pl):	U¿ytki/System
+Group(pl):	Narzêdzia/System
 URL:		ftp://sunsite.unc.edu/pub/Linux/system/misc
 Source0:	%{name}-%{version}.tar.gz
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
-Patch0:		%{name}-config.patch
-Patch1:		%{name}-shutdown.patch
-Patch2:		%{name}-chfn.patch
+Patch0:		%{name}-openpty.patch
+Patch1:		%{name}-config.patch
+Patch2:		%{name}-nochkdupexe.patch
+Patch3:		%{name}-shutdown.patch
+Patch4:		%{name}-chfn.patch
 Requires:	pam >= 0.66
 Buildroot:	/tmp/%{name}-%{version}-root
 
@@ -52,7 +54,7 @@ login gibi sistem programlarý sayýlabilir.
 Summary:	Programs: chfn and chsh -- use it on own risc..
 Summary(pl):	Programy: chfn and chsh -- skrajnie niebezpiecznie.
 Group:		Utilities/System
-Group(pl):	U¿ytki/System
+Group(pl):	Narzêdzia/System
 Requires:	pam >= 0.66
 
 %description suid -l pl
@@ -69,7 +71,7 @@ Summary(fr): programmes pour mettre en place et configurer les loopback
 Summary(pl): Program do konfiguracji urz±dzenia blokowego loopback
 Summary(tr): Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:       Utilities/System
-Group(pl):   U¿ytki/System
+Group(pl):   Narzêdzia/System
 
 %description -n losetup
 Linux supports a special block device called the loopback device, which
@@ -118,7 +120,7 @@ Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
 Summary(pl):	Programy do montowania i odmontowywania systemu plików
 Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Utilities/System
-Group(pl):	U¿ytki/System
+Group(pl):	Narzêdzia/System
 
 %description -n mount
 Mount is used for adding new filesystems, both local and networked, to
@@ -162,6 +164,8 @@ kritiktir.
 %patch0 -p1 
 %patch1 -p1 
 %patch2 -p1 
+%patch3 -p1 
+%patch4 -p1 
 
 %build
 cp login-utils/login.c login-utils/login.c.new
@@ -176,7 +180,10 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/{bin,etc/pam.d,sbin}
 install -d $RPM_BUILD_ROOT/usr/{bin,info,lib,man/man1,man/man6,man/man8,sbin}
 
-make install DESTDIR=$RPM_BUILD_ROOT INSTALLSUID="install -m 4711" 
+make install \
+    DESTDIR=$RPM_BUILD_ROOT \
+    INSTALLSUID="install -m 4711" \
+    USE_TTY_GROUP=no 
 
 %ifarch i386
 mv -f $RPM_BUILD_ROOT/usr/bin/rdev $RPM_BUILD_ROOT/usr/sbin
@@ -197,12 +204,13 @@ strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
 
 %ifarch i386
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
-echo	.so hwclock.8.bz2 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
+echo	.so hwclock.8 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
 %endif
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-bzip2 -9 $RPM_BUILD_ROOT/usr/man/man[1568]/* ANNOUNCE */README.*
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* 
+bzip2 -9 ANNOUNCE */README.*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -215,8 +223,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock
 
-%attr(644,root, man) /usr/man/man8/hwclock.8.bz2
-%attr(644,root, man) /usr/man/man8/clock.8.bz2
+%attr(644,root, man) /usr/man/man8/hwclock.8.gz
+%attr(644,root, man) /usr/man/man8/clock.8.gz
 %endif
 
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
@@ -235,15 +243,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/setfdprm
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
 
-%attr(644,root, man) /usr/man/man8/fdformat.8.bz2
-%attr(644,root, man) /usr/man/man8/mkswap.8.bz2
-%attr(644,root, man) /usr/man/man8/setfdprm.8.bz2
+%attr(644,root, man) /usr/man/man8/fdformat.8.gz
+%attr(644,root, man) /usr/man/man8/mkswap.8.gz
+%attr(644,root, man) /usr/man/man8/setfdprm.8.gz
 
 %attr(755,root,root) /usr/games/banner
-%attr(644,root, man) /usr/man/man6/banner.6.bz2
+%attr(644,root, man) /usr/man/man6/banner.6.gz
 
 %attr(755,root,root) /usr/bin/ddate
-%attr(644,root, man) /usr/man/man1/ddate.1.bz2
+%attr(644,root, man) /usr/man/man1/ddate.1.gz
 
 %attr(755,root,root) /bin/login
 
@@ -251,9 +259,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/newgrp
 %attr(755,root,root) /usr/sbin/vipw
 
-%attr(644,root, man) /usr/man/man1/login.1.bz2
-%attr(644,root, man) /usr/man/man1/newgrp.1.bz2
-%attr(644,root, man) /usr/man/man8/vipw.8.bz2
+%attr(644,root, man) /usr/man/man1/login.1.gz
+%attr(644,root, man) /usr/man/man1/newgrp.1.gz
+%attr(644,root, man) /usr/man/man8/vipw.8.gz
 
 %attr(0755,root,root) /bin/kill
 %attr(0755,root,root) /usr/bin/cal
@@ -267,17 +275,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(2711,root, tty) /usr/bin/write
 %attr(0755,root,root) /usr/bin/getopt
 
-%attr(644,root, man) /usr/man/man1/cal.1.bz2
-%attr(644,root, man) /usr/man/man1/kill.1.bz2
-%attr(644,root, man) /usr/man/man1/logger.1.bz2
-%attr(644,root, man) /usr/man/man1/look.1.bz2
-%attr(644,root, man) /usr/man/man1/mcookie.1.bz2
-%attr(644,root, man) /usr/man/man1/namei.1.bz2
-%attr(644,root, man) /usr/man/man1/script.1.bz2
-%attr(644,root, man) /usr/man/man1/setterm.1.bz2
-%attr(644,root, man) /usr/man/man1/whereis.1.bz2
-%attr(644,root, man) /usr/man/man1/write.1.bz2
-%attr(644,root, man) /usr/man/man1/getopt.1.bz2
+%attr(644,root, man) /usr/man/man1/cal.1.gz
+%attr(644,root, man) /usr/man/man1/kill.1.gz
+%attr(644,root, man) /usr/man/man1/logger.1.gz
+%attr(644,root, man) /usr/man/man1/look.1.gz
+%attr(644,root, man) /usr/man/man1/mcookie.1.gz
+%attr(644,root, man) /usr/man/man1/namei.1.gz
+%attr(644,root, man) /usr/man/man1/script.1.gz
+%attr(644,root, man) /usr/man/man1/setterm.1.gz
+%attr(644,root, man) /usr/man/man1/whereis.1.gz
+%attr(644,root, man) /usr/man/man1/write.1.gz
+%attr(644,root, man) /usr/man/man1/getopt.1.gz
 
 %attr(755,root,root) /bin/dmesg
 
@@ -299,24 +307,24 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(755,root,root) /usr/sbin/rootflags
 
-%attr(644,root, man) /usr/man/man1/arch.1.bz2
-%attr(644,root, man) /usr/man/man1/readprofile.1.bz2
-%attr(644,root, man) /usr/man/man8/cytune.8.bz2
-%attr(644,root, man) /usr/man/man8/ctrlaltdel.8.bz2
-%attr(644,root, man) /usr/man/man8/dmesg.8.bz2
-%attr(644,root, man) /usr/man/man8/ipcrm.8.bz2
-%attr(644,root, man) /usr/man/man8/ipcs.8.bz2
-%attr(644,root, man) /usr/man/man8/kbdrate.8.bz2
-%attr(644,root, man) /usr/man/man8/ramsize.8.bz2
-%attr(644,root, man) /usr/man/man8/renice.8.bz2
-%attr(644,root, man) /usr/man/man8/rootflags.8.bz2
-%attr(644,root, man) /usr/man/man8/setsid.8.bz2
-%attr(644,root, man) /usr/man/man8/swapdev.8.bz2
-%attr(644,root, man) /usr/man/man8/vidmode.8.bz2
+%attr(644,root, man) /usr/man/man1/arch.1.gz
+%attr(644,root, man) /usr/man/man1/readprofile.1.gz
+%attr(644,root, man) /usr/man/man8/cytune.8.gz
+%attr(644,root, man) /usr/man/man8/ctrlaltdel.8.gz
+%attr(644,root, man) /usr/man/man8/dmesg.8.gz
+%attr(644,root, man) /usr/man/man8/ipcrm.8.gz
+%attr(644,root, man) /usr/man/man8/ipcs.8.gz
+%attr(644,root, man) /usr/man/man8/kbdrate.8.gz
+%attr(644,root, man) /usr/man/man8/ramsize.8.gz
+%attr(644,root, man) /usr/man/man8/renice.8.gz
+%attr(644,root, man) /usr/man/man8/rootflags.8.gz
+%attr(644,root, man) /usr/man/man8/setsid.8.gz
+%attr(644,root, man) /usr/man/man8/swapdev.8.gz
+%attr(644,root, man) /usr/man/man8/vidmode.8.gz
 
 %ifarch i386
 %attr(755,root,root) /usr/sbin/rdev
-%attr(644,root, man) /usr/man/man8/rdev.8.bz2
+%attr(644,root, man) /usr/man/man8/rdev.8.gz
 %endif
 
 %attr(755,root,root) /usr/bin/col
@@ -327,16 +335,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/bin/rev
 %attr(755,root,root) /usr/bin/ul
 
-%attr(644,root, man) /usr/man/man1/col.1.bz2
-%attr(644,root, man) /usr/man/man1/colcrt.1.bz2
-%attr(644,root, man) /usr/man/man1/colrm.1.bz2
-%attr(644,root, man) /usr/man/man1/column.1.bz2
-%attr(644,root, man) /usr/man/man1/hexdump.1.bz2
-%attr(644,root, man) /usr/man/man1/rev.1.bz2
-%attr(644,root, man) /usr/man/man1/ul.1.bz2
+%attr(644,root, man) /usr/man/man1/col.1.gz
+%attr(644,root, man) /usr/man/man1/colcrt.1.gz
+%attr(644,root, man) /usr/man/man1/colrm.1.gz
+%attr(644,root, man) /usr/man/man1/column.1.gz
+%attr(644,root, man) /usr/man/man1/hexdump.1.gz
+%attr(644,root, man) /usr/man/man1/rev.1.gz
+%attr(644,root, man) /usr/man/man1/ul.1.gz
 
 %attr(755,root,root) /bin/more
-%attr(644,root, man) /usr/man/man1/more.1.bz2
+%attr(644,root, man) /usr/man/man1/more.1.gz
 
 %dir /usr/lib/getopt
 %attr(755,root,root) /usr/lib/getopt/*
@@ -344,14 +352,14 @@ rm -rf $RPM_BUILD_ROOT
 %config /usr/lib/more.help
 
 %ifnarch sparc
-%attr(644,root, man) /usr/man/man8/fsck.minix.8.bz2
-%attr(644,root, man) /usr/man/man8/mkfs.minix.8.bz2
-%attr(644,root, man) /usr/man/man8/mkfs.8.bz2
+%attr(644,root, man) /usr/man/man8/fsck.minix.8.gz
+%attr(644,root, man) /usr/man/man8/mkfs.minix.8.gz
+%attr(644,root, man) /usr/man/man8/mkfs.8.gz
 %endif
 
 %ifarch i386 alpha
-%attr(644,root, man) /usr/man/man8/fdisk.8.bz2
-%attr(644,root, man) /usr/man/man8/cfdisk.8.bz2
+%attr(644,root, man) /usr/man/man8/fdisk.8.gz
+%attr(644,root, man) /usr/man/man8/cfdisk.8.gz
 %endif
 
 %files suid
@@ -364,27 +372,39 @@ rm -rf $RPM_BUILD_ROOT
 %attr(4711,root,root) /usr/bin/chfn
 %attr(4711,root,root) /usr/bin/chsh
 
-%attr(644,root, man) /usr/man/man1/chfn.1.bz2
-%attr(644,root, man) /usr/man/man1/chsh.1.bz2
+%attr(644,root, man) /usr/man/man1/chfn.1.gz
+%attr(644,root, man) /usr/man/man1/chsh.1.gz
 
 %files -n mount
+%defattr(644,root,root,755)
+
 %attr(755,root,root) /bin/mount
 %attr(755,root,root) /bin/umount
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
-%attr(644,root, man) /usr/man/man5/fstab.5.bz2
-%attr(644,root, man) /usr/man/man5/nfs.5.bz2
-%attr(644,root, man) /usr/man/man8/mount.8.bz2
-%attr(644,root, man) /usr/man/man8/swapoff.8.bz2
-%attr(644,root, man) /usr/man/man8/swapon.8.bz2
-%attr(644,root, man) /usr/man/man8/umount.8.bz2
+%attr(644,root, man) /usr/man/man5/fstab.5.gz
+%attr(644,root, man) /usr/man/man5/nfs.5.gz
+%attr(644,root, man) /usr/man/man8/mount.8.gz
+%attr(644,root, man) /usr/man/man8/swapoff.8.gz
+%attr(644,root, man) /usr/man/man8/swapon.8.gz
+%attr(644,root, man) /usr/man/man8/umount.8.gz
 
 %files -n losetup
-%attr(644,root, man) /usr/man/man8/losetup.8.bz2
+%defattr(644,root,root,755)
+
+%attr(644,root, man) /usr/man/man8/losetup.8.gz
 %attr(755,root,root) /sbin/losetup
 
 %changelog
+* Mon Feb 15 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+- updated to 2.9i,
+- fixed Group(pl),
+
+  by Maciek Ró¿ycki <macro@ds2.amg.gda.pl>
+
+- added openpty && nochkdupexe patches.
+
 * Sun Jan 31 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [2.9h-1d]
 - update to latest version,
