@@ -282,7 +282,8 @@ install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
 
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
-touch $RPM_BUILD_ROOT/etc/security/{chsh,chfn}
+touch $RPM_BUILD_ROOT/etc/security/blacklist.login
+
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
@@ -317,6 +318,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
 
 %attr(0755,root,root) /bin/arch
 %attr(0755,root,root) /bin/dmesg
