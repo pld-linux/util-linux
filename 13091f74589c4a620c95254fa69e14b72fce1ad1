@@ -1,0 +1,4 @@
+- updated to 2.10s,
+- fixed handling _without_rawio,
+- move banner to %%{_bindir},
+- added isosize to %files.
