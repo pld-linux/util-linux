@@ -244,13 +244,14 @@ make	OPT="$RPM_OPT_FLAGS" \
 rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
-	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_libdir},%{_infodir},%{_datadir}/misc} \
-	$RPM_BUILD_ROOT%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}
+	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
+	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
 
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 755" \
 	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
+	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USE_TTY_GROUP=no
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
@@ -426,8 +427,8 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pl) %{_mandir}/pl/man8/fdformat.8*
 %lang(pl) %{_mandir}/pl/man8/mkswap.8*
 
-%dir %{_libdir}/getopt
-%attr(755,root,root) %{_libdir}/getopt/*
+%dir %{_examplesdir}/getopt
+%attr(755,root,root) %{_examplesdir}/getopt/*
 %{_datadir}/misc/more.help
 
 %ifarch %{ix86} alpha
