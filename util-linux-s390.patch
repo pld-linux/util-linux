@@ -1,0 +1,12 @@
+--- util-linux-2.10m/fdisk/fdiskbsdlabel.h.orig	Mon Oct 16 20:28:57 2000
++++ util-linux-2.10m/fdisk/fdiskbsdlabel.h	Mon Oct 16 20:25:04 2000
+@@ -49,6 +49,9 @@
+ #elif defined (__alpha__) || defined (__powerpc__) || defined (__ia64__)
+ #define BSD_LABELSECTOR   0
+ #define BSD_LABELOFFSET   64
++#elif defined (__s390__) /* does s390 need BSD_LABELS ? */
++#define BSD_LABELSECTOR   1
++#define BSD_LABELOFFSET   0
+ #else
+ #error unknown architecture
+ #endif
