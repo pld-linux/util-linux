@@ -27,8 +27,8 @@ Source14:	kbdrate.8.pl
 Source15:	fdformat.8.pl
 Source16:	mkswap.8.pl
 Source17:	fdisk.8.pl
-Source28:	umount.8.pl
-Source29:	mount.8.pl
+Source18:	umount.8.pl
+Source19:	mount.8.pl
 Source20:	swapon.8.pl
 Source21:	swapoff.8.pl
 Source22:	fstab.5.pl
