@@ -1,36 +1,36 @@
-diff -urN util-linux-2.10o/mount/Makefile util-linux-2.10o.int2/mount/Makefile
---- util-linux-2.10o/mount/Makefile	Fri Aug 11 20:58:54 2000
-+++ util-linux-2.10o.int2/mount/Makefile	Mon Sep 25 11:44:06 2000
-@@ -28,7 +28,7 @@
+diff -urN util-linux-2.11b.org/mount/Makefile util-linux-2.11b/mount/Makefile
+--- util-linux-2.11b.org/mount/Makefile	Wed Mar 21 10:07:38 2001
++++ util-linux-2.11b/mount/Makefile	Wed Mar 21 10:09:42 2001
+@@ -24,7 +24,7 @@
+ 
+ MAYBE = pivot_root swapoff
+ 
+-LO_OBJS = lomount.o $(LIB)/xstrncpy.o
++LO_OBJS = lomount.o rmd160.o $(LIB)/xstrncpy.o
+ NFS_OBJS = nfsmount.o nfsmount_xdr.o nfsmount_clnt.o
  GEN_FILES = nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
  
- # comment these out if you are not compiling in loop support
--LO_OBJS=lomount.o
-+LO_OBJS=lomount.o rmd160.o
- 
- all: $(PROGS)
- 
-@@ -59,7 +59,7 @@
- losetup.o: lomount.c
- 	$(COMPILE) -DMAIN lomount.c -o $@
- 
--losetup: losetup.o
-+losetup: losetup.o rmd160.o
+@@ -54,7 +54,7 @@
+ swapon:	swapon.o version.o
  	$(LINK) $^ -o $@
  
- mount.o umount.o nfsmount.o losetup.o fstab.o realpath.o sundries.o: sundries.h
-diff -urN util-linux-2.10o/mount/lomount.c util-linux-2.10o.int2/mount/lomount.c
---- util-linux-2.10o/mount/lomount.c	Sat Aug  5 17:52:28 2000
-+++ util-linux-2.10o.int2/mount/lomount.c	Mon Sep 25 11:44:34 2000
+-main_losetup.o: lomount.c
++main_losetup.o: lomount.c rmd160.o
+ 	$(COMPILE) -DMAIN lomount.c -o $@
+ 
+ losetup: main_losetup.o $(LIB)/xstrncpy.o
+diff -urN util-linux-2.11b.org/mount/lomount.c util-linux-2.11b/mount/lomount.c
+--- util-linux-2.11b.org/mount/lomount.c	Wed Mar 21 10:07:38 2001
++++ util-linux-2.11b/mount/lomount.c	Wed Mar 21 10:08:36 2001
 @@ -27,6 +27,7 @@
  
  #include "loop.h"
  #include "lomount.h"
 +#include "rmd160.h"
+ #include "xstrncpy.h"
  #include "nls.h"
  
- extern int verbose;
-@@ -37,12 +38,22 @@
+@@ -38,12 +39,22 @@
  struct crypt_type_struct {
  	int id;
  	char *name;
@@ -58,7 +58,7 @@ diff -urN util-linux-2.10o/mount/lomount.c util-linux-2.10o.int2/mount/lomount.c
  };
  
  static int 
-@@ -167,12 +178,18 @@
+@@ -195,12 +206,18 @@
  	return 0;
  }
  
@@ -77,7 +77,7 @@ diff -urN util-linux-2.10o/mount/lomount.c util-linux-2.10o.int2/mount/lomount.c
  
  	mode = (*loopro ? O_RDONLY : O_RDWR);
  	if ((ffd = open (file, mode)) < 0) {
-@@ -224,6 +241,7 @@
+@@ -250,6 +267,7 @@
  		loopinfo.lo_encrypt_key_size = strlen(loopinfo.lo_encrypt_key);
  		break;
  	case LO_CRYPT_DES:
@@ -85,7 +85,7 @@ diff -urN util-linux-2.10o/mount/lomount.c util-linux-2.10o.int2/mount/lomount.c
  		pass = getpass (_("Password: "));
  		strncpy (loopinfo.lo_encrypt_key, pass, 8);
  		loopinfo.lo_encrypt_key[8] = 0;
-@@ -240,6 +258,30 @@
+@@ -266,6 +284,30 @@
  				return 1;
  			}
  		break;
@@ -116,7 +116,7 @@ diff -urN util-linux-2.10o/mount/lomount.c util-linux-2.10o.int2/mount/lomount.c
  	default:
  		fprintf (stderr,
  			 _("Don't know how to get key for encryption system %d\n"),
-@@ -324,11 +366,18 @@
+@@ -350,11 +392,18 @@
  
  static void
  usage(void) {
@@ -135,9 +135,9 @@ diff -urN util-linux-2.10o/mount/lomount.c util-linux-2.10o.int2/mount/lomount.c
  	exit(1);
  }
  
-diff -urN util-linux-2.10o/mount/losetup.8 util-linux-2.10o.int2/mount/losetup.8
---- util-linux-2.10o/mount/losetup.8	Fri Aug 11 13:11:30 2000
-+++ util-linux-2.10o.int2/mount/losetup.8	Mon Sep 25 11:44:06 2000
+diff -urN util-linux-2.11b.org/mount/losetup.8 util-linux-2.11b/mount/losetup.8
+--- util-linux-2.11b.org/mount/losetup.8	Wed Mar 21 10:07:38 2001
++++ util-linux-2.11b/mount/losetup.8	Wed Mar 21 10:07:52 2001
 @@ -36,11 +36,47 @@
  .PD 0
  .IP \fBXOR\fP
@@ -222,9 +222,9 @@ diff -urN util-linux-2.10o/mount/losetup.8 util-linux-2.10o.int2/mount/losetup.8
  .SH AUTHORS
  .nf
  Original version: Theodore Ts'o <tytso@athena.mit.edu>
-diff -urN util-linux-2.10o/mount/rmd160.c util-linux-2.10o.int2/mount/rmd160.c
---- util-linux-2.10o/mount/rmd160.c	Thu Jan  1 01:00:00 1970
-+++ util-linux-2.10o.int2/mount/rmd160.c	Mon Sep 25 11:46:06 2000
+diff -urN util-linux-2.11b.org/mount/rmd160.c util-linux-2.11b/mount/rmd160.c
+--- util-linux-2.11b.org/mount/rmd160.c	Thu Jan  1 01:00:00 1970
++++ util-linux-2.11b/mount/rmd160.c	Wed Mar 21 10:07:52 2001
 @@ -0,0 +1,532 @@
 +/* rmd160.c  -	RIPE-MD160
 + *	Copyright (C) 1998 Free Software Foundation, Inc.
@@ -758,9 +758,9 @@ diff -urN util-linux-2.10o/mount/rmd160.c util-linux-2.10o.int2/mount/rmd160.c
 +    rmd160_final( &hd );
 +    memcpy( outbuf, hd.buf, 20 );
 +}
-diff -urN util-linux-2.10o/mount/rmd160.h util-linux-2.10o.int2/mount/rmd160.h
---- util-linux-2.10o/mount/rmd160.h	Thu Jan  1 01:00:00 1970
-+++ util-linux-2.10o.int2/mount/rmd160.h	Mon Sep 25 11:46:18 2000
+diff -urN util-linux-2.11b.org/mount/rmd160.h util-linux-2.11b/mount/rmd160.h
+--- util-linux-2.11b.org/mount/rmd160.h	Thu Jan  1 01:00:00 1970
++++ util-linux-2.11b/mount/rmd160.h	Wed Mar 21 10:07:52 2001
 @@ -0,0 +1,9 @@
 +#ifndef RMD160_H
 +#define RMD160_H
