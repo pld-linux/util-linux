@@ -12,7 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	2
+%define		_release	3
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -396,8 +396,8 @@ echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-for d in cs de fi fr hu it ja ko pl ; do
-    for m in man1 man5 man6 man8 ; do
+for d in cs de es fi fr hu it ja ko pl ; do
+    for m in man1 man5 man8 ; do
 	if [ -d man/$d/$m ]; then
 	    install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
 	    install man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
@@ -444,6 +444,8 @@ fi
 
 %{_mandir}/man8/clock.8*
 %{_mandir}/man8/hwclock.8*
+%lang(es) %{_mandir}/es/man8/clock.8*
+%lang(es) %{_mandir}/es/man8/hwclock.8*
 %lang(ja) %{_mandir}/ja/man8/clock.8*
 %lang(ja) %{_mandir}/ja/man8/hwclock.8*
 
@@ -526,6 +528,31 @@ fi
 %lang(de) %{_mandir}/de/man1/more.1*
 %lang(de) %{_mandir}/de/man1/write.1*
 
+%lang(es) %{_mandir}/es/man1/arch.1*
+%lang(es) %{_mandir}/es/man1/colrm.1*
+%lang(es) %{_mandir}/es/man1/column.1*
+%lang(es) %{_mandir}/es/man1/ddate.1*
+%lang(es) %{_mandir}/es/man1/getopt.1*
+%lang(es) %{_mandir}/es/man1/look.1*
+%lang(es) %{_mandir}/es/man1/more.1*
+%lang(es) %{_mandir}/es/man1/namei.1*
+%lang(es) %{_mandir}/es/man1/readprofile.1*
+%lang(es) %{_mandir}/es/man1/rev.1*
+%lang(es) %{_mandir}/es/man1/script.1*
+%lang(es) %{_mandir}/es/man1/setterm.1*
+%lang(es) %{_mandir}/es/man1/ul.1*
+%lang(es) %{_mandir}/es/man1/whereis.1*
+%lang(es) %{_mandir}/es/man1/write.1*
+
+%lang(es) %{_mandir}/es/man8/cytune.8*
+%lang(es) %{_mandir}/es/man8/ctrlaltdel.8*
+%lang(es) %{_mandir}/es/man8/ipcrm.8*
+%lang(es) %{_mandir}/es/man8/ipcs.8*
+%lang(es) %{_mandir}/es/man8/mkswap.8*
+%lang(es) %{_mandir}/es/man8/renice.8*
+%lang(es) %{_mandir}/es/man8/setfdprm.8*
+%lang(es) %{_mandir}/es/man8/setsid.8*
+
 %lang(fi) %{_mandir}/fi/man1/arch.1*
 %lang(fi) %{_mandir}/fi/man1/cal.1*
 %lang(fi) %{_mandir}/fi/man1/column.1*
@@ -592,7 +619,7 @@ fi
 %lang(ja) %{_mandir}/ja/man1/ul.1*
 %lang(ja) %{_mandir}/ja/man1/whereis.1*
 %lang(ja) %{_mandir}/ja/man1/write.1*
- 
+
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
@@ -683,6 +710,11 @@ fi
 %{_mandir}/man8/mkfs.minix.8*
 %{_mandir}/man8/mkfs.8*
 
+%lang(es) %{_mandir}/es/man8/fdisk.8*
+%lang(es) %{_mandir}/es/man8/fsck.minix.8*
+%lang(es) %{_mandir}/es/man8/mkfs.minix.8*
+%lang(es) %{_mandir}/es/man8/mkfs.8*
+
 %lang(fr) %{_mandir}/fr/man8/cfdisk.8*
 %lang(fr) %{_mandir}/fr/man8/fdisk.8*
 %lang(fr) %{_mandir}/fr/man8/sfdisk.8*
@@ -726,6 +758,11 @@ fi
 
 %lang(de) %{_mandir}/de/man8/rdev.8*
 
+%lang(es) %{_mandir}/es/man8/ramsize.8*
+%lang(es) %{_mandir}/es/man8/rdev.8*
+%lang(es) %{_mandir}/es/man8/rootflags.8*
+%lang(es) %{_mandir}/es/man8/vidmode.8*
+
 %lang(ja) %{_mandir}/ja/man8/ramsize.8*
 %lang(ja) %{_mandir}/ja/man8/rdev.8*
 %lang(ja) %{_mandir}/ja/man8/rootflags.8*
@@ -768,6 +805,14 @@ fi
 
 %lang(de) %{_mandir}/de/man5/fstab.5*
 %lang(de) %{_mandir}/de/man5/nfs.5*
+
+%lang(es) %{_mandir}/es/man5/fstab.5*
+%lang(es) %{_mandir}/es/man5/nfs.5*
+
+%lang(es) %{_mandir}/es/man8/mount.8*
+%lang(es) %{_mandir}/es/man8/umount.8*
+%lang(es) %{_mandir}/es/man8/swapon.8*
+%lang(es) %{_mandir}/es/man8/swapoff.8*
 
 %lang(fr) %{_mandir}/fr/man5/fstab.5*
 %lang(fr) %{_mandir}/fr/man5/nfs.5*
@@ -838,6 +883,7 @@ fi
 %attr(755,root,root) %{_sbindir}/tunelp
 
 %{_mandir}/man8/tunelp.8*
+%lang(es) %{_mandir}/es/man8/tunelp.8*
 %lang(ja) %{_mandir}/ja/man8/tunelp.8*
 %lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
@@ -849,7 +895,9 @@ fi
 
 %{_mandir}/man1/login.1*
 %lang(de) %{_mandir}/de/man1/login.1*
+%lang(es) %{_mandir}/es/man1/login.1*
 %lang(hu) %{_mandir}/hu/man1/login.1*
+%lang(ja) %{_mandir}/ja/man1/login.1*
 %lang(ko) %{_mandir}/ko/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
 
@@ -858,6 +906,7 @@ fi
 %attr(0755,root,root) /sbin/agetty
 
 %{_mandir}/man8/agetty.8*
+%lang(es) %{_mandir}/es/man8/agetty.8*
 %lang(ja) %{_mandir}/ja/man8/agetty.8*
 
 %files -n rawdevices
