@@ -210,8 +210,8 @@ echo	.so hwclock.8 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* 
-gzip -9fn */README.*
+gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
+	*/README.*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -413,6 +413,7 @@ rm -rf $RPM_BUILD_ROOT
 - gziping docs
 - removed ANNOUNCE from docs
 - removed man group from man pages
+- compiled on rpm 3
 
 * Mon Feb 15 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
 - updated to 2.9i,
