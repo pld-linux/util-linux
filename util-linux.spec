@@ -12,7 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	4
+%define		_release	5
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -396,7 +396,7 @@ echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-for d in cs da de es fi fr hu id it ja ko nl pl ; do
+for d in cs de es fi fr hu id it ja ko nl pl ; do
     for m in man1 man5 man8 ; do
 	if [ -d man/$d/$m ]; then
 	    install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
@@ -521,15 +521,11 @@ fi
 %{_mandir}/man8/setfdprm.8*
 %{_mandir}/man8/setsid.8*
 
-%lang(da) %{_mandir}/da/man1/kill.1*
-%lang(da) %{_mandir}/da/man1/more.1*
-%lang(da) %{_mandir}/da/man1/write.1*
-
 %lang(de) %{_mandir}/de/man1/kill.1*
 %lang(de) %{_mandir}/de/man1/more.1*
 %lang(de) %{_mandir}/de/man1/write.1*
 
-%lang(da) %{_mandir}/da/man8/fdformat.8*
+%lang(de) %{_mandir}/da/man8/fdformat.8*
 
 %lang(es) %{_mandir}/es/man1/arch.1*
 %lang(es) %{_mandir}/es/man1/colrm.1*
