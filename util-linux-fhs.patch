@@ -17,7 +17,7 @@ diff -Nur util-linux-2.9r/lib/pathnames.h util-linux-2.9r.pld/lib/pathnames.h
  #define _PATH_UTMP      	"/var/run/utmpx"
  #define _PATH_WTMP      	LOGDIR "/wtmpx"
 -#define _PATH_WTMPLOCK		"/etc/wtmplock"
-+#define _PATH_WTMPLOCK		"/var/lock/wtmxplock"
++#define _PATH_WTMPLOCK		"/var/lock/wtmpxlock"
  
  /* no more . in DEFPATH */
  #define	_PATH_DEFPATH	        "/usr/local/bin:/bin:/usr/bin"
