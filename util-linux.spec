@@ -45,7 +45,7 @@ Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
 Patch3:		%{name}-fhs.patch
 Patch4:		%{name}-login.patch
-%{!?bcond_off_crypto:Patch5: %{name}-kerneli.patch}
+Patch5:		%{name}-kerneli.patch
 Patch6:		%{name}-info.patch
 Patch7:		%{name}-fdisk2.patch
 Patch8:		%{name}-mount-tcp.patch
@@ -57,7 +57,8 @@ Patch13:	%{name}-sparcraid.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
-%{!?bcond_off_crypto:Patch17: %{name}-kerneli-fix.patch}
+Patch17:	%{name}-kerneli-fix.patch
+Patch18:	%{name}-kerneli-2.4.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -65,6 +66,9 @@ BuildRequires:	texinfo
 Requires:	pam >= 0.66
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
+
+%define		_kernel_ver	%(grep UTS_RELEASE /usr/src/linux/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
+%define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 
 %description
 util-linux contains a large variety of low-level system utilities
@@ -258,7 +262,11 @@ support for this feature built into them, however).
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
+%if %{_kernel24}
+%{!?bcond_off_crypto:%patch18 -p1}
+%else
 %{!?bcond_off_crypto:%patch5 -p1}
+%endif
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
@@ -270,13 +278,15 @@ support for this feature built into them, however).
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%if !%{_kernel24}
 %{!?bcond_off_crypto:%patch17 -p1}
+%endif
 
 %build
-CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
+CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
 %configure
 
-make	OPT="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
+make	OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	%{!?bcond_off_rawio:ADD_RAW="yes"}
 
