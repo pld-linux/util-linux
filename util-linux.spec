@@ -4,6 +4,7 @@
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
+# - move logger to separate package (to avoid conflicts with inetutils)
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
