@@ -14,7 +14,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	2
+%define		_release	3
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -31,8 +31,8 @@ Group:		Applications/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	login.pamd
-Source3:	rawdevices-init
-Source4:	rawdevices-sysconfig
+Source3:	rawdevices.init
+Source4:	rawdevices.sysconfig
 Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
@@ -115,11 +115,11 @@ Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
 Summary(tr):	Yerel-çevrim aygıtlarının kurulması ve ayarlanması için programlar
 Group:		Applications/System
 Release:	%{_release}@%{_kernel_series}
-%if %{_kernel24}
-%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
-%else
-%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
-%endif
+#%if %{_kernel24}
+#%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
+#%else
+#%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
+#%endif
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -171,11 +171,11 @@ Summary(pl):	Programy do montowania i odmontowywania systemów plików
 Summary(tr):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Group:		Applications/System
 Release:	%{_release}@%{_kernel_series}
-%if %{_kernel24}
-%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
-%else
-%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
-%endif
+#%if %{_kernel24}
+#%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
+#%else
+#%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
+#%endif
 
 %description -n mount
 mount is used for adding new filesystems, both local and networked, to
