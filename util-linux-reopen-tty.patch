@@ -1,0 +1,15 @@
+Only in util-linux-2.11d-: conftest.c
+Only in util-linux-2.11d-: defines.h
+diff -ur util-linux-2.11d/login-utils/login.c util-linux-2.11d-/login-utils/login.c
+--- util-linux-2.11d/login-utils/login.c	Thu Jun  7 11:23:57 2001
++++ util-linux-2.11d-/login-utils/login.c	Thu Jun  7 12:27:31 2001
+@@ -1103,6 +1103,8 @@
+     }
+     /* child */
+     setsid();
++    /* reopen, as we need controling tty in the child */
++    opentty(ttyn);
+     signal(SIGHUP, SIG_DFL);
+ #endif
+     signal(SIGINT, SIG_DFL);
+Only in util-linux-2.11d-: make_include
