@@ -9,8 +9,7 @@ Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-URL:		ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux
-Source0:	%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
