@@ -5,6 +5,9 @@
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
+%define		_kernel_ver	%(grep UTS_RELEASE /usr/src/linux/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
+%define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
+%define		_kernel_series	%{?_kernel24:2.4}%{!?_kernel24:2.2}
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -67,7 +70,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 BuildRequires:	texinfo
 Requires:	pam >= 0.66
-%conflicts_kernel_series
+Conflicts:	kernel %{?_kernel24:<} {!?_kernel24:>=} 2.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
 
