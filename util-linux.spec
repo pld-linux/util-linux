@@ -12,7 +12,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	2
+%define		_release	3
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -509,7 +509,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/look
 %attr(0755,root,root) %{_bindir}/mcookie
 %attr(0755,root,root) %{_bindir}/namei
-%attr(4755,root,root) %{_bindir}/newgrp
 %attr(0755,root,root) %{_bindir}/renice
 %attr(0755,root,root) %{_bindir}/rev
 %attr(0755,root,root) %{_bindir}/script
@@ -520,8 +519,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
 %attr(0755,root,root) %{_sbindir}/readprofile
-%attr(0755,root,root) %{_sbindir}/vigr
-%attr(0755,root,root) %{_sbindir}/vipw
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
@@ -538,7 +535,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/more.1*
 %{_mandir}/man1/namei.1*
-%{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/setterm.1*
 %{_mandir}/man1/readprofile.1*
@@ -562,7 +558,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/renice.8*
 %{_mandir}/man8/setsid.8*
 %{_mandir}/man8/setfdprm.8*
-%{_mandir}/man8/vipw.8*
 
 %lang(pl) %{_mandir}/pl/man1/arch.1*
 %lang(pl) %{_mandir}/pl/man1/colrm.1*
