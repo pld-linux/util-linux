@@ -2,6 +2,7 @@
 # Conditional build:
 # _without_crypto	- without kerneli cryptography
 # _with_pivot_root
+# _without_dist_kernel
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -13,7 +14,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	1
+%define		_release	2
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -115,9 +116,9 @@ Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Applications/System
 Release:	%{_release}@%{_kernel_series}
 %if %{_kernel24}
-Conflicts:	kernel < 2.3.0
+%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 %else
-Conflicts:	kernel >= 2.3.0
+%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
 %endif
 
 %description -n losetup
@@ -171,9 +172,9 @@ Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Applications/System
 Release:	%{_release}@%{_kernel_series}
 %if %{_kernel24}
-Conflicts:	kernel < 2.3.0
+%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 %else
-Conflicts:	kernel >= 2.3.0
+%{!?_without_dist_kernel:Requires:	kernel < 2.3.0}
 %endif
 
 %description -n mount
