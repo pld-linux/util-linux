@@ -1,23 +1,6 @@
-? defines.h
-? make_include
-? mount/loop.h
-? mount/losetup
-? mount/mount
-? mount/nfsmount.h
-? mount/nfsmount_clnt.c
-? mount/nfsmount_xdr.c
-? mount/pivot_root
-? mount/swapargs.h
-? mount/swapon
-? mount/umount
-Index: mount/Makefile
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/Makefile,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.1
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
---- mount/Makefile	24 Mar 2002 12:54:13 -0000	1.1.1.1
-+++ mount/Makefile	24 Mar 2002 13:56:39 -0000	1.1.1.1.2.1
+diff -Nur util-linux-2.11zorg/mount/Makefile util-linux-2.11z/mount/Makefile
+--- util-linux-2.11zorg/mount/Makefile	Tue Nov 26 09:53:59 2002
++++ util-linux-2.11z/mount/Makefile	Fri Mar 28 21:43:00 2003
 @@ -24,7 +24,7 @@
  
  MAYBE = pivot_root swapoff
@@ -27,28 +10,24 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
  NFS_OBJS = nfsmount.o nfsmount_xdr.o nfsmount_clnt.o
  GEN_FILES = nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
  
-@@ -57,8 +57,12 @@
+@@ -57,9 +57,13 @@
  main_losetup.o: lomount.c
  	$(COMPILE) -DMAIN lomount.c -o $@
  
 -losetup: main_losetup.o $(LIB)/xstrncpy.o
 +losetup: main_losetup.o $(LIB)/xstrncpy.o sha512.o rmd160.o
  	$(LINK) $^ -o $@
-+
+ 
 +rmd160.o lomount.o main_losetup.o: rmd160.h
 +
 +sha512.o lomount.o main_losetup.o: sha512.h
- 
++
  mount.o umount.o nfsmount.o losetup.o fstab.o realpath.o sundries.o: sundries.h
  
-Index: mount/lomount.c
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/lomount.c,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.3
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
---- mount/lomount.c	24 Mar 2002 12:54:15 -0000	1.1.1.1
-+++ mount/lomount.c	24 Mar 2002 16:02:42 -0000	1.1.1.1.2.3
+ mount.o umount.o fstab.o sundries.o: fstab.h
+diff -Nur util-linux-2.11zorg/mount/lomount.c util-linux-2.11z/mount/lomount.c
+--- util-linux-2.11zorg/mount/lomount.c	Fri Nov  1 01:58:51 2002
++++ util-linux-2.11z/mount/lomount.c	Fri Mar 28 21:43:00 2003
 @@ -6,6 +6,11 @@
   * - added Native Language Support
   * Sun Mar 21 1999 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
@@ -69,7 +48,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  #include <sys/ioctl.h>
  #include <sys/stat.h>
  #include <sys/mman.h>
-@@ -27,48 +33,102 @@
+@@ -28,48 +34,102 @@
  
  #include "loop.h"
  #include "lomount.h"
@@ -199,7 +178,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  static int
  show_loop (char *device) {
  	struct loop_info loopinfo;
-@@ -90,7 +150,7 @@
+@@ -91,7 +151,7 @@
  	printf (_("%s: [%04x]:%ld (%s) offset %d, %s encryption\n"),
  		device, loopinfo.lo_device, loopinfo.lo_inode,
  		loopinfo.lo_name, loopinfo.lo_offset,
@@ -208,7 +187,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	close (fd);
  
  	return 0;
-@@ -183,24 +243,62 @@
+@@ -184,24 +244,62 @@
  		error(_(
  		    "mount: Could not find any loop device, and, according to %s,\n"
  		    "       this kernel does not know about the loop device.\n"
@@ -276,7 +255,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  
  	mode = (*loopro ? O_RDONLY : O_RDWR);
  	if ((ffd = open (file, mode)) < 0) {
-@@ -218,13 +316,10 @@
+@@ -219,13 +317,10 @@
  	*loopro = (mode == O_RDONLY);
  
  	memset (&loopinfo, 0, sizeof (loopinfo));
@@ -294,7 +273,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	loopinfo.lo_offset = offset;
  
  #ifdef MCL_FUTURE  
-@@ -240,24 +335,148 @@
+@@ -241,24 +336,148 @@
  	}
  #endif
  
@@ -453,7 +432,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  				  (islower (pass[i]) ? toupper (pass[i]) :
  				   pass[i])-'A'+10 : pass[i]-'0') << (i&7) * 4;
  			} else {
-@@ -266,29 +485,83 @@
+@@ -267,29 +486,83 @@
  				return 1;
  			}
  		break;
@@ -553,7 +532,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  int 
  del_loop (const char *device) {
  	int fd;
-@@ -319,7 +592,7 @@
+@@ -320,7 +593,7 @@
  
  int
  set_loop (const char *device, const char *file, int offset,
@@ -562,7 +541,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	mutter();
  	return 1;
  }
-@@ -348,12 +621,45 @@
+@@ -349,12 +622,45 @@
  int verbose = 0;
  static char *progname;
  
@@ -610,7 +589,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  		progname, progname, progname);
  	exit(1);
  }
-@@ -387,19 +693,20 @@
+@@ -388,19 +694,20 @@
  
  int
  main(int argc, char **argv) {
@@ -636,7 +615,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  		switch (c) {
  		case 'd':
  			delete = 1;
-@@ -407,9 +714,18 @@
+@@ -408,9 +715,18 @@
  		case 'e':
  			encryption = optarg;
  			break;
@@ -655,7 +634,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  		case 'v':
  			verbose = 1;
  			break;
-@@ -418,7 +734,7 @@
+@@ -419,7 +735,7 @@
  		}
  	}
  	if (argc == 1) usage();
@@ -664,7 +643,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	    (!delete && (argc < optind+1 || argc > optind+2)))
  		usage();
  	if (argc == optind+1) {
-@@ -429,7 +745,13 @@
+@@ -430,7 +746,13 @@
  	} else {
  		if (offset && sscanf(offset,"%d",&off) != 1)
  			usage();
@@ -679,7 +658,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	}
  	return res;
  }
-@@ -445,3 +767,61 @@
+@@ -446,3 +768,61 @@
  }
  #endif
  #endif
@@ -741,14 +720,9 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
 +}
 +#endif
 +
-Index: mount/lomount.h
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/lomount.h,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.2
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.2
---- mount/lomount.h	24 Mar 2002 12:54:15 -0000	1.1.1.1
-+++ mount/lomount.h	24 Mar 2002 15:31:25 -0000	1.1.1.1.2.2
+diff -Nur util-linux-2.11zorg/mount/lomount.h util-linux-2.11z/mount/lomount.h
+--- util-linux-2.11zorg/mount/lomount.h	Fri Dec  8 18:08:02 2000
++++ util-linux-2.11z/mount/lomount.h	Fri Mar 28 21:43:00 2003
 @@ -1,5 +1,6 @@
  extern int verbose;
 -extern int set_loop (const char *, const char *, int, const char *, int *);
@@ -757,14 +731,9 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.2
  extern int del_loop (const char *);
  extern int is_loop_device (const char *);
  extern char * find_unused_loop_device (void);
-Index: mount/losetup.8
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/losetup.8,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.1
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
---- mount/losetup.8	24 Mar 2002 12:54:15 -0000	1.1.1.1
-+++ mount/losetup.8	24 Mar 2002 13:56:39 -0000	1.1.1.1.2.1
+diff -Nur util-linux-2.11zorg/mount/losetup.8 util-linux-2.11z/mount/losetup.8
+--- util-linux-2.11zorg/mount/losetup.8	Fri Aug 11 11:11:30 2000
++++ util-linux-2.11z/mount/losetup.8	Fri Mar 28 21:43:00 2003
 @@ -10,6 +10,9 @@
  ] [
  .B \-o
@@ -887,15 +856,10 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
  .SH AUTHORS
  .nf
  Original version: Theodore Ts'o <tytso@athena.mit.edu>
-Index: mount/mount.8
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/mount.8,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.1
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
---- mount/mount.8	24 Mar 2002 12:54:16 -0000	1.1.1.1
-+++ mount/mount.8	24 Mar 2002 13:56:39 -0000	1.1.1.1.2.1
-@@ -258,6 +258,12 @@
+diff -Nur util-linux-2.11zorg/mount/mount.8 util-linux-2.11z/mount/mount.8
+--- util-linux-2.11zorg/mount/mount.8	Tue Jan 21 13:45:54 2003
++++ util-linux-2.11z/mount/mount.8	Fri Mar 28 21:43:00 2003
+@@ -270,6 +270,12 @@
  .B \-v
  Verbose mode.
  .TP
@@ -908,7 +872,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
  .B \-a
  Mount all filesystems (of the given types) mentioned in
  .IR fstab .
-@@ -563,6 +569,15 @@
+@@ -627,6 +633,15 @@
  .BR noexec ", " nosuid ", and " nodev
  (unless overridden by subsequent options, as in the option line
  .BR users,exec,dev,suid ).
@@ -924,7 +888,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
  .RE
  .TP
  .B \-\-bind
-@@ -1581,7 +1596,10 @@
+@@ -1688,7 +1703,10 @@
  .BR loop ", " offset " and " encryption ,
  that are really options to
  .BR losetup (8).
@@ -936,15 +900,10 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
  (but just an option `\fB\-o loop\fP' is given), then
  .B mount
  will try to find some unused loop device and use that.
-Index: mount/mount.c
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/mount.c,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.3
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
---- mount/mount.c	24 Mar 2002 12:54:18 -0000	1.1.1.1
-+++ mount/mount.c	24 Mar 2002 16:41:46 -0000	1.1.1.1.2.3
-@@ -108,6 +108,9 @@
+diff -Nur util-linux-2.11zorg/mount/mount.c util-linux-2.11z/mount/mount.c
+--- util-linux-2.11zorg/mount/mount.c	Thu Jan  2 19:38:44 2003
++++ util-linux-2.11z/mount/mount.c	Fri Mar 28 21:44:26 2003
+@@ -113,6 +113,9 @@
  /* True if ruid != euid.  */
  static int suid = 0;
  
@@ -954,7 +913,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  /* Map from -o and fstab option strings to the flag argument to mount(2).  */
  struct opt_map {
    const char *opt;		/* option name */
-@@ -184,7 +187,7 @@
+@@ -192,7 +195,7 @@
  };
  
  static char *opt_loopdev, *opt_vfstype, *opt_offset, *opt_encryption,
@@ -963,7 +922,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  
  static struct string_opt_map {
    char *tag;
-@@ -195,6 +198,8 @@
+@@ -203,6 +206,8 @@
    { "vfs=",	1, &opt_vfstype },
    { "offset=",	0, &opt_offset },
    { "encryption=", 0, &opt_encryption },
@@ -972,7 +931,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
    { "speed=", 0, &opt_speed },
    { NULL, 0, NULL }
  };
-@@ -544,7 +549,7 @@
+@@ -553,7 +558,7 @@
  static int
  loop_check(char **spec, char **type, int *flags,
  	   int *loop, char **loopdev, char **loopfile) {
@@ -981,7 +940,7 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  
    /*
     * In the case of a loop mount, either type is of the form lo@/dev/loop5
-@@ -587,7 +592,10 @@
+@@ -596,7 +601,10 @@
        if (verbose)
  	printf(_("mount: going to use the loop device %s\n"), *loopdev);
        offset = opt_offset ? strtoul(opt_offset, NULL, 0) : 0;
@@ -993,15 +952,15 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	if (verbose)
  	  printf(_("mount: failed setting up loop device\n"));
  	return EX_FAIL;
-@@ -1305,6 +1313,7 @@
+@@ -1352,6 +1360,7 @@
  	{ "rw", 0, 0, 'w' },
  	{ "options", 1, 0, 'o' },
-	{ "test-opts", 1, 0, 'O' },
+ 	{ "test-opts", 1, 0, 'O' },
 +	{ "pass-fd", 1, 0, 'p' },
  	{ "types", 1, 0, 't' },
  	{ "bind", 0, 0, 128 },
  	{ "replace", 0, 0, 129 },
-@@ -1340,7 +1349,7 @@
+@@ -1389,7 +1398,7 @@
  	  "       mount --move olddir newdir\n"
  	  "A device can be given by name, say /dev/hda1 or /dev/cdrom,\n"
  	  "or by label, using  -L label  or by uuid, using  -U uuid .\n"
@@ -1010,26 +969,26 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  	  "For many more details, say  man 8 mount .\n"
  	));
  /*
-@@ -1356,6 +1365,7 @@
+@@ -1405,6 +1414,7 @@
  	int c, result = 0, specseen;
- 	char *options = NULL, *spec, *node;
+ 	char *options = NULL, *test_opts = NULL, *spec, *node;
  	char *volumelabel = NULL;
 +	char *passfd = NULL;
  	char *uuid = NULL;
  	char *types = NULL;
  	struct mntentchn *mc;
-@@ -1377,7 +1387,7 @@
+@@ -1428,7 +1438,7 @@
  	initproctitle(argc, argv);
  #endif
  
--	while ((c = getopt_long (argc, argv, "afFhlL:no:O:rsU:vVwt:",
-+	while ((c = getopt_long (argc, argv, "afFhlL:no:O:p:rsU:vVwt:",
+-	while ((c = getopt_long (argc, argv, "afFhilL:no:O:rsU:vVwt:",
++	while ((c = getopt_long (argc, argv, "afFhilL:no:O:p:rsU:vVwt:",
  				 longopts, NULL)) != -1) {
  		switch (c) {
- 		case 'a':		/* mount everything in fstab */
-@@ -1407,6 +1417,9 @@
+ 		case 'a':	       /* mount everything in fstab */
+@@ -1467,6 +1477,9 @@
  			else
- 				options = xstrdup(optarg);
+ 				test_opts = xstrdup(optarg);
  			break;
 +		case 'p':               /* read passphrase from given fd */
 +		        passfd = optarg;
@@ -1037,22 +996,19 @@ diff -u -u -r1.1.1.1 -r1.1.1.1.2.3
  		case 'r':		/* mount readonly */
  			readonly = 1;
  			readwrite = 0;
-@@ -1504,6 +1517,9 @@
- 			printf(_("mount: mounting %s\n"), spec);
+@@ -1576,6 +1589,9 @@
  	} else
  		spec = NULL;		/* just for gcc */
-+
+ 
 +	if (passfd && sscanf(passfd,"%d",&pfd) != 1)
 +	        die (EX_USAGE, _("mount: argument to --pass-fd or -p must be a number"));
- 
++
  	switch (argc+specseen) {
  	case 0:
-Index: mount/rmd160.c
-===================================================================
-RCS file: mount/rmd160.c
-diff -N mount/rmd160.c
---- /dev/null	1 Jan 1970 00:00:00 -0000
-+++ mount/rmd160.c	24 Mar 2002 13:56:39 -0000	1.1.2.1
+ 		/* mount -a */
+diff -Nur util-linux-2.11zorg/mount/rmd160.c util-linux-2.11z/mount/rmd160.c
+--- util-linux-2.11zorg/mount/rmd160.c	Thu Jan  1 00:00:00 1970
++++ util-linux-2.11z/mount/rmd160.c	Fri Mar 28 21:43:00 2003
 @@ -0,0 +1,532 @@
 +/* rmd160.c  -	RIPE-MD160
 + *	Copyright (C) 1998 Free Software Foundation, Inc.
@@ -1586,12 +1542,9 @@ diff -N mount/rmd160.c
 +    rmd160_final( &hd );
 +    memcpy( outbuf, hd.buf, 20 );
 +}
-Index: mount/rmd160.h
-===================================================================
-RCS file: mount/rmd160.h
-diff -N mount/rmd160.h
---- /dev/null	1 Jan 1970 00:00:00 -0000
-+++ mount/rmd160.h	24 Mar 2002 15:31:25 -0000	1.1.2.2
+diff -Nur util-linux-2.11zorg/mount/rmd160.h util-linux-2.11z/mount/rmd160.h
+--- util-linux-2.11zorg/mount/rmd160.h	Thu Jan  1 00:00:00 1970
++++ util-linux-2.11z/mount/rmd160.h	Fri Mar 28 21:43:00 2003
 @@ -0,0 +1,9 @@
 +#ifndef RMD160_H
 +#define RMD160_H
@@ -1602,12 +1555,9 @@ diff -N mount/rmd160.h
 +rmd160_hash_buffer (char *outbuf, const char *buffer, size_t length);
 +
 +#endif /*RMD160_H*/
-Index: mount/sha512.c
-===================================================================
-RCS file: mount/sha512.c
-diff -N mount/sha512.c
---- /dev/null	1 Jan 1970 00:00:00 -0000
-+++ mount/sha512.c	24 Mar 2002 13:56:39 -0000	1.1.2.1
+diff -Nur util-linux-2.11zorg/mount/sha512.c util-linux-2.11z/mount/sha512.c
+--- util-linux-2.11zorg/mount/sha512.c	Thu Jan  1 00:00:00 1970
++++ util-linux-2.11z/mount/sha512.c	Fri Mar 28 21:43:00 2003
 @@ -0,0 +1,432 @@
 +/*
 + *  sha512.c
@@ -2041,12 +1991,9 @@ diff -N mount/sha512.c
 +    memset(&ctx, 0, sizeof(ctx));
 +}
 +#endif
-Index: mount/sha512.h
-===================================================================
-RCS file: mount/sha512.h
-diff -N mount/sha512.h
---- /dev/null	1 Jan 1970 00:00:00 -0000
-+++ mount/sha512.h	24 Mar 2002 13:56:39 -0000	1.1.2.1
+diff -Nur util-linux-2.11zorg/mount/sha512.h util-linux-2.11z/mount/sha512.h
+--- util-linux-2.11zorg/mount/sha512.h	Thu Jan  1 00:00:00 1970
++++ util-linux-2.11z/mount/sha512.h	Fri Mar 28 21:43:00 2003
 @@ -0,0 +1,45 @@
 +/*
 + *  sha512.h
@@ -2093,14 +2040,9 @@ diff -N mount/sha512.h
 +/* no sha384_write(), use sha512_write() */
 +/* no sha384_final(), use sha512_final(), result in ctx->sha_out[0...47]  */
 +extern void sha384_hash_buffer(unsigned char *, int, unsigned char *, int);
-Index: mount/sundries.c
-===================================================================
-RCS file: /cvsroot/cryptoapi/util-linux/mount/sundries.c,v
-retrieving revision 1.1.1.1
-retrieving revision 1.1.1.1.2.1
-diff -u -u -r1.1.1.1 -r1.1.1.1.2.1
---- mount/sundries.c	24 Mar 2002 12:54:19 -0000	1.1.1.1
-+++ mount/sundries.c	24 Mar 2002 13:56:39 -0000	1.1.1.1.2.1
+diff -Nur util-linux-2.11zorg/mount/sundries.c util-linux-2.11z/mount/sundries.c
+--- util-linux-2.11zorg/mount/sundries.c	Fri Nov  1 01:00:50 2002
++++ util-linux-2.11z/mount/sundries.c	Fri Mar 28 21:43:00 2003
 @@ -162,7 +162,7 @@
  	  return 1;
  
