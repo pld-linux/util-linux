@@ -440,7 +440,7 @@ fi
 %doc */README.*
 
 %attr(755,root,root) /sbin/clock
-%attr(755,root,root) /sbin/hwclock
+%attr(755,root,root) /sbin/hwclock*
 
 %{_mandir}/man8/clock.8*
 %{_mandir}/man8/hwclock.8*
