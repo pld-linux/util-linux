@@ -1,6 +1,6 @@
 #
 # Conditional build:	
-# bcond_off_crypto - without kerneli cryptography
+# bcond_off_crypto	- without kerneli cryptography
 # bcond_off_rawio
 # bcond_on_pivot_root
 #
@@ -10,8 +10,8 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10r
-Release:	3
+Version:	2.10s
+Release:	1
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -263,14 +263,14 @@ support for this feature built into them, however).
 %patch11 -p1
 %{!?bcond_off_rawio:%patch12 -p1}
 
-
 %build
 
 CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
 %configure
 
 make	OPT="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}" \
-	MOREHELPDIR=%{_datadir}/misc
+	MOREHELPDIR=%{_datadir}/misc \
+	%{!?bcond_off_rawio:ADD_RAW="yes"}
 
 (cd sys-utils; makeinfo ipc.texi)
 
@@ -286,7 +286,9 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
 	INSTALLSUID="install -m 755" \
 	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
-	USE_TTY_GROUP=no
+	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
+	USE_TTY_GROUP=no \
+	%{!?bcond_off_rawio:ADD_RAW="yes"}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
@@ -364,42 +366,48 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /sbin/kbdrate
 %attr(0755,root,root) /sbin/blockdev
 %attr(0755,root,root) /sbin/elvtune
+%attr(0755,root,root) %{_bindir}/banner
 %attr(0755,root,root) %{_bindir}/cal
 %attr(0755,root,root) %{_bindir}/col
 %attr(0755,root,root) %{_bindir}/colcrt
 %attr(0755,root,root) %{_bindir}/colrm
 %attr(0755,root,root) %{_bindir}/column
-%attr(0755,root,root) %{_bindir}/hexdump
-%attr(0755,root,root) %{_bindir}/rev
-%attr(0755,root,root) %{_bindir}/ul
 %attr(0755,root,root) %{_bindir}/ddate
 %attr(0755,root,root) %{_bindir}/fdformat
-%attr(0755,root,root) %{_bindir}/newgrp
-%attr(0755,root,root) %{_bindir}/setfdprm
+%attr(0755,root,root) %{_bindir}/getopt
+%attr(0755,root,root) %{_bindir}/ipcrm
+%attr(0755,root,root) %{_bindir}/ipcs
+%attr(0755,root,root) %{_bindir}/hexdump
+%attr(0755,root,root) %{_bindir}/isosize
 %attr(0755,root,root) %{_bindir}/logger
 %attr(0755,root,root) %{_bindir}/look
 %attr(0755,root,root) %{_bindir}/mcookie
 %attr(0755,root,root) %{_bindir}/namei
-%attr(0755,root,root) %{_bindir}/script
-%attr(0755,root,root) %{_bindir}/setsid
-%attr(0755,root,root) %{_bindir}/setterm
-%attr(0755,root,root) %{_bindir}/whereis
-%attr(2755,root, tty) %{_bindir}/write
-%attr(0755,root,root) %{_bindir}/getopt
-%attr(0755,root,root) %{_bindir}/ipcrm
-%attr(0755,root,root) %{_bindir}/ipcs
+%attr(0755,root,root) %{_bindir}/newgrp
 %attr(0755,root,root) %{_bindir}/renice
 %{!?bcond_off_rawio:%attr(0755,root,root) %{_bindir}/raw}
-%attr(0755,root,root) %{_prefix}/games/banner
+%attr(0755,root,root) %{_bindir}/rev
+%attr(0755,root,root) %{_bindir}/script
+%attr(0755,root,root) %{_bindir}/setsid
+%attr(0755,root,root) %{_bindir}/setfdprm
+%attr(0755,root,root) %{_bindir}/setterm
+%attr(0755,root,root) %{_bindir}/ul
+%attr(0755,root,root) %{_bindir}/whereis
+%attr(2755,root, tty) %{_bindir}/write
 %attr(0755,root,root) %{_sbindir}/vipw
 %attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/arch.1*
-%{_mandir}/man1/readprofile.1*
-%{_mandir}/man1/newgrp.1*
-%{_mandir}/man1/ddate.1*
 %{_mandir}/man1/cal.1*
+%{_mandir}/man1/col.1*
+%{_mandir}/man1/colcrt.1*
+%{_mandir}/man1/colrm.1*
+%{_mandir}/man1/column.1*
+%{_mandir}/man1/ddate.1*
+%{_mandir}/man1/getopt.1*
+%{_mandir}/man1/hexdump.1*
+%{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/kill.1*
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
@@ -408,16 +416,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/namei.1*
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/setterm.1*
-%{_mandir}/man1/whereis.1*
-%{_mandir}/man1/write.1*
-%{_mandir}/man1/getopt.1*
-%{_mandir}/man1/col.1*
-%{_mandir}/man1/colcrt.1*
-%{_mandir}/man1/colrm.1*
-%{_mandir}/man1/column.1*
-%{_mandir}/man1/hexdump.1*
+%{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/ul.1*
+%{_mandir}/man1/whereis.1*
+%{_mandir}/man1/write.1*
 
 %{_mandir}/man6/banner.6*
 
@@ -426,16 +429,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/dmesg.8*
 %{_mandir}/man8/elvtune.8*
+%{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/ipcrm.8*
 %{_mandir}/man8/ipcs.8*
+%{_mandir}/man8/isosize.8*
 %{_mandir}/man8/kbdrate.8*
+%{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/renice.8*
 %{_mandir}/man8/setsid.8*
-%{_mandir}/man8/vipw.8*
-%{_mandir}/man8/fdformat.8*
-%{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/setfdprm.8*
 %{!?bcond_off_rawio:%{_mandir}/man8/raw.8*}
+%{_mandir}/man8/vipw.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
