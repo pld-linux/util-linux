@@ -376,7 +376,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Thu Apr 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
-  [2.9o-1]
+  [2.9o-10]
 - fixed installing .mo files (util-linux-DESTDIR.patch),
 - removed suid subpackage (added to Obsoletes),
 - recompiles on new rpm.
