@@ -4,30 +4,23 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.9s
+Version:	2.9u
 Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 URL:		ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux
-Source0:	%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.gz
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
 Patch0:		util-linux-MCONFIG.patch
-Patch1:		util-linux-chfn.patch
-Patch2:		util-linux-fdisk.patch
-Patch3:		util-linux-login.patch
-Patch4:		util-linux-misc.patch
-Patch5:		util-linux-mkswap.patch
+Patch1:		util-linux-fdisk.patch
+Patch2:		util-linux-po.patch
+Patch3:		util-linux-utmpx.patch
+Patch4:		util-linux-fhs.patch
+Patch5:		util-linux-login.patch
 Patch6:		util-linux-more.patch
-Patch7:		util-linux-po.patch
-Patch8:		util-linux-shutdown.patch
-Patch9:		util-linux-kernel23.patch
-Patch10:	util-linux-utmpx.patch
-Patch11:	util-linux-fhs.patch
-Patch12:	util-linux-login.diff
-Patch13:	util-linux-more.diff
 BuildPrereq:	pam-devel >= 0.66
 BuildPrereq:	ncurses-devel
 BuildPrereq:	gettext
@@ -172,21 +165,31 @@ Programy do manipulacji plikiem /etc/passwd.
 %description uprogs
 Users programs for manipulate /etc/passwd file.
 
+%package	chkdupexe
+Summary:	chkdupexe - find duplicate executables
+Summary(pl):	chkdupexe odszukuje powtarzaj±ce sie pliki uruchamialne
+Group:		Utilities/System
+Group(pl):      Narzêdzia/System
+
+%description chkdupexe
+chkdupexe  will  scan  the  union of $PATH and a hardcoded
+list of common locations for  binaries.   It  will  report
+dangling symlinks and duplicately-named binaries.
+
+%description chkdupexe -l pl
+chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane
+katalogi z plikami uruchamialnymi i informuje o powtarzaj±cych siê plikach
+w ró¿nych katalogach.
+
 %prep
-%setup   -q 
-%patch0  -p1 
-%patch1  -p1 
-%patch2  -p1 
-#%patch3  -p1 
-%patch4  -p1 
-#%patch5  -p1 
-#%patch6  -p1 
-%patch7  -p1 
-#%patch8  -p1 
-%patch10 -p1 
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%setup  -q 
+%patch0 -p1 
+%patch1 -p1
+%patch2 -p1 
+%patch3 -p1 
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 
@@ -409,6 +412,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(644,root,root) %{_mandir}/man1/chfn.1.gz
 %attr(644,root,root) %{_mandir}/man1/chsh.1.gz
+
+%files chkdupexe
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/chkdupexe
+%{_mandir}/man1/chkdupexe.1*
 
 %changelog
 * Sun May 23 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
