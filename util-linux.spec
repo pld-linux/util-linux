@@ -4,7 +4,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10g
+Version:	2.10l
 Release:	1
 Copyright:	distributable
 Group:		Utilities/System
@@ -218,8 +218,8 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-%patch5 -p1 
-%patch6 -p1
+%patch5 -p1
+#%patch6 -p1 -b .wiget
 
 %build
 
