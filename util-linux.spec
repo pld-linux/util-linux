@@ -446,7 +446,11 @@ install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
 %ifarch ppc
 mv -f $RPM_BUILD_ROOT/sbin/hwclock $RPM_BUILD_ROOT/sbin/hwclock.rtc
-install clock-ppc $RPM_BUILD_ROOT/sbin/hwclock
+install clock-ppc $RPM_BUILD_ROOT/sbin/hwclock.adb
+#yneed fix: 
+# hwclock.adb is for PowerMac (default)
+# hwclock.rtc is for RS/6000 (PreP,CHRP)
+ln -sf hwclock.adb $RPM_BUILD_ROOT/sbin/hwclock
 %endif
 
 ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
@@ -493,7 +497,13 @@ fi
 %doc */README.* text-utils/LICENSE.pg
 
 %attr(755,root,root) /sbin/clock
+%ifarch ppc
+%attr(755,root,root) %config(noreplace) /sbin/hwclock
+%attr(755,root,root) /sbin/hwclock.adb
+%attr(755,root,root) /sbin/hwclock.rtc
+%else
 %attr(755,root,root) /sbin/hwclock*
+%endif
 
 %{_mandir}/man8/clock.8*
 %{_mandir}/man8/hwclock.8*
