@@ -1,7 +1,6 @@
 #
 # Conditional build:
-# _without_dist_kernel	- do nothing for now
-# _with_uClibc		- don't build few utilities
+%bcond_with	uClibc	# don't build few utilities
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -46,15 +45,17 @@ Patch14:	%{name}-amd64.patch
 Patch15:	%{name}-crypto-debian.patch
 Patch16:	%{name}-dev_t.patch
 Patch17:	%{name}-selinux.patch
+Patch18:	%{name}-blk.patch
+Patch19:	%{name}-io.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
-%{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
-%{!?_with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
 BuildRequires:	libselinux-devel
+%{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
+%{!?with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
 BuildRequires:	texinfo
 BuildRequires:	textutils
-%{!?_with_uClibc:BuildRequires:	zlib-devel}
-%{!?_with_uClibc:Requires:	pam >= 0.77.3}
+%{!?with_uClibc:BuildRequires:	zlib-devel}
+%{!?with_uClibc:Requires:	pam >= 0.77.3}
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
@@ -349,6 +350,8 @@ Obs³uga raw-device'ów.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 %build
 CC="%{__cc}"
@@ -359,12 +362,12 @@ export CC CFLAGS LDFLAGS
 # configure and it doesn't take any parameters
 ./configure
 
-%{?_with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
+%{?with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
 %{__make} \
 	OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
-	%{!?_with_uClibc:ADD_RAW="yes"} \
-	%{?_with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
+	%{!?with_uClibc:ADD_RAW="yes"} \
+	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
 
 %ifarch ppc
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
@@ -387,8 +390,8 @@ install -d $RPM_BUILD_ROOT{/bin,/sbin,/etc/{pam.d,logrotate,rc.d/init.d,sysconfi
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
-	%{!?_with_uClibc:ADD_RAW="yes"} \
-	%{?_with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
+	%{!?with_uClibc:ADD_RAW="yes"} \
+	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
@@ -433,7 +436,7 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man8/sln.8*
 rm -f $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8*
 rm -f $RPM_BUILD_ROOT%{_mandir}/man8/vipw.8*
 
-%{!?_with_uClibc:%find_lang %{name}}
+%{!?with_uClibc:%find_lang %{name}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -458,7 +461,7 @@ if [ -f /var/lock/subsys/rawdevices ]; then
 fi
 /sbin/chkconfig --del rawdevices
 
-%files %{!?_with_uClibc:-f %{name}.lang}
+%files %{!?with_uClibc:-f %{name}.lang}
 %defattr(644,root,root,755)
 %doc */README.* text-utils/LICENSE.pg
 
@@ -483,7 +486,7 @@ fi
 %attr(0755,root,root) /bin/arch
 %attr(0755,root,root) /bin/dmesg
 %attr(0755,root,root) /bin/kill
-%{!?_with_uClibc:%attr(0755,root,root) /bin/more}
+%{!?with_uClibc:%attr(0755,root,root) /bin/more}
 %attr(0755,root,root) /sbin/blockdev
 %attr(0755,root,root) /sbin/mkfs
 %attr(0755,root,root) /sbin/mkswap
@@ -510,11 +513,11 @@ fi
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
 %attr(0755,root,root) %{_bindir}/setfdprm
-%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/pg}
+%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/pg}
 %attr(0755,root,root) %{_bindir}/line
 %attr(0755,root,root) %{_bindir}/rename
-%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
-%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
+%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
+%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
 %attr(0755,root,root) %{_bindir}/tailf
@@ -534,15 +537,15 @@ fi
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/mcookie.1*
-%{!?_with_uClibc:%{_mandir}/man1/more.1*}
+%{!?with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
-%{!?_with_uClibc:%{_mandir}/man1/pg.1*}
+%{!?with_uClibc:%{_mandir}/man1/pg.1*}
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/rename.1*
 %{_mandir}/man1/script.1*
-%{!?_with_uClibc:%{_mandir}/man1/setterm.1*}
-%{!?_with_uClibc:%{_mandir}/man1/ul.1*}
+%{!?with_uClibc:%{_mandir}/man1/setterm.1*}
+%{!?with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
 %{_mandir}/man1/tailf.1*
@@ -753,13 +756,13 @@ fi
 %attr(755,root,root) /sbin/fsck.minix
 %attr(755,root,root) /sbin/mkfs.minix
 %ifnarch sparc sparc64
-%{!?_with_uClibc:%attr(755,root,root) /sbin/cfdisk}
+%{!?with_uClibc:%attr(755,root,root) /sbin/cfdisk}
 %attr(755,root,root) /sbin/sfdisk
 %endif
 
 %{_mandir}/man8/fdisk.8*
 %ifnarch sparc sparc64
-%{!?_with_uClibc:%{_mandir}/man8/cfdisk.8*}
+%{!?with_uClibc:%{_mandir}/man8/cfdisk.8*}
 %{_mandir}/man8/sfdisk.8*
 %endif
 %{_mandir}/man8/fsck.minix.8*
@@ -774,7 +777,7 @@ fi
 
 %lang(fr) %{_mandir}/fr/man8/fdisk.8*
 %ifnarch sparc sparc64
-%{!?_with_uClibc:%lang(fr) %{_mandir}/fr/man8/cfdisk.8*}
+%{!?with_uClibc:%lang(fr) %{_mandir}/fr/man8/cfdisk.8*}
 %lang(fr) %{_mandir}/fr/man8/sfdisk.8*
 %endif
 %lang(fr) %{_mandir}/fr/man8/mkfs.minix.8*
@@ -784,12 +787,12 @@ fi
 
 %lang(it) %{_mandir}/it/man8/fdisk.8*
 %ifnarch sparc sparc64
-%{!?_with_uClibc:%lang(it) %{_mandir}/it/man8/cfdisk.8*}
+%{!?with_uClibc:%lang(it) %{_mandir}/it/man8/cfdisk.8*}
 %endif
 
 %lang(ja) %{_mandir}/ja/man8/fdisk.8*
 %ifnarch sparc sparc64
-%{!?_with_uClibc:%lang(ja) %{_mandir}/ja/man8/cfdisk.8*}
+%{!?with_uClibc:%lang(ja) %{_mandir}/ja/man8/cfdisk.8*}
 %lang(ja) %{_mandir}/ja/man8/sfdisk.8*
 %endif
 %lang(ja) %{_mandir}/ja/man8/fsck.minix.8*
@@ -807,8 +810,8 @@ fi
 %lang(pl) %{_mandir}/pl/man8/mkfs.minix.8*
 %lang(pl) %{_mandir}/pl/man8/mkfs.8*
 
-%{!?_with_uClibc:%attr(755,root,root) /sbin/fsck.cramfs}
-%{!?_with_uClibc:%attr(755,root,root) /sbin/mkfs.cramfs}
+%{!?with_uClibc:%attr(755,root,root) /sbin/fsck.cramfs}
+%{!?with_uClibc:%attr(755,root,root) /sbin/mkfs.cramfs}
 %attr(755,root,root) /sbin/mkfs.bfs
 
 %attr(755,root,root) %{_bindir}/cytune
@@ -958,7 +961,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/tunelp.8*
 %lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
-%if %{?_with_uClibc:0}%{!?_with_uClibc:1}
+%if %{without uClibc}
 %files -n login
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/login
@@ -983,7 +986,7 @@ fi
 %lang(es) %{_mandir}/es/man8/agetty.8*
 %lang(ja) %{_mandir}/ja/man8/agetty.8*
 
-%if %{?_with_uClibc:0}%{!?_with_uClibc:1}
+%if %{without uClibc}
 %files -n rawdevices
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/raw
