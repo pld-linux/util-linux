@@ -47,7 +47,7 @@ Patch5:		util-linux-login.patch
 Patch6:		util-linux-more.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel
-BuildRequires:	gettext
+BuildRequires:	gettext-devel
 Requires:	pam >= 0.66
 Requires:	/sbin/install-info
 Buildroot:	/tmp/%{name}-%{version}-root
