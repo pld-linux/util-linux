@@ -15,7 +15,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	4
+%define		_release	5
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
