@@ -1,12 +1,12 @@
-diff -Nur util-linux-2.11b.orig/mount/Makefile util-linux-2.11b/mount/Makefile
---- util-linux-2.11b.orig/mount/Makefile	Mon Mar  5 01:38:53 2001
-+++ util-linux-2.11b/mount/Makefile	Wed Mar 28 11:41:40 2001
+diff -Nur util-linux-2.11n/mount/Makefile util-linux-2.11n-int/mount/Makefile
+--- util-linux-2.11n/mount/Makefile	Sun May 20 02:52:24 2001
++++ util-linux-2.11n-int/mount/Makefile	Tue Dec 18 21:38:11 2001
 @@ -24,7 +24,7 @@
  
  MAYBE = pivot_root swapoff
  
 -LO_OBJS = lomount.o $(LIB)/xstrncpy.o
-+LO_OBJS = lomount.o rmd160.o $(LIB)/xstrncpy.o
++LO_OBJS = lomount.o $(LIB)/xstrncpy.o rmd160.o
  NFS_OBJS = nfsmount.o nfsmount_xdr.o nfsmount_clnt.o
  GEN_FILES = nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
  
@@ -15,13 +15,13 @@ diff -Nur util-linux-2.11b.orig/mount/Makefile util-linux-2.11b/mount/Makefile
  	$(COMPILE) -DMAIN lomount.c -o $@
  
 -losetup: main_losetup.o $(LIB)/xstrncpy.o
-+losetup: main_losetup.o rmd160.o $(LIB)/xstrncpy.o
++losetup: main_losetup.o $(LIB)/xstrncpy.o rmd160.o
  	$(LINK) $^ -o $@
  
  mount.o umount.o nfsmount.o losetup.o fstab.o realpath.o sundries.o: sundries.h
-diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
---- util-linux-2.11b.orig/mount/lomount.c	Thu Mar 15 11:09:58 2001
-+++ util-linux-2.11b/mount/lomount.c	Wed Mar 28 12:09:33 2001
+diff -Nur util-linux-2.11n/mount/lomount.c util-linux-2.11n-int/mount/lomount.c
+--- util-linux-2.11n/mount/lomount.c	Thu Mar 15 11:09:58 2001
++++ util-linux-2.11n-int/mount/lomount.c	Tue Dec 18 21:38:11 2001
 @@ -6,6 +6,11 @@
   * - added Native Language Support
   * Sun Mar 21 1999 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
@@ -34,7 +34,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
   */
  
  #define PROC_DEVICES	"/proc/devices"
-@@ -21,54 +26,60 @@
+@@ -21,54 +26,107 @@
  #include <errno.h>
  #include <stdlib.h>
  #include <unistd.h>
@@ -52,11 +52,52 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +#ifndef LO_CRYPT_CRYPTOAPI
 +#define LO_CRYPT_CRYPTOAPI 18
 +#endif
++#ifndef LO_CRYPT_NONE
++#define LO_CRYPT_NONE 0
++#endif
++#ifndef LO_CRYPT_XOR
++#define LO_CRYPT_XOR 1
++#endif
++#ifndef LO_CRYPT_DES
++#define LO_CRYPT_DES 2
++#endif
++#ifndef LO_CRYPT_FISH2
++#define LO_CRYPT_FISH2 3
++#endif
++#ifndef LO_CRYPT_BLOW
++#define LO_CRYPT_BLOW 4
++#endif
++#ifndef LO_CRYPT_CAST128
++#define LO_CRYPT_CAST128 5
++#endif
++#ifndef LO_CRYPT_IDEA
++#define LO_CRYPT_IDEA 6
++#endif
++#ifndef LO_CRYPT_SERPENT
++#define LO_CRYPT_SERPENT 7
++#endif
++#ifndef LO_CRYPT_MARS
++#define LO_CRYPT_MARS 8
++#endif
++#ifndef LO_CRYPT_RC6
++#define LO_CRYPT_RC6 11
++#endif
++#ifndef LO_CRYPT_3DES
++#define LO_CRYPT_3DES 12
++#endif
++#ifndef LO_CRYPT_DFC
++#define LO_CRYPT_DFC 15
++#endif
++#ifndef LO_CRYPT_RIJNDAEL
++#define LO_CRYPT_RIJNDAEL 16
++#endif
++
 +
  extern int verbose;
  extern char *xstrdup (const char *s);	/* not: #include "sundries.h" */
  extern void error (const char *fmt, ...);	/* idem */
  
++
 +struct cipher_info
 +{
 +	const char *name;
@@ -67,12 +108,13 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +};
 +
 +static int set_loop_passwd(struct loop_info *_loopinfo, int pfd, int keysz,
-+			const char *encryption, int fd, int ffd);
++			   const char *encryption, int fd, int ffd);
 +static int get_cipher_info(const char *name, struct cipher_info *res);
 +static int name_to_id(const char *name);
 +#ifdef MAIN
-+static char *id_to_name(int fd);
++static char *id_to_name(int id);
 +#endif
++ 
 +
  #ifdef LOOP_SET_FD
  struct crypt_type_struct {
@@ -85,14 +127,19 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 -	{ LO_CRYPT_XOR, "xor" },
 -	{ LO_CRYPT_DES, "DES" },
 -	{ -1, NULL   }
-+	{ LO_CRYPT_NONE, "no",0 },
-+	{ LO_CRYPT_NONE, "none",0 },
-+	{ LO_CRYPT_XOR, "xor",0 },
-+	{ LO_CRYPT_DES, "DES",8 },
-+	{ LO_CRYPT_FISH2, "twofish",20 },
-+	{ LO_CRYPT_BLOW, "blowfish",20 },
-+	{ LO_CRYPT_CAST128, "cast128",16 },
-+	{ LO_CRYPT_IDEA, "idea",16 },
++        { LO_CRYPT_NONE, "none", 0 },
++        { LO_CRYPT_XOR, "xor", 0 },
++        { LO_CRYPT_DES, "des", 8 },
++        { LO_CRYPT_FISH2, "twofish", 20 },
++        { LO_CRYPT_BLOW, "blowfish", 20 },
++        { LO_CRYPT_CAST128, "cast", 16 },
++        { LO_CRYPT_SERPENT, "serpent", 16 },
++        { LO_CRYPT_MARS, "mars", 16 },
++        { LO_CRYPT_RC6, "rc6", 16 },
++        { LO_CRYPT_3DES, "des-ede3", 24 },
++        { LO_CRYPT_DFC, "dfc", 16 },
++        { LO_CRYPT_IDEA, "idea", 16 },
++        { LO_CRYPT_RIJNDAEL, "rijndael", 16 },
 +	{ -1, NULL,0   }
  };
  
@@ -122,7 +169,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  static int
  show_loop (char *device) {
  	struct loop_info loopinfo;
-@@ -90,7 +101,7 @@
+@@ -90,7 +148,7 @@
  	printf (_("%s: [%04x]:%ld (%s) offset %d, %s encryption\n"),
  		device, loopinfo.lo_device, loopinfo.lo_inode,
  		loopinfo.lo_name, loopinfo.lo_offset,
@@ -131,7 +178,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  	close (fd);
  
  	return 0;
-@@ -183,24 +194,64 @@
+@@ -183,24 +241,64 @@
  		error(_(
  		    "mount: Could not find any loop device, and, according to %s,\n"
  		    "       this kernel does not know about the loop device.\n"
@@ -201,7 +248,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  
  	mode = (*loopro ? O_RDONLY : O_RDWR);
  	if ((ffd = open (file, mode)) < 0) {
-@@ -218,13 +269,10 @@
+@@ -218,13 +316,10 @@
  	*loopro = (mode == O_RDONLY);
  
  	memset (&loopinfo, 0, sizeof (loopinfo));
@@ -213,13 +260,13 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 -		return 1;
 -	}
 +	snprintf(loopinfo.lo_name, sizeof(loopinfo.lo_name),
-+		"%s-cbc", encryption);
++		 "%s-cbc", encryption);
 +	loopinfo.lo_name[LO_NAME_SIZE - 1] = 0;
 +	loopinfo.lo_encrypt_type = LO_CRYPT_CRYPTOAPI;
  	loopinfo.lo_offset = offset;
  
  #ifdef MCL_FUTURE  
-@@ -240,24 +288,74 @@
+@@ -240,24 +335,73 @@
  	}
  #endif
  
@@ -235,7 +282,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +
 +	if (ioctl (fd, LOOP_SET_STATUS, &loopinfo) < 0) {
 +		/* Try again with old-style LO_CRYPT_XX if
-+		     new style LO_CRYPT_CRYPTOAPI ioctl didn't work */
++                   new-style LO_CRYPT_CRYPTOAPI ioctl didn't work */
 +		if (tried_old) {
 +			error("The cipher does not exist, or a cipher module "
 +			      "needs to be loaded into the kernel");
@@ -260,13 +307,13 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +}
 +
 +int
-+set_loop_passwd(struct loop_info *loopinfo, int pfd, int keysz,
++set_loop_passwd(struct loop_info *loopinfo, int pfd, int keysz, 
 +		const char *encryption, int fd, int ffd)
 +{
 +	int i;
 +	int keylength;
 +	char *pass;
-+	char keybits[2*HASHLENGTH];
++	char keybits[2*HASHLENGTH]; 
 +	char passwdbuff[PASSWDBUFFLEN];
 +	struct cipher_info info;
 +
@@ -279,11 +326,10 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 -		pass = getpass (_("Password: "));
 -		xstrncpy (loopinfo.lo_encrypt_key, pass, LO_KEY_SIZE);
 -		loopinfo.lo_encrypt_key_size = strlen(loopinfo.lo_encrypt_key);
-+	    /* WARNING: xgetpass() can return massive amounts of data,
-+	     * not only 128 bytes like the original getpass(3) */
++          /* WARNING: xgetpass() can return massive amounts of data,
++           * not only 128 bytes like the original getpass(3) */
 +		pass = xgetpass (pfd,_("Password: "));
-+		strncpy (loopinfo->lo_encrypt_key, pass, LO_KEY_SIZE);
-+		loopinfo->lo_encrypt_key[LO_KEY_SIZE - 1] = 0;
++		xstrncpy (loopinfo->lo_encrypt_key, pass, LO_KEY_SIZE);
 +		loopinfo->lo_encrypt_key_size = strlen(loopinfo->lo_encrypt_key);
  		break;
  	case LO_CRYPT_DES:
@@ -304,7 +350,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  				  (islower (pass[i]) ? toupper (pass[i]) :
  				   pass[i])-'A'+10 : pass[i]-'0') << (i&7) * 4;
  			} else {
-@@ -266,29 +364,82 @@
+@@ -266,29 +410,88 @@
  				return 1;
  			}
  		break;
@@ -312,7 +358,13 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +	case LO_CRYPT_BLOW:
 +	case LO_CRYPT_IDEA:
 +	case LO_CRYPT_CAST128:
-+		pass = xgetpass(pfd, _("Password :"));
++        case LO_CRYPT_SERPENT:
++        case LO_CRYPT_MARS:
++        case LO_CRYPT_RC6:
++        case LO_CRYPT_3DES:
++        case LO_CRYPT_DFC:
++        case LO_CRYPT_RIJNDAEL:
++		pass = xgetpass(pfd, _("Password: "));
 +		strncpy(passwdbuff+1,pass,PASSWDBUFFLEN-1);
 +		passwdbuff[PASSWDBUFFLEN-1] = '\0';
 +		passwdbuff[0] = 'A';
@@ -361,7 +413,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +			keysz = atoi(keysize);
 +		}
 +
-+		pass = xgetpass(pfd, _("Password :"));
++		pass = xgetpass(pfd, _("Password: "));
 +		strncpy(passwdbuff+1,pass,PASSWDBUFFLEN-1);
 +		passwdbuff[PASSWDBUFFLEN-1] = '\0';
 +		passwdbuff[0] = 'A';
@@ -403,7 +455,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  int 
  del_loop (const char *device) {
  	int fd;
-@@ -319,7 +470,7 @@
+@@ -319,7 +522,7 @@
  
  int
  set_loop (const char *device, const char *file, int offset,
@@ -412,7 +464,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  	mutter();
  	return 1;
  }
-@@ -348,13 +499,40 @@
+@@ -348,13 +551,40 @@
  int verbose = 0;
  static char *progname;
  
@@ -455,7 +507,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  	exit(1);
  }
  
-@@ -387,19 +565,22 @@
+@@ -387,19 +617,22 @@
  
  int
  main(int argc, char **argv) {
@@ -481,7 +533,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  		switch (c) {
  		case 'd':
  			delete = 1;
-@@ -407,9 +588,15 @@
+@@ -407,9 +640,15 @@
  		case 'e':
  			encryption = optarg;
  			break;
@@ -497,7 +549,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  		case 'v':
  			verbose = 1;
  			break;
-@@ -418,7 +605,7 @@
+@@ -418,7 +657,7 @@
  		}
  	}
  	if (argc == 1) usage();
@@ -506,7 +558,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  	    (!delete && (argc < optind+1 || argc > optind+2)))
  		usage();
  	if (argc == optind+1) {
-@@ -429,7 +616,12 @@
+@@ -429,7 +668,12 @@
  	} else {
  		if (offset && sscanf(offset,"%d",&off) != 1)
  			usage();
@@ -520,7 +572,7 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
  	}
  	return res;
  }
-@@ -445,3 +637,61 @@
+@@ -445,3 +689,61 @@
  }
  #endif
  #endif
@@ -582,9 +634,9 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.c util-linux-2.11b/mount/lomount.c
 +}
 +#endif
 +
-diff -Nur util-linux-2.11b.orig/mount/lomount.h util-linux-2.11b/mount/lomount.h
---- util-linux-2.11b.orig/mount/lomount.h	Fri Dec  8 19:08:02 2000
-+++ util-linux-2.11b/mount/lomount.h	Wed Mar 28 11:38:53 2001
+diff -Nur util-linux-2.11n/mount/lomount.h util-linux-2.11n-int/mount/lomount.h
+--- util-linux-2.11n/mount/lomount.h	Fri Dec  8 19:08:02 2000
++++ util-linux-2.11n-int/mount/lomount.h	Tue Dec 18 21:38:11 2001
 @@ -1,5 +1,6 @@
  extern int verbose;
 -extern int set_loop (const char *, const char *, int, const char *, int *);
@@ -593,9 +645,9 @@ diff -Nur util-linux-2.11b.orig/mount/lomount.h util-linux-2.11b/mount/lomount.h
  extern int del_loop (const char *);
  extern int is_loop_device (const char *);
  extern char * find_unused_loop_device (void);
-diff -Nur util-linux-2.11b.orig/mount/losetup.8 util-linux-2.11b/mount/losetup.8
---- util-linux-2.11b.orig/mount/losetup.8	Fri Aug 11 13:11:30 2000
-+++ util-linux-2.11b/mount/losetup.8	Wed Mar 28 11:38:53 2001
+diff -Nur util-linux-2.11n/mount/losetup.8 util-linux-2.11n-int/mount/losetup.8
+--- util-linux-2.11n/mount/losetup.8	Fri Aug 11 13:11:30 2000
++++ util-linux-2.11n-int/mount/losetup.8	Tue Dec 18 21:38:11 2001
 @@ -10,6 +10,9 @@
  ] [
  .B \-o
@@ -718,10 +770,10 @@ diff -Nur util-linux-2.11b.orig/mount/losetup.8 util-linux-2.11b/mount/losetup.8
  .SH AUTHORS
  .nf
  Original version: Theodore Ts'o <tytso@athena.mit.edu>
-diff -Nur util-linux-2.11b.orig/mount/mount.8 util-linux-2.11b/mount/mount.8
---- util-linux-2.11b.orig/mount/mount.8	Mon Mar 19 22:21:28 2001
-+++ util-linux-2.11b/mount/mount.8	Wed Mar 28 11:38:53 2001
-@@ -252,6 +252,12 @@
+diff -Nur util-linux-2.11n/mount/mount.8 util-linux-2.11n-int/mount/mount.8
+--- util-linux-2.11n/mount/mount.8	Sat Nov 24 19:31:34 2001
++++ util-linux-2.11n-int/mount/mount.8	Tue Dec 18 21:40:41 2001
+@@ -250,6 +250,12 @@
  .B \-v
  Verbose mode.
  .TP
@@ -734,7 +786,7 @@ diff -Nur util-linux-2.11b.orig/mount/mount.8 util-linux-2.11b/mount/mount.8
  .B \-a
  Mount all filesystems (of the given types) mentioned in
  .IR fstab .
-@@ -517,6 +523,15 @@
+@@ -546,6 +552,15 @@
  .BR noexec ", " nosuid ", and " nodev
  (unless overridden by subsequent options, as in the option line
  .BR users,exec,dev,suid ).
@@ -750,7 +802,7 @@ diff -Nur util-linux-2.11b.orig/mount/mount.8 util-linux-2.11b/mount/mount.8
  .RE
  
  .SH "FILESYSTEM SPECIFIC MOUNT OPTIONS"
-@@ -1349,7 +1364,10 @@
+@@ -1535,7 +1550,10 @@
  .BR loop ", " offset " and " encryption ,
  that are really options to
  .BR losetup (8).
@@ -762,42 +814,65 @@ diff -Nur util-linux-2.11b.orig/mount/mount.8 util-linux-2.11b/mount/mount.8
  (but just an option `\fB\-o loop\fP' is given), then
  .B mount
  will try to find some unused loop device and use that.
-diff -Nur util-linux-2.11b.orig/mount/mount.c util-linux-2.11b/mount/mount.c
---- util-linux-2.11b.orig/mount/mount.c	Thu Mar 15 11:09:59 2001
-+++ util-linux-2.11b/mount/mount.c	Wed Mar 28 12:10:45 2001
-@@ -107,6 +107,12 @@
+diff -Nur util-linux-2.11n/mount/mount.c util-linux-2.11n-int/mount/mount.c
+--- util-linux-2.11n/mount/mount.c	Sun Nov 11 00:10:44 2001
++++ util-linux-2.11n-int/mount/mount.c	Tue Dec 18 21:38:11 2001
+@@ -108,6 +108,9 @@
  /* True if ruid != euid.  */
  static int suid = 0;
  
 +/* Contains the fd no. to read the passphrase from, if any */
 +static int pfd = -1;
 +
-+/* Contains the preferred keysize in bits we want to use */
-+static int keysz = 0;
-+
  /* Map from -o and fstab option strings to the flag argument to mount(2).  */
  struct opt_map {
    const char *opt;		/* option name */
-@@ -568,7 +574,8 @@
+@@ -184,7 +187,7 @@
+ };
+ 
+ static char *opt_loopdev, *opt_vfstype, *opt_offset, *opt_encryption,
+-  *opt_speed;
++  *opt_keybits, *opt_speed;
+ 
+ static struct string_opt_map {
+   char *tag;
+@@ -195,6 +198,7 @@
+   { "vfs=",	1, &opt_vfstype },
+   { "offset=",	0, &opt_offset },
+   { "encryption=", 0, &opt_encryption },
++  { "keybits=", 0, &opt_keybits },
+   { "speed=", 0, &opt_speed },
+   { NULL, 0, NULL }
+ };
+@@ -544,7 +548,7 @@
+ static int
+ loop_check(char **spec, char **type, int *flags,
+ 	   int *loop, char **loopdev, char **loopfile) {
+-  int looptype, offset;
++  int looptype, offset, keybits;
+ 
+   /*
+    * In the case of a loop mount, either type is of the form lo@/dev/loop5
+@@ -587,7 +591,9 @@
        if (verbose)
  	printf(_("mount: going to use the loop device %s\n"), *loopdev);
        offset = opt_offset ? strtoul(opt_offset, NULL, 0) : 0;
 -      if (set_loop (*loopdev, *loopfile, offset, opt_encryption, &loopro)) {
++      keybits = opt_keybits ? strtoul(opt_keybits, NULL, 0) : 0;
 +      if (set_loop (*loopdev, *loopfile, offset, opt_encryption, pfd, 
-+		    keysz, &loopro)) {
++		    keybits, &loopro)) {
  	if (verbose)
  	  printf(_("mount: failed setting up loop device\n"));
  	return EX_FAIL;
-@@ -1281,6 +1288,8 @@
+@@ -1305,6 +1311,7 @@
  	{ "read-write", 0, 0, 'w' },
  	{ "rw", 0, 0, 'w' },
  	{ "options", 1, 0, 'o' },
 +	{ "pass-fd", 1, 0, 'p' },
-+	{ "keybits", 1, 0, 'k' },
  	{ "types", 1, 0, 't' },
  	{ "bind", 0, 0, 128 },
  	{ "replace", 0, 0, 129 },
-@@ -1313,7 +1322,7 @@
+@@ -1337,7 +1344,7 @@
  	  "       mount --bind olddir newdir\n"
  	  "A device can be given by name, say /dev/hda1 or /dev/cdrom,\n"
  	  "or by label, using  -L label  or by uuid, using  -U uuid .\n"
@@ -806,16 +881,15 @@ diff -Nur util-linux-2.11b.orig/mount/mount.c util-linux-2.11b/mount/mount.c
  	  "For many more details, say  man 8 mount .\n"
  	));
  /*
-@@ -1329,6 +1338,8 @@
+@@ -1353,6 +1360,7 @@
  	int c, result = 0, specseen;
  	char *options = NULL, *spec, *node;
  	char *volumelabel = NULL;
 +	char *passfd = NULL;
-+	char *keysize = NULL;
  	char *uuid = NULL;
- 	string_list types = NULL;
+ 	char *types = NULL;
  	struct mntentchn *mc;
-@@ -1349,7 +1360,7 @@
+@@ -1374,7 +1382,7 @@
  	initproctitle(argc, argv);
  #endif
  
@@ -824,17 +898,7 @@ diff -Nur util-linux-2.11b.orig/mount/mount.c util-linux-2.11b/mount/mount.c
  				 longopts, NULL)) != EOF) {
  		switch (c) {
  		case 'a':		/* mount everything in fstab */
-@@ -1364,6 +1375,9 @@
- 		case 'h':		/* help */
- 			usage (stdout, 0);
- 			break;
-+		case 'k':
-+			keysize = optarg;
-+			break;
- 		case 'l':
- 			list_with_volumelabel = 1;
- 			break;
-@@ -1379,6 +1393,9 @@
+@@ -1404,6 +1412,9 @@
  			else
  				options = xstrdup(optarg);
  			break;
@@ -844,21 +908,19 @@ diff -Nur util-linux-2.11b.orig/mount/mount.c util-linux-2.11b/mount/mount.c
  		case 'r':		/* mount readonly */
  			readonly = 1;
  			readwrite = 0;
-@@ -1466,6 +1483,11 @@
- 			printf(_("mount: mounting %s\n"), spec);
+@@ -1492,6 +1503,9 @@
  	} else
  		spec = NULL;		/* just for gcc */
-+
+ 
 +	if (passfd && sscanf(passfd,"%d",&pfd) != 1)
 +	        die (EX_USAGE, _("mount: argument to --pass-fd or -p must be a number"));
-+	if (keysize && sscanf(keysize,"%d",&keysz) != 1)
-+	        die (EX_USAGE, _("mount: argument to --keybits or -k must be a number"));
- 
++
  	switch (argc+specseen) {
  	case 0:
-diff -Nur util-linux-2.11b.orig/mount/rmd160.c util-linux-2.11b/mount/rmd160.c
---- util-linux-2.11b.orig/mount/rmd160.c	Thu Jan  1 01:00:00 1970
-+++ util-linux-2.11b/mount/rmd160.c	Wed Mar 28 11:38:53 2001
+ 		/* mount -a */
+diff -Nur util-linux-2.11n/mount/rmd160.c util-linux-2.11n-int/mount/rmd160.c
+--- util-linux-2.11n/mount/rmd160.c	Thu Jan  1 01:00:00 1970
++++ util-linux-2.11n-int/mount/rmd160.c	Tue Dec 18 21:38:11 2001
 @@ -0,0 +1,532 @@
 +/* rmd160.c  -	RIPE-MD160
 + *	Copyright (C) 1998 Free Software Foundation, Inc.
@@ -1392,9 +1454,9 @@ diff -Nur util-linux-2.11b.orig/mount/rmd160.c util-linux-2.11b/mount/rmd160.c
 +    rmd160_final( &hd );
 +    memcpy( outbuf, hd.buf, 20 );
 +}
-diff -Nur util-linux-2.11b.orig/mount/rmd160.h util-linux-2.11b/mount/rmd160.h
---- util-linux-2.11b.orig/mount/rmd160.h	Thu Jan  1 01:00:00 1970
-+++ util-linux-2.11b/mount/rmd160.h	Wed Mar 28 11:38:53 2001
+diff -Nur util-linux-2.11n/mount/rmd160.h util-linux-2.11n-int/mount/rmd160.h
+--- util-linux-2.11n/mount/rmd160.h	Thu Jan  1 01:00:00 1970
++++ util-linux-2.11n-int/mount/rmd160.h	Tue Dec 18 21:38:11 2001
 @@ -0,0 +1,9 @@
 +#ifndef RMD160_H
 +#define RMD160_H
@@ -1405,3 +1467,15 @@ diff -Nur util-linux-2.11b.orig/mount/rmd160.h util-linux-2.11b/mount/rmd160.h
 +#endif /*RMD160_H*/
 +
 +
+diff -Nur util-linux-2.11n/mount/sundries.c util-linux-2.11n-int/mount/sundries.c
+--- util-linux-2.11n/mount/sundries.c	Fri Jul 27 11:40:23 2001
++++ util-linux-2.11n-int/mount/sundries.c	Tue Dec 18 21:38:11 2001
+@@ -162,7 +162,7 @@
+ 	  return 1;
+ 
+      no = 0;
+-     if (!strncmp(types, "no", 2)) {
++     if (types && !strncmp(types, "no", 2)) {
+ 	  no = 1;
+ 	  types += 2;
+      }

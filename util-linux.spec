@@ -14,7 +14,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	3
+%define		_release	4
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -41,12 +41,13 @@ Patch4:		%{name}-login.patch
 Patch5:		%{name}-kerneli.patch
 Patch6:		%{name}-info.patch
 Patch7:		%{name}-fdisk2.patch
-Patch8:		ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
+Patch8:		ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch9:		%{name}-syscall.patch
 Patch10:	%{name}-raw.patch
 Patch11:	%{name}-gecos.patch
 Patch12:	%{name}-glibc.patch
-Patch13:	%{name}-kerneli-2.4.patch
+#based on:	http://www.kernel.org/pub/linux/kernel/people/hvr/util-linux-patch-int/%{name}-2.11n.patch.bz2
+Patch13:	%{name}-cryptoapi.patch
 Patch14:	%{name}-losetup-getpass.patch
 Patch15:	%{name}-login-problems.patch
 Patch16:	%{name}-posixsh.patch
