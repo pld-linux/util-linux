@@ -10,32 +10,30 @@ Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
-Source1:	chfn.pamd
-Source2:	chsh.pamd
-Source3:	login.pamd
-Source4:	kill.1.pl
-Source5:	arch.1.pl
-Source6:	login.1.pl
-Source7:	look.1.pl
-Source8:	script.1.pl
-Source9:	write.1.pl
-Source10:	getopt.1.pl
-Source11:	colrm.1.pl
-Source12:	hexdump.1.pl
-Source13:	ul.1.pl
-Source14:	ipcrm.8.pl
-Source15:	ipcs.8.pl
-Source16:	kbdrate.8.pl
-Source17:	fdformat.8.pl
-Source18:	mkswap.8.pl
-Source19:	fdisk.8.pl
-Source20:	umount.8.pl
-Source21:	mount.8.pl
-Source22:	swapon.8.pl
-Source23:	swapoff.8.pl
-Source24:	fstab.5.pl
-Source25:	chkdupexe.1.pl
-Source26:	tunelp.8.pl
+Source1:	login.pamd
+Source2:	kill.1.pl
+Source3:	arch.1.pl
+Source4:	login.1.pl
+Source5:	look.1.pl
+Source6:	script.1.pl
+Source7:	write.1.pl
+Source8:	getopt.1.pl
+Source9:	colrm.1.pl
+Source10:	hexdump.1.pl
+Source11:	ul.1.pl
+Source12:	ipcrm.8.pl
+Source13:	ipcs.8.pl
+Source14:	kbdrate.8.pl
+Source15:	fdformat.8.pl
+Source16:	mkswap.8.pl
+Source17:	fdisk.8.pl
+Source28:	umount.8.pl
+Source29:	mount.8.pl
+Source20:	swapon.8.pl
+Source21:	swapoff.8.pl
+Source22:	fstab.5.pl
+Source23:	chkdupexe.1.pl
+Source24:	tunelp.8.pl
 Patch0:		util-linux-MCONFIG.patch
 Patch1:		util-linux-fdisk.patch
 Patch2:		util-linux-po.patch
@@ -247,41 +245,39 @@ make install \
 make -C po install \
 	prefix=$RPM_BUILD_ROOT%{_prefix}
 
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/pam.d/login
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
-install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
-install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
-install %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
-install %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
-install %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
-install %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
-install %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
-install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
-install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
-install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
+install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
+install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
+install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
+install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
+install %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
+install %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
+install %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
+install %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
+install %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
+install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
 
-install %{SOURCE14} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
-install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
-install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/kbdrate.8
-install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
-install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
+install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
+install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
+install %{SOURCE14} $RPM_BUILD_ROOT%{_mandir}/pl/man8/kbdrate.8
+install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
+install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
 
 %ifarch %{ix86} alpha
-install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
+install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
 %endif
 
-install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
-install %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
-install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
-install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
+install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
+install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
+install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
+install %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
-install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
+install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
 
-install %{SOURCE25} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
+install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
 
-install %{SOURCE26} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
+install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
 
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
