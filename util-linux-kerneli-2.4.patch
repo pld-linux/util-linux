@@ -737,7 +737,7 @@ diff -Nur util-linux-2.11b.orig/mount/mount.8 util-linux-2.11b/mount/mount.8
 @@ -517,6 +523,15 @@
  .BR noexec ", " nosuid ", and " nodev
  (unless overridden by subsequent options, as in the option line
- .BR user,exec,dev,suid ).
+ .BR users,exec,dev,suid ).
 +.TP
 +.B encryption
 +Specifies an encryption algorithm to use.  Used in conjunction with the
