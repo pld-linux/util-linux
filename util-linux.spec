@@ -4,8 +4,8 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10o
-Release:	5
+Version:	2.10q
+Release:	1
 License:	Distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -44,10 +44,9 @@ Patch6:		util-linux-info.patch
 Patch7:		util-linux-fdisk2.patch
 Patch8:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10f-mount-tcp.patch
 Patch9:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-compat.patch
-Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-nfsv3.patch
-Patch11:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
-Patch12:	util-linux-syscall.patch 
-%{?norawio:#}Patch13:	util-linux-2.10o-rawio.patch
+Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
+Patch11:	util-linux-syscall.patch 
+%{?norawio:#}Patch12:	util-linux-2.10o-rawio.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -249,8 +248,7 @@ support for this feature built into them, however).
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%{?norawio:#}%patch13 -p1
+%{?norawio:#}%patch12 -p1
 
 
 %build
