@@ -4,16 +4,16 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.9o
-Release:	10
+Version:	2.9r
+Release:	1
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.bz2
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
-Patch0:		util-linux-openpty.patch
+#Patch0:		util-linux-openpty.patch
 Patch1:		util-linux-config.patch
 Patch2:		util-linux-nochkdupexe.patch
 Patch3:		util-linux-shutdown.patch
@@ -151,7 +151,7 @@ kritiktir.
 
 %prep
 %setup -q 
-%patch0 -p1 
+#%patch0 -p1 
 %patch1 -p1 
 %patch2 -p1 
 %patch3 -p1 
@@ -174,16 +174,16 @@ install -d $RPM_BUILD_ROOT/{bin,etc/pam.d,sbin}
 install -d $RPM_BUILD_ROOT/usr/{bin,info,lib,man/man1,man/man6,man/man8,sbin}
 
 make install \
-	DESTDIR=$RPM_BUILD_ROOT \
+	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 4711" \
 	USE_TTY_GROUP=no
 
-%ifarch i386
-mv -f $RPM_BUILD_ROOT/usr/bin/rdev $RPM_BUILD_ROOT/usr/sbin
+%ifarch i386 i486 i586 i686
+mv -f $RPM_BUILD_ROOT/usr/bin/{swapdev,vidmode,ramsize,rootflags,rdev} \
+	$RPM_BUILD_ROOT/usr/sbin
 %endif
 
-mv $RPM_BUILD_ROOT/usr/bin/{swapdev,vidmode,ramsize,rootflags,readprofile} \
-$RPM_BUILD_ROOT/usr/sbin
+mv $RPM_BUILD_ROOT/usr/bin/readprofile $RPM_BUILD_ROOT/usr/sbin
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
@@ -195,7 +195,7 @@ touch $RPM_BUILD_ROOT/etc/security/{chsh,chfn}
 
 strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
 
-%ifarch i386
+%ifarch i386 i486 i586 i686 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
 echo	.so hwclock.8 > $RPM_BUILD_ROOT/usr/man/man8/clock.8
 %endif
@@ -206,7 +206,7 @@ gzip -9fn $RPM_BUILD_ROOT/usr/man/man[1568]/* \
 	*/README.*
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+#rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
@@ -214,7 +214,7 @@ rm -rf $RPM_BUILD_ROOT
 
 /usr/info/ipc.info
 
-%ifarch i386
+%ifarch i386 i486 i586 i686
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock
 
@@ -270,7 +270,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /usr/sbin/vipw
 %attr(0755,root,root) /usr/sbin/vigr
 %attr(0755,root,root) /usr/sbin/readprofile
-%attr(0755,root,root) /usr/sbin/ramsize
 
 /usr/man/man1/arch.1.gz
 /usr/man/man1/readprofile.1.gz
@@ -280,12 +279,8 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man8/ipcrm.8.gz
 /usr/man/man8/ipcs.8.gz
 /usr/man/man8/kbdrate.8.gz
-/usr/man/man8/ramsize.8.gz
 /usr/man/man8/renice.8.gz
-/usr/man/man8/rootflags.8.gz
 /usr/man/man8/setsid.8.gz
-/usr/man/man8/swapdev.8.gz
-/usr/man/man8/vidmode.8.gz
 /usr/man/man8/tunelp.8.gz
 /usr/man/man1/login.1.gz
 /usr/man/man1/newgrp.1.gz
@@ -321,7 +316,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/lib/getopt/*
 /usr/lib/more.help
 
-%ifarch i386 alpha
+%ifarch i386 i486 i586 i686 alpha
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/cfdisk
 %attr(755,root,root) /sbin/fsck.minix
@@ -331,24 +326,29 @@ rm -rf $RPM_BUILD_ROOT
 /usr/man/man8/fdisk.8.gz
 /usr/man/man8/cfdisk.8.gz
 /usr/man/man8/sfdisk.8.gz
-%endif
-
-%ifnarch sparc
-%attr(755,root,root) /usr/bin/cytune
-%attr(755,root,root) /usr/sbin/swapdev
-%attr(755,root,root) /usr/sbin/vidmode
-
 /usr/man/man8/fsck.minix.8.gz
 /usr/man/man8/mkfs.minix.8.gz
 /usr/man/man8/mkfs.8.gz
 %endif
 
-%ifarch i386
-%attr(755,root,root) /usr/sbin/rdev
-
-/usr/man/man8/rdev.8.gz
+%ifnarch sparc
+%attr(755,root,root) /usr/bin/cytune
 %endif
 
+%ifarch i386 i486 i586 i686
+%attr(755,root,root) /usr/sbin/rdev
+%attr(755,root,root) /usr/sbin/swapdev
+%attr(755,root,root) /usr/sbin/vidmode
+%attr(755,root,root) /usr/sbin/ramsize
+
+/usr/man/man8/rdev.8.gz
+/usr/man/man8/rootflags.8.gz
+/usr/man/man8/swapdev.8.gz
+/usr/man/man8/vidmode.8.gz
+/usr/man/man8/ramsize.8.gz
+%endif
+
+%lang(de)    /usr/share/locale/de/LC_MESSAGES/util-linux.mo
 %lang(fr)    /usr/share/locale/fr/LC_MESSAGES/util-linux.mo
 %lang(nl)    /usr/share/locale/nl/LC_MESSAGES/util-linux.mo
 %lang(pt_BR) /usr/share/locale/pt_BR/LC_MESSAGES/util-linux.mo
