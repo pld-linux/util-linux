@@ -21,7 +21,7 @@ Patch4:		util-linux-chfn.patch
 BuidPrereq:	pam >= 0.66
 Requires:	pam >= 0.66
 Buildroot:	/tmp/%{name}-%{version}-root
-Obsoletes:	util-linux-suid
+Obsoletes:	util-linux-suids
 
 %description
 util-linux contains a large variety of low-level system utilities
@@ -389,8 +389,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /sbin/losetup
 
 %changelog
-* Thu Mar 25 1999 Artur Frysiak <wiget@pld.org.pl>
+* Thu Apr 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.9o-1]
+- removed suid subpackage (added to Obsoletes),
+- recompiles on new rpm.
+
+* Thu Mar 25 1999 Artur Frysiak <wiget@pld.org.pl>
 - changed Source URL
 - added calling ./configure script
 - gziping docs
