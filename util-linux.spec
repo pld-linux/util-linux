@@ -561,11 +561,13 @@ fi
 %{_mandir}/man1/getopt.1*
 %{_mandir}/man1/hexdump.1*
 %{_mandir}/man1/kill.1*
+%{_mandir}/man1/line.1*
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/mcookie.1*
 %{!?_with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
+%{_mandir}/man1/pg.1*
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/rename.1*
@@ -574,8 +576,6 @@ fi
 %{!?_with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
-%{_mandir}/man1/pg.1*
-%{_mandir}/man1/line.1*
 
 %{_mandir}/man8/blockdev.8*
 %{_mandir}/man8/ctrlaltdel.8*
@@ -685,12 +685,14 @@ fi
 %lang(ja) %{_mandir}/ja/man1/getopt.1*
 %lang(ja) %{_mandir}/ja/man1/hexdump.1*
 %lang(ja) %{_mandir}/ja/man1/kill.1*
+%lang(ja) %{_mandir}/ja/man1/line.1*
 %lang(ja) %{_mandir}/ja/man1/logger.1*
 %lang(ja) %{_mandir}/ja/man1/look.1*
 %lang(ja) %{_mandir}/ja/man1/mcookie.1*
 %lang(ja) %{_mandir}/ja/man1/more.1*
 %lang(ja) %{_mandir}/ja/man1/namei.1*
 %lang(ja) %{_mandir}/ja/man1/readprofile.1*
+%lang(ja) %{_mandir}/ja/man1/rename.1*
 %lang(ja) %{_mandir}/ja/man1/rev.1*
 %lang(ja) %{_mandir}/ja/man1/script.1*
 %lang(ja) %{_mandir}/ja/man1/setterm.1*
