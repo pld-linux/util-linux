@@ -484,7 +484,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(4755,root,root) /bin/mount
 %attr(4755,root,root) /bin/umount
-%attr(755,root,root) /sbin/pivot_root
+%{?bcond_on_pivot_root:%attr(755,root,root) /sbin/pivot_root}
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
@@ -493,7 +493,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/swapoff.8*
-%{_mandir}/man8/pivot_root.8*
+%{?bcond_on_pivot_root:%{_mandir}/man8/pivot_root.8*}
 %{_mandir}/man8/swapon.8*
 %{_mandir}/man8/umount.8*
 
