@@ -1,0 +1,5 @@
+- use %%{_kernelsrcdir}
+- only mount and losetup get @2.[24] suffix (others don't depend)
+- fixes in the suffix determination
+- release 5
+- STB
