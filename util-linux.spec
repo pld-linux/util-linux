@@ -13,7 +13,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	1
+%define		_release	2
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -346,7 +346,7 @@ util-linux dla bootkietki.
 %patch15 -p1
 
 %build
-CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
+CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
 %configure2_13
 
 %if %{?BOOT:1}%{!?BOOT:0}
