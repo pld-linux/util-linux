@@ -56,6 +56,7 @@ Patch12:	%{name}-cryptoapi.patch
 Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
+Patch16:	%{name}-no_multiline.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -372,6 +373,7 @@ Obs³uga raw-device'ów.
 %endif
 %patch14 -p1
 %patch15 -p1
+%patch16
 
 %build
 CC="%{__cc}"
