@@ -21,6 +21,7 @@ Version:	2.12
 Release:	14
 License:	distributable
 Group:		Applications/System
+# devel versions at ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
 # Source0-md5:	997adf78b98d9d1c5db4f37ea982acff
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
