@@ -255,7 +255,7 @@ support for this feature built into them, however).
 CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -I%{_includedir}/ncurses"
 %configure
 
-make	OPT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} \
+make	OPT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}" \
 	MOREHELPDIR=%{_datadir}/misc
 
 (cd sys-utils; makeinfo ipc.texi)
