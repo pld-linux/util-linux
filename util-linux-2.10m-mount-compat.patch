@@ -1,0 +1,35 @@
+--- util-linux-2.10m/mount/nfs_mount4.h.compat	Sun Apr 16 14:48:48 2000
++++ util-linux-2.10m/mount/nfs_mount4.h	Thu Jun 29 20:51:22 2000
+@@ -4,11 +4,16 @@
+  * Thus, if necessary we teach nfsmount.c the structure of new fields
+  * that will come later.
+  *
+- * Moreover, the new kernel includes conflict with glibc includes
+- * so it is easiest to ignore the kernel altogether (at compile time).
+  */
+ 
++#include "nfs_mountversion.h"
++
+ #define NFS_MOUNT_VERSION	4
++
++#if KERNEL_NFS_MOUNT_VERSION >= 4
++#define NFS_FHSIZE	32
++#define NFS_PORT	2049
++#endif
+ 
+ struct nfs2_fh {
+         char                    data[32];
+--- util-linux-2.10m/mount/Makefile.compat	Thu Jun 29 20:49:43 2000
++++ util-linux-2.10m/mount/Makefile	Thu Jun 29 20:50:23 2000
+@@ -108,7 +108,10 @@ nfsmount.h nfsmount_xdr.c nfsmount_clnt.
+ 	cp $(RPCSVCDIR)/nfsmount_clnt.c .
+ endif
+ 
+-nfsmount.o: nfs_mount4.h
++nfsmount.o: nfs_mount4.h nfs_mountversion.h
++
++nfs_mountversion.h: /usr/include/linux/nfs_mount.h
++	grep NFS_MOUNT_VERSION $< | sed -e 's/NFS/KERNEL_NFS/' > $@
+ 
+ swapargs.h:
+ 	sh swap.configure
