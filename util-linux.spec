@@ -36,12 +36,11 @@ Source23:	chkdupexe.1.pl
 Source24:	tunelp.8.pl
 Patch0:		util-linux-MCONFIG.patch
 Patch1:		util-linux-fdisk.patch
-Patch2:		util-linux-po.patch
-Patch3:		util-linux-utmpx.patch
-Patch4:		util-linux-fhs.patch
-Patch5:		util-linux-login.patch
-Patch6:		util-linux-kerneli.patch
-Patch7:		util-linux-info.patch
+Patch2:		util-linux-utmpx.patch
+Patch3:		util-linux-fhs.patch
+Patch4:		util-linux-login.patch
+Patch5:		util-linux-kerneli.patch
+Patch6:		util-linux-info.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -220,9 +219,8 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch2 -p1 
 %patch3 -p1 
 %patch4 -p1
-%patch5 -p1
-#%patch6 -p1
-%patch7 -p1
+#%patch5 -p1
+%patch6 -p1
 
 %build
 
@@ -243,13 +241,9 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
 
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
-	INSTALLSUID="install -m 4711" \
+	INSTALLSUID="install -m 755" \
 	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
-	localedir=%{_datadir}/locale \
 	USE_TTY_GROUP=no
-
-make -C po install \
-	prefix=$RPM_BUILD_ROOT%{_prefix}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
@@ -291,7 +285,7 @@ touch $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
-strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
+#strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
 
 %ifarch %{ix86} 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
