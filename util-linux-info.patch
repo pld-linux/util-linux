@@ -1,0 +1,62 @@
+diff -Nru util-linux-2.10l/sys-utils/ipc.texi util-linux-2.10l.new/sys-utils/ipc.texi
+--- util-linux-2.10l/sys-utils/ipc.texi	Thu May  4 22:31:35 2000
++++ util-linux-2.10l.new/sys-utils/ipc.texi	Thu May  4 22:33:45 2000
+@@ -31,10 +31,20 @@
+ @end titlepage
+ 
+ 
++@ifinfo
++@format
++@dircategory Miscellaneous:
++@direntry
++* ipc: (ipc).				System V IPC
++@end direntry
++@end format
++@end ifinfo
+ 
+ @node top, Overview, Notes, (dir)
+ @chapter System V IPC.
+ 
++@top System V IPC
++
+ These facilities are provided to maintain compatibility with
+ programs developed on system V unix systems and others 
+ that rely on these system V mechanisms to accomplish inter 
+@@ -91,8 +101,8 @@
+ There are system and implementation defined limits on the number and
+ sizes of resources of any given type. Some of these are imposed by the
+ implementation and others by the system administrator 
+-when configuring the kernel (@xref{msglimits}, @xref{semlimits},
+-@xref{shmlimits}).@refill
++when configuring the kernel
++@xref{msglimits}, @xref{semlimits}, @xref{shmlimits}.@refill
+ 
+ There is an @code{msqid_ds}, @code{semid_ds} or @code{shmid_ds} struct 
+ associated with each message queue, semaphore array or shared segment. 
+@@ -355,7 +365,7 @@
+ 
+ @example
+ struct msgbuf 
+-    long mtype;      type of message (@xref{msgrcv}).
++    long mtype;      type of message (@xref{msgrcv}.)
+     char mtext[1];   message text .. why is this not a ptr?
+ @end example
+ 
+@@ -558,7 +568,7 @@
+ @item
+ buf    : allocated by user for reading/writing info.
+ @item
+-cmd    : IPC_STAT, IPC_SET, IPC_RMID (@xref{syscalls}).
++cmd    : IPC_STAT, IPC_SET, IPC_RMID (@xref{syscalls}.)
+ @end itemize
+ 
+ IPC_STAT results in the copy of the queue data structure
+@@ -1149,7 +1159,7 @@
+ @item
+ shmid : id got from call to shmget.
+ @item
+-cmd : IPC_STAT, IPC_SET, IPC_RMID (@xref{syscalls}).
++cmd : IPC_STAT, IPC_SET, IPC_RMID (@xref{syscalls}.)
+ @itemize @asis
+ @item
+ IPC_SET : Used to set the owner uid, gid, and shm_perms.mode field.
