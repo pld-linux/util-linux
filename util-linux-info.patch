@@ -1,22 +1,19 @@
-diff -urN util-linux-2.11d.org/sys-utils/ipc.texi util-linux-2.11d/sys-utils/ipc.texi
---- util-linux-2.11d.org/sys-utils/ipc.texi	Sun Jun  3 21:54:08 2001
-+++ util-linux-2.11d/sys-utils/ipc.texi	Sun Jun  3 21:54:17 2001
-@@ -103,6 +103,14 @@
- the creator, owner, access perms ..etc.., for the resource. 
- These structures are detailed in the following sections.@refill
+diff -Nur util-linux-2.11g.orig/sys-utils/ipc.texi util-linux-2.11g/sys-utils/ipc.texi
+--- util-linux-2.11g.orig/sys-utils/ipc.texi	Thu Apr 12 23:11:42 2001
++++ util-linux-2.11g/sys-utils/ipc.texi	Sat Aug  4 19:07:44 2001
+@@ -30,9 +30,9 @@
+ programs within the terms of the GNU GPL.
+ @end titlepage
  
-+@ifinfo
-+@format
+-@dircategory Miscellaneous
 +@dircategory Miscellaneous:
-+@direntry
-+* ipc: (ipc).				System V IPC
-+@end direntry
-+@end format
-+@end ifinfo
+ @direntry
+-* ipc: (ipc).           System V style inter process communication
++* ipc: (ipc).				System V style inter process communication
+ @end direntry
  
- 
- @node example, perms, Overview, Overview
-@@ -358,7 +366,7 @@
+ @node top, Overview, Notes, (dir)
+@@ -358,7 +358,7 @@
  
  @example
  struct msgbuf 
@@ -25,7 +22,7 @@ diff -urN util-linux-2.11d.org/sys-utils/ipc.texi util-linux-2.11d/sys-utils/ipc
      char mtext[1];   message text .. why is this not a ptr?
  @end example
  
-@@ -561,7 +569,7 @@
+@@ -561,7 +561,7 @@
  @item
  buf    : allocated by user for reading/writing info.
  @item
@@ -34,7 +31,7 @@ diff -urN util-linux-2.11d.org/sys-utils/ipc.texi util-linux-2.11d/sys-utils/ipc
  @end itemize
  
  IPC_STAT results in the copy of the queue data structure
-@@ -1152,7 +1160,7 @@
+@@ -1152,7 +1152,7 @@
  @item
  shmid : id got from call to shmget.
  @item

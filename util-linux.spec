@@ -16,7 +16,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11g
-Release:	3@%{_kernel_series}
+Release:	4@%{_kernel_series}
 License:	Distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -73,6 +73,8 @@ Requires:	pam >= 0.66
 Conflicts:	kernel %{?_kernel24:<} {!?_kernel24:>=} 2.3.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
+
+%define		debugcflags	-O1 -g
 
 %description
 util-linux contains a large variety of low-level system utilities
@@ -315,13 +317,15 @@ Obs³uga raw-device'ów.
 %patch15 -p1
 %patch16 -p1
 %patch20 -p1
+%if !%{_kernel24}
 %patch21 -p1
+%endif
 
 %build
-CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
-%configure
+CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+%configure2_13
 
-%{__make} OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
+%{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	ADD_RAW="yes"
 
