@@ -42,8 +42,11 @@ function assign_raw()
            exit 0
          fi
 
-       echo "           $RAW  -->   $BLOCK"; 
-       raw $RAW $BLOCK
+       show "Assigning device: $RAW --> $BLOCK"
+       busy
+       raw $RAW $BLOCK > /dev/null
+       deltext
+       ok
      fi
    done
 }
@@ -53,11 +56,8 @@ case "$1" in
   start)
   	if [ ! -f /var/lock/subsys/rawdevices ]; then
 		msg_starting rawdevices
-		echo
-		# Assign devices
-		echo $"Assigning devices: "
+		ok
 		assign_raw
-		echo $"done"
 		touch /var/lock/subsys/rawdevices
 	else
 		msg_Already_Running rawdevices
@@ -66,8 +66,10 @@ case "$1" in
   stop)
   	if [ -f /var/lock/subsys/rawdevices ]; then
 		msg_stopping rawdevices
-		echo
+		busy
 		rm -f /var/lock/subsys/rawdevices >/dev/null 2>&1
+		deltext
+		ok
 	else
 		msg_Not_Running rawdevices
 		exit 1
@@ -84,6 +86,7 @@ case "$1" in
         ;;
 
   restart|reload)
+  	$0 stop
         $0 start
         ;;
 
