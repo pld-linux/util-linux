@@ -49,9 +49,9 @@ Patch12:	%{name}-glibc.patch
 Patch13:	%{name}-kerneli-2.4.patch
 Patch14:	%{name}-losetup-getpass.patch
 Patch15:	%{name}-login-problems.patch
-BuildRequires:	pam-devel >= 0.66
-BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
+BuildRequires:	ncurses-devel >= 5.0
+BuildRequires:	pam-devel >= 0.66
 BuildRequires:	texinfo
 %if %{?BOOT:1}%{!?BOOT:0}
 BuildRequires:	glibc-static
@@ -76,7 +76,7 @@ Linux-System erforderlich sind. Dazu gehören Konfigurationstools wie
 'fdisk' und Systemprogramme wie 'logger'.
 
 %description -l es
-util-Linux contiene una gran variedad de utilitarios de sistema de
+util-linux contiene una gran variedad de utilitarios de sistema de
 bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
 entre otras cosas, herramientas de configuración como fdisk y
 programas de sistema como login.
@@ -88,13 +88,13 @@ autres, les outils de configuration comme fdisk et des programmes
 systèmes comme logger.
 
 %description -l pl
-Util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi
+util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi
 systemowych niezbêdnych do prawid³owego dzia³ania Linuksa. W pakiecie
-znajduj± siê miêdzy innymi, narzêdzia konfiguracyjne takie jak fdisk i
-programy systemowe takie jak logger.
+znajduj± siê miêdzy innymi narzêdzia konfiguracyjne, takie jak fdisk
+i programy systemowe, takie jak logger.
 
 %description -l pt_BR
-util-Linux contém uma grande variedade de utilitários de sistema
+util-linux contém uma grande variedade de utilitários de sistema
 de baixo-nível necessários para um sistema Linux funcional. Isso
 inclui, entre outras coisas, ferramentas de configuração como fdisk
 e programas de sistema como login.
@@ -146,10 +146,9 @@ périphérique loopback du réseau, configuré avec la commande ifconfig
 normale.
 
 %description -n losetup -l pl
-Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, które
-mapuje normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten
-zawiera program przy pomocy którego bêdziesz móg³ wykorzystaæ to
-urz±dzenie.
+Linux wspiera specjalne urz±dzenie blokowe loopback, które mapuje
+normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera
+program, przy pomocy którego bêdziesz móg³ je skonfigurowaæ.
 
 Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym
 interfejsem loopback, który jest konfigurowany przy pomocy polecenia
@@ -165,9 +164,9 @@ yapýlandýrýlan að yerel-çevrim aygýtý ile karýþtýrýlmamalýdýr.
 
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
-Summary(de):	Programme zum Montieren und Abmontieren von Dateisystemen
+Summary(de):	Programme zum montieren und abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
-Summary(pl):	Programy do montowania i odmontowywania systemu plików
+Summary(pl):	Programy do montowania i odmontowywania systemów plików
 Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Group:		Applications/System
 Group(de):	Applikationen/System
@@ -180,7 +179,7 @@ Conflicts:	kernel >= 2.3.0
 %endif
 
 %description -n mount
-Mount is used for adding new filesystems, both local and networked, to
+mount is used for adding new filesystems, both local and networked, to
 your current directory structure. The filesystems must already exist
 for this to work. It can also be used to change the access types the
 kernel uses for already-mounted filesystems.
@@ -188,7 +187,7 @@ kernel uses for already-mounted filesystems.
 This package is critical for the functionality of your system.
 
 %description -n mount -l de
-Mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk)
+mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk)
 zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme
 müssen bereits existieren. Außerdem können die Zugriffstypen geändert
 werden, die der Kernel für bereits montierte Dateisysteme verwendet.
@@ -204,7 +203,7 @@ changer les types d'accès pour les systèmes de fichiers déjà montés.
 Ce paquetage est critique pour le fonctionnement de votre système.
 
 %description -n mount -l pl
-Program mount jest u¿ywany przez system do montowania systemu plików,
+Program mount jest u¿ywany przez system do montowania systemów plików,
 zarówno lokalnych jak i sieciowych (np. NFS).
 
 Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuksa.
@@ -244,10 +243,10 @@ Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 
 %description -n tunelp
-`tunelp' aids in configuring the kernel parallel port driver.
+tunelp aids in configuring the kernel parallel port driver.
 
 %description -n tunelp -l de
-TUNELP hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
+tunelp hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
 
 %description -n tunelp -l fr
 « tunelp » aide à configurer le pilote du noyau pour le port
@@ -372,7 +371,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/man{1,5,6,8}}
 
 %{__make} install \
-	DESTDIR="$RPM_BUILD_ROOT" \
+	DESTDIR=$RPM_BUILD_ROOT \
 	INSTALLSUID="install -m 755" \
 	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
