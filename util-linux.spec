@@ -343,7 +343,8 @@ agetty jest prostym linuksowym getty z obs³ug± portu szeregowego.
 Summary:	Support for raw-devices
 Summary(pl):	Obs³uga raw-device'ów
 Group:		Applications/System
-PreReq:		/sbin/chkconfig
+PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 
 %description -n rawdevices
 Support for raw-devices.
@@ -402,7 +403,7 @@ makeinfo ipc.texi
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
+install -d $RPM_BUILD_ROOT{/bin,/sbin,/etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/man{1,5,6,8}}
 
@@ -420,7 +421,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 
-install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
+install -d $RPM_BUILD_ROOT{/etc/security,/var/lock}
 
 > $RPM_BUILD_ROOT/etc/security/blacklist.login
 
@@ -450,15 +451,14 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 done
 
 # cleanup, remove files not included in package
-rm -f $RPM_BUILD_ROOT/%{_bindir}/{chfn,chsh,newgrp}
-rm -f $RPM_BUILD_ROOT/%{_sbindir}/vipw
-rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/chfn.1*
-rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/chsh.1*
-rm -f $RPM_BUILD_ROOT/%{_mandir}/man1/newgrp.1*
-rm -f $RPM_BUILD_ROOT/%{_mandir}/man8/sln.8*
-rm -f $RPM_BUILD_ROOT/%{_mandir}/man8/vigr.8*
-rm -f $RPM_BUILD_ROOT/%{_mandir}/man8/vipw.8*
-
+rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp}
+rm -f $RPM_BUILD_ROOT%{_sbindir}/vipw
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/chfn.1*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/chsh.1*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/newgrp.1*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man8/sln.8*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8*
+rm -f $RPM_BUILD_ROOT%{_mandir}/man8/vipw.8*
 
 %{!?_with_uClibc:%find_lang %{name}}
 
