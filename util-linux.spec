@@ -60,6 +60,7 @@ BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	pam-devel >= 0.66}
 BuildRequires:	texinfo
 BuildRequires:	textutils
+BuildRequires:	zlib-devel
 %{!?_with_uClibc:Requires:	pam >= 0.66}
 Provides:	fdisk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
