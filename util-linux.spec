@@ -463,8 +463,8 @@ rm -rf $RPM_BUILD_ROOT
 %files -n mount
 %defattr(644,root,root,755)
 
-%attr(755,root,root) /bin/mount
-%attr(755,root,root) /bin/umount
+%attr(4755,root,root) /bin/mount
+%attr(4755,root,root) /bin/umount
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
