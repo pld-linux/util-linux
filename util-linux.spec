@@ -246,7 +246,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
 
-make install \
+%{__make} install \
 	DESTDIR="$RPM_BUILD_ROOT" \
 	INSTALLSUID="install -m 755" \
 	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
