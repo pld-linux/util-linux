@@ -928,6 +928,7 @@ fi
 %lang(es) %{_mandir}/es/man8/agetty.8*
 %lang(ja) %{_mandir}/ja/man8/agetty.8*
 
+%if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n rawdevices
 %defattr(644,root,root,755)
 %attr(0755,root,root) %{_bindir}/raw
@@ -936,9 +937,4 @@ fi
 
 %{_mandir}/man8/raw.8*
 %lang(ja) %{_mandir}/ja/man8/raw.8*
-
-%if %{?BOOT:1}%{!?BOOT:0}
-%files BOOT
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/bootdisk/sbin/*
 %endif
