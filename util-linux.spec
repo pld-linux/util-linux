@@ -194,7 +194,7 @@ Linux п╕дтриму╓ спец╕альний блочний пристр╕й, loopback, який
 використовують для зв'язку loopback-пристро╖в з╕ звичайними файлами
 або блочними пристроями, для в╕д'╓днання loopback-пристро╖в та
 запрос╕в ╖х стану.
-%endif
+#%endif
 
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
