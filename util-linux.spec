@@ -109,6 +109,12 @@ baixo-nМvel necessАrios para um sistema Linux funcional. Isso inclui,
 entre outras coisas, ferramentas de configuraГЦo como fdisk e
 programas de sistema como login.
 
+%description -l ru
+Этот пакет содержит большой набор системных утилит низкого уровня,
+которые необходимы для функционирования системы Linux. Он включает, в
+числе прочих, инструменты конфигурации, такие как fdisk, и системные
+программы, такие как login.
+
 %description -l tr
 Чlevsel durumdaki bir Linux sistemi iГin gerekli birГok alt dЭzey
 sistem araГlarЩnЩ iГerir. Bunlar arasЩnda fdisk gibi yapЩlandЩrma
@@ -119,12 +125,6 @@ uygulamalarЩ ve logger gibi sistem programlarЩ sayЩlabilir.
 необх╕дн╕ для функц╕онування системи Linux. В╕н м╕стить, окр╕м ╕нших,
 конф╕гурац╕йн╕ ╕нструменти (так╕ як fdisk) та системн╕ програми (так╕
 як login).
-
-%description -l ru
-Этот пакет содержит большой набор системных утилит низкого уровня,
-которые необходимы для функционирования системы Linux. Он включает, в
-числе прочих, инструменты конфигурации, такие как fdisk, и системные
-программы, такие как login.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
@@ -176,14 +176,6 @@ Urz╠dzenie blokowe loopback nie powinno byФ mylone z sieciowym
 interfejsem loopback, ktСry jest konfigurowany przy pomocy polecenia
 ifconfig.
 
-%description -n losetup -l tr
-Linux Жzel bir blok aygЩt olan yerel-Гevrim aygЩtЩnЩ (loopback device)
-destekler. Bu aygЩt normal bir dosyanЩn sanal bir blok aygЩtЩ Эzerine
-haritasЩnЩ ГЩkarЩr. Bu paket, dosyalar ve yerel-Гevrim aygЩtlarЩ
-arasЩndaki haritalama iЧleminin kurulmasЩ ve kaldЩrЩlmasЩ iГin
-programlar iГerir. Blok yerel-Гevrim aygЩtЩ ifconfig komutu ile
-yapЩlandЩrЩlan aП yerel-Гevrim aygЩtЩ ile karЩЧtЩrЩlmamalЩdЩr.
-
 %description -n losetup -l ru
 Linux поддерживает специальное блочное устройство, называемое
 loopback, которое отображает обычный файл в виртуальное блочное
@@ -191,6 +183,14 @@ loopback, которое отображает обычный файл в виртуальное блочное
 систему. Losetup используется для связи loopback-устройств с обычными
 файлами или блочными устройствами, для отсоединения loopback-устройств
 и запросов их статуса.
+
+%description -n losetup -l tr
+Linux Жzel bir blok aygЩt olan yerel-Гevrim aygЩtЩnЩ (loopback device)
+destekler. Bu aygЩt normal bir dosyanЩn sanal bir blok aygЩtЩ Эzerine
+haritasЩnЩ ГЩkarЩr. Bu paket, dosyalar ve yerel-Гevrim aygЩtlarЩ
+arasЩndaki haritalama iЧleminin kurulmasЩ ve kaldЩrЩlmasЩ iГin
+programlar iГerir. Blok yerel-Гevrim aygЩtЩ ifconfig komutu ile
+yapЩlandЩrЩlan aП yerel-Гevrim aygЩtЩ ile karЩЧtЩrЩlmamalЩdЩr.
 
 %description -n losetup -l uk
 Linux п╕дтриму╓ спец╕альний блочний пристр╕й, loopback, який
@@ -246,13 +246,6 @@ zarСwno lokalnych jak i sieciowych (np. NFS).
 
 Pakiet ten jest niezbЙdny do prawidЁowej pracy twojego Linuksa.
 
-%description -n mount -l tr
-mount, hem yerel hem de aП dosya sistemlerinin dizin yapЩsЩna
-eklenmesi iГin kullanЩlЩr. Bunun iГin baПlanacak dosya sisteminin
-Жnceden hazЩrlanmЩЧ olmasЩ gerekir. AynЩ zamanda ГekirdeПin baПlanmЩЧ
-dosya sistemlerine eriЧimini deПiЧtirmek iГin de kullanЩlЩr. Bu paket
-sisteminizin iЧlevselliПi aГЩsЩndan kritiktir.
-
 %description -n mount -l ru
 Пакет mount содержит программы mount, umount, swapon и swapoff. Файлы
 в вашей системе организованы в виде одного большого дерева или
@@ -261,6 +254,13 @@ sisteminizin iЧlevselliПi aГЩsЩndan kritiktir.
 дереву файлов вашей системы. Команда umount отсоединяет файловую
 систему от дерева. Swapon и swapoff, соответственно, разрешает и
 запрещает своппинг в определенные файлы и устройства.
+
+%description -n mount -l tr
+mount, hem yerel hem de aП dosya sistemlerinin dizin yapЩsЩna
+eklenmesi iГin kullanЩlЩr. Bunun iГin baПlanacak dosya sisteminin
+Жnceden hazЩrlanmЩЧ olmasЩ gerekir. AynЩ zamanda ГekirdeПin baПlanmЩЧ
+dosya sistemlerine eriЧimini deПiЧtirmek iГin de kullanЩlЩr. Bu paket
+sisteminizin iЧlevselliПi aГЩsЩndan kritiktir.
 
 %description -n mount -l uk
 Пакет mount м╕стить програми mount, umount, swapon та swapoff. Файли у
