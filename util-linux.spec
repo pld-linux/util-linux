@@ -4,7 +4,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10c
+Version:	2.10g
 Release:	1
 Copyright:	distributable
 Group:		Utilities/System
