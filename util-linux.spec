@@ -390,7 +390,7 @@ install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
 %ifarch ppc
-rm -f $RPM_BUILD_ROOT/sbin/hwclock
+mv -f $RPM_BUILD_ROOT/sbin/hwclock $RPM_BUILD_ROOT/sbin/hwclock.rtc
 install clock-ppc $RPM_BUILD_ROOT/sbin/hwclock
 %endif
 
