@@ -27,8 +27,8 @@ Summary(ru):	Набор базовых системных утилит для Linux
 Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
-Version:	2.11w
-%define	_rel	2
+Version:	2.11x
+%define	_rel	1
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -54,7 +54,6 @@ Patch12:	%{name}-cryptoapi.patch
 Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
-Patch16:	%{name}-chfn_exploid.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -382,7 +381,6 @@ util-linux dla bootkietki.
 %endif
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 
 %build
 CC="%{__cc}"
