@@ -347,7 +347,7 @@ mv -f fdisk/fdisk fdisk-BOOT
 	ADD_RAW="yes"
 
 %ifarch ppc
-%{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc.c
+%{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
 %endif
 
 (cd sys-utils; makeinfo ipc.texi)
