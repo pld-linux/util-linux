@@ -1,6 +1,6 @@
-diff -Naur util-linux-2.11g-o/mount/lomount.c util-linux-2.11g/mount/lomount.c
---- util-linux-2.11g-o/mount/lomount.c	Mon Jul  9 16:10:58 2001
-+++ util-linux-2.11g/mount/lomount.c	Mon Jul  9 16:19:24 2001
+diff -Naur util-linux-2.11r-o/mount/lomount.c util-linux-2.11r/mount/lomount.c
+--- util-linux-2.11r-o/mount/lomount.c	Mon Jul  9 16:10:58 2001
++++ util-linux-2.11r/mount/lomount.c	Mon Jul  9 16:19:24 2001
 @@ -6,6 +6,11 @@
   * - added Native Language Support
   * Sun Mar 21 1999 - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
@@ -165,11 +165,11 @@ diff -Naur util-linux-2.11g-o/mount/lomount.c util-linux-2.11g/mount/lomount.c
  
  	delete = off = 0;
 -	offset = encryption = NULL;
-+        offset = encryption = passfd = NULL;
++	offset = encryption = passfd = NULL;
  	progname = argv[0];
--	while ((c = getopt(argc,argv,"de:o:v")) != EOF) {
-+        while ((c = getopt_long(argc,argv,"de:ho:p:v",
-+                                longopts, NULL)) != EOF) {
+-	while ((c = getopt(argc,argv,"de:o:v")) != -1) {
++	while ((c = getopt_long(argc,argv,"de:ho:p:v",
++                                longopts, NULL)) != -1) {
  		switch (c) {
  		case 'd':
  			delete = 1;
@@ -280,9 +280,9 @@ diff -Naur util-linux-2.11g-o/mount/mount.8 util-linux-2.11g/mount/mount.8
  (but just an option `\fB\-o loop\fP' is given), then
  .B mount
  will try to find some unused loop device and use that.
-diff -Naur util-linux-2.11g-o/mount/mount.c util-linux-2.11g/mount/mount.c
---- util-linux-2.11g-o/mount/mount.c	Fri Jun  8 01:24:28 2001
-+++ util-linux-2.11g/mount/mount.c	Mon Jul  9 16:22:13 2001
+diff -Naur util-linux-2.11r-o/mount/mount.c util-linux-2.11r/mount/mount.c
+--- util-linux-2.11r-o/mount/mount.c	Fri Jun  8 01:24:28 2001
++++ util-linux-2.11r/mount/mount.c	Mon Jul  9 16:22:13 2001
 @@ -108,6 +108,9 @@
  /* True if ruid != euid.  */
  static int suid = 0;
@@ -332,8 +332,8 @@ diff -Naur util-linux-2.11g-o/mount/mount.c util-linux-2.11g/mount/mount.c
  #endif
  
 -	while ((c = getopt_long (argc, argv, "afFhlL:no:rsU:vVwt:",
-+        while ((c = getopt_long (argc, argv, "afFhlL:no:p:rsU:vVwt:",
- 				 longopts, NULL)) != EOF) {
++	while ((c = getopt_long (argc, argv, "afFhlL:no:p:rsU:vVwt:",
+ 				 longopts, NULL)) != -1) {
  		switch (c) {
  		case 'a':		/* mount everything in fstab */
 @@ -1408,6 +1413,9 @@
