@@ -44,6 +44,7 @@ Patch12:	%{name}-ppc-hwclock.patch
 Patch13:	%{name}-no_multiline.patch
 Patch14:	%{name}-amd64.patch
 Patch15:	%{name}-crypto-debian.patch
+Patch16:	%{name}-dev_t.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -344,6 +345,7 @@ Obs³uga raw-device'ów.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 CC="%{__cc}"

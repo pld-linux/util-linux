@@ -1,0 +1,13 @@
+diff -durN -x '*~' util-linux-2.12.orig/mount/my_dev_t.h util-linux-2.12/mount/my_dev_t.h
+--- util-linux-2.12.orig/mount/my_dev_t.h	2003-07-16 22:05:50.000000000 +0200
++++ util-linux-2.12/mount/my_dev_t.h	2004-12-19 14:31:34.467427960 +0100
+@@ -3,5 +3,9 @@
+ /* maybe we need __kernel_old_dev_t -- later */
+ /* for ancient systems use "unsigned short" */
+ 
++#if 0
+ #include <linux/posix_types.h>
+ #define my_dev_t __kernel_dev_t
++#else
++#define my_dev_t dev_t
++#endif
