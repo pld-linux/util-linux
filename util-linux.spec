@@ -64,14 +64,14 @@ Konfigurationstools wie 'fdisk' und Systemprogramme wie 'login'.
 %description -l fr
 util-linux contient une grande variété d'utilitaire système bas niveau
 nécessaires au fonctionnement d'un système Linux. Cela comprend, entre
-autres, les outils de configuration comme fdisk et des programmes
-systèmes comme login.
+autres, les outils de configuration comme fdisk et des programmes systèmes
+comme login.
 
 %description -l pl
 Util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi systemowych
-niezbêdnych do prawid³owego dzia³ania Linuxa. W pakiecie znajduj± siê miêdzy 
-innymi, narzêdzia konfiguracyjne takie jak fdisk i programy systemowe takie 
-jak login.
+niezbêdnych do prawid³owego dzia³ania Linuxa. W pakiecie znajduj± siê
+miêdzy innymi, narzêdzia konfiguracyjne takie jak fdisk i programy
+systemowe takie jak login.
 
 %description -l tr
 þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey sistem
@@ -91,16 +91,16 @@ Group(pl):	Narzêdzia/System
 Linux supports a special block device called the loopback device, which
 maps a normal file onto a virtual block device. This package contains
 programs for setting up and removing the mapping between files and loopback
-devices. 
+devices.
 
 Block loopback devices should not be confused with the networking loopback
 device, which is configured with the normal ifconfig command.
 
 %description -l de -n losetup
-Linux unterstützt ein spezielles Blockgerät, das sogenannte Loopback, das 
-eine normale Datei auf ein virtuelles Blockgerät abbildet. Das Paket 
-enthält Programme zum Einrichten und Entfernen der Zuordnung zwischen 
-Dateien und Loopback-Geräten.  
+Linux unterstützt ein spezielles Blockgerät, das sogenannte Loopback, das
+eine normale Datei auf ein virtuelles Blockgerät abbildet. Das Paket
+enthält Programme zum Einrichten und Entfernen der Zuordnung zwischen
+Dateien und Loopback-Geräten.
 
 %description -l fr -n losetup
 Linux gère un périphérique bloc spécial appelé « loopback », qui correspond
@@ -109,22 +109,23 @@ les programmes pour configurer et supprimer la correspondance entre les
 fichiers et les périphériques loopback.
 
 Les périphériques bloc loopback ne doivent pas être confondus avec le
-périphérique loopback du réseau, configuré avec la commande ifconfig normale.
+périphérique loopback du réseau, configuré avec la commande ifconfig
+normale.
 
 %description -l pl -n losetup 
-Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, które mapuje
-normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera program przy
-pomocy którego bêdziesz móg³ wykorzystaæ to urz±dzenie. 
+Linux ma wsparcie dla specjalnego urz±dzenia blokowego loopback, które
+mapuje normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera
+program przy pomocy którego bêdziesz móg³ wykorzystaæ to urz±dzenie.
 
-Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym interfejsem 
+Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym interfejsem
 loopback, który jest konfigurowany przy pomocy polecenia ifconfig.
 
 %description -l tr -n losetup
 Linux özel bir blok aygýt olan yerel-çevrim aygýtýný (loopback device)
 destekler. Bu aygýt normal bir dosyanýn sanal bir blok aygýtý üzerine
 haritasýný çýkarýr. Bu paket, dosyalar ve yerel-çevrim aygýtlarý arasýndaki
-haritalama iþleminin kurulmasý ve kaldýrýlmasý için programlar içerir.
-Blok yerel-çevrim aygýtý ifconfig komutu ile yapýlandýrýlan að yerel-çevrim
+haritalama iþleminin kurulmasý ve kaldýrýlmasý için programlar içerir. Blok
+yerel-çevrim aygýtý ifconfig komutu ile yapýlandýrýlan að yerel-çevrim
 aygýtý ile karýþtýrýlmamalýdýr.
 
 %package -n mount
@@ -137,66 +138,66 @@ Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 
 %description -n mount
-Mount is used for adding new filesystems, both local and networked, to
-your current directory structure. The filesystems must already exist for
-this to work. It can also be used to change the access types the kernel
-uses for already-mounted filesystems.
+Mount is used for adding new filesystems, both local and networked, to your
+current directory structure. The filesystems must already exist for this to
+work. It can also be used to change the access types the kernel uses for
+already-mounted filesystems.
 
 This package is critical for the functionality of your system.
 
 %description -l de -n mount
-Mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk)
-zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme müssen
+Mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk) zu
+Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme müssen
 bereits existieren. Außerdem können die Zugriffstypen geändert werden, die
 der Kernel für bereits montierte Dateisysteme verwendet.
 
 Dieses Paket ist für Ihr System unbedingt erforderlich .
 
 %description -l fr -n mount
-mount sert à ajouter de nouveaux systèmes de fichiers, locaux ou réseaux,
-à votre structure de répertoire. Les systèmes de fichiers doivent déjà
+mount sert à ajouter de nouveaux systèmes de fichiers, locaux ou réseaux, à
+votre structure de répertoire. Les systèmes de fichiers doivent déjà
 exister pour que cela fonctionne. Il peut aussi servir à changer les types
 d'accès pour les systèmes de fichiers déjà montés.
 
-Ce paquetage est critique pour le fonctionnement de votre système.   
+Ce paquetage est critique pour le fonctionnement de votre système.
 
 %description -l pl -n mount
-Program mount jest u¿ywany przez system do montowania systemu plików, zrówno
-lokalnych jak i sieciowych (np. NFS). 
+Program mount jest u¿ywany przez system do montowania systemu plików,
+zrówno lokalnych jak i sieciowych (np. NFS).
 
 Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuxa.
 
 %description -l tr -n mount
-mount, hem yerel hem de að dosya sistemlerinin dizin yapýsýna eklenmesi için
-kullanýlýr. Bunun için baðlanacak dosya sisteminin önceden hazýrlanmýþ olmasý
-gerekir. Ayný zamanda çekirdeðin baðlanmýþ dosya sistemlerine eriþimini
-deðiþtirmek için de kullanýlýr. Bu paket sisteminizin iþlevselliði açýsýndan
-kritiktir.
+mount, hem yerel hem de að dosya sistemlerinin dizin yapýsýna eklenmesi
+için kullanýlýr. Bunun için baðlanacak dosya sisteminin önceden hazýrlanmýþ
+olmasý gerekir. Ayný zamanda çekirdeðin baðlanmýþ dosya sistemlerine
+eriþimini deðiþtirmek için de kullanýlýr. Bu paket sisteminizin
+iþlevselliði açýsýndan kritiktir.
 
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
 Summary(pl):	chkdupexe odszukuje powtarzaj±ce sie pliki uruchamialne
 Group:		Utilities/System
-Group(pl):      Narzêdzia/System
+Group(pl):	Narzêdzia/System
 
 %description chkdupexe
-chkdupexe  will  scan  the  union of $PATH and a hardcoded
-list of common locations for  binaries.   It  will  report
-dangling symlinks and duplicately-named binaries.
+chkdupexe will scan the union of $PATH and a hardcoded list of common
+locations for binaries. It will report dangling symlinks and
+duplicately-named binaries.
 
 %description chkdupexe -l pl
-chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane
-katalogi z plikami uruchamialnymi i informuje o powtarzaj±cych siê plikach
-w ró¿nych katalogach.
+chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane katalogi
+z plikami uruchamialnymi i informuje o powtarzaj±cych siê plikach w ró¿nych
+katalogach.
 
 %package -n tunelp
-Summary:        configures kernel parallel port driver
-Summary(de):    konfiguriert den Kerneltreiber für den parallelen Port
-Summary(fr):    Configure le pilote du port parallèle dans le noyau
-Summary(pl):    Program do konfigurowania sterownika portu równoleg³ego
-Summary(tr):    Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
-Group:          Utilities/System
-Group(pl):      Narzêdzia/System
+Summary:	configures kernel parallel port driver
+Summary(de):	konfiguriert den Kerneltreiber für den parallelen Port
+Summary(fr):	Configure le pilote du port parallèle dans le noyau
+Summary(pl):	Program do konfigurowania sterownika portu równoleg³ego
+Summary(tr):	Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
+Group:		Utilities/System
+Group(pl):	Narzêdzia/System
 
 %description -n tunelp
 `tunelp' aids in configuring the kernel parallel port driver.
@@ -287,8 +288,6 @@ touch $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
-#strip $RPM_BUILD_ROOT/{bin/*,sbin/*,usr/bin/*,usr/sbin/*} || :
-
 %ifarch %{ix86} 
 ln -sf	hwclock $RPM_BUILD_ROOT/sbin/clock
 echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
@@ -311,7 +310,6 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/{man*/*,pl/man*/*} \
 rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
-
 %defattr(644,root,root,755)
 %doc */README.*
 
