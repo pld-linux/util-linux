@@ -354,8 +354,7 @@ Obs³uga raw-device'ów.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-# NOTE: selinux bcond is handled in %build
-%patch17 -p1
+%{?with_selinux:%patch17 -p1}
 %patch18 -p1
 %patch19 -p1
 
@@ -374,7 +373,6 @@ export CC CFLAGS LDFLAGS
 	MOREHELPDIR=%{_datadir}/misc \
 	%{!?with_uClibc:ADD_RAW="yes"} \
 	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"} \
-	%{!?with_selinux:HAVE_SELINUX="no"}
 
 %ifarch ppc
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
