@@ -27,7 +27,7 @@ Summary(ru):	Набор базовых системных утилит для Linux
 Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
-Version:	2.11u
+Version:	2.11w
 %define	_rel	1
 Release:	%{_rel}
 License:	distributable
