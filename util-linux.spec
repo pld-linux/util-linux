@@ -63,11 +63,11 @@ Patch17:	mount-2.12pre-symlink_20030809.diff
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
-%{!?_with_uClibc:BuildRequires:	pam-devel >= 0.66}
+%{!?_with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?_with_uClibc:BuildRequires:	zlib-devel}
-%{!?_with_uClibc:Requires:	pam >= 0.66}
+%{!?_with_uClibc:Requires:	pam >= 0.77.3}
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
@@ -316,7 +316,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 Summary:	login is used when signing onto a system
 Summary(pl):	login jest u¿ywany do rozpoczêcia pracy w systemie
 Group:		Applications/System
-Requires:	pam-pld
+Requires:	pam >= 0.77.3
 Obsoletes:	heimdal-login
 
 %description -n login
