@@ -16,13 +16,14 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	8
+Release:	9
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
 # Source0-md5:	997adf78b98d9d1c5db4f37ea982acff
-Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
-# Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
+#Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+Source1:	%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	81bbcc9a820512ecde87a8f31de0b745
 Source2:	login.pamd
 Source3:	rawdevices.init
 Source4:	rawdevices.sysconfig
@@ -431,13 +432,12 @@ ln -sf newgrp $RPM_BUILD_ROOT%{_bindir}/sg
 echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
 
 # cleanup, remove files not included in package
-rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh}
-rm -f $RPM_BUILD_ROOT%{_sbindir}/vipw
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/chfn.1*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/chsh.1*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man8/sln.8*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man8/vigr.8*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man8/vipw.8*
+rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh} \
+	$RPM_BUILD_ROOT%{_sbindir}/{vifr,vipw} \
+	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/man8/{sln,vigr,vipw}.8 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,clear,last,mesg,od,passwd,reset,wall}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man8/{display-services,fast*,halt,initctl,need,provide,reboot,shutdown,simpleinit,sln,vigr,vipw}.8
 
 %{!?with_uClibc:%find_lang %{name}}
 
@@ -571,8 +571,12 @@ fi
 %{_mandir}/man8/setfdprm.8*
 %{_mandir}/man8/setsid.8*
 
+%lang(cs) %{_mandir}/cs/man1/write.1*
+
 %lang(de) %{_mandir}/de/man1/kill.1*
 %lang(de) %{_mandir}/de/man1/more.1*
+%lang(de) %{_mandir}/de/man1/newgrp.1*
+%lang(de) %{_mandir}/de/man1/sg.1*
 %lang(de) %{_mandir}/de/man1/write.1*
 
 %lang(de) %{_mandir}/de/man8/fdformat.8*
@@ -585,10 +589,12 @@ fi
 %lang(es) %{_mandir}/es/man1/look.1*
 %lang(es) %{_mandir}/es/man1/more.1*
 %lang(es) %{_mandir}/es/man1/namei.1*
+%lang(es) %{_mandir}/es/man1/newgrp.1*
 %lang(es) %{_mandir}/es/man1/readprofile.1*
 %lang(es) %{_mandir}/es/man1/rev.1*
 %lang(es) %{_mandir}/es/man1/script.1*
 %lang(es) %{_mandir}/es/man1/setterm.1*
+%lang(es) %{_mandir}/es/man1/sg.1*
 %lang(es) %{_mandir}/es/man1/ul.1*
 %lang(es) %{_mandir}/es/man1/whereis.1*
 %lang(es) %{_mandir}/es/man1/write.1*
@@ -607,6 +613,8 @@ fi
 %lang(fi) %{_mandir}/fi/man1/column.1*
 %lang(fi) %{_mandir}/fi/man1/kill.1*
 %lang(fi) %{_mandir}/fi/man1/more.1*
+%lang(fi) %{_mandir}/fi/man1/newgrp.1*
+%lang(fi) %{_mandir}/fi/man1/sg.1*
 %lang(fi) %{_mandir}/fi/man1/whereis.1*
 %lang(fi) %{_mandir}/fi/man1/write.1*
 
@@ -615,6 +623,7 @@ fi
 %lang(fr) %{_mandir}/fr/man1/col.1*
 %lang(fr) %{_mandir}/fr/man1/kill.1*
 %lang(fr) %{_mandir}/fr/man1/more.1*
+%lang(fr) %{_mandir}/fr/man1/rev.1*
 %lang(fr) %{_mandir}/fr/man1/whereis.1*
 %lang(fr) %{_mandir}/fr/man1/write.1*
 
@@ -632,7 +641,9 @@ fi
 %lang(hu) %{_mandir}/hu/man1/kill.1*
 %lang(hu) %{_mandir}/hu/man1/logger.1*
 %lang(hu) %{_mandir}/hu/man1/more.1*
+%lang(hu) %{_mandir}/hu/man1/newgrp.1*
 %lang(hu) %{_mandir}/hu/man1/setterm.1*
+%lang(hu) %{_mandir}/hu/man1/sg.1*
 %lang(hu) %{_mandir}/hu/man1/whereis.1*
 %lang(hu) %{_mandir}/hu/man1/write.1*
 
@@ -650,8 +661,19 @@ fi
 %lang(id) %{_mandir}/id/man8/fdformat.8*
 
 %lang(it) %{_mandir}/it/man1/arch.1*
+%lang(it) %{_mandir}/it/man1/cal.1*
 %lang(it) %{_mandir}/it/man1/kill.1*
+%lang(it) %{_mandir}/it/man1/newgrp.1*
+%lang(it) %{_mandir}/it/man1/rename.1*
+%lang(it) %{_mandir}/it/man1/rev.1*
+%lang(it) %{_mandir}/it/man1/sg.1*
 
+%lang(it) %{_mandir}/it/man8/ctrlaltdel.8*
+%lang(it) %{_mandir}/it/man8/dmesg.8*
+%lang(it) %{_mandir}/it/man8/fdformat.8*
+%lang(it) %{_mandir}/it/man8/ipcrm.8*
+%lang(it) %{_mandir}/it/man8/ipcs.8*
+%lang(it) %{_mandir}/it/man8/mkfs.8*
 %lang(it) %{_mandir}/it/man8/mkswap.8*
 %lang(it) %{_mandir}/it/man8/setsid.8*
 
@@ -671,11 +693,14 @@ fi
 %lang(ja) %{_mandir}/ja/man1/mcookie.1*
 %lang(ja) %{_mandir}/ja/man1/more.1*
 %lang(ja) %{_mandir}/ja/man1/namei.1*
+%lang(ja) %{_mandir}/ja/man1/newgrp.1*
 %lang(ja) %{_mandir}/ja/man1/readprofile.1*
 %lang(ja) %{_mandir}/ja/man1/rename.1*
+%lang(ja) %{_mandir}/ja/man1/replay.1*
 %lang(ja) %{_mandir}/ja/man1/rev.1*
 %lang(ja) %{_mandir}/ja/man1/script.1*
 %lang(ja) %{_mandir}/ja/man1/setterm.1*
+%lang(ja) %{_mandir}/ja/man1/sg.1*
 %lang(ja) %{_mandir}/ja/man1/ul.1*
 %lang(ja) %{_mandir}/ja/man1/whereis.1*
 %lang(ja) %{_mandir}/ja/man1/write.1*
@@ -709,10 +734,12 @@ fi
 %lang(ko) %{_mandir}/ko/man1/mcookie.1*
 %lang(ko) %{_mandir}/ko/man1/more.1*
 %lang(ko) %{_mandir}/ko/man1/namei.1*
+%lang(ko) %{_mandir}/ko/man1/newgrp.1*
 %lang(ko) %{_mandir}/ko/man1/readprofile.1*
 %lang(ko) %{_mandir}/ko/man1/rev.1*
 %lang(ko) %{_mandir}/ko/man1/script.1*
 %lang(ko) %{_mandir}/ko/man1/setterm.1*
+%lang(ko) %{_mandir}/ko/man1/sg.1*
 %lang(ko) %{_mandir}/ko/man1/ul.1*
 %lang(ko) %{_mandir}/ko/man1/whereis.1*
 %lang(ko) %{_mandir}/ko/man1/write.1*
@@ -980,6 +1007,7 @@ fi
 %lang(es) %{_mandir}/es/man1/login.1*
 %lang(hu) %{_mandir}/hu/man1/login.1*
 %lang(id) %{_mandir}/id/man1/login.1*
+%lang(it) %{_mandir}/it/man1/login.1*
 %lang(ja) %{_mandir}/ja/man1/login.1*
 %lang(ko) %{_mandir}/ko/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
