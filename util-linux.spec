@@ -264,6 +264,20 @@ login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany
 do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 (jednak wiêkszo¶æ nowoczesnych shelli ma takie funkcje wbudowane).
 
+%package -n agetty
+Summary:	alternative Linux getty
+Summary(pl):	alternatywny getty 
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
+Requires:	login
+
+%description -n agetty
+agetty is simple linux getty with serial support.
+
+%description -n agetty -l pl
+agetty jest prostym linuxowym getty z obs³ug± portu szeregowego.
+
 %package -n rawdevices
 Summary:	Support for raw-devices
 Summary(pl):	Obs³uga raw-device'ów
@@ -277,7 +291,6 @@ Support for raw-devices.
 
 %description -n rawdevices -l pl
 Obs³uga raw-device'ów.
-
 
 %prep
 %setup -q
@@ -594,6 +607,11 @@ fi
 %attr(0755,root,root) /bin/login
 %{_mandir}/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
+
+%files -n agetty
+%defattr(644,root,root,755)
+%attr(0755,root,root) /sbin/agetty
+%{_mandir}/man8/agetty.8*
 
 %files -n rawdevices
 %defattr(644,root,root,755)
