@@ -18,7 +18,7 @@ Patch1:		util-linux-config.patch
 Patch2:		util-linux-nochkdupexe.patch
 Patch3:		util-linux-shutdown.patch
 Patch4:		util-linux-chfn.patch
-BuidPrereq:	pam >= 0.66
+BuildPrereq:	pam >= 0.66
 Requires:	pam >= 0.66
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	util-linux-suids
