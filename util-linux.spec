@@ -24,7 +24,7 @@ Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.11l
 Release:	%{_release}
-License:	Distributable
+License:	distributable
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
