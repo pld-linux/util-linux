@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10l
-Release:	1
+Release:	2
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
@@ -41,9 +41,11 @@ Patch3:		util-linux-utmpx.patch
 Patch4:		util-linux-fhs.patch
 Patch5:		util-linux-login.patch
 Patch6:		util-linux-kerneli.patch
+Patch7:		util-linux-info.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
+BuildRequires:	texinfo
 Requires:	pam >= 0.66
 Requires:	/sbin/install-info
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -219,7 +221,8 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch3 -p1 
 %patch4 -p1
 %patch5 -p1
-#%patch6 -p1 -b .wiget
+#%patch6 -p1
+%patch7 -p1
 
 %build
 
@@ -228,6 +231,8 @@ CFLAGS="$RPM_OPT_FLAGS -I/usr/include/ncurses"
 
 make	OPT="$RPM_OPT_FLAGS" \
 	MOREHELPDIR=%{_datadir}/misc
+
+(cd sys-utils; makeinfo ipc.texi)
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -299,6 +304,12 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/{man*/*,pl/man*/*} \
 	*/README.* $RPM_BUILD_ROOT%{_infodir}/*
 
 %find_lang %{name}
+
+%post
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+%postun
+[ -x /usr/sbin/fix-info-dir ] && /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
