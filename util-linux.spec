@@ -40,7 +40,7 @@ Patch2:		util-linux-po.patch
 Patch3:		util-linux-utmpx.patch
 Patch4:		util-linux-fhs.patch
 Patch5:		util-linux-login.patch
-#Patch6:		util-linux-cipher.patch
+Patch6:		util-linux-kerneli.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -219,7 +219,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 %patch3 -p1 
 %patch4 -p1
 %patch5 -p1 
-#%patch6 -p1
+%patch6 -p1
 
 %build
 
