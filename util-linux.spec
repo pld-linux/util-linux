@@ -10,7 +10,7 @@ Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
-Version:	2.10s
+Version:	2.11b
 Release:	1
 License:	Distributable
 Group:		Applications/System
@@ -49,17 +49,15 @@ Patch4:		%{name}-login.patch
 %{!?bcond_off_crypto:Patch5: %{name}-kerneli.patch}
 Patch6:		%{name}-info.patch
 Patch7:		%{name}-fdisk2.patch
-Patch8:		ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10f-mount-tcp.patch
-Patch9:		ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10m-mount-compat.patch
-Patch10:	ftp://ftp.sourceforge.net/pub/nfs/%{name}-2.10m-mount-rpc.patch
+Patch8:		%{name}-mount-tcp.patch
+Patch9:		%{name}-mount-rpc.patch
+Patch10:	ftp://ftp.linuxnfs.sourceforge.org:/pub/nfs/%{name}-2.10m-mount-compat.patch
 Patch11:	%{name}-syscall.patch
 Patch12:	%{name}-2.10o-rawio.patch
-Patch13:	%{name}-fdisk-efi-dell.patch
-Patch14:	%{name}-sparcraid.patch
-Patch15:	%{name}-overflow.patch
-Patch16:	%{name}-gecos.patch
-Patch17:	%{name}-glibc.patch
-Patch18:	%{name}-s390.patch
+Patch13:	%{name}-sparcraid.patch
+Patch14:	%{name}-gecos.patch
+Patch15:	%{name}-glibc.patch
+Patch16:	%{name}-s390.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -272,8 +270,6 @@ support for this feature built into them, however).
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
-%patch17 -p1
-%patch18 -p1
 
 %build
 CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
@@ -374,7 +370,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) /sbin/mkfs
 %attr(0755,root,root) /sbin/mkswap
 %attr(0755,root,root) /sbin/ctrlaltdel
-%attr(0755,root,root) /sbin/kbdrate
 %attr(0755,root,root) /sbin/blockdev
 %attr(0755,root,root) /sbin/elvtune
 %attr(0755,root,root) %{_bindir}/banner
@@ -444,7 +439,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/ipcrm.8*
 %{_mandir}/man8/ipcs.8*
 %{_mandir}/man8/isosize.8*
-%{_mandir}/man8/kbdrate.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/renice.8*
 %{_mandir}/man8/setsid.8*
