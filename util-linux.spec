@@ -71,6 +71,7 @@ Obsoletes:	util-linux-suids
 %define		_kernel_ver	%(grep UTS_RELEASE /usr/src/linux/include/linux/version.h 2>/dev/null | cut -d'"' -f2)
 %define		_kernel24	%(echo %{_kernel_ver} | grep -q '2\.[012]\.' ; echo $?)
 
+
 %description
 util-linux contains a large variety of low-level system utilities
 necessary for a functional Linux system. This includes, among other
@@ -285,10 +286,10 @@ support for this feature built into them, however).
 %patch19 -p1
 
 %build
-CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
 %configure
 
-make	OPT="%{rpmcflags}" \
+make	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	%{!?bcond_off_rawio:ADD_RAW="yes"}
 
