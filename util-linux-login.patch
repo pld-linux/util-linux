@@ -1,16 +1,28 @@
-diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/login.c
---- util-linux-2.9r/login-utils/login.c	Sun May  2 04:16:35 1999
-+++ util-linux-2.9r.pld/login-utils/login.c	Sun May 23 13:49:11 1999
+diff -Nur util-linux-2.9s/lib/pathnames.h util-linux-2.9s.pld/lib/pathnames.h
+--- util-linux-2.9s/lib/pathnames.h	Fri Jun 11 08:18:28 1999
++++ util-linux-2.9s.pld/lib/pathnames.h	Fri Jun 11 08:16:50 1999
+@@ -70,7 +70,7 @@
+ #define SECURETTY       	"/etc/securetty"
+ #define _PATH_UTMP      	"/var/run/utmpx"
+ #define _PATH_WTMP      	LOGDIR "/wtmpx"
+-#define _PATH_WTMPLOCK		"/var/lock/wtmpxlock"
++#define _PATH_WTMPLOCK		"/var/lock/wtmxplock"
+ 
+ /* no more . in DEFPATH */
+ #define	_PATH_DEFPATH	        "/usr/local/bin:/bin:/usr/bin"
+diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/login.c
+--- util-linux-2.9s/login-utils/login.c	Fri May 28 11:49:46 1999
++++ util-linux-2.9s.pld/login-utils/login.c	Fri Jun 11 08:16:50 1999
 @@ -154,7 +154,7 @@
  
  #define SLEEP_EXIT_TIMEOUT 5
  
 -#ifdef __linux__
-+#ifndef __linux__ /* sami se qrna masakrujcie logi -- ³obuzy jedne */
++#ifndef __linux__
  #define DO_PS_FIDDLING
  #endif
  
-@@ -272,6 +272,41 @@
+@@ -272,6 +272,40 @@
      return 0;
  }
  
@@ -48,11 +60,10 @@ diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/lo
 +	updwtmp(_PATH_BTMPX, &ut);
 +}
 +#endif	/* USE_PAM */
-+
  
  int
  main(int argc, char **argv)
-@@ -457,8 +492,6 @@
+@@ -457,8 +491,6 @@
      else
        tty = ttyn;
      
@@ -61,7 +72,7 @@ diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/lo
  #if 0
      /* other than iso-8859-1 */
      printf("\033(K");
-@@ -516,7 +549,8 @@
+@@ -516,7 +548,8 @@
  	       (retcode == PAM_AUTHINFO_UNAVAIL))) {
  	    pam_get_item(pamh, PAM_USER, (const void **) &username);
  	    syslog(LOG_NOTICE,_("FAILED LOGIN %d FROM %s FOR %s, %s"),
@@ -71,7 +82,7 @@ diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/lo
  	    fprintf(stderr,_("Login incorrect\n\n"));
  	    pam_set_item(pamh,PAM_USER,NULL);
  	    retcode = pam_authenticate(pamh, 0);
-@@ -525,13 +559,16 @@
+@@ -525,13 +558,16 @@
  	if (retcode != PAM_SUCCESS) {
  	    pam_get_item(pamh, PAM_USER, (const void **) &username);
  
@@ -90,7 +101,7 @@ diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/lo
  
  	    fprintf(stderr,_("\nLogin incorrect\n"));
  	    pam_end(pamh, retcode);
-@@ -561,8 +598,12 @@
+@@ -561,8 +597,12 @@
      retcode = pam_open_session(pamh, 0);
      PAM_FAIL_CHECK;
  
@@ -103,51 +114,18 @@ diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/lo
      for (cnt = 0;; ask = 1) {
  #  ifndef __linux__
  	ioctlval = 0;
-@@ -838,6 +879,20 @@
- 		    && utp->ut_type >= INIT_PROCESS
- 		    && utp->ut_type <= DEAD_PROCESS)
- 			break;
-+
-+	/*
-+	 * XXX If we can't find a pre-existing entry by pid, try by line
-+	 * XXX BSD network daemons may rely on this.
-+	 */
-+	if (utp == NULL) {
-+	    endutent();
+@@ -842,7 +882,9 @@
+ 	/* If we can't find a pre-existing entry by pid, try by line.
+ 	   BSD network daemons may rely on this. (anonymous) */
+ 	if (utp == NULL) {
+-	     setutent();
++	    endutent(); 
 +	    setutent();
 +	    memset(&ut, 0, sizeof(ut));
-+	    ut.ut_type = LOGIN_PROCESS;	/* XXX doesn't matter */
-+	    strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
-+	    strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
-+	    utp = getutid(&ut);
-+	}
- 	
- 	if (utp) {
- 	    memcpy(&ut, utp, sizeof(ut));
-@@ -848,14 +903,19 @@
- 	/* endutent(); superfluous, error for glibc */
- 	
- 	if (ut.ut_id[0] == 0)
--	  strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
-+	    strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
- 	
- 	strncpy(ut.ut_user, username, sizeof(ut.ut_user));
- 	strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
- 	ut.ut_line[sizeof(ut.ut_line)-1] = 0;
--	time(&t);
-+
-+#if defined(_HAVE_UT_TV)
-+	gettimeofday(&ut.ut_tv, NULL);
-+#else
-+	time(&t) ;
- 	ut.ut_time = t;		/* ut_time is not always a time_t */
--				/* (we might test #ifdef _HAVE_UT_TV ) */
-+#endif
-+
- 	ut.ut_type = USER_PROCESS;
- 	ut.ut_pid = mypid;
- 	if (hostname) {
-@@ -1068,6 +1128,8 @@
+ 	     ut.ut_type = LOGIN_PROCESS;
+ 	     strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
+ 	     strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
+@@ -1081,6 +1123,8 @@
  #endif
      signal(SIGINT, SIG_DFL);
      
@@ -156,3 +134,28 @@ diff -Nur util-linux-2.9r/login-utils/login.c util-linux-2.9r.pld/login-utils/lo
      /* discard permissions last so can't get killed and drop core */
      if(setuid(pwd->pw_uid) < 0 && pwd->pw_uid) {
  	syslog(LOG_ALERT, _("setuid() failed"));
+diff -Nur util-linux-2.9s/text-utils/Makefile util-linux-2.9s.pld/text-utils/Makefile
+--- util-linux-2.9s/text-utils/Makefile	Fri Jun 11 08:18:28 1999
++++ util-linux-2.9s.pld/text-utils/Makefile	Fri Jun 11 08:16:50 1999
+@@ -20,7 +20,7 @@
+ 
+ # Where to put datebase files?
+ 
+-DATAMISC=	more.help
++USRLIB=		more.help
+ 
+ all: $(BIN) $(USRBIN)
+ 
+@@ -68,10 +68,10 @@
+ endif
+ 
+ install install.shadow install.text-utils: all
+-	$(INSTALLDIR) $(BINDIR) $(USRBINDIR) $(DATAMISCDIR) $(MAN1DIR)
++	$(INSTALLDIR) $(BINDIR) $(USRBINDIR) $(USRLIBDIR) $(MAN1DIR)
+ 	$(INSTALLBIN) $(BIN) $(BINDIR)
+ 	$(INSTALLBIN) $(USRBIN) $(USRBINDIR)
+-	$(INSTALLDAT) $(DATAMISC) $(DATAMISCDIR)
++	$(INSTALLDAT) $(USRLIB) $(USRLIBDIR)
+ 	$(INSTALLMAN) $(MAN1) $(MAN1DIR)
+ 
+ .PHONY: clean distclean
