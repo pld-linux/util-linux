@@ -1,22 +1,23 @@
-diff -Nur util-linux-2.10o/configure util-linux-2.10o.raw/configure
---- util-linux-2.10o/configure	Fri Aug 11 19:36:48 2000
-+++ util-linux-2.10o.raw/configure	Thu Nov  2 11:26:43 2000
-@@ -24,6 +24,7 @@
- # 18. For pivot_root.c: does <linux/unistd.h> define __NR_pivot_root?
- # 19. For hwclock.c: does struct tm have a field tm_gmtoff?
- # 20. For nfsmount: does the output of rpcgen compile?
-+# 21. For raw.c: does <linux/raw.h> exist?
+diff -urN util-linux-2.10q.org/configure util-linux-2.10q/configure
+--- util-linux-2.10q.org/configure	Tue Nov 21 22:08:46 2000
++++ util-linux-2.10q/configure	Tue Nov 21 22:10:35 2000
+@@ -32,6 +32,7 @@
+ # 11. For pivot_root.c: does <linux/unistd.h> define __NR_pivot_root?
+ # 12. For hwclock.c: does struct tm have a field tm_gmtoff?
+ # 13. For nfsmount: does the output of rpcgen compile?
++# 14. For raw.c: does <linux/raw.h> exist?
  
  rm -f make_include defines.h
  
-@@ -477,3 +478,10 @@
-         echo "Your rpcgen output does not compile"
+@@ -558,3 +559,11 @@
  fi
  rm -f conftest conftestx.c conftestl.c conftest.h conftest.x conferrs
+ rm -f conftestx.o conftestl.o
 +
 +#
-+# 21. For raw.c: does <linux/raw.h> exist?
++# 14. For raw.c: does <linux/raw.h> exist?
 +#
 +if ./testincl "linux/raw.h"; then
-+	echo "ADD_RAW=yes" >> make_include
++       echo "ADD_RAW=yes" >> make_include
 +fi
++
