@@ -23,9 +23,9 @@ Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
+Summary(ru):	îÁÂÏÒ ÂÁÚÏ×ÙÈ ÓÉÓÔÅÍÎÙÈ ÕÔÉÌÉÔ ÄÌÑ Linux
 Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
-Summary(ru):	îÁÂÏÒ ÂÁÚÏ×ÙÈ ÓÉÓÔÅÍÎÙÈ ÕÔÉÌÉÔ ÄÌÑ Linux
 Name:		util-linux
 Version:	2.11r
 Release:	%{_release}
@@ -43,18 +43,17 @@ Patch3:		%{name}-fhs.patch
 Patch4:		%{name}-login.patch
 Patch5:		%{name}-kerneli.patch
 Patch6:		%{name}-info.patch
-Patch7:		%{name}-fdisk2.patch
-Patch8:		ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/%{name}-2.10m-mount-compat.patch
-Patch9:		%{name}-syscall.patch
-Patch10:	%{name}-raw.patch
-Patch11:	%{name}-gecos.patch
-Patch12:	%{name}-glibc.patch
+Patch7:		ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/%{name}-2.10m-mount-compat.patch
+Patch8:		%{name}-syscall.patch
+Patch9:		%{name}-raw.patch
+Patch10:	%{name}-gecos.patch
+Patch11:	%{name}-glibc.patch
 #based on:	http://www.kernel.org/pub/linux/kernel/people/hvr/util-linux-patch-int/%{name}-2.11n.patch.bz2
-Patch13:	%{name}-cryptoapi.patch
-Patch14:	%{name}-losetup-getpass.patch
-Patch15:	%{name}-login-problems.patch
-Patch16:	%{name}-posixsh.patch
-Patch17:	%{name}-ppc-hwclock.patch
+Patch12:	%{name}-cryptoapi.patch
+Patch13:	%{name}-losetup-getpass.patch
+Patch14:	%{name}-login-problems.patch
+Patch15:	%{name}-posixsh.patch
+Patch16:	%{name}-ppc-hwclock.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -365,23 +364,22 @@ util-linux dla bootkietki.
 %patch3 -p1
 %patch4 -p1
 %if %{_kernel24}
-%{!?_without_crypto:%patch13 -p0}
+%{!?_without_crypto:%patch12 -p0}
 %else
 %{!?_without_crypto:%patch5 -p1}
 %endif
 %patch6 -p1
-#%patch7 -p1
+%patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
 #%if !%{_kernel24}
-#%{!?_without_crypto:%patch14 -p1}
+#%{!?_without_crypto:%patch13 -p1}
 #%endif
-#%patch15 -p1
+#%patch14 -p1
+%patch15 -p1
 %patch16 -p1
-%patch17 -p1
 
 %build
 export CC="%{__cc}"
