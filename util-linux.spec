@@ -28,13 +28,14 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.11w
-%define	_rel	2
+%define	_rel	3
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.gz
 # Source0-md5:	36d6bcdf415d6b486205cc64abb7af77
-Source1:	%{name}-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
+# Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
 Source3:	rawdevices.init
 Source4:	rawdevices.sysconfig
@@ -515,44 +516,44 @@ fi
 
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/fdprm
 
-%attr(0755,root,root) /bin/arch
-%attr(0755,root,root) /bin/dmesg
-%attr(0755,root,root) /bin/kill
-%{!?_with_uClibc:%attr(0755,root,root) /bin/more}
-%attr(0755,root,root) /sbin/blockdev
-%attr(0755,root,root) /sbin/mkfs
-%attr(0755,root,root) /sbin/mkswap
-%attr(0755,root,root) /sbin/ctrlaltdel
-%attr(0755,root,root) /sbin/elvtune
-%attr(0755,root,root) %{_bindir}/cal
-%attr(0755,root,root) %{_bindir}/col
-%attr(0755,root,root) %{_bindir}/colcrt
-%attr(0755,root,root) %{_bindir}/colrm
-%attr(0755,root,root) %{_bindir}/column
-%attr(0755,root,root) %{_bindir}/ddate
-%attr(0755,root,root) %{_bindir}/fdformat
-%attr(0755,root,root) %{_bindir}/getopt
-%attr(0755,root,root) %{_bindir}/hexdump
-%attr(0755,root,root) %{_bindir}/ipcrm
-%attr(0755,root,root) %{_bindir}/ipcs
-%attr(0755,root,root) %{_bindir}/isosize
-%attr(0755,root,root) %{_bindir}/logger
-%attr(0755,root,root) %{_bindir}/look
-%attr(0755,root,root) %{_bindir}/mcookie
-%attr(0755,root,root) %{_bindir}/namei
-%attr(0755,root,root) %{_bindir}/renice
-%attr(0755,root,root) %{_bindir}/rev
-%attr(0755,root,root) %{_bindir}/script
-%attr(0755,root,root) %{_bindir}/setsid
-%attr(0755,root,root) %{_bindir}/setfdprm
-%attr(0755,root,root) %{_bindir}/pg
-%attr(0755,root,root) %{_bindir}/line
-%attr(0755,root,root) %{_bindir}/rename
-%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
-%{!?_with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
-%attr(0755,root,root) %{_bindir}/whereis
+%attr(755,root,root) /bin/arch
+%attr(755,root,root) /bin/dmesg
+%attr(755,root,root) /bin/kill
+%{!?_with_uClibc:%attr(755,root,root) /bin/more}
+%attr(755,root,root) /sbin/blockdev
+%attr(755,root,root) /sbin/mkfs
+%attr(755,root,root) /sbin/mkswap
+%attr(755,root,root) /sbin/ctrlaltdel
+%attr(755,root,root) /sbin/elvtune
+%attr(755,root,root) %{_bindir}/cal
+%attr(755,root,root) %{_bindir}/col
+%attr(755,root,root) %{_bindir}/colcrt
+%attr(755,root,root) %{_bindir}/colrm
+%attr(755,root,root) %{_bindir}/column
+%attr(755,root,root) %{_bindir}/ddate
+%attr(755,root,root) %{_bindir}/fdformat
+%attr(755,root,root) %{_bindir}/getopt
+%attr(755,root,root) %{_bindir}/hexdump
+%attr(755,root,root) %{_bindir}/ipcrm
+%attr(755,root,root) %{_bindir}/ipcs
+%attr(755,root,root) %{_bindir}/isosize
+%attr(755,root,root) %{_bindir}/logger
+%attr(755,root,root) %{_bindir}/look
+%attr(755,root,root) %{_bindir}/mcookie
+%attr(755,root,root) %{_bindir}/namei
+%attr(755,root,root) %{_bindir}/renice
+%attr(755,root,root) %{_bindir}/rev
+%attr(755,root,root) %{_bindir}/script
+%attr(755,root,root) %{_bindir}/setsid
+%attr(755,root,root) %{_bindir}/setfdprm
+%attr(755,root,root) %{_bindir}/pg
+%attr(755,root,root) %{_bindir}/line
+%attr(755,root,root) %{_bindir}/rename
+%{!?_with_uClibc:%attr(755,root,root) %{_bindir}/setterm}
+%{!?_with_uClibc:%attr(755,root,root) %{_bindir}/ul}
+%attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
-%attr(0755,root,root) %{_sbindir}/readprofile
+%attr(755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
@@ -985,7 +986,7 @@ fi
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
-%attr(0755,root,root) /bin/login
+%attr(755,root,root) /bin/login
 
 %{_mandir}/man1/login.1*
 %lang(de) %{_mandir}/de/man1/login.1*
@@ -999,7 +1000,7 @@ fi
 
 %files -n agetty
 %defattr(644,root,root,755)
-%attr(0755,root,root) /sbin/agetty
+%attr(755,root,root) /sbin/agetty
 
 %{_mandir}/man8/agetty.8*
 %lang(es) %{_mandir}/es/man8/agetty.8*
@@ -1008,7 +1009,7 @@ fi
 %if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n rawdevices
 %defattr(644,root,root,755)
-%attr(0755,root,root) %{_bindir}/raw
+%attr(755,root,root) %{_bindir}/raw
 %attr(0750,root,root) /etc/rc.d/init.d/rawdevices
 %attr(0640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
 
