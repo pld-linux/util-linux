@@ -1,5 +1,6 @@
---- util-linux-2.9v/MCONFIG.MCONFIG	Tue Jul 20 02:53:55 1999
-+++ util-linux-2.9v/MCONFIG	Tue Jul 27 11:34:38 1999
+diff -urN util-linux-2.11d.org/MCONFIG util-linux-2.11d/MCONFIG
+--- util-linux-2.11d.org/MCONFIG	Sun Jun  3 21:42:36 2001
++++ util-linux-2.11d/MCONFIG	Sun Jun  3 21:42:47 2001
 @@ -16,17 +16,17 @@
  # If HAVE_PAM is set to "yes", then login, chfn, chsh, and newgrp
  # will use PAM for authentication. Additionally, passwd will not be
@@ -21,41 +22,25 @@
  
  # If you use chfn and chsh from this package, REQUIRE_PASSWORD will require
  # non-root users to enter the account password before updating /etc/passwd.
-@@ -72,7 +72,7 @@
+@@ -83,7 +83,7 @@
  # If HAVE_SLN is set to "yes", then sln won't be installed
  # (but the man page sln.8 will be installed anyway).
  # sln also comes with libc and glibc.
 -HAVE_SLN=no
 +HAVE_SLN=yes
  
- CC=		gcc
- 
-@@ -111,7 +111,7 @@
+ # If HAVE_FDUTILS is set to "yes", then setfdprm won't be installed.
+ HAVE_FDUTILS=no
+@@ -117,7 +117,7 @@
  # SLANGFLAGS=-I/usr/include/slang
  # No such subdirectory - slcurses.h lives in /usr/include
  #   (no extra definition required).
 -LIBSLANG=-lslang
 +# LIBSLANG=-lslang
  
- 
- DEVDIR=		$(DESTDIR)/dev
-@@ -124,13 +124,13 @@
- BINDIR=         $(DESTDIR)/bin
- VARPATH=	$(DESTDIR)/var
- LOGDIR=		$(DESTDIR)/var/log
--MANDIR=		$(DESTDIR)/usr/man
-+MANDIR=		$(DESTDIR)/usr/share/man
- MAN1DIR=	$(MANDIR)/man1
- MAN3DIR=	$(MANDIR)/man3
- MAN5DIR=	$(MANDIR)/man5
- MAN6DIR=	$(MANDIR)/man6
- MAN8DIR=	$(MANDIR)/man8
--INFODIR=	$(DESTDIR)/usr/info
-+INFODIR=	$(DESTDIR)/usr/share/info
- 
- # Directory for shutdown, halt, reboot, etc.
- SHUTDOWNDIR=	$(SBINDIR)
-@@ -147,7 +147,7 @@
+ #
+ # Paths used for compilation (not all are actually used, see CFLAGS below)
+@@ -175,7 +175,7 @@
  MANMODE=	644
  DATMODE=	644
  INFOMODE=	644
@@ -64,12 +49,12 @@
  
  CHMOD=		chmod
  INSTALL=	install
-@@ -155,7 +155,7 @@
+@@ -183,7 +183,7 @@
  INSTALLBIN=	$(INSTALL) -m $(BINMODE)
  INSTALLMAN=	$(INSTALL) -m $(MANMODE)
  INSTALLDAT=	$(INSTALL) -m $(DATMODE)
 -INSTALLSUID=    $(INSTALL) -m $(SUIDMODE) -o root
 +INSTALLSUID=    $(INSTALL) -m $(SUIDMODE)
  
- %.o: %.c
- 	$(CC) -c $(CFLAGS) $< -o $@
+ CFLAGS    := $(CFLAGS) $(OPT) -I$(LIB) $(WARNFLAGS) \
+ 			$(CURSESFLAGS) $(SLANGFLAGS) \
