@@ -20,6 +20,8 @@ Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
 Summary(fr):	Ensemble d'utilitaires système de base pour Linux
 Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
 Summary(tr):	Temel sistem araçlarý
+Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
+Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
 Name:		util-linux
 Version:	2.11g
 Release:	%{rel}
@@ -110,6 +112,18 @@ programy systemowe takie jak logger.
 þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey
 sistem araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma
 uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
+
+%description -l pt_BR
+util-Linux contém uma grande variedade de utilitários de sistema
+de baixo-nível necessários para um sistema Linux funcional. Isso
+inclui, entre outras coisas, ferramentas de configuração como fdisk
+e programas de sistema como login.
+
+%description -l es
+util-Linux contiene una gran variedad de utilitarios de sistema de
+bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
+entre otras cosas, herramientas de configuración como fdisk y
+programas de sistema como login.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
