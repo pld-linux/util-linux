@@ -46,6 +46,7 @@ Patch8:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10f-mount-tcp.patch
 Patch9:		ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-compat.patch
 Patch10:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-nfsv3.patch
 Patch11:	ftp://ftp.sourceforge.net/pub/nfs/util-linux-2.10m-mount-rpc.patch
+Patch12:	util-linux-syscall.patch 
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -247,6 +248,7 @@ support for this feature built into them, however).
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 
