@@ -28,7 +28,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.11w
-%define	_rel	1
+%define	_rel	2
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -790,6 +790,7 @@ fi
 %{_mandir}/man8/fdisk.8*
 %{_mandir}/man8/sfdisk.8*
 %{_mandir}/man8/fsck.minix.8*
+%{_mandir}/man8/mkfs.bfs.8*
 %{_mandir}/man8/mkfs.minix.8*
 %{_mandir}/man8/mkfs.8*
 
@@ -813,6 +814,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/fdisk.8*
 %lang(ja) %{_mandir}/ja/man8/sfdisk.8*
 %lang(ja) %{_mandir}/ja/man8/fsck.minix.8*
+%lang(ja) %{_mandir}/ja/man8/mkfs.bfs.8*
 %lang(ja) %{_mandir}/ja/man8/mkfs.minix.8*
 %lang(ja) %{_mandir}/ja/man8/mkfs.8*
 
@@ -828,9 +830,7 @@ fi
 
 %attr(755,root,root) /sbin/fsck.cramfs
 %attr(755,root,root) /sbin/mkfs.cramfs
-
 %attr(755,root,root) /sbin/mkfs.bfs
-%{_mandir}/man8/mkfs.bfs.8*
 
 %attr(755,root,root) %{_bindir}/cytune
 
