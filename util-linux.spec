@@ -158,6 +158,7 @@ Summary(pl):	Programy u¿ytkowników do manipulacji /etc/passwd
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
 Requires:	pam >= 0.66
+Obsoletes:	util-linux-suid
 
 %description uprogs -l pl
 Programy do manipulacji plikiem /etc/passwd. 
