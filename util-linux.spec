@@ -40,6 +40,8 @@ Source21:	swapoff.8.pl
 Source22:	fstab.5.pl
 Source23:	chkdupexe.1.pl
 Source24:	tunelp.8.pl
+Source25:	rawdevice.init
+Source26:	rawdevice.sysconfig
 Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
@@ -312,7 +314,7 @@ make	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
+install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
 
@@ -353,6 +355,9 @@ install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
 install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
 
 install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
+
+install %{SOURCE25} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
+install %{SOURCE26} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
@@ -578,3 +583,5 @@ rm -rf $RPM_BUILD_ROOT
 %files -n rawdevices
 %{!?_without_rawio:%attr(0755,root,root) %{_bindir}/raw}
 %{!?_without_rawio:%{_mandir}/man8/raw.8*}
+%attr(0750,root,root) /etc/rc.d/init.d/rawdevices
+%attr(0650,root,root) /etc/sysconfig/rawdevices
