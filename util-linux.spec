@@ -171,7 +171,7 @@ gerekir. Ayný zamanda çekirdeðin baðlanmýþ dosya sistemlerine eriþimini
 deðiþtirmek için de kullanýlýr. Bu paket sisteminizin iþlevselliði açýsýndan
 kritiktir.
 
-%package	chkdupexe
+%package chkdupexe
 Summary:	chkdupexe - find duplicate executables
 Summary(pl):	chkdupexe odszukuje powtarzaj±ce sie pliki uruchamialne
 Group:		Utilities/System
