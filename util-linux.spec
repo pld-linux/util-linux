@@ -210,8 +210,8 @@ w ró¿nych katalogach.
 Summary:        configures kernel parallel port driver
 Summary(de):    konfiguriert den Kerneltreiber für den parallelen Port
 Summary(fr):    Configure le pilote du port parallèle dans le noyau
-Summary(tr):    Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
 Summary(pl):    Program do konfigurowania sterownika portu równoleg³ego
+Summary(tr):    Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
 Group:          Utilities/System
 Group(pl):      Narzêdzia/System
 
@@ -224,11 +224,11 @@ TUNELP hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
 %description -n tunelp -l fr
 « tunelp » aide à configurer le pilote du noyau pour le port parallèle.
 
-%description -n tunelp -l tr
-Paralel baðlantý noktasý sürücüsünü ayarlar.
-
 %description -n tunelp -l pl
 Program do konfigurowania sterownika portu równoleg³ego.
+
+%description -n tunelp -l tr
+Paralel baðlantý noktasý sürücüsünü ayarlar.
 
 %prep
 %setup  -q 
