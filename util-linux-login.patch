@@ -1,18 +1,16 @@
-diff -Nur util-linux-2.9s/lib/pathnames.h util-linux-2.9s.pld/lib/pathnames.h
---- util-linux-2.9s/lib/pathnames.h	Fri Jun 11 08:18:28 1999
-+++ util-linux-2.9s.pld/lib/pathnames.h	Fri Jun 11 08:16:50 1999
-@@ -70,7 +70,7 @@
+--- util-linux-2.10b/lib/pathnames.h.wiget	Fri Nov 19 08:16:28 1999
++++ util-linux-2.10b/lib/pathnames.h	Fri Nov 19 08:36:51 1999
+@@ -105,7 +105,7 @@
  #define SECURETTY       	"/etc/securetty"
  #define _PATH_UTMP      	"/var/run/utmpx"
  #define _PATH_WTMP      	LOGDIR "/wtmpx"
--#define _PATH_WTMPLOCK		"/var/lock/wtmpxlock"
-+#define _PATH_WTMPLOCK		"/var/lock/wtmxplock"
+-#define _PATH_WTMPLOCK		"/var/log/wtmpxlock"
++#define _PATH_WTMPLOCK		"/var/lock/wtmpxlock"
  
  /* no more . in DEFPATH */
  #define	_PATH_DEFPATH	        "/usr/local/bin:/bin:/usr/bin"
-diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/login.c
---- util-linux-2.9s/login-utils/login.c	Fri May 28 11:49:46 1999
-+++ util-linux-2.9s.pld/login-utils/login.c	Fri Jun 11 08:16:50 1999
+--- util-linux-2.10b/login-utils/login.c.wiget	Sun Nov 14 22:55:55 1999
++++ util-linux-2.10b/login-utils/login.c	Fri Nov 19 08:16:28 1999
 @@ -154,7 +154,7 @@
  
  #define SLEEP_EXIT_TIMEOUT 5
@@ -22,7 +20,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
  #define DO_PS_FIDDLING
  #endif
  
-@@ -272,6 +272,40 @@
+@@ -300,6 +300,40 @@
      return 0;
  }
  
@@ -63,7 +61,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
  
  int
  main(int argc, char **argv)
-@@ -457,8 +491,6 @@
+@@ -485,8 +519,6 @@
      else
        tty = ttyn;
      
@@ -72,7 +70,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
  #if 0
      /* other than iso-8859-1 */
      printf("\033(K");
-@@ -516,7 +548,8 @@
+@@ -550,7 +582,8 @@
  	       (retcode == PAM_AUTHINFO_UNAVAIL))) {
  	    pam_get_item(pamh, PAM_USER, (const void **) &username);
  	    syslog(LOG_NOTICE,_("FAILED LOGIN %d FROM %s FOR %s, %s"),
@@ -82,7 +80,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
  	    fprintf(stderr,_("Login incorrect\n\n"));
  	    pam_set_item(pamh,PAM_USER,NULL);
  	    retcode = pam_authenticate(pamh, 0);
-@@ -525,13 +558,16 @@
+@@ -559,13 +592,16 @@
  	if (retcode != PAM_SUCCESS) {
  	    pam_get_item(pamh, PAM_USER, (const void **) &username);
  
@@ -101,7 +99,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
  
  	    fprintf(stderr,_("\nLogin incorrect\n"));
  	    pam_end(pamh, retcode);
-@@ -561,8 +597,12 @@
+@@ -595,8 +631,12 @@
      retcode = pam_open_session(pamh, 0);
      PAM_FAIL_CHECK;
  
@@ -114,7 +112,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
      for (cnt = 0;; ask = 1) {
  #  ifndef __linux__
  	ioctlval = 0;
-@@ -842,7 +882,9 @@
+@@ -875,7 +915,9 @@
  	/* If we can't find a pre-existing entry by pid, try by line.
  	   BSD network daemons may rely on this. (anonymous) */
  	if (utp == NULL) {
@@ -125,7 +123,7 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
  	     ut.ut_type = LOGIN_PROCESS;
  	     strncpy(ut.ut_id, ttyn + 8, sizeof(ut.ut_id));
  	     strncpy(ut.ut_line, ttyn + 5, sizeof(ut.ut_line));
-@@ -1081,6 +1123,8 @@
+@@ -1118,6 +1160,8 @@
  #endif
      signal(SIGINT, SIG_DFL);
      
@@ -134,28 +132,3 @@ diff -Nur util-linux-2.9s/login-utils/login.c util-linux-2.9s.pld/login-utils/lo
      /* discard permissions last so can't get killed and drop core */
      if(setuid(pwd->pw_uid) < 0 && pwd->pw_uid) {
  	syslog(LOG_ALERT, _("setuid() failed"));
-diff -Nur util-linux-2.9s/text-utils/Makefile util-linux-2.9s.pld/text-utils/Makefile
---- util-linux-2.9s/text-utils/Makefile	Fri Jun 11 08:18:28 1999
-+++ util-linux-2.9s.pld/text-utils/Makefile	Fri Jun 11 08:16:50 1999
-@@ -20,7 +20,7 @@
- 
- # Where to put datebase files?
- 
--DATAMISC=	more.help
-+USRLIB=		more.help
- 
- all: $(BIN) $(USRBIN)
- 
-@@ -68,10 +68,10 @@
- endif
- 
- install install.shadow install.text-utils: all
--	$(INSTALLDIR) $(BINDIR) $(USRBINDIR) $(DATAMISCDIR) $(MAN1DIR)
-+	$(INSTALLDIR) $(BINDIR) $(USRBINDIR) $(USRLIBDIR) $(MAN1DIR)
- 	$(INSTALLBIN) $(BIN) $(BINDIR)
- 	$(INSTALLBIN) $(USRBIN) $(USRBINDIR)
--	$(INSTALLDAT) $(DATAMISC) $(DATAMISCDIR)
-+	$(INSTALLDAT) $(USRLIB) $(USRLIBDIR)
- 	$(INSTALLMAN) $(MAN1) $(MAN1DIR)
- 
- .PHONY: clean distclean
