@@ -30,7 +30,7 @@ Name:		util-linux
 Version:	2.12
 %define	_rel	3
 %define _pre pre
-Release:	0.%{_pre}.%{_rel}
+Release:	1
 License:	distributable
 Group:		Applications/System
 Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}%{_pre}.tar.gz
@@ -137,7 +137,7 @@ Summary(tr):	Yerel-Гevrim aygЩtlarЩnЩn kurulmasЩ ve ayarlanmasЩ iГin programlar
 Summary(ru):	Программы для настройки loopback-устройств
 Summary(uk):	Програми для конф╕гурац╕╖ loopback-пристро╖в
 Group:		Applications/System
-Release:	%{_rel}@%{_kernel_series}
+Release:	1
 #%if %{_kernel24}
 #%%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 #%else
@@ -211,7 +211,7 @@ Summary(tr):	Dosya sistemlerini baПlamak ve ГЖzmek iГin programlar
 Summary(uk):	Програми для монтування та розмонтування файлових систем
 Summary(ru):	Программы для монтирования и размонтирования файловых систем
 Group:		Applications/System
-Release:	%{_rel}@%{_kernel_series}
+Release:	1
 #%if %{_kernel24}
 #%%{!?_without_dist_kernel:Requires:	kernel >= 2.3.0}
 #%else
