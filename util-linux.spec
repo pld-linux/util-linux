@@ -78,6 +78,9 @@ BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 BuildRequires:	texinfo
+%if %{?BOOT:1}%{!?BOOT:0}
+BuildRequires:	glibc-static
+%endif
 Requires:	pam >= 0.66
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
@@ -327,6 +330,16 @@ Support for raw-devices.
 %description -n rawdevices -l pl
 Obs³uga raw-device'ów.
 
+%if %{?BOOT:1}%{!?BOOT:0}
+%package BOOT
+Summary:	util-linux for bootdisk
+Group:		Applications/System
+Group(de):	Applikationen/System
+Group(pl):	Aplikacje/System
+
+%description BOOT
+%endif
+
 %prep
 %setup -q
 %patch0 -p1
@@ -358,6 +371,12 @@ Obs³uga raw-device'ów.
 CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
 %configure2_13
 
+%if %{?BOOT:1}%{!?BOOT:0}
+%{__make} -C fdisk OPT="%{rpmcflags} -static"
+mv -f fdisk/fdisk fdisk-BOOT
+%{__make} -C fdisk clean
+%endif
+
 %{__make} OPT="%{rpmcflags}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	ADD_RAW="yes"
@@ -366,6 +385,11 @@ CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses -I%{_kernelsrcdir}/include"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
+%if %{?BOOT:1}%{!?BOOT:0}
+install -d $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin
+install fdisk-BOOT $RPM_BUILD_ROOT%{_libdir}/bootdisk/sbin/%{name}
+%endif
 
 install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
@@ -658,3 +682,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0750,root,root) /etc/rc.d/init.d/rawdevices
 %attr(0640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
 %{_mandir}/man8/raw.8*
+
+%if %{?BOOT:1}%{!?BOOT:0}
+%files BOOT
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/bootdisk/sbin/*
+%endif
