@@ -1010,8 +1010,8 @@ fi
 %files -n rawdevices
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/raw
-%attr(0750,root,root) /etc/rc.d/init.d/rawdevices
-%attr(0640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
+%attr(750,root,root) /etc/rc.d/init.d/rawdevices
+%attr(640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
 
 %{_mandir}/man8/raw.8*
 %lang(ja) %{_mandir}/ja/man8/raw.8*
