@@ -321,16 +321,16 @@ Obs³uga raw-device'ów.
 CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
 %configure
 
-%{__make}	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
+%{__make} OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 	MOREHELPDIR=%{_datadir}/misc \
 	ADD_RAW="yes"
 
 (cd sys-utils; makeinfo ipc.texi)
 
 %install
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
-%{__install} -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
+install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
 	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
 	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/{man{1,5,6,8},pl/man{1,5,6,8}}}
 
@@ -343,50 +343,50 @@ CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
 	USE_TTY_GROUP=no \
 	ADD_RAW="yes"
 
-%{__install} %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
-%{__install} %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
-%{__install} %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
-%{__install} %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
-%{__install} %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
-%{__install} %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
-%{__install} %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
-%{__install} %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
-%{__install} %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
-%{__install} %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
-%{__install} %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
+install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/kill.1
+install %{SOURCE3} $RPM_BUILD_ROOT%{_mandir}/pl/man1/arch.1
+install %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/pl/man1/login.1
+install %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/pl/man1/look.1
+install %{SOURCE6} $RPM_BUILD_ROOT%{_mandir}/pl/man1/script.1
+install %{SOURCE7} $RPM_BUILD_ROOT%{_mandir}/pl/man1/write.1
+install %{SOURCE8} $RPM_BUILD_ROOT%{_mandir}/pl/man1/getopt.1
+install %{SOURCE9} $RPM_BUILD_ROOT%{_mandir}/pl/man1/colrm.1
+install %{SOURCE10} $RPM_BUILD_ROOT%{_mandir}/pl/man1/hexdump.1
+install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/pl/man1/ul.1
 
-%{__install} %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
-%{__install} %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
-%{__install} %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
-%{__install} %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
-%{__install} %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
-%{__install} %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
-%{__install} %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
-%{__install} %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
-%{__install} %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
+install %{SOURCE12} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcrm.8
+install %{SOURCE13} $RPM_BUILD_ROOT%{_mandir}/pl/man8/ipcs.8
+install %{SOURCE15} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdformat.8
+install %{SOURCE16} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mkswap.8
+install %{SOURCE17} $RPM_BUILD_ROOT%{_mandir}/pl/man8/fdisk.8
+install %{SOURCE18} $RPM_BUILD_ROOT%{_mandir}/pl/man8/umount.8
+install %{SOURCE19} $RPM_BUILD_ROOT%{_mandir}/pl/man8/mount.8
+install %{SOURCE20} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapon.8
+install %{SOURCE21} $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
-%{__install} %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
+install %{SOURCE22} $RPM_BUILD_ROOT%{_mandir}/pl/man5/fstab.5
 
-%{__install} %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
+install %{SOURCE23} $RPM_BUILD_ROOT%{_mandir}/pl/man1/chkdupexe.1
 
-%{__install} %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
+install %{SOURCE24} $RPM_BUILD_ROOT%{_mandir}/pl/man8/tunelp.8
 
-%{__install} %{SOURCE25} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
-%{__install} %{SOURCE26} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
+install %{SOURCE25} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
+install %{SOURCE26} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 
-%{__install} -d $RPM_BUILD_ROOT/{etc/security,var/lock}
+install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
 touch $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
-%{__ln_s} -f hwclock $RPM_BUILD_ROOT/sbin/clock
-echo	'.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
+ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
+echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
-%{__ln_s} -f swapon $RPM_BUILD_ROOT/sbin/swapoff
+ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-%{__gzip} -9nf */README.*
+gzip -9nf */README.*
 
 %find_lang %{name}
 
@@ -411,7 +411,7 @@ fi
 /sbin/chkconfig --del rawdevices
 
 %clean
-%{__rm} -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -420,8 +420,8 @@ fi
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock
 
-%{_mandir}/man8/hwclock.8*
 %{_mandir}/man8/clock.8*
+%{_mandir}/man8/hwclock.8*
 
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/fdprm
 
@@ -429,10 +429,10 @@ fi
 %attr(0755,root,root) /bin/dmesg
 %attr(0755,root,root) /bin/kill
 %attr(0755,root,root) /bin/more
+%attr(0755,root,root) /sbin/blockdev
 %attr(0755,root,root) /sbin/mkfs
 %attr(0755,root,root) /sbin/mkswap
 %attr(0755,root,root) /sbin/ctrlaltdel
-%attr(0755,root,root) /sbin/blockdev
 %attr(0755,root,root) /sbin/elvtune
 %attr(0755,root,root) %{_bindir}/banner
 %attr(0755,root,root) %{_bindir}/cal
@@ -443,9 +443,9 @@ fi
 %attr(0755,root,root) %{_bindir}/ddate
 %attr(0755,root,root) %{_bindir}/fdformat
 %attr(0755,root,root) %{_bindir}/getopt
+%attr(0755,root,root) %{_bindir}/hexdump
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
-%attr(0755,root,root) %{_bindir}/hexdump
 %attr(0755,root,root) %{_bindir}/isosize
 %attr(0755,root,root) %{_bindir}/logger
 %attr(0755,root,root) %{_bindir}/look
@@ -461,9 +461,9 @@ fi
 %attr(0755,root,root) %{_bindir}/ul
 %attr(0755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
-%attr(0755,root,root) %{_sbindir}/vipw
-%attr(0755,root,root) %{_sbindir}/vigr
 %attr(0755,root,root) %{_sbindir}/readprofile
+%attr(0755,root,root) %{_sbindir}/vigr
+%attr(0755,root,root) %{_sbindir}/vipw
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
@@ -474,13 +474,13 @@ fi
 %{_mandir}/man1/ddate.1*
 %{_mandir}/man1/getopt.1*
 %{_mandir}/man1/hexdump.1*
-%{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/kill.1*
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/more.1*
 %{_mandir}/man1/namei.1*
+%{_mandir}/man1/newgrp.1*
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/setterm.1*
 %{_mandir}/man1/readprofile.1*
@@ -506,33 +506,33 @@ fi
 %{_mandir}/man8/setfdprm.8*
 %{_mandir}/man8/vipw.8*
 
-%lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/arch.1*
+%lang(pl) %{_mandir}/pl/man1/colrm.1*
+%lang(pl) %{_mandir}/pl/man1/getopt.1*
+%lang(pl) %{_mandir}/pl/man1/hexdump.1*
+%lang(pl) %{_mandir}/pl/man1/kill.1*
 %lang(pl) %{_mandir}/pl/man1/look.1*
 %lang(pl) %{_mandir}/pl/man1/script.1*
-%lang(pl) %{_mandir}/pl/man1/write.1*
-%lang(pl) %{_mandir}/pl/man1/getopt.1*
-%lang(pl) %{_mandir}/pl/man1/colrm.1*
-%lang(pl) %{_mandir}/pl/man1/hexdump.1*
 %lang(pl) %{_mandir}/pl/man1/ul.1*
+%lang(pl) %{_mandir}/pl/man1/write.1*
 
+%lang(pl) %{_mandir}/pl/man8/fdformat.8*
 %lang(pl) %{_mandir}/pl/man8/ipcrm.8*
 %lang(pl) %{_mandir}/pl/man8/ipcs.8*
-%lang(pl) %{_mandir}/pl/man8/fdformat.8*
 %lang(pl) %{_mandir}/pl/man8/mkswap.8*
 
 %dir %{_examplesdir}/getopt
 %attr(755,root,root) %{_examplesdir}/getopt/*
 %{_datadir}/misc/more.help
 
-%attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/cfdisk
+%attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/fsck.minix
 %attr(755,root,root) /sbin/mkfs.minix
 %attr(755,root,root) /sbin/sfdisk
 
-%{_mandir}/man8/fdisk.8*
 %{_mandir}/man8/cfdisk.8*
+%{_mandir}/man8/fdisk.8*
 %{_mandir}/man8/sfdisk.8*
 %{_mandir}/man8/fsck.minix.8*
 %{_mandir}/man8/mkfs.minix.8*
@@ -543,15 +543,15 @@ fi
 %attr(755,root,root) %{_bindir}/cytune
 
 %ifarch %{ix86}
-%attr(755,root,root) %{_sbindir}/rdev
-%attr(755,root,root) %{_sbindir}/vidmode
 %attr(755,root,root) %{_sbindir}/ramsize
+%attr(755,root,root) %{_sbindir}/rdev
 %attr(755,root,root) %{_sbindir}/rootflags
+%attr(755,root,root) %{_sbindir}/vidmode
 
+%{_mandir}/man8/ramsize.8*
 %{_mandir}/man8/rdev.8*
 %{_mandir}/man8/rootflags.8*
 %{_mandir}/man8/vidmode.8*
-%{_mandir}/man8/ramsize.8*
 %endif
 
 %{_infodir}/ipc*
@@ -571,13 +571,13 @@ fi
 %{_mandir}/man5/nfs.5*
 
 %{_mandir}/man8/mount.8*
-%{_mandir}/man8/swapoff.8*
+%{_mandir}/man8/umount.8*
 %{?_with_pivot_root:%{_mandir}/man8/pivot_root.8*}
 %{_mandir}/man8/swapon.8*
-%{_mandir}/man8/umount.8*
+%{_mandir}/man8/swapoff.8*
 
-%lang(pl) %{_mandir}/pl/man8/umount.8*
 %lang(pl) %{_mandir}/pl/man8/mount.8*
+%lang(pl) %{_mandir}/pl/man8/umount.8*
 %lang(pl) %{_mandir}/pl/man8/swapon.8*
 %lang(pl) %{_mandir}/pl/man8/swapoff.8*
 
