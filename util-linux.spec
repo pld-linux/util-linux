@@ -16,7 +16,7 @@
 %else
 %define		_kernel_series	2.2
 %endif
-%define		_release	4
+%define		_release	5
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -55,6 +55,7 @@ Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
 Patch16:	%{name}-chfn_exploid.patch
+Patch17:	%{name}-alpha.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
@@ -383,6 +384,7 @@ util-linux dla bootkietki.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 CC="%{__cc}"
