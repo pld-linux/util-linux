@@ -59,6 +59,7 @@ BuildRequires:	texinfo
 BuildRequires:	glibc-static
 %endif
 Requires:	pam >= 0.66
+Provides:	fdisk
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
 
