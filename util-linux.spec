@@ -438,6 +438,12 @@ rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh} \
 	$RPM_BUILD_ROOT%{_mandir}/man8/{sln,vigr,vipw}.8 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,clear,last,mesg,od,passwd,reset,wall}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man8/{display-services,fast*,halt,initctl,need,provide,reboot,shutdown,simpleinit,sln,vigr,vipw}.8
+%ifnarch %{ix86}
+rm -f $RPM_BUILD_ROOT%{_mandir}/*/man8/{ramsize,rdev,rootflags,vidmode}.8
+%endif
+%ifarch sparc sparc64
+rm -f $RPM_BUILD_ROOT%{_mandir}/*/man8/{cfdisk,sfdisk}.8
+%endif
 
 %{!?with_uClibc:%find_lang %{name}}
 
