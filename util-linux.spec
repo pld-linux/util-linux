@@ -196,10 +196,10 @@ make install \
 
 %ifarch i386 i486 i586 i686
 mv -f $RPM_BUILD_ROOT%{_bindir}/{swapdev,vidmode,ramsize,rootflags,rdev} \
-	$RPM_BUILD_ROOT/usr/sbin
+	$RPM_BUILD_ROOT%{_sbindir}
 %endif
 
-mv $RPM_BUILD_ROOT%{_bindir}/readprofile $RPM_BUILD_ROOT/usr/sbin
+mv $RPM_BUILD_ROOT%{_bindir}/readprofile $RPM_BUILD_ROOT%{_sbindir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/chfn
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/chsh
@@ -281,11 +281,11 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
 %attr(0755,root,root) %{_bindir}/renice
-%attr(0755,root,root) /usr/sbin/rootflags
+%attr(0755,root,root) %{_sbindir}/rootflags
 %attr(0755,root,root) /usr/games/banner
-%attr(0755,root,root) /usr/sbin/vipw
-%attr(0755,root,root) /usr/sbin/vigr
-%attr(0755,root,root) /usr/sbin/readprofile
+%attr(0755,root,root) %{_sbindir}/vipw
+%attr(0755,root,root) %{_sbindir}/vigr
+%attr(0755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/arch.1.gz
 %{_mandir}/man1/readprofile.1.gz
@@ -352,10 +352,10 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %endif
 
 %ifarch i386 i486 i586 i686
-%attr(755,root,root) /usr/sbin/rdev
-%attr(755,root,root) /usr/sbin/swapdev
-%attr(755,root,root) /usr/sbin/vidmode
-%attr(755,root,root) /usr/sbin/ramsize
+%attr(755,root,root) %{_sbindir}/rdev
+%attr(755,root,root) %{_sbindir}/swapdev
+%attr(755,root,root) %{_sbindir}/vidmode
+%attr(755,root,root) %{_sbindir}/ramsize
 
 %{_mandir}/man8/rdev.8.gz
 %{_mandir}/man8/rootflags.8.gz
