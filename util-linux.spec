@@ -16,7 +16,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12
-Release:	9
+Release:	10
 License:	distributable
 Group:		Applications/System
 Source0:	http://ftp.cwi.nl/aeb/util-linux/%{name}-%{version}.tar.gz
@@ -427,16 +427,12 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 	done
 done
 
-# symlink that existed in shadow
-ln -sf newgrp $RPM_BUILD_ROOT%{_bindir}/sg
-echo '.so newgrp.1' > $RPM_BUILD_ROOT%{_mandir}/man1/sg.1
-
 # cleanup, remove files not included in package
-rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh} \
+rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
 	$RPM_BUILD_ROOT%{_sbindir}/{vifr,vipw} \
-	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh,newgrp,sg}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/man8/{sln,vigr,vipw}.8 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,clear,last,mesg,od,passwd,reset,wall}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,clear,last,mesg,newgrp,od,passwd,reset,sg,wall}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man8/{display-services,fast*,halt,initctl,need,provide,reboot,shutdown,simpleinit,sln,vigr,vipw}.8
 %ifnarch %{ix86}
 rm -f $RPM_BUILD_ROOT%{_mandir}/*/man8/{ramsize,rdev,rootflags,vidmode}.8
@@ -492,47 +488,45 @@ fi
 
 %attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/fdprm
 
-%attr(0755,root,root) /bin/arch
-%attr(0755,root,root) /bin/dmesg
-%attr(0755,root,root) /bin/kill
-%{!?with_uClibc:%attr(0755,root,root) /bin/more}
-%attr(0755,root,root) /sbin/blockdev
-%attr(0755,root,root) /sbin/mkfs
-%attr(0755,root,root) /sbin/mkswap
-%attr(0755,root,root) /sbin/ctrlaltdel
-%attr(0755,root,root) /sbin/elvtune
-%attr(0755,root,root) %{_bindir}/cal
-%attr(0755,root,root) %{_bindir}/col
-%attr(0755,root,root) %{_bindir}/colcrt
-%attr(0755,root,root) %{_bindir}/colrm
-%attr(0755,root,root) %{_bindir}/column
-%attr(0755,root,root) %{_bindir}/ddate
-%attr(0755,root,root) %{_bindir}/fdformat
-%attr(0755,root,root) %{_bindir}/getopt
-%attr(0755,root,root) %{_bindir}/hexdump
-%attr(0755,root,root) %{_bindir}/ipcrm
-%attr(0755,root,root) %{_bindir}/ipcs
-%attr(0755,root,root) %{_bindir}/isosize
-%attr(0755,root,root) %{_bindir}/line
-%attr(0755,root,root) %{_bindir}/logger
-%attr(0755,root,root) %{_bindir}/look
-%attr(0755,root,root) %{_bindir}/mcookie
-%attr(0755,root,root) %{_bindir}/namei
-%attr(0755,root,root) %{_bindir}/newgrp
-%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/pg}
-%attr(0755,root,root) %{_bindir}/renice
-%attr(0755,root,root) %{_bindir}/rev
-%attr(0755,root,root) %{_bindir}/script
-%attr(0755,root,root) %{_bindir}/setsid
-%attr(0755,root,root) %{_bindir}/setfdprm
-%attr(0755,root,root) %{_bindir}/rename
-%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/setterm}
-%attr(0755,root,root) %{_bindir}/sg
-%{!?with_uClibc:%attr(0755,root,root) %{_bindir}/ul}
-%attr(0755,root,root) %{_bindir}/whereis
+%attr(755,root,root) /bin/arch
+%attr(755,root,root) /bin/dmesg
+%attr(755,root,root) /bin/kill
+%{!?with_uClibc:%attr(755,root,root) /bin/more}
+%attr(755,root,root) /sbin/blockdev
+%attr(755,root,root) /sbin/mkfs
+%attr(755,root,root) /sbin/mkswap
+%attr(755,root,root) /sbin/ctrlaltdel
+%attr(755,root,root) /sbin/elvtune
+%attr(755,root,root) %{_bindir}/cal
+%attr(755,root,root) %{_bindir}/col
+%attr(755,root,root) %{_bindir}/colcrt
+%attr(755,root,root) %{_bindir}/colrm
+%attr(755,root,root) %{_bindir}/column
+%attr(755,root,root) %{_bindir}/ddate
+%attr(755,root,root) %{_bindir}/fdformat
+%attr(755,root,root) %{_bindir}/getopt
+%attr(755,root,root) %{_bindir}/hexdump
+%attr(755,root,root) %{_bindir}/ipcrm
+%attr(755,root,root) %{_bindir}/ipcs
+%attr(755,root,root) %{_bindir}/isosize
+%attr(755,root,root) %{_bindir}/line
+%attr(755,root,root) %{_bindir}/logger
+%attr(755,root,root) %{_bindir}/look
+%attr(755,root,root) %{_bindir}/mcookie
+%attr(755,root,root) %{_bindir}/namei
+%{!?with_uClibc:%attr(755,root,root) %{_bindir}/pg}
+%attr(755,root,root) %{_bindir}/renice
+%attr(755,root,root) %{_bindir}/rev
+%attr(755,root,root) %{_bindir}/script
+%attr(755,root,root) %{_bindir}/setsid
+%attr(755,root,root) %{_bindir}/setfdprm
+%attr(755,root,root) %{_bindir}/rename
+%{!?with_uClibc:%attr(755,root,root) %{_bindir}/setterm}
+%{!?with_uClibc:%attr(755,root,root) %{_bindir}/ul}
+%attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
-%attr(0755,root,root) %{_bindir}/tailf
-%attr(0755,root,root) %{_sbindir}/readprofile
+%attr(755,root,root) %{_bindir}/tailf
+%attr(755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
@@ -550,14 +544,12 @@ fi
 %{_mandir}/man1/mcookie.1*
 %{!?with_uClibc:%{_mandir}/man1/more.1*}
 %{_mandir}/man1/namei.1*
-%{_mandir}/man1/newgrp.1*
 %{!?with_uClibc:%{_mandir}/man1/pg.1*}
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/rename.1*
 %{_mandir}/man1/script.1*
 %{!?with_uClibc:%{_mandir}/man1/setterm.1*}
-%{_mandir}/man1/sg.1*
 %{!?with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
@@ -581,8 +573,6 @@ fi
 
 %lang(de) %{_mandir}/de/man1/kill.1*
 %lang(de) %{_mandir}/de/man1/more.1*
-%lang(de) %{_mandir}/de/man1/newgrp.1*
-%lang(de) %{_mandir}/de/man1/sg.1*
 %lang(de) %{_mandir}/de/man1/write.1*
 
 %lang(de) %{_mandir}/de/man8/fdformat.8*
@@ -595,12 +585,10 @@ fi
 %lang(es) %{_mandir}/es/man1/look.1*
 %lang(es) %{_mandir}/es/man1/more.1*
 %lang(es) %{_mandir}/es/man1/namei.1*
-%lang(es) %{_mandir}/es/man1/newgrp.1*
 %lang(es) %{_mandir}/es/man1/readprofile.1*
 %lang(es) %{_mandir}/es/man1/rev.1*
 %lang(es) %{_mandir}/es/man1/script.1*
 %lang(es) %{_mandir}/es/man1/setterm.1*
-%lang(es) %{_mandir}/es/man1/sg.1*
 %lang(es) %{_mandir}/es/man1/ul.1*
 %lang(es) %{_mandir}/es/man1/whereis.1*
 %lang(es) %{_mandir}/es/man1/write.1*
@@ -619,8 +607,6 @@ fi
 %lang(fi) %{_mandir}/fi/man1/column.1*
 %lang(fi) %{_mandir}/fi/man1/kill.1*
 %lang(fi) %{_mandir}/fi/man1/more.1*
-%lang(fi) %{_mandir}/fi/man1/newgrp.1*
-%lang(fi) %{_mandir}/fi/man1/sg.1*
 %lang(fi) %{_mandir}/fi/man1/whereis.1*
 %lang(fi) %{_mandir}/fi/man1/write.1*
 
@@ -647,9 +633,7 @@ fi
 %lang(hu) %{_mandir}/hu/man1/kill.1*
 %lang(hu) %{_mandir}/hu/man1/logger.1*
 %lang(hu) %{_mandir}/hu/man1/more.1*
-%lang(hu) %{_mandir}/hu/man1/newgrp.1*
 %lang(hu) %{_mandir}/hu/man1/setterm.1*
-%lang(hu) %{_mandir}/hu/man1/sg.1*
 %lang(hu) %{_mandir}/hu/man1/whereis.1*
 %lang(hu) %{_mandir}/hu/man1/write.1*
 
@@ -669,10 +653,8 @@ fi
 %lang(it) %{_mandir}/it/man1/arch.1*
 %lang(it) %{_mandir}/it/man1/cal.1*
 %lang(it) %{_mandir}/it/man1/kill.1*
-%lang(it) %{_mandir}/it/man1/newgrp.1*
 %lang(it) %{_mandir}/it/man1/rename.1*
 %lang(it) %{_mandir}/it/man1/rev.1*
-%lang(it) %{_mandir}/it/man1/sg.1*
 
 %lang(it) %{_mandir}/it/man8/ctrlaltdel.8*
 %lang(it) %{_mandir}/it/man8/dmesg.8*
@@ -699,14 +681,12 @@ fi
 %lang(ja) %{_mandir}/ja/man1/mcookie.1*
 %lang(ja) %{_mandir}/ja/man1/more.1*
 %lang(ja) %{_mandir}/ja/man1/namei.1*
-%lang(ja) %{_mandir}/ja/man1/newgrp.1*
 %lang(ja) %{_mandir}/ja/man1/readprofile.1*
 %lang(ja) %{_mandir}/ja/man1/rename.1*
 %lang(ja) %{_mandir}/ja/man1/replay.1*
 %lang(ja) %{_mandir}/ja/man1/rev.1*
 %lang(ja) %{_mandir}/ja/man1/script.1*
 %lang(ja) %{_mandir}/ja/man1/setterm.1*
-%lang(ja) %{_mandir}/ja/man1/sg.1*
 %lang(ja) %{_mandir}/ja/man1/ul.1*
 %lang(ja) %{_mandir}/ja/man1/whereis.1*
 %lang(ja) %{_mandir}/ja/man1/write.1*
@@ -740,12 +720,10 @@ fi
 %lang(ko) %{_mandir}/ko/man1/mcookie.1*
 %lang(ko) %{_mandir}/ko/man1/more.1*
 %lang(ko) %{_mandir}/ko/man1/namei.1*
-%lang(ko) %{_mandir}/ko/man1/newgrp.1*
 %lang(ko) %{_mandir}/ko/man1/readprofile.1*
 %lang(ko) %{_mandir}/ko/man1/rev.1*
 %lang(ko) %{_mandir}/ko/man1/script.1*
 %lang(ko) %{_mandir}/ko/man1/setterm.1*
-%lang(ko) %{_mandir}/ko/man1/sg.1*
 %lang(ko) %{_mandir}/ko/man1/ul.1*
 %lang(ko) %{_mandir}/ko/man1/whereis.1*
 %lang(ko) %{_mandir}/ko/man1/write.1*
