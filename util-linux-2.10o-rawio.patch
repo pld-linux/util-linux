@@ -5,7 +5,7 @@ diff -urN util-linux-2.10q.org/configure util-linux-2.10q/configure
  # 11. For pivot_root.c: does <linux/unistd.h> define __NR_pivot_root?
  # 12. For hwclock.c: does struct tm have a field tm_gmtoff?
  # 13. For nfsmount: does the output of rpcgen compile?
-+# 14. For raw.c: does <linux/raw.h> exist?
++# 14. For raw.c: does <sys/raw.h> exist?
  
  rm -f make_include defines.h
  
@@ -15,9 +15,9 @@ diff -urN util-linux-2.10q.org/configure util-linux-2.10q/configure
  rm -f conftestx.o conftestl.o
 +
 +#
-+# 14. For raw.c: does <linux/raw.h> exist?
++# 14. For raw.c: does <sys/raw.h> exist?
 +#
-+if ./testincl "linux/raw.h"; then
++if ./testincl "sys/raw.h"; then
 +       echo "ADD_RAW=yes" >> make_include
 +fi
 +

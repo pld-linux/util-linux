@@ -18,26 +18,3 @@
  
  char *	progname;
  int	do_query = 0;
---- ./configure.orig	Sat Jun 30 13:13:31 2001
-+++ ./configure	Sat Jun 30 13:52:00 2001
-@@ -35,7 +35,7 @@
- # 11. For pivot_root.c: does <linux/unistd.h> define __NR_pivot_root?
- # 12. For hwclock.c: does struct tm have a field tm_gmtoff?
- # 13. For nfsmount: does the output of rpcgen compile?
--# 14. For raw.c: does <linux/raw.h> exist?
-+# 14. For raw.c: does <sys/raw.h> exist?
- 
- rm -f make_include defines.h
- 
-@@ -601,9 +601,9 @@
- rm -f conftestx.o conftestl.o
- 
- #
--# 14. For raw.c: does <linux/raw.h> exist?
-+# 14. For raw.c: does <sys/raw.h> exist?
- #
--if ./testincl "linux/raw.h"; then
-+if ./testincl "sys/raw.h"; then
-        echo "ADD_RAW=yes" >> make_include
- fi
- 
