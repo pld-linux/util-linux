@@ -60,6 +60,7 @@ Patch16:	%{name}-s390.patch
 Patch17:	%{name}-kerneli-fix.patch
 Patch18:	%{name}-kerneli-2.4.patch
 Patch19:	%{name}-pam.patch
+Patch20:	%{name}-qnx4.patch
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -284,6 +285,7 @@ support for this feature built into them, however).
 %{!?bcond_off_crypto:%patch17 -p1}
 %endif
 %patch19 -p1
+%patch20 -p1
 
 %build
 CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"

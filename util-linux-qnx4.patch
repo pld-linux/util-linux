@@ -1,0 +1,11 @@
+--- util-linux-2.11b/mount/mount_guess_fstype.c.wiget	Fri May  4 14:06:28 2001
++++ util-linux-2.11b/mount/mount_guess_fstype.c	Fri May  4 14:06:37 2001
+@@ -204,7 +204,7 @@
+ 		 !strncmp(xsb.xfsb.s_magic, XFS_SUPER_MAGIC2, 4))
+ 	      type = "xfs";
+ 	 else if(!strncmp(xsb.qnx4fs_magic+4, "QNX4FS", 6))
+-	      type = "qnx4fs";
++	      type = "qnx4";
+ 	 else if(xsb.bfs_magic == 0x1badface)
+ 	      type = "bfs";
+ 	 else if(!strncmp(xsb.ntfssb.s_magic, NTFS_SUPER_MAGIC,
