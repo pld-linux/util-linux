@@ -5,7 +5,7 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.10m
-Release:	2
+Release:	3
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
