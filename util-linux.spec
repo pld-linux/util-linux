@@ -386,7 +386,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 
 install -d $RPM_BUILD_ROOT/{etc/security,var/lock}
 
-touch $RPM_BUILD_ROOT/etc/security/blacklist.login
+> $RPM_BUILD_ROOT/etc/security/blacklist.login
 
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
