@@ -6,8 +6,8 @@
  
 -#define BLKELVGET   _IOR(0x12,106,sizeof(blkelv_ioctl_arg_t))
 -#define BLKELVSET   _IOW(0x12,107,sizeof(blkelv_ioctl_arg_t))
-+#define BLKELVGET   _IOR(0x12,106,blkelv_ioctl_arg_t)
-+#define BLKELVSET   _IOW(0x12,107,blkelv_ioctl_arg_t)
++#define BLKELVGET   _IOR(0x12,106,size_t) /* blkelv_ioctl_arg_t, broken by sizeof() */
++#define BLKELVSET   _IOW(0x12,107,size_t) /* blkelv_ioctl_arg_t, broken by sizeof() */
  
  static void
  usage(void) {
@@ -19,8 +19,8 @@
  #define BLKSSZGET  _IO(0x12,104)
 -#define BLKBSZGET  _IOR(0x12,112,sizeof(int))
 -#define BLKBSZSET  _IOW(0x12,113,sizeof(int))
-+#define BLKBSZGET  _IOR(0x12,112,size_t)
-+#define BLKBSZSET  _IOW(0x12,113,size_t)
++#define BLKBSZGET  _IOR(0x12,112,size_t) /* int, broken by sizeof() */
++#define BLKBSZSET  _IOW(0x12,113,size_t) /* int, broken by sizeof() */
  #endif
  
  /* Maybe <linux/hdreg.h> could be included */
@@ -31,7 +31,7 @@
  #define BLKFLSBUF    _IO(0x12,97)    /* flush buffer cache */
  #define BLKSSZGET    _IO(0x12,104)   /* get block device sector size */
 -#define BLKGETSIZE64 _IOR(0x12,114,8)	/* 8 = sizeof(u64) */
-+#define BLKGETSIZE64 _IOR(0x12,114,size_t)	/* sizeof(size_t) == sizeof(u64 *) */
++#define BLKGETSIZE64 _IOR(0x12,114,size_t) /* u64, broken by sizeof(); sizeof(8) was the same on 32-bit, but not on 64-bit archs */
  
  /* including <linux/hdreg.h> also fails */
  struct hd_geometry {
