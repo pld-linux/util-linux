@@ -5,32 +5,30 @@ Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuxa
 Summary(tr):	Temel sistem araçlarý
 Name:		util-linux
 Version:	2.9r
-Release:	1
+Release:	2
 Copyright:	distributable
 Group:		Utilities/System
 Group(pl):	Narzêdzia/System
-Source0:	ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux/%{name}-%{version}.tar.bz2
+URL:		ftp://ftp.win.tue.nl/pub/linux-local/utils/util-linux
+Source0:	%{name}-%{version}.tar.bz2
 Source1:	chfn.pamd
 Source2:	chsh.pamd
 Source3:	login.pamd
-#Patch0:		util-linux-openpty.patch
-Patch1:		util-linux-config.patch
-Patch2:		util-linux-nochkdupexe.patch
-Patch3:		util-linux-shutdown.patch
-Patch4:		util-linux-chfn.patch
-Patch5:		util-linux-DESTDIR.patch
-Patch6:		util-linux-btmp.patch
-Patch7:		util-linux-moretc.patch
-Patch8:		util-linux-openlog.patch
-#Patch9:		util-linux-gecos.patch
-Patch10:	util-linux-sigjmp.patch
-Patch11:	util-linux-fdiskwarning.patch
-Patch12:	util-linux-jbj.patch
-Patch13:	util-linux-mkswap.patch
+Patch0:		util-linux-MCONFIG.patch
+Patch1:		util-linux-chfn.patch
+Patch2:		util-linux-fdisk.patch
+Patch3:		util-linux-login.patch
+Patch4:		util-linux-misc.patch
+Patch5:		util-linux-mkswap.patch
+Patch6:		util-linux-more.patch
+Patch7:		util-linux-po.patch
+Patch8:		util-linux-shutdown.patch
+Patch9:		util-linux-kernel23.patch
 BuildPrereq:	pam-devel >= 0.66
 BuildPrereq:	ncurses-devel
 BuildPrereq:	gettext
 Requires:	pam >= 0.66
+Requires:	/sbin/install-info
 Buildroot:	/tmp/%{name}-%{version}-root
 Obsoletes:	util-linux-suids
 
@@ -62,7 +60,7 @@ jak login.
 araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma uygulamalarý ve
 login gibi sistem programlarý sayýlabilir.
 
-%package -n losetup
+%package -n	losetup
 Summary:	programs for setting up and configuring loopback devices
 Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
 Summary(fr):	programmes pour mettre en place et configurer les loopback
@@ -111,7 +109,7 @@ fichiers et les périphériques loopback.
 Les périphériques bloc loopback ne doivent pas être confondus avec le
 périphérique loopback du réseau, configuré avec la commande ifconfig normale.
 
-%package -n mount
+%package -n	mount
 Summary:	Programs for mounting and unmounting filesystems
 Summary(de):	Programme zum Montieren und Abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et démonter des systèmes de fichiers.
@@ -157,9 +155,22 @@ gerekir. Ayný zamanda çekirdeðin baðlanmýþ dosya sistemlerine eriþimini
 deðiþtirmek için de kullanýlýr. Bu paket sisteminizin iþlevselliði açýsýndan
 kritiktir.
 
+%package	uprogs
+Summary:	Users programs for manipulate /etc/passwd
+Summary(pl):	Programy u¿ytkowników do manipulacji /etc/passwd 
+Group:		Utilities/System
+Group(pl):	Narzêdzia/System
+Requires:	pam >= 0.66
+
+%description uprogs -l pl
+Programy do manipulacji plikiem /etc/passwd. 
+
+%description uprogs
+Users programs for manipulate /etc/passwd file.
+
 %prep
-%setup -q 
-#%patch0 -p1 
+%setup   -q 
+%patch0  -p1 
 %patch1  -p1 
 %patch2  -p1 
 %patch3  -p1 
@@ -168,16 +179,13 @@ kritiktir.
 %patch6  -p1 
 %patch7  -p1 
 %patch8  -p1 
-#%patch9  -p1 
-%patch10 -p1 
-%patch11 -p1 
-%patch12 -p1 
-%patch13 -p1 
 
 %build
-cp login-utils/login.c login-utils/login.c.new
-sed -e "s/#define DO_PS_FIDDLING//" \
-login-utils/login.c.new > login-utils/login.c
+# First check running Linux release ... 
+RELEASE=`uname -r | head -c 3`
+if [ "$RELEASE" = "2.3" ]; then
+    patch -p1 < $RPM_SOURCE_DIR/%{name}-kernel23.patch
+fi
 
 %configure
 
@@ -186,8 +194,8 @@ make OPT="$RPM_OPT_FLAGS"
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{bin,etc/pam.d,sbin}
-install -d $RPM_BUILD_ROOT/usr/{bin,info,lib,man/man1,man/man6,man/man8,sbin}
+install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}}
+install -d $RPM_BUILD_ROOT/usr/{bin,sbin,lib,share/{info,man/man{1,5,6,8}}}
 
 make install \
 	DESTDIR="$RPM_BUILD_ROOT" \
@@ -219,16 +227,14 @@ echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
 gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
-	*/README.*
+	*/README.* $RPM_BUILD_ROOT%{_infodir}/*
 
 %clean
-#rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
 %doc */README.*
-
-%{_infodir}/ipc.info
 
 %ifarch i386 i486 i586 i686
 %attr(755,root,root) /sbin/clock
@@ -239,9 +245,6 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %endif
 
 %attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/login
-%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chfn
-%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
-%attr(640,root,root) %config(noreplace) %verify(not mtime size md5) /etc/security/*
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/fdprm
 
 %attr(0755,root,root) /bin/arch
@@ -254,8 +257,6 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %attr(0755,root,root) /sbin/ctrlaltdel
 %attr(0755,root,root) /sbin/kbdrate
 %attr(0755,root,root) %{_bindir}/cal
-%attr(4755,root,root) %{_bindir}/chfn
-%attr(4755,root,root) %{_bindir}/chsh
 %attr(0755,root,root) %{_bindir}/col
 %attr(0755,root,root) %{_bindir}/colcrt
 %attr(0755,root,root) %{_bindir}/colrm
@@ -276,7 +277,7 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %attr(0755,root,root) %{_bindir}/setterm
 %attr(0755,root,root) %{_bindir}/tunelp
 %attr(0755,root,root) %{_bindir}/whereis
-%attr(2755,root, tty) %{_bindir}/write
+%attr(2711,root, tty) %{_bindir}/write
 %attr(0755,root,root) %{_bindir}/getopt
 %attr(0755,root,root) %{_bindir}/ipcrm
 %attr(0755,root,root) %{_bindir}/ipcs
@@ -289,15 +290,6 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 
 %{_mandir}/man1/arch.1.gz
 %{_mandir}/man1/readprofile.1.gz
-%{_mandir}/man8/cytune.8.gz
-%{_mandir}/man8/ctrlaltdel.8.gz
-%{_mandir}/man8/dmesg.8.gz
-%{_mandir}/man8/ipcrm.8.gz
-%{_mandir}/man8/ipcs.8.gz
-%{_mandir}/man8/kbdrate.8.gz
-%{_mandir}/man8/renice.8.gz
-%{_mandir}/man8/setsid.8.gz
-%{_mandir}/man8/tunelp.8.gz
 %{_mandir}/man1/login.1.gz
 %{_mandir}/man1/newgrp.1.gz
 %{_mandir}/man1/ddate.1.gz
@@ -313,13 +305,6 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %{_mandir}/man1/whereis.1.gz
 %{_mandir}/man1/write.1.gz
 %{_mandir}/man1/getopt.1.gz
-%{_mandir}/man1/chfn.1.gz
-%{_mandir}/man1/chsh.1.gz
-%{_mandir}/man6/banner.6.gz
-%{_mandir}/man8/vipw.8.gz
-%{_mandir}/man8/fdformat.8.gz
-%{_mandir}/man8/mkswap.8.gz
-%{_mandir}/man8/setfdprm.8.gz
 %{_mandir}/man1/col.1.gz
 %{_mandir}/man1/colcrt.1.gz
 %{_mandir}/man1/colrm.1.gz
@@ -327,6 +312,22 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %{_mandir}/man1/hexdump.1.gz
 %{_mandir}/man1/rev.1.gz
 %{_mandir}/man1/ul.1.gz
+
+%{_mandir}/man6/banner.6.gz
+
+%{_mandir}/man8/cytune.8.gz
+%{_mandir}/man8/ctrlaltdel.8.gz
+%{_mandir}/man8/dmesg.8.gz
+%{_mandir}/man8/ipcrm.8.gz
+%{_mandir}/man8/ipcs.8.gz
+%{_mandir}/man8/kbdrate.8.gz
+%{_mandir}/man8/renice.8.gz
+%{_mandir}/man8/setsid.8.gz
+%{_mandir}/man8/tunelp.8.gz
+%{_mandir}/man8/vipw.8.gz
+%{_mandir}/man8/fdformat.8.gz
+%{_mandir}/man8/mkswap.8.gz
+%{_mandir}/man8/setfdprm.8.gz
 
 %dir %{_libdir}/getopt
 %attr(755,root,root) %{_libdir}/getopt/*
@@ -369,6 +370,8 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %lang(nl)    %{_datadir}/locale/nl/LC_MESSAGES/util-linux.mo
 %lang(pt_BR) %{_datadir}/locale/pt_BR/LC_MESSAGES/util-linux.mo
 
+%{_infodir}/ipc*
+
 %files -n mount
 %defattr(644,root,root,755)
 
@@ -379,6 +382,7 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 
 %{_mandir}/man5/fstab.5.gz
 %{_mandir}/man5/nfs.5.gz
+
 %{_mandir}/man8/mount.8.gz
 %{_mandir}/man8/swapoff.8.gz
 %{_mandir}/man8/swapon.8.gz
@@ -390,7 +394,27 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %{_mandir}/man8/losetup.8.gz
 %attr(755,root,root) /sbin/losetup
 
+%files uprogs
+%defattr(640,root,root,755)
+
+%config(noreplace) %verify(not mtime size md5) /etc/pam.d/chfn
+%config(noreplace) %verify(not mtime size md5) /etc/pam.d/chsh
+%config(noreplace) %verify(not mtime size md5) /etc/security/*
+
+%attr(4711,root,root) %{_bindir}/chfn
+%attr(4711,root,root) %{_bindir}/chsh
+
+%{_mandir}/man1/chfn.1.gz
+%{_mandir}/man1/chsh.1.gz
+
 %changelog
+* Sun May 23 1999 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
+  [2.9r-2]
+- fixes all patches,
+- added patch for possibility build on linux 2.3.x -- dirty but ...,
+- FHS 2.0,
+- added uprogs sub-pakage.
+
 * Thu Apr 22 1999 Tomasz K³oczko <kloczek@rudy.mif.pg.gda.pl>
   [2.9o-10]
 - fixed installing .mo files (util-linux-DESTDIR.patch),
@@ -427,8 +451,10 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 - added mount and loopback subpackage,
 - fixed pl translation.
 - removed tsort -- provides by textutils,
-- by Arkadiusz Mi¶kiewicz <misiek@linstar.zsz2.starachowice.pl>
-  fixed login.c
+
+    Arkadiusz Mi¶kiewicz <misiek@linstar.zsz2.starachowice.pl>
+
+- fixed login.c
   
 * Mon Oct 26 1998 Wojtek ¦lusarczyk <wojtek@shadow.eu.org>
   [2.9-1d]
@@ -451,86 +477,8 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 
 * Sat Aug 29 1998 Konrad Stêpieñ <konrad@interdata.com.pl>
   [2.8-6]
-- reconfigure spec to build non root
-- link man clock to hwclock for i386
-- few simplification in %install
-- added full %attr description in %files
-
-* Sun Aug 23 1998 Jeff Johnson <jbj@redhat.com>
-- add cbm1581 floppy definitions (problem #787)
-
-* Mon Jun 29 1998 Jeff Johnson <jbj@redhat.com>
-- remove /etc/nologin at end of shutdown/halt.
-
-* Fri Jun 19 1998 Jeff Johnson <jbj@redhat.com>
-- add mount/losetup.
-
-* Thu Jun 18 1998 Jeff Johnson <jbj@redhat.com>
-- update to 2.8 with 2.8b clean up. hostid now defunct?
-
-* Mon Jun 01 1998 David S. Miller <davem@dm.cobaltmicro.com>
-- "more" now works properly on sparc
-
-* Sat May 02 1998 Jeff Johnson <jbj@redhat.com>
-- Fix "fdisk -l" fault on mounted cdrom. (prob #513)
-
-* Fri Apr 24 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Sat Apr 11 1998 Cristian Gafton <gafton@redhat.com>
-- manhattan rebuild
-
-* Mon Dec 29 1997 Erik Troan <ewt@redhat.com>
-- more didn't suspend properly on glibc
-- use proper tc*() calls rather then ioctl's
-
-* Sun Dec 21 1997 Cristian Gafton <gafton@redhat.com>
-- fixed a security problem in chfn and chsh accepting too 
-  long gecos fields
-
-* Fri Dec 19 1997 Mike Wangsmo <wanger@redhat.com>
-- removed "." from default path
-
-* Tue Dec 02 1997 Cristian Gafton <gafton@redhat.com>
-- added (again) the vipw patch
-
-* Wed Oct 22 1997 Michael Fulbright <msf@redhat.com>
-- minor cleanups for glibc 2.1
-
-* Fri Oct 17 1997 Michael Fulbright <msf@redhat.com>
-- added vfat32 filesystem type to list recognized by fdisk
-
-* Fri Oct 10 1997 Erik Troan <ewt@redhat.com>
-- don't build clock on the alpha 
-- don't install chkdupexe
-
-* Thu Oct 02 1997 Michael K. Johnson <johnsonm@redhat.com>
-- Update to new pam standard.
-- BuildRoot.
-
-* Thu Sep 25 1997 Cristian Gafton <gafton@redhat.com>
-- added rootok and setproctitle patches
-- updated pam config files for chfn and chsh
-
-* Tue Sep 02 1997 Erik Troan <ewt@redhat.com>
-- updated MCONFIG to automatically determine the architecture
-- added glibc header hacks to fdisk code
-- rdev is only available on the intel
-
-* Fri Jul 18 1997 Erik Troan <ewt@redhat.com>
-- update to util-linux 2.7, fixed login problems
-
-* Wed Jun 25 1997 Erik Troan <ewt@redhat.com>
-- Merged Red Hat changes into main util-linux source, updated package to
-  development util-linux (nearly 2.7).
-
-* Tue Apr 22 1997 Michael K. Johnson <johnsonm@redhat.com>
-- LOG_AUTH --> LOG_AUTHPRIV in login and shutdown
-
-* Mon Mar 03 1997 Michael K. Johnson <johnsonm@redhat.com>
-- Moved to new pam and from pam.conf to pam.d
-
-* Tue Feb 25 1997 Michael K. Johnson <johnsonm@redhat.com>
-- pam.patch differentiated between different kinds of bad logins.
-  In particular, "user does not exist" and "bad password" were treated
-  differently.  This was a minor security hole.
+- reconfigure spec to build non root,
+- link man clock to hwclock for i386,
+- few simplification in %install,
+- added full %attr description in %files,
+- start at RH spec.
