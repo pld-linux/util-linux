@@ -364,10 +364,10 @@ gzip -9fn $RPM_BUILD_ROOT%{_mandir}/man[1568]/* \
 %{_mandir}/man8/ramsize.8.gz
 %endif
 
-%lang(de)    /usr/share/locale/de/LC_MESSAGES/util-linux.mo
-%lang(fr)    /usr/share/locale/fr/LC_MESSAGES/util-linux.mo
-%lang(nl)    /usr/share/locale/nl/LC_MESSAGES/util-linux.mo
-%lang(pt_BR) /usr/share/locale/pt_BR/LC_MESSAGES/util-linux.mo
+%lang(de)    %{_datadir}/locale/de/LC_MESSAGES/util-linux.mo
+%lang(fr)    %{_datadir}/locale/fr/LC_MESSAGES/util-linux.mo
+%lang(nl)    %{_datadir}/locale/nl/LC_MESSAGES/util-linux.mo
+%lang(pt_BR) %{_datadir}/locale/pt_BR/LC_MESSAGES/util-linux.mo
 
 %files -n mount
 %defattr(644,root,root,755)
