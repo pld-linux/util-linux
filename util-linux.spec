@@ -46,7 +46,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
 Requires:	pam >= 0.66
 Requires:	/sbin/install-info
-Buildroot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	util-linux-suids
 
 %description
@@ -410,7 +410,6 @@ rm -rf $RPM_BUILD_ROOT
 %lang(pl) %{_mandir}/pl/man1/colrm.1*
 %lang(pl) %{_mandir}/pl/man1/hexdump.1*
 %lang(pl) %{_mandir}/pl/man1/ul.1*
-
 
 %lang(pl) %{_mandir}/pl/man8/ipcrm.8*
 %lang(pl) %{_mandir}/pl/man8/ipcs.8*
