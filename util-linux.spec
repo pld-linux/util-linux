@@ -103,9 +103,9 @@ sistem araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma
 uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
 
 %package -n losetup
-Summary:	programs for setting up and configuring loopback devices
+Summary:	Programs for setting up and configuring loopback devices
 Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
-Summary(fr):	programmes pour mettre en place et configurer les loopback
+Summary(fr):	Programmes pour mettre en place et configurer les loopback
 Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
 Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Group:		Applications/System
@@ -204,7 +204,7 @@ sisteminizin iþlevselliði açýsýndan kritiktir.
 
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
-Summary(pl):	chkdupexe odszukuje powtarzaj±ce sie pliki uruchamialne
+Summary(pl):	chkdupexe odszukuje powtarzaj±ce siê pliki uruchamialne
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
@@ -220,8 +220,8 @@ katalogi z plikami uruchamialnymi i informuje o powtarzaj±cych siê
 plikach w ró¿nych katalogach.
 
 %package -n tunelp
-Summary:	configures kernel parallel port driver
-Summary(de):	konfiguriert den Kerneltreiber für den parallelen Port
+Summary:	Configures kernel parallel port driver
+Summary(de):	Konfiguriert den Kerneltreiber für den parallelen Port
 Summary(fr):	Configure le pilote du port parallèle dans le noyau
 Summary(pl):	Program do konfigurowania sterownika portu równoleg³ego
 Summary(tr):	Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
@@ -265,18 +265,18 @@ do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
 (jednak wiêkszo¶æ nowoczesnych shelli ma takie funkcje wbudowane).
 
 %package -n agetty
-Summary:	alternative Linux getty
-Summary(pl):	alternatywny getty 
+Summary:	Alternative Linux getty
+Summary(pl):	Alternatywny getty 
 Group:		Applications/System
 Group(de):	Applikationen/System
 Group(pl):	Aplikacje/System
 Requires:	login
 
 %description -n agetty
-agetty is simple linux getty with serial support.
+agetty is simple Linux getty with serial support.
 
 %description -n agetty -l pl
-agetty jest prostym linuxowym getty z obs³ug± portu szeregowego.
+agetty jest prostym linuksowym getty z obs³ug± portu szeregowego.
 
 %package -n rawdevices
 Summary:	Support for raw-devices
