@@ -58,6 +58,7 @@ Patch13:	%{name}-sparcraid.patch
 Patch14:	%{name}-gecos.patch
 Patch15:	%{name}-glibc.patch
 Patch16:	%{name}-s390.patch
+%{!?bcond_off_crypto:Patch17: %{name}-kerneli-fix.patch}
 BuildRequires:	pam-devel >= 0.66
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	gettext-devel
@@ -270,6 +271,7 @@ support for this feature built into them, however).
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%{!?bcond_off_crypto:%patch17 -p1}
 
 %build
 CFLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -I%{_includedir}/ncurses"
