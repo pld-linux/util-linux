@@ -224,7 +224,7 @@ Group:          Utilities/System
 Group(pl):	Narzêdzia/System
 Obsoletes:	heimdal-login
 
-%description login
+%description -n login
 login is used when signing onto a system. It can also be used to
 switch from one user to another at any time (most modern shells have
 support for this feature built into them, however). 
