@@ -1,0 +1,13 @@
+diff -urN util-linux-2.11t.orig/login-utils/setpwnam.c util-linux-2.11t/login-utils/setpwnam.c
+--- util-linux-2.11t.orig/login-utils/setpwnam.c	Mon Jul 31 14:50:39 2000
++++ util-linux-2.11t/login-utils/setpwnam.c	Mon Jul 29 19:37:37 2002
+@@ -98,7 +98,8 @@
+     /* sanity check */
+     for (x = 0; x < 3; x++) {
+ 	if (x > 0) sleep(1);
+-	fd = open(PTMPTMP_FILE, O_WRONLY|O_CREAT, 0644);
++	// newer share the temporary file.
++	fd = open(PTMPTMP_FILE, O_WRONLY|O_CREAT|O_EXCL, 0644);
+ 	if (fd == -1) {
+ 	    umask(oldumask);
+ 	    return -1;
