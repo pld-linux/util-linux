@@ -252,10 +252,10 @@ support for this feature built into them, however).
 
 %build
 
-CFLAGS="$RPM_OPT_FLAGS -I%{_includedir}/ncurses"
+CFLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -I%{_includedir}/ncurses"
 %configure
 
-make	OPT="$RPM_OPT_FLAGS" \
+make	OPT="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} \
 	MOREHELPDIR=%{_datadir}/misc
 
 (cd sys-utils; makeinfo ipc.texi)
@@ -315,8 +315,7 @@ echo	.so hwclock.8 > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
 
-gzip -9fn $RPM_BUILD_ROOT%{_mandir}/{man*/*,pl/man*/*} \
-	*/README.* $RPM_BUILD_ROOT%{_infodir}/*
+gzip -9fn */README.*
 
 %find_lang %{name}
 
