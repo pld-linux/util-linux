@@ -570,6 +570,7 @@ fi
 %{_mandir}/man1/namei.1*
 %{_mandir}/man1/readprofile.1*
 %{_mandir}/man1/rev.1*
+%{_mandir}/man1/rename.1*
 %{_mandir}/man1/script.1*
 %{!?_with_uClibc:%{_mandir}/man1/setterm.1*}
 %{!?_with_uClibc:%{_mandir}/man1/ul.1*}
