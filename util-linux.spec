@@ -1,8 +1,8 @@
 #
 # Conditional build:	
-# bcond_off_crypto	- without kerneli cryptography
-# bcond_off_rawio
-# bcond_on_pivot_root
+# _without_crypto	- without kerneli cryptography
+# _without_rawio
+# _with_pivot_root
 #
 Summary:	Collection of basic system utilities for Linux
 Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -266,9 +266,9 @@ support for this feature built into them, however).
 %patch3 -p1 
 %patch4 -p1
 %if %{_kernel24}
-%{!?bcond_off_crypto:%patch18 -p1}
+%{!?_without_crypto:%patch18 -p1}
 %else
-%{!?bcond_off_crypto:%patch5 -p1}
+%{!?_without_crypto:%patch5 -p1}
 %endif
 %patch6 -p1
 %patch7 -p1
@@ -276,13 +276,13 @@ support for this feature built into them, however).
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%{!?bcond_off_rawio:%patch12 -p1}
+%{!?_without_rawio:%patch12 -p1}
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %if !%{_kernel24}
-%{!?bcond_off_crypto:%patch17 -p1}
+%{!?_without_crypto:%patch17 -p1}
 %endif
 %patch19 -p1
 %patch20 -p1
@@ -293,7 +293,7 @@ CFLAGS="%{!?debug:%{rpmcflags}} %{?debug:-O1} -I%{_includedir}/ncurses"
 
 make	OPT="%{!?debug:%{rpmcflags}} %{?debug:-O1}" \
 	MOREHELPDIR=%{_datadir}/misc \
-	%{!?bcond_off_rawio:ADD_RAW="yes"}
+	%{!?_without_rawio:ADD_RAW="yes"}
 
 (cd sys-utils; makeinfo ipc.texi)
 
@@ -311,7 +311,7 @@ install -d $RPM_BUILD_ROOT/{bin,sbin,etc/{pam.d,logrotate}} \
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
-	%{!?bcond_off_rawio:ADD_RAW="yes"}
+	%{!?_without_rawio:ADD_RAW="yes"}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/pam.d/login
 
@@ -406,7 +406,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(0755,root,root) %{_bindir}/namei
 %attr(0755,root,root) %{_bindir}/newgrp
 %attr(0755,root,root) %{_bindir}/renice
-%{!?bcond_off_rawio:%attr(0755,root,root) %{_bindir}/raw}
+%{!?_without_rawio:%attr(0755,root,root) %{_bindir}/raw}
 %attr(0755,root,root) %{_bindir}/rev
 %attr(0755,root,root) %{_bindir}/script
 %attr(0755,root,root) %{_bindir}/setsid
@@ -458,7 +458,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/renice.8*
 %{_mandir}/man8/setsid.8*
 %{_mandir}/man8/setfdprm.8*
-%{!?bcond_off_rawio:%{_mandir}/man8/raw.8*}
+%{!?_without_rawio:%{_mandir}/man8/raw.8*}
 %{_mandir}/man8/vipw.8*
 
 %lang(pl) %{_mandir}/pl/man1/kill.1*
@@ -520,7 +520,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %attr(4755,root,root) /bin/mount
 %attr(4755,root,root) /bin/umount
-%{?bcond_on_pivot_root:%attr(755,root,root) /sbin/pivot_root}
+%{?_with_pivot_root:%attr(755,root,root) /sbin/pivot_root}
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
@@ -529,7 +529,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/swapoff.8*
-%{?bcond_on_pivot_root:%{_mandir}/man8/pivot_root.8*}
+%{?_with_pivot_root:%{_mandir}/man8/pivot_root.8*}
 %{_mandir}/man8/swapon.8*
 %{_mandir}/man8/umount.8*
 
