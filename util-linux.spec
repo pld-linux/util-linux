@@ -1016,9 +1016,9 @@ fi
 %if %{?_with_uClibc:0}%{!?_with_uClibc:1}
 %files -n rawdevices
 %defattr(644,root,root,755)
-%attr(0755,root,root) %{_bindir}/raw
-%attr(0750,root,root) /etc/rc.d/init.d/rawdevices
-%attr(0640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
+%attr(755,root,root) %{_bindir}/raw
+%attr(750,root,root) /etc/rc.d/init.d/rawdevices
+%attr(640,root,root) %config(noreplace) /etc/sysconfig/rawdevices
 
 %{_mandir}/man8/raw.8*
 %lang(ja) %{_mandir}/ja/man8/raw.8*
