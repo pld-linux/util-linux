@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12q
-Release:	1
+Release:	2
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -53,11 +53,11 @@ BuildRequires:	gettext-devel
 BuildRequires:	grep
 BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
-%{!?with_uClibc:BuildRequires:	pam-devel >= 0.77.3}
+%{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
-%{!?with_uClibc:Requires:	pam >= 0.77.3}
+%{!?with_uClibc:Requires:	pam >= 0.79.0}
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
