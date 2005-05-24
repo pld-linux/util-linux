@@ -1,0 +1,11 @@
+--- util-linux-2.12q/mount/umount.c.orig	2005-05-24 23:24:57 +0000
++++ util-linux-2.12q/mount/umount.c	2005-05-24 23:33:08 +0000
+@@ -41,8 +41,6 @@
+ #include <linux/unistd.h>
+ #ifdef __NR_umount2
+ 
+-static int umount2(const char *path, int flags);
+-
+ _syscall2(int, umount2, const char *, path, int, flags);
+ 
+ #else /* __NR_umount2 */
