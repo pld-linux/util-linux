@@ -48,6 +48,7 @@ Patch15:	%{name}-dm_crypt.patch
 Patch16:	%{name}-blk.patch
 Patch17:	%{name}-managed.patch
 Patch18:	%{name}-page.patch
+Patch19:	%{name}-gcc4.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -357,6 +358,7 @@ Obs³uga raw-device'ów.
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %build
 CC="%{__cc}"
