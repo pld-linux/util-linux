@@ -1,0 +1,20 @@
+
+
+---
+
+ util-linux-2.12-bfields/mount/nfsmount.c |    2 +-
+ 1 files changed, 1 insertion(+), 1 deletion(-)
+
+diff -puN mount/nfsmount.c~mount_sloppy_fix mount/nfsmount.c
+--- util-linux-2.12/mount/nfsmount.c~mount_sloppy_fix	2004-12-13 12:21:52.000000000 -0500
++++ util-linux-2.12-bfields/mount/nfsmount.c	2004-12-13 12:21:52.000000000 -0500
+@@ -712,7 +712,7 @@ parse_options(char *old_opts, struct nfs
+ 					data->flags |= NFS_MOUNT_BROKEN_SUID;
+ 				}
+ #endif
+-			} else {
++			} else if (!sloppy) {
+ 			bad_option:
+ 				printf(_("Unsupported nfs mount option: "
+ 					 "%s%s\n"), val ? "" : "no", opt);
+_

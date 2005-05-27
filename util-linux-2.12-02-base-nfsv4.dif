@@ -1,0 +1,866 @@
+
+Add basic nfsv4 support
+
+---
+
+ util-linux-2.12-bfields/mount/Makefile     |    2 
+ util-linux-2.12-bfields/mount/fstab.5      |    1 
+ util-linux-2.12-bfields/mount/mount.8      |   75 ++++++
+ util-linux-2.12-bfields/mount/mount.c      |   13 +
+ util-linux-2.12-bfields/mount/nfs.5        |  200 +++++++++++++++++
+ util-linux-2.12-bfields/mount/nfs4_mount.h |   82 +++++++
+ util-linux-2.12-bfields/mount/nfs4mount.c  |  335 +++++++++++++++++++++++++++++
+ util-linux-2.12-bfields/mount/nfsmount.c   |    5 
+ util-linux-2.12-bfields/mount/sundries.h   |    2 
+ util-linux-2.12-bfields/mount/umount.c     |    3 
+ 10 files changed, 710 insertions(+), 8 deletions(-)
+
+diff -puN mount/fstab.5~base-nfsv4 mount/fstab.5
+--- util-linux-2.12/mount/fstab.5~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/fstab.5	2004-10-13 13:51:50.000000000 -0400
+@@ -115,6 +115,7 @@ of filesystem types, such as
+ .IR msdos ,
+ .IR ncpfs ,
+ .IR nfs ,
++.IR nfs4 ,
+ .IR ntfs ,
+ .IR proc ,
+ .IR qnx4 ,
+diff -puN mount/Makefile~base-nfsv4 mount/Makefile
+--- util-linux-2.12/mount/Makefile~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/Makefile	2004-10-13 13:51:50.000000000 -0400
+@@ -31,7 +31,7 @@
+ 
+ LO_OBJS = lomount.o $(LIB)/xstrncpy.o
+ CRYPT_OBJS = cryptsetup.o -lcryptsetup
+-NFS_OBJS = nfsmount.o nfsmount_xdr.o
++NFS_OBJS = nfsmount.o nfsmount_xdr.o nfs4mount.o
+ GEN_FILES = nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
+ 
+ all: $(PROGS)
+diff -puN mount/mount.8~base-nfsv4 mount/mount.8
+--- util-linux-2.12/mount/mount.8~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/mount.8	2004-10-13 13:51:50.000000000 -0400
+@@ -370,6 +370,7 @@ currently supported are:
+ .IR msdos ,
+ .IR ncpfs ,
+ .IR nfs ,
++.IR nfs4 ,
+ .IR ntfs ,
+ .IR proc ,
+ .IR qnx4 ,
+@@ -403,7 +404,7 @@ For most types all the
+ program has to do is issue a simple
+ .IR mount (2)
+ system call, and no detailed knowledge of the filesystem type is required.
+-For a few types however (like nfs, smbfs, ncpfs) ad hoc code is
++For a few types however (like nfs, nfs4, smbfs, ncpfs) ad hoc code is
+ necessary. The nfs ad hoc code is built in, but smbfs and ncpfs
+ have a separate mount program. In order to make it possible to
+ treat all types in a uniform way, mount will execute the program
+@@ -451,9 +452,10 @@ or, if that does not exist,
+ All of the filesystem types listed there will be tried,
+ except for those that are labeled "nodev" (e.g.,
+ .IR devpts ,
+-.I proc
++.IR proc ,
++.IR nfs ,
+ and
+-.IR nfs ).
++.IR nfs4 ).
+ If
+ .I /etc/filesystems
+ ends in a line with a single * only, mount will read
+@@ -1243,6 +1245,73 @@ Usually it just causes lots of trouble.
+ .B nolock
+ Do not use locking. Do not start lockd.
+ 
++.SH "Mount options for nfs4"
++Instead of a textual option string, parsed by the kernel, the
++.I nfs4
++file system expects a binary argument of type
++.IR "struct nfs4_mount_data" .
++The program
++.B mount
++itself parses the following options of the form `tag=value',
++and puts them in the structure mentioned:
++.BI rsize= n,
++.BI wsize= n,
++.BI timeo= n,
++.BI retrans= n,
++.BI acregmin= n,
++.BI acregmax= n,
++.BI acdirmin= n,
++.BI acdirmax= n,
++.BI actimeo= n,
++.BI retry= n,
++.BI port= n,
++.BI proto= n,
++.BI clientaddr= n,
++.BI sec= n.
++The option
++.BI addr= n
++is accepted but ignored.
++Also the following Boolean options, possibly preceded by
++.B no
++are recognized:
++.BR bg ,
++.BR fg ,
++.BR soft ,
++.BR hard ,
++.BR intr ,
++.BR cto ,
++.BR ac ,
++For details, see
++.BR nfs (5).
++
++Especially useful options include
++.TP
++.B rsize=32768,wsize=32768
++This will make your NFS connection faster than with the default
++buffer size of 4096.
++.TP
++.B hard
++The program accessing a file on a NFS mounted file system will hang
++when the server crashes. The process cannot be interrupted or
++killed unless you also specify
++.BR intr .
++When the NFS server is back online the program will continue undisturbed
++from where it was. This is probably what you want.
++.TP
++.B soft
++This option allows the kernel to time out if the NFS server is not
++responding for some time. The time can be
++specified with
++.BR timeo=time .
++This timeout value is expressed in tenths of a second.
++The
++.BR soft
++option might be useful if your NFS server sometimes doesn't respond
++or will be rebooted while some process tries to get a file from the server.
++Avoid using this option with
++.BR proto=udp
++or with a short timeout.
++
+ .SH "Mount options for ntfs"
+ .TP
+ .BI iocharset= name
+diff -puN mount/mount.c~base-nfsv4 mount/mount.c
+--- util-linux-2.12/mount/mount.c~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/mount.c	2004-10-13 13:51:50.000000000 -0400
+@@ -821,6 +821,19 @@ retry_nfs:
+ 	              "without support for the type `nfs'"));
+ #endif
+   }
++#ifdef HAVE_NFS
++  /*
++   * NFSv4 support
++   */
++  if (!fake && types && streq (types, "nfs4")) {
++    mnt_err = nfs4mount(spec, node, &flags, &extra_opts, &mount_opts, bg);
++    if (mnt_err)
++      return mnt_err;
++#else
++    die (EX_SOFTWARE, _("mount: this version was compiled "
++	              "without support for the type `nfs4'"));
++#endif
++  }
+ 
+   block_signals (SIG_BLOCK);
+ 
+diff -puN /dev/null mount/nfs4mount.c
+--- /dev/null	2004-08-19 17:44:20.000000000 -0400
++++ util-linux-2.12-bfields/mount/nfs4mount.c	2004-10-13 13:52:38.000000000 -0400
+@@ -0,0 +1,335 @@
++/*
++ * nfs4mount.c -- Linux NFS mount
++ * Copyright (C) 2002 Trond Myklebust <trond.myklebust@fys.uio.no>
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License as published by
++ * the Free Software Foundation; either version 2, or (at your option)
++ * any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * Note: this file based on the original nfsmount.c
++ */
++
++#include "../defines.h"	/* for HAVE_rpcsvc_nfs_prot_h and HAVE_inet_aton */
++
++#include <linux/posix_types.h>
++#include <asm/posix_types.h>
++#undef __FD_CLR
++#undef __FD_SET
++#undef __FD_ISSET
++#undef __FD_ZERO
++
++#include <unistd.h>
++#include <stdio.h>
++#include <string.h>
++#include <errno.h>
++#include <netdb.h>
++#include <time.h>
++#include <sys/socket.h>
++#include <sys/time.h>
++#include <sys/utsname.h>
++#include <sys/stat.h>
++#include <netinet/in.h>
++#include <arpa/inet.h>
++
++#include "sundries.h"
++
++#include "mount_constants.h"
++#include "nfs4_mount.h"
++
++#include "nls.h"
++
++#ifndef NFS_PORT
++#define NFS_PORT 2049
++#endif
++
++static int parse_devname(char *hostdir, char **hostname, char **dirname)
++{
++	char *s;
++
++	if (!(s = strchr(hostdir, ':'))) {
++		fprintf(stderr,
++			_("mount: "
++			  "directory to mount not in host:dir format\n"));
++		return -1;
++	}
++	*hostname = hostdir;
++	*dirname = s + 1;
++	*s = '\0';
++	/* Ignore all but first hostname in replicated mounts
++	   until they can be fully supported. (mack@sgi.com) */
++	if ((s = strchr(hostdir, ','))) {
++		*s = '\0';
++		fprintf(stderr,
++			_("mount: warning: "
++			  "multiple hostnames not supported\n"));
++	}
++	return 0;
++}
++
++static int fill_ipv4_sockaddr(const char *hostname, struct sockaddr_in *addr)
++{
++	struct hostent *hp;
++	addr->sin_family = AF_INET;
++
++	if (inet_aton(hostname, &addr->sin_addr))
++		return 0;
++	if ((hp = gethostbyname(hostname)) == NULL) {
++		fprintf(stderr, _("mount: can't get address for %s\n"),
++			hostname);
++		return -1;
++	}
++	if (hp->h_length > sizeof(struct in_addr)) {
++		fprintf(stderr,
++			_("mount: got bad hp->h_length\n"));
++		hp->h_length = sizeof(struct in_addr);
++	}
++	memcpy(&addr->sin_addr, hp->h_addr, hp->h_length);
++	return 0;
++}
++
++static int get_my_ipv4addr(char *ip_addr, int len)
++{
++	char myname[1024];
++	struct sockaddr_in myaddr;
++
++	if (gethostname(myname, sizeof(myname))) {
++		fprintf(stderr, _("mount: can't determine client address\n"));
++		return -1;
++	}
++	if (fill_ipv4_sockaddr(myname, &myaddr))
++		return -1;
++	snprintf(ip_addr, len, "%s", inet_ntoa(myaddr.sin_addr));
++	ip_addr[len-1] = '\0';
++	return 0;
++}
++
++int nfs4mount(const char *spec, const char *node, int *flags,
++	      char **extra_opts, char **mount_opts,
++	      int running_bg)
++{
++	static struct nfs4_mount_data data;
++	static char hostdir[1024];
++	static char ip_addr[16] = "127.0.0.1";
++	static struct sockaddr_in server_addr;
++	static int pseudoflavour = 0;
++
++	char *hostname, *dirname, *old_opts;
++	char new_opts[1024];
++	char *opt, *opteq;
++	char *s;
++	int val;
++	int bg, soft, intr;
++	int nocto, noac;
++	int retry;
++	int retval;
++
++	retval = EX_FAIL;
++	if (strlen(spec) >= sizeof(hostdir)) {
++		fprintf(stderr, _("mount: "
++				  "excessively long host:dir argument\n"));
++		goto fail;
++	}
++	strcpy(hostdir, spec);
++	if (parse_devname(hostdir, &hostname, &dirname))
++		goto fail;
++
++	if (fill_ipv4_sockaddr(hostname, &server_addr))
++		goto fail;
++	if (get_my_ipv4addr(ip_addr, sizeof(ip_addr)))
++		goto fail;
++
++	/* add IP address to mtab options for use when unmounting */
++	s = inet_ntoa(server_addr.sin_addr);
++	old_opts = *extra_opts;
++	if (!old_opts)
++		old_opts = "";
++	if (strlen(old_opts) + strlen(s) + 10 >= sizeof(new_opts)) {
++		fprintf(stderr, _("mount: "
++				  "excessively long option argument\n"));
++		goto fail;
++	}
++	snprintf(new_opts, sizeof(new_opts), "%s%saddr=%s",
++		 old_opts, *old_opts ? "," : "", s);
++	*extra_opts = xstrdup(new_opts);
++
++	/* Set default options.
++	 * rsize/wsize and timeo are left 0 in order to
++	 * let the kernel decide.
++	 */
++	memset(&data, 0, sizeof(data));
++	data.retrans	= 3;
++	data.acregmin	= 3;
++	data.acregmax	= 60;
++	data.acdirmin	= 30;
++	data.acdirmax	= 60;
++	data.proto	= IPPROTO_TCP;
++
++	bg = 0;
++	soft = 0;
++	intr = 0;
++	nocto = 0;
++	noac = 0;
++	retry = 10000;		/* 10000 minutes ~ 1 week */
++
++	/*
++	 * NFSv4 specifies that the default port should be 2049
++	 */
++	server_addr.sin_port = htons(NFS_PORT);
++
++	/* parse options */
++
++	for (opt = strtok(old_opts, ","); opt; opt = strtok(NULL, ",")) {
++		if ((opteq = strchr(opt, '='))) {
++			val = atoi(opteq + 1);
++			*opteq = '\0';
++			if (!strcmp(opt, "rsize"))
++				data.rsize = val;
++			else if (!strcmp(opt, "wsize"))
++				data.wsize = val;
++			else if (!strcmp(opt, "timeo"))
++				data.timeo = val;
++			else if (!strcmp(opt, "retrans"))
++				data.retrans = val;
++			else if (!strcmp(opt, "acregmin"))
++				data.acregmin = val;
++			else if (!strcmp(opt, "acregmax"))
++				data.acregmax = val;
++			else if (!strcmp(opt, "acdirmin"))
++				data.acdirmin = val;
++			else if (!strcmp(opt, "acdirmax"))
++				data.acdirmax = val;
++			else if (!strcmp(opt, "actimeo")) {
++				data.acregmin = val;
++				data.acregmax = val;
++				data.acdirmin = val;
++				data.acdirmax = val;
++			}
++			else if (!strcmp(opt, "retry"))
++				retry = val;
++			else if (!strcmp(opt, "port"))
++				server_addr.sin_port = htons(val);
++			else if (!strcmp(opt, "proto")) {
++				if (!strncmp(opteq+1, "tcp", 3))
++					data.proto = IPPROTO_TCP;
++				else if (!strncmp(opteq+1, "udp", 3))
++					data.proto = IPPROTO_UDP;
++				else
++					printf(_("Warning: Unrecognized proto= option.\n"));
++			} else if (!strcmp(opt, "clientaddr")) {
++				if (strlen(opteq+1) >= sizeof(ip_addr))
++					printf(_("Invalid client address %s"),
++								opteq+1);
++				strncpy(ip_addr,opteq+1, sizeof(ip_addr));
++				ip_addr[sizeof(ip_addr)-1] = '\0';
++			} else if (!strcmp(opt, "sec")) {
++				if (!strcmp(opteq+1, "krb5"))
++					pseudoflavour = 390003;
++				else if (!strcmp(opteq+1, "krb5i"))
++					pseudoflavour = 390004;
++				else if (!strcmp(opteq+1, "krb5p"))
++					pseudoflavour = 390005;
++				else if (!strcmp(opteq+1, "lipkey"))
++					pseudoflavour = 390006;
++				else if (!strcmp(opteq+1, "lipkey-i"))
++					pseudoflavour = 390007;
++				else if (!strcmp(opteq+1, "lipkey-p"))
++					pseudoflavour = 390008;
++				else if (!strcmp(opteq+1, "spkm3"))
++					pseudoflavour = 390009;
++				else if (!strcmp(opteq+1, "spkm3i"))
++					pseudoflavour = 390010;
++				else if (!strcmp(opteq+1, "spkm3p"))
++					pseudoflavour = 390011;
++				else {
++					printf(_("unknown security type %s\n"),
++							opteq+1);
++					goto fail;
++				}
++			} else if (!strcmp(opt, "addr")) {
++				/* ignore */;
++			} else {
++				printf(_("unknown nfs mount parameter: "
++					 "%s=%d\n"), opt, val);
++				goto fail;
++			}
++		} else {
++			val = 1;
++			if (!strncmp(opt, "no", 2)) {
++				val = 0;
++				opt += 2;
++			}
++			if (!strcmp(opt, "bg"))
++				bg = val;
++			else if (!strcmp(opt, "fg"))
++				bg = !val;
++			else if (!strcmp(opt, "soft"))
++				soft = val;
++			else if (!strcmp(opt, "hard"))
++				soft = !val;
++			else if (!strcmp(opt, "intr"))
++				intr = val;
++			else if (!strcmp(opt, "cto"))
++				nocto = !val;
++			else if (!strcmp(opt, "ac"))
++				noac = !val;
++			else {
++				if (!sloppy) {
++					printf(_("unknown nfs mount option: "
++						 "%s%s\n"), val ? "" : "no", opt);
++					goto fail;
++				}
++			}
++		}
++	}
++
++	data.flags = (soft ? NFS4_MOUNT_SOFT : 0)
++		| (intr ? NFS4_MOUNT_INTR : 0)
++		| (nocto ? NFS4_MOUNT_NOCTO : 0)
++		| (noac ? NFS4_MOUNT_NOAC : 0);
++
++	if (pseudoflavour != 0) {
++		data.auth_flavourlen = 1;
++		data.auth_flavours = &pseudoflavour;
++	}
++
++	data.client_addr.data = ip_addr;
++	data.client_addr.len = strlen(ip_addr);
++
++	data.mnt_path.data = dirname;
++	data.mnt_path.len = strlen(dirname);
++
++	data.hostname.data = hostname;
++	data.hostname.len = strlen(hostname);
++	data.host_addr = (struct sockaddr *)&server_addr;
++	data.host_addrlen = sizeof(server_addr);
++
++#ifdef NFS_MOUNT_DEBUG
++	printf("rsize = %d, wsize = %d, timeo = %d, retrans = %d\n",
++	       data.rsize, data.wsize, data.timeo, data.retrans);
++	printf("acreg (min, max) = (%d, %d), acdir (min, max) = (%d, %d)\n",
++	       data.acregmin, data.acregmax, data.acdirmin, data.acdirmax);
++	printf("port = %d, bg = %d, retry = %d, flags = %.8x\n",
++	       ntohs(server_addr.sin_port), bg, retry, data.flags);
++	printf("soft = %d, intr = %d, nocto = %d, noac = %d\n",
++	       (data.flags & NFS4_MOUNT_SOFT) != 0,
++	       (data.flags & NFS4_MOUNT_INTR) != 0,
++	       (data.flags & NFS4_MOUNT_NOCTO) != 0,
++	       (data.flags & NFS4_MOUNT_NOAC) != 0);
++	printf("proto = %s\n", (data.proto == IPPROTO_TCP) ? "tcp" : "udp");
++#endif
++
++	data.version = NFS4_MOUNT_VERSION;
++
++	*mount_opts = (char *) &data;
++	/* clean up */
++	return 0;
++
++fail:
++	return retval;
++}
+diff -puN /dev/null mount/nfs4_mount.h
+--- /dev/null	2004-08-19 17:44:20.000000000 -0400
++++ util-linux-2.12-bfields/mount/nfs4_mount.h	2004-10-13 13:51:50.000000000 -0400
+@@ -0,0 +1,82 @@
++#ifndef _LINUX_NFS4_MOUNT_H
++#define _LINUX_NFS4_MOUNT_H
++
++/*
++ *  linux/include/linux/nfs4_mount.h
++ *
++ *  Copyright (C) 2002  Trond Myklebust
++ *
++ *  structure passed from user-space to kernel-space during an nfsv4 mount
++ */
++
++/*
++ * WARNING!  Do not delete or change the order of these fields.  If
++ * a new field is required then add it to the end.  The version field
++ * tracks which fields are present.  This will ensure some measure of
++ * mount-to-kernel version compatibility.  Some of these aren't used yet
++ * but here they are anyway.
++ */
++#define NFS4_MOUNT_VERSION	1
++
++struct nfs_string {
++	unsigned int len;
++	const char* data;
++};
++
++struct nfs4_mount_data {
++	int version;				/* 1 */
++	int flags;				/* 1 */
++	int rsize;				/* 1 */
++	int wsize;				/* 1 */
++	int timeo;				/* 1 */
++	int retrans;				/* 1 */
++	int acregmin;				/* 1 */
++	int acregmax;				/* 1 */
++	int acdirmin;				/* 1 */
++	int acdirmax;				/* 1 */
++
++	/* see the definition of 'struct clientaddr4' in RFC3010 */
++	struct nfs_string client_addr;		/* 1 */
++
++	/* Mount path */
++	struct nfs_string mnt_path;		/* 1 */
++
++	/* Server details */
++	struct nfs_string hostname;		/* 1 */
++	/* Server IP address */
++	unsigned int host_addrlen;		/* 1 */
++	struct sockaddr* host_addr;		/* 1 */
++
++	/* Transport protocol to use */
++	int proto;				/* 1 */
++
++	/* Pseudo-flavours to use for authentication. See RFC2623 */
++	int auth_flavourlen;			/* 1 */
++	int *auth_flavours;			/* 1 */
++};
++
++/* bits in the flags field */
++/* Note: the fields that correspond to existing NFSv2/v3 mount options
++ * 	 should mirror the values from include/linux/nfs_mount.h
++ */
++
++#define NFS4_MOUNT_SOFT		0x0001	/* 1 */
++#define NFS4_MOUNT_INTR		0x0002	/* 1 */
++#define NFS4_MOUNT_NOCTO	0x0010	/* 1 */
++#define NFS4_MOUNT_NOAC		0x0020	/* 1 */
++#define NFS4_MOUNT_STRICTLOCK	0x1000	/* 1 */
++#define NFS4_MOUNT_FLAGMASK	0xFFFF
++
++/* pseudoflavors: */
++
++#define RPC_AUTH_GSS_KRB5       390003
++#define RPC_AUTH_GSS_KRB5I      390004
++#define RPC_AUTH_GSS_KRB5P      390005
++#define RPC_AUTH_GSS_LKEY       390006
++#define RPC_AUTH_GSS_LKEYI      390007
++#define RPC_AUTH_GSS_LKEYP      390008
++#define RPC_AUTH_GSS_SPKM       390009
++#define RPC_AUTH_GSS_SPKMI      390010
++#define RPC_AUTH_GSS_SPKMP      390011
++
++#endif
+diff -puN mount/nfs.5~base-nfsv4 mount/nfs.5
+--- util-linux-2.12/mount/nfs.5~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/nfs.5	2004-10-13 13:51:50.000000000 -0400
+@@ -3,7 +3,7 @@
+ .\" patches. "
+ .TH NFS 5 "20 November 1993" "Linux 0.99" "Linux Programmer's Manual"
+ .SH NAME
+-nfs \- nfs fstab format and options
++nfs \- nfs and nfs4 fstab format and options
+ .SH SYNOPSIS
+ .B /etc/fstab
+ .SH DESCRIPTION
+@@ -17,14 +17,51 @@ the local directory that is the mount po
+ and the NFS specific options that control
+ the way the filesystem is mounted.
+ .P
+-Here is an example from an \fI/etc/fstab\fP file from an NFS mount.
++Three different versions of the NFS protocol are
++supported by the Linux NFS client:
++NFS version 2, NFS version 3, and NFS version 4.
++To mount via NFS version 2, use the
++.BR nfs
++file system type and specify
++.BR nfsvers=2 .
++Version 2 is the default protocol version for the
++.BR nfs
++file system type when
++.BR nfsvers=
++is not specified on the mount command.
++To mount via NFS version 3, use the
++.BR nfs
++file system type and specify
++.BR nfsvers=3 .
++To mount via NFS version 4, use the
++.BR nfs4
++file system type.
++The
++.BR nfsvers=
++keyword is not supported for the
++.BR nfs4
++file system type.
++.P
++These file system types share similar mount options;
++the differences are listed below.
++.P
++Here is an example from an \fI/etc/fstab\fP file for an NFSv2 mount
++over UDP.
+ .sp
+ .nf
+ .ta 2.5i +0.75i +0.75i +1.0i
+ server:/usr/local/pub	/pub	nfs	rsize=8192,wsize=8192,timeo=14,intr
+ .fi
++.P
++Here is an example for an NFSv4 mount over TCP using Kerberos
++5 mutual authentication.
++.sp
++.nf
++.ta 2.5i +0.75i +0.75i +1.0i
++server:/usr/local/pub	/pub	nfs4	proto=tcp,sec=krb5,hard,intr
++.fi
+ .DT
+-.SS Options
++.SS Options for the nfs file system type
+ .TP 1.5i
+ .I rsize=n
+ The number of bytes NFS uses when reading files from an NFS server.
+@@ -208,6 +245,163 @@ is the default.
+ All of the non-value options have corresponding nooption forms.
+ For example, nointr means don't allow file operations to be
+ interrupted.
++.SS Options for the nfs4 file system type
++.TP 1.5i
++.I rsize=n
++The number of bytes NFS uses when reading files from an NFS server.
++The default value is dependent on the kernel, currently 4096 bytes.
++(However, throughput is improved greatly by asking for
++.IR rsize=32768 .)
++This value is negotiated with the server.
++.TP 1.5i
++.I wsize=n
++The number of bytes NFS uses when writing files to an NFS server.
++The default value is dependent on the kernel, currently 4096 bytes.
++(However, throughput is improved greatly by asking for
++.IR wsize=32768 .)
++This value is negotiated with the server.
++.TP 1.5i
++.I timeo=n
++The value in tenths of a second before sending the
++first retransmission after an RPC timeout.
++The default value depends on whether
++.IR proto=udp
++or
++.IR proto=tcp
++is in effect (see below).
++The default value for UDP is 7 tenths of a second.
++The default value for TCP is 60 seconds.
++After the first timeout,
++the timeout is doubled after each successive timeout until a maximum
++timeout of 60 seconds is reached or the enough retransmissions
++have occured to cause a major timeout.  Then, if the filesystem
++is hard mounted, each new timeout cascade restarts at twice the
++initial value of the previous cascade, again doubling at each
++retransmission.  The maximum timeout is always 60 seconds.
++.TP 1.5i
++.I retrans=n
++The number of minor timeouts and retransmissions that must occur before
++a major timeout occurs.  The default is 5 timeouts for
++.IR proto=udp
++and 2 timeouts for
++.IR proto=tcp .
++When a major timeout
++occurs, the file operation is either aborted or a "server not responding"
++message is printed on the console.
++.TP 1.5i
++.I acregmin=n
++The minimum time in seconds that attributes of a regular file should
++be cached before requesting fresh information from a server.
++The default is 3 seconds.
++.TP 1.5i
++.I acregmax=n
++The maximum time in seconds that attributes of a regular file can
++be cached before requesting fresh information from a server.
++The default is 60 seconds.
++.TP 1.5i
++.I acdirmin=n
++The minimum time in seconds that attributes of a directory should
++be cached before requesting fresh information from a server.
++The default is 30 seconds.
++.TP 1.5i
++.I acdirmax=n
++The maximum time in seconds that attributes of a directory can
++be cached before requesting fresh information from a server.
++The default is 60 seconds.
++.TP 1.5i
++.I actimeo=n
++Using actimeo sets all of
++.I acregmin,
++.I acregmax,
++.I acdirmin,
++and
++.I acdirmax
++to the same value.
++There is no default value.
++.TP 1.5i
++.I retry=n
++The number of minutes to retry an NFS mount operation
++in the foreground or background before giving up.
++The default value is 10000 minutes, which is roughly one week.
++.TP 1.5i
++.I port=n
++The numeric value of the port to connect to the NFS server on.
++If the port number is 0 (the default) then query the
++remote host's portmapper for the port number to use.
++If the remote host's NFS daemon is not registered with
++its portmapper, the standard NFS port number 2049 is
++used instead.
++.TP 1.5i
++.I proto=n
++Mount the NFS filesystem using a specific network protocol
++instead of the default UDP protocol.
++Many NFS version 4 servers only support TCP.
++Valid protocol types are
++.IR udp
++and
++.IR tcp .
++.TP 1.5i
++.I clientaddr=n
++On a multi-homed client, this
++causes the client to use a specific callback address when
++communicating with an NFS version 4 server.
++This option is currently ignored.
++.TP 1.5i
++.I sec=n
++Specify an advanced security mechanism for this file system.
++To use Kerberos 5 mutual authentication, specify
++.IR krb5 .
++Kerberos 5 integrity checking is specified with
++.IR krb5i ,
++and Kerberos 5 privacy is specified with
++.IR krb5p .
++Other security mechanisms may become available in the future.
++.TP 1.5i
++.I bg
++If an NFS mount attempt times out, retry the mount
++in the background.
++After a mount operation is backgrounded, all subsequent mounts
++on the same NFS server will be backgrounded immediately, without
++first attempting the mount.
++A missing mount point is treated as a timeout,
++to allow for nested NFS mounts.
++.TP 1.5i
++.I fg
++If the first NFS mount attempt times out, retry the mount
++in the foreground.
++This is the complement of the
++.I bg
++option, and also the default behavior.
++.TP 1.5i
++.I soft
++If an NFS file operation has a major timeout then report an I/O error to
++the calling program.
++The default is to continue retrying NFS file operations indefinitely.
++.TP 1.5i
++.I hard
++If an NFS file operation has a major timeout then report
++"server not responding" on the console and continue retrying indefinitely.
++This is the default.
++.TP 1.5i
++.I intr
++If an NFS file operation has a major timeout and it is hard mounted,
++then allow signals to interupt the file operation and cause it to
++return EINTR to the calling program.  The default is to not
++allow file operations to be interrupted.
++.TP 1.5i
++.I nocto
++Suppress the retrieval of new attributes when creating a file.
++.TP 1.5i
++.I noac
++Disable attribute caching, and force synchronous writes.
++This extracts a
++server performance penalty but it allows two different NFS clients
++to get reasonable good results when both clients are actively
++writing to common filesystem on the server.
++.P
++All of the non-value options have corresponding nooption forms.
++For example, nointr means don't allow file operations to be
++interrupted.
+ .SH FILES
+ .I /etc/fstab
+ .SH "SEE ALSO"
+diff -puN mount/nfsmount.c~base-nfsv4 mount/nfsmount.c
+--- util-linux-2.12/mount/nfsmount.c~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/nfsmount.c	2004-10-13 13:51:50.000000000 -0400
+@@ -706,7 +706,10 @@ static inline int
+ nfsmnt_check_compat(const struct pmap *nfs_pmap, const struct pmap *mnt_pmap)
+ {
+ 	if (nfs_pmap->pm_vers > MAX_NFSPROT) {
+-		fprintf(stderr, _("NFSv%ld not supported!\n"), nfs_pmap->pm_vers);
++		if (nfs_pmap->pm_vers == 4)
++			fprintf(stderr, _("'vers=4' is not supported.  Use '-t nfs4' instead.\n"));
++		else
++			fprintf(stderr, _("NFSv%ld not supported!\n"), nfs_pmap->pm_vers);
+ 		goto out_bad;
+ 	}
+ 	if (mnt_pmap->pm_vers > MAX_MNTPROT) {
+diff -puN mount/sundries.h~base-nfsv4 mount/sundries.h
+--- util-linux-2.12/mount/sundries.h~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/sundries.h	2004-10-13 13:51:50.000000000 -0400
+@@ -37,6 +37,8 @@ void die (int errcode, const char *fmt, 
+ #ifdef HAVE_NFS
+ int nfsmount (const char *spec, const char *node, int *flags,
+ 	      char **orig_opts, char **opt_args, int *version, int running_bg);
++int nfs4mount (const char *spec, const char *node, int *flags,
++		char **orig_opts, char **opt_args, int running_bg);
+ int nfsumount(const char *spec, const char *opts);
+ #endif
+ 
+diff -puN mount/umount.c~base-nfsv4 mount/umount.c
+--- util-linux-2.12/mount/umount.c~base-nfsv4	2004-10-13 13:51:50.000000000 -0400
++++ util-linux-2.12-bfields/mount/umount.c	2004-10-13 13:51:50.000000000 -0400
+@@ -89,6 +89,9 @@
+ /* True if ruid != euid.  */
+ int suid = 0;
+ 
++/* Needed by nfs4mount.c */
++int sloppy = 0;
++
+ /*
+  * check_special_umountprog()
+  *	If there is a special umount program for this type, exec it.
+
