@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12q
-Release:	2
+Release:	2.1
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -49,6 +49,12 @@ Patch16:	%{name}-blk.patch
 Patch17:	%{name}-managed.patch
 Patch18:	%{name}-page.patch
 Patch19:	%{name}-gcc4.patch
+Patch20:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-01-nfs.dif
+Patch21:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-02-base-nfsv4.dif
+Patch22:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-03-krb5.dif
+Patch23:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-04-modify_mount_to_support_multiple_security_flavors.dif
+Patch24:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-05-mount_sloppy_fix.dif
+Patch25:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-06-redhat-nfs-mount.dif
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -359,6 +365,12 @@ ObsЁuga raw-device'Сw.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
 
 %build
 CC="%{__cc}"
