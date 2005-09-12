@@ -1,0 +1,5 @@
+- fix race cond in fdisk-sunlabel, causing in some cases new created label NOT be saved on the media.
+- Btw, can someone finally do 2 things:
+  - upgrade trunk util-linu to 2.12q
+  - add this letter at the end of version number. It is important!
+  Thank you.
