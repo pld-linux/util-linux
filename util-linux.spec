@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12q
-Release:	4
+Release:	4.1
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -57,6 +57,8 @@ Patch24:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-
 Patch25:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-06-redhat-nfs-mount.dif
 Patch26:	util-linux-2.12q-update-mtab-when-moving.patch
 Patch27:	util-linux-2.12q-use-update_mtab-for-fake.patch
+Patch28:	util-linux-2.12q-more-fake-checks-v2.patch
+Patch29:	util-linux-2.12q-update_mtab-fixes.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -375,6 +377,8 @@ ObsЁuga raw-device'Сw.
 %patch25 -p1
 %patch26 -p0
 %patch27 -p1
+%patch28 -p0
+%patch29 -p1
 
 %build
 CC="%{__cc}"
