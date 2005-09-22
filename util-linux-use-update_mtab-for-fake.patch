@@ -1,0 +1,16 @@
+Use update_mtab() to update /etc/mtab on fake mounts (mount -f), else we get
+dup entries in /etc/mtab.
+
+Patch by Mike Frysinger <vapier@gentoo.org>, backported to util-linux-2.11w
+
+--- util-linux-2.11w/mount/mount.c.orig	Thu Sep 22 09:13:14 2005
++++ util-linux-2.11w/mount/mount.c	Thu Sep 22 09:15:06 2005
+@@ -631,7 +631,7 @@
+ 	    print_one (&mnt);
+ 
+     if (!nomtab && mtab_is_writable()) {
+-	if (flags & MS_REMOUNT)
++	if (fake || (flags & MS_REMOUNT))
+ 	    update_mtab (mnt.mnt_dir, &mnt);
+ 	else {
+ 	    mntFILE *mfp;
