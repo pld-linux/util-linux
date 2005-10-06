@@ -28,7 +28,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.11w
-%define	_rel	4
+%define	_rel	5
 Release:	%{_rel}
 License:	distributable
 Group:		Applications/System
@@ -57,7 +57,7 @@ Patch13:	%{name}-losetup-getpass.patch
 Patch14:	%{name}-posixsh.patch
 Patch15:	%{name}-ppc-hwclock.patch
 Patch16:	%{name}-chfn_exploid.patch
-Patch17:	%{name}-use-update_mtab-for-fake.patch
+Patch17:	%{name}-disallow-umount-r.patch
 BuildRequires:	gettext-devel
 BuildRequires:	grep
 %{!?_with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
