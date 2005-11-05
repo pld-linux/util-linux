@@ -528,7 +528,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/clock.8*
 %lang(ja) %{_mandir}/ja/man8/hwclock.8*
 
-%attr(640,root,root) %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/fdprm
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/fdprm
 
 %attr(755,root,root) /bin/arch
 %attr(755,root,root) /bin/dmesg
@@ -572,7 +572,7 @@ fi
 %attr(755,root,root) %{_sbindir}/readprofile
 
 %attr(754,root,root) /etc/rc.d/init.d/blockdev
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/blockdev
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/blockdev
 
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
@@ -1029,8 +1029,8 @@ fi
 %if %{without uClibc}
 %files -n login
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/pam.d/login
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/security/blacklist.login
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/login
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/security/blacklist.login
 %attr(755,root,root) /bin/login
 
 %{_mandir}/man1/login.1*
@@ -1057,7 +1057,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/raw
 %attr(754,root,root) /etc/rc.d/init.d/rawdevices
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/rawdevices
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rawdevices
 
 %{_mandir}/man8/raw.8*
 %lang(ja) %{_mandir}/ja/man8/raw.8*
