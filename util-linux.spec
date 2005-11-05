@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12r
-Release:	1
+Release:	1.1
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -29,6 +29,8 @@ Source1:	%{name}-non-english-man-pages.tar.bz2
 Source2:	login.pamd
 Source3:	rawdevices.init
 Source4:	rawdevices.sysconfig
+Source5:	%{name}-blockdev.init
+Source6:	%{name}-blockdev.sysconfig
 Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
@@ -423,6 +425,8 @@ install -d $RPM_BUILD_ROOT{/bin,/sbin,/etc/{pam.d,logrotate,rc.d/init.d,sysconfi
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
+install %{SOURCE5} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
+install %{SOURCE6} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
 
 install -d $RPM_BUILD_ROOT{/etc/security,/var/lock}
 
@@ -474,9 +478,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+/sbin/chkconfig --add blockdev
+if [ -f /var/lock/subsys/blockdev ]; then
+        /etc/rc.d/init.d/blockdev restart 1>&2
+else
+        echo "Run \"/etc/rc.d/init.d/blockdev start\" to start blockdev."
+fi
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
+
+%preun
+if [ -f /var/lock/subsys/blockdev ]; then
+        /etc/rc.d/init.d/blockdev stop 1>&2
+fi
+/sbin/chkconfig --del blockdev
 
 %post -n rawdevices
 /sbin/chkconfig --add rawdevices
