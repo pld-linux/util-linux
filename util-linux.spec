@@ -571,6 +571,9 @@ fi
 %attr(755,root,root) %{_bindir}/tailf
 %attr(755,root,root) %{_sbindir}/readprofile
 
+%attr(754,root,root) /etc/rc.d/init.d/blockdev
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/blockdev
+
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
 %{_mandir}/man1/col.1*
