@@ -71,6 +71,7 @@ BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
 %{!?with_uClibc:Requires:	pam >= 0.79.0}
+Requires(post,preun):	/sbin/chkconfig
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
