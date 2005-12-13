@@ -386,7 +386,7 @@ Obs³uga raw-device'ów.
 %build
 CC="%{__cc}"
 LDFLAGS="%{rpmldflags}"
-CFLAGS="%{rpmcflags} -I%{_includedir}/ncurses"
+CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
 export CC CFLAGS LDFLAGS
 # using %%configure2_13 isn't very wise here, it is not autoconf generated
 # configure and it doesn't take any parameters
