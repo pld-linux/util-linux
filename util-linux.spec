@@ -51,16 +51,16 @@ Patch16:	%{name}-blk.patch
 Patch17:	%{name}-managed.patch
 Patch18:	%{name}-page.patch
 Patch19:	%{name}-gcc4.patch
-Patch20:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-01-nfs.dif
-Patch21:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-02-base-nfsv4.dif
-Patch22:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-03-krb5.dif
-Patch23:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-04-modify_mount_to_support_multiple_security_flavors.dif
-Patch24:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-05-mount_sloppy_fix.dif
-Patch25:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/util-linux-2.12-06-redhat-nfs-mount.dif
-Patch26:	util-linux-2.12q-update-mtab-when-moving.patch
-Patch27:	util-linux-2.12q-use-update_mtab-for-fake.patch
-Patch28:	util-linux-2.12q-more-fake-checks-v2.patch
-Patch29:	util-linux-2.12q-update_mtab-fixes.patch
+Patch20:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/%{name}-2.12-01-nfs.dif
+Patch21:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/%{name}-2.12-02-base-nfsv4.dif
+Patch22:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/%{name}-2.12-03-krb5.dif
+Patch23:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/%{name}-2.12-04-modify_mount_to_support_multiple_security_flavors.dif
+Patch24:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/%{name}-2.12-05-mount_sloppy_fix.dif
+Patch25:	http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/%{name}-2.12-06-redhat-nfs-mount.dif
+Patch26:	%{name}-2.12q-update-mtab-when-moving.patch
+Patch27:	%{name}-2.12q-use-update_mtab-for-fake.patch
+Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
+Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -70,8 +70,8 @@ BuildRequires:	libselinux-devel
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
-%{!?with_uClibc:Requires:	pam >= 0.79.0}
 Requires(post,preun):	/sbin/chkconfig
+%{!?with_uClibc:Requires:	pam >= 0.79.0}
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
@@ -341,8 +341,8 @@ agetty jest prostym linuksowym getty z obs³ug± portu szeregowego.
 Summary:	Support for raw-devices
 Summary(pl):	Obs³uga raw-device'ów
 Group:		Applications/System
-PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 
 %description -n rawdevices
 Support for raw-devices.
@@ -1047,7 +1047,7 @@ fi
 
 %files -n agetty
 %defattr(644,root,root,755)
-%attr(0755,root,root) /sbin/agetty
+%attr(755,root,root) /sbin/agetty
 
 %{_mandir}/man8/agetty.8*
 %lang(es) %{_mandir}/es/man8/agetty.8*
