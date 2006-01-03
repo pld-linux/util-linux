@@ -134,6 +134,7 @@ uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
 
 %package -n blockdev
 Summary:	Support for blockdev
+Summary(pl):	Obs³uga blockdev
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
@@ -143,6 +144,11 @@ Requires:	rc-scripts
 The utility blockdev allows one to call block device ioctls from the
 command line. This package also includes initscript to set blockdev
 parameters at system startup.
+
+%description -n blockdev -l pl
+Narzêdzie blockdev pozwala na wywo³ania ioctl dla urz±dzeñ blokowych z
+linii poleceñ. Ten pakiet zawiera tak¿e skrypt inicjalizacyjny do
+ustawiania parametrów blockdev przy starcie systemu.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
