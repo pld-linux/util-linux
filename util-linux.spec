@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12r
-Release:	2
+Release:	3
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -70,7 +70,6 @@ BuildRequires:	libselinux-devel
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
-Requires(post,preun):	/sbin/chkconfig
 %{!?with_uClibc:Requires:	pam >= 0.79.0}
 Provides:	fdisk
 Obsoletes:	cramfs
@@ -132,6 +131,18 @@ uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
 ÎÅÏÂÈ¦ÄÎ¦ ÄÌÑ ÆÕÎËÃ¦ÏÎÕ×ÁÎÎÑ ÓÉÓÔÅÍÉ Linux. ÷¦Î Í¦ÓÔÉÔØ, ÏËÒ¦Í ¦ÎÛÉÈ,
 ËÏÎÆ¦ÇÕÒÁÃ¦ÊÎ¦ ¦ÎÓÔÒÕÍÅÎÔÉ (ÔÁË¦ ÑË fdisk) ÔÁ ÓÉÓÔÅÍÎ¦ ÐÒÏÇÒÁÍÉ (ÔÁË¦
 ÑË login).
+
+%package -n blockdev
+Summary:	Support for blockdev
+Group:		Applications/System
+Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
+#Requires: uname(release) >= 2.6
+
+%description -n blockdev
+The utility blockdev allows one to call block device ioctls from the
+command line. This package also includes initscript to set blockdev
+parameters at system startup.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
@@ -479,19 +490,21 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
-/sbin/chkconfig --add blockdev
-if [ -f /var/lock/subsys/blockdev ]; then
-        /etc/rc.d/init.d/blockdev restart 1>&2
-else
-        echo "Run \"/etc/rc.d/init.d/blockdev start\" to start blockdev."
-fi
 
 %postun
 [ ! -x /usr/sbin/fix-info-dir ] || /usr/sbin/fix-info-dir -c %{_infodir} >/dev/null 2>&1
 
-%preun
+%post -n blockdev
+/sbin/chkconfig --add blockdev
 if [ -f /var/lock/subsys/blockdev ]; then
-        /etc/rc.d/init.d/blockdev stop 1>&2
+	/etc/rc.d/init.d/blockdev restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/blockdev start\" to start blockdev."
+fi
+
+%preun -n blockdev
+if [ -f /var/lock/subsys/blockdev ]; then
+	/etc/rc.d/init.d/blockdev stop 1>&2
 fi
 /sbin/chkconfig --del blockdev
 
@@ -535,7 +548,6 @@ fi
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
 %{!?with_uClibc:%attr(755,root,root) /bin/more}
-%attr(755,root,root) /sbin/blockdev
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkswap
 %attr(755,root,root) /sbin/ctrlaltdel
@@ -572,9 +584,6 @@ fi
 %attr(755,root,root) %{_bindir}/tailf
 %attr(755,root,root) %{_sbindir}/readprofile
 
-%attr(754,root,root) /etc/rc.d/init.d/blockdev
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/blockdev
-
 %{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
 %{_mandir}/man1/col.1*
@@ -603,7 +612,6 @@ fi
 %{_mandir}/man1/write.1*
 %{_mandir}/man1/tailf.1*
 
-%{_mandir}/man8/blockdev.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/cytune.8*
 %{_mandir}/man8/dmesg.8*
@@ -739,7 +747,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/whereis.1*
 %lang(ja) %{_mandir}/ja/man1/write.1*
 
-%lang(ja) %{_mandir}/ja/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
 %lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/dmesg.8*
@@ -922,6 +929,14 @@ fi
 %{_infodir}/ipc*
 
 %ghost /var/lock/wtmpxlock
+
+%files -n blockdev
+%defattr(644,root,root,755)
+%attr(754,root,root) /etc/rc.d/init.d/blockdev
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/blockdev
+%attr(755,root,root) /sbin/blockdev
+%{_mandir}/man8/blockdev.8*
+%lang(ja) %{_mandir}/ja/man8/blockdev.8*
 
 %files -n mount
 %defattr(644,root,root,755)
