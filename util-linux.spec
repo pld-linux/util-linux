@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12r
-Release:	3
+Release:	4
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -69,6 +69,7 @@ BuildRequires:	grep
 BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
+BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
@@ -140,7 +141,7 @@ Summary(pl):	Obs³uga blockdev
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
-#Requires: uname(release) >= 2.6
+#Requires:	uname(release) >= 2.6
 
 %description -n blockdev
 The utility blockdev allows one to call block device ioctls from the
@@ -157,8 +158,8 @@ Summary:	Programs for setting up and configuring loopback devices
 Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
 Summary(fr):	Programmes pour mettre en place et configurer les loopback
 Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
-Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Summary(ru):	ðÒÏÇÒÁÍÍÙ ÄÌÑ ÎÁÓÔÒÏÊËÉ loopback-ÕÓÔÒÏÊÓÔ×
+Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
 Summary(uk):	ðÒÏÇÒÁÍÉ ÄÌÑ ËÏÎÆ¦ÇÕÒÁÃ¦§ loopback-ÐÒÉÓÔÒÏ§×
 Group:		Applications/System
 
@@ -225,9 +226,9 @@ Summary:	Programs for mounting and unmounting filesystems
 Summary(de):	Programme zum montieren und abmontieren von Dateisystemen
 Summary(fr):	Programme pour monter et démonter des systèmes de fichiers
 Summary(pl):	Programy do montowania i odmontowywania systemów plików
+Summary(ru):	ðÒÏÇÒÁÍÍÙ ÄÌÑ ÍÏÎÔÉÒÏ×ÁÎÉÑ É ÒÁÚÍÏÎÔÉÒÏ×ÁÎÉÑ ÆÁÊÌÏ×ÙÈ ÓÉÓÔÅÍ
 Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
 Summary(uk):	ðÒÏÇÒÁÍÉ ÄÌÑ ÍÏÎÔÕ×ÁÎÎÑ ÔÁ ÒÏÚÍÏÎÔÕ×ÁÎÎÑ ÆÁÊÌÏ×ÉÈ ÓÉÓÔÅÍ
-Summary(ru):	ðÒÏÇÒÁÍÍÙ ÄÌÑ ÍÏÎÔÉÒÏ×ÁÎÉÑ É ÒÁÚÍÏÎÔÉÒÏ×ÁÎÉÑ ÆÁÊÌÏ×ÙÈ ÓÉÓÔÅÍ
 Group:		Applications/System
 Requires:	cryptsetup >= 0.2-1.pre1.4
 Requires:	libgcrypt >= 1.2.0-6
@@ -504,31 +505,23 @@ rm -rf $RPM_BUILD_ROOT
 
 %post -n blockdev
 /sbin/chkconfig --add blockdev
-if [ -f /var/lock/subsys/blockdev ]; then
-	/etc/rc.d/init.d/blockdev restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/blockdev start\" to start blockdev."
-fi
+%service blockdev restart
 
 %preun -n blockdev
-if [ -f /var/lock/subsys/blockdev ]; then
-	/etc/rc.d/init.d/blockdev stop 1>&2
+if [ "$1" = "0" ]; then
+	%service blockdev stop
+	/sbin/chkconfig --del blockdev
 fi
-/sbin/chkconfig --del blockdev
 
 %post -n rawdevices
 /sbin/chkconfig --add rawdevices
-if [ -f /var/lock/subsys/rawdevices ]; then
-	/etc/rc.d/init.d/rawdevices restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/rawdevices start\" to start rawdevices."
-fi
+%service rawdevices restart
 
 %preun -n rawdevices
-if [ -f /var/lock/subsys/rawdevices ]; then
-	/etc/rc.d/init.d/rawdevices stop 1>&2
+if [ "$1" = "0" ]; then
+	%service rawdevices stop
+	/sbin/chkconfig --del rawdevices
 fi
-/sbin/chkconfig --del rawdevices
 
 %files %{!?with_uClibc:-f %{name}.lang}
 %defattr(644,root,root,755)
