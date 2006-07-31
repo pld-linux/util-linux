@@ -70,6 +70,7 @@ BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
@@ -402,6 +403,7 @@ Obs³uga raw-device'ów.
 %patch27 -p1
 %patch28 -p0
 %patch29 -p1
+sed 's/-lncurses/-lncurses -ltinfo/' -i configure
 
 %build
 CC="%{__cc}"
