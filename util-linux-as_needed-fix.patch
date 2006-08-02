@@ -1,0 +1,12 @@
+diff -Nur util-linux-2.12r/configure util-linux-2.12r.as_needed-fix/configure
+--- util-linux-2.12r/configure	2006-08-02 02:46:38.000000000 +0200
++++ util-linux-2.12r.as_needed-fix/configure	2006-08-02 02:46:40.000000000 +0200
+@@ -445,7 +445,7 @@
+ 	echo "HAVE_NCURSES=no" >> make_include
+ 	echo "You don't have ncurses - I will not make ul and setterm."
+ else
+-	echo "LIBCURSES=-lncurses" >> make_include
++	echo "LIBCURSES=-lncurses -ltinfo" >> make_include
+ 	echo "#define HAVE_ncurses" >> defines.h
+ fi
+ 
