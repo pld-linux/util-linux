@@ -63,6 +63,7 @@ Patch26:	%{name}-2.12q-update-mtab-when-moving.patch
 Patch27:	%{name}-2.12q-use-update_mtab-for-fake.patch
 Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
 Patch29:	%{name}-2.12q-update_mtab-fixes.patch
+Patch30:	%{name}-as_needed-fix.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	grep
@@ -70,7 +71,6 @@ BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
@@ -403,7 +403,7 @@ Obs³uga raw-device'ów.
 %patch27 -p1
 %patch28 -p0
 %patch29 -p1
-sed 's/-lncurses/-lncurses -ltinfo/' -i configure
+%patch30 -p1
 
 %build
 CC="%{__cc}"
