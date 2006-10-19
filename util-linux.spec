@@ -66,13 +66,11 @@ Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 Patch30:	%{name}-as_needed-fix.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
-BuildRequires:	grep
 BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
-BuildRequires:	textutils
 %{!?with_uClibc:BuildRequires:	zlib-devel}
 %{!?with_uClibc:Requires:	pam >= 0.79.0}
 Provides:	fdisk
@@ -141,6 +139,7 @@ Summary:	Support for blockdev
 Summary(pl):	Obs³uga blockdev
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
+Requires:	coreutils
 Requires:	rc-scripts
 #Requires:	uname(release) >= 2.6
 
