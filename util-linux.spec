@@ -17,7 +17,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12r
-Release:	4
+Release:	5
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
