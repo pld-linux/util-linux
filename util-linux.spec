@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_with	uClibc	# don't build few utilities
+%bcond_without	selinux # build without SELinux support
 #
 # TODO:
 # - move raw to /sbin (potentially can be used before mount partitions)??
@@ -419,6 +420,7 @@ export CC CFLAGS LDFLAGS
 	MOREHELPDIR=%{_datadir}/misc \
 	%{!?with_uClibc:ADD_RAW="yes"} \
 	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"} \
+	%{!?with_selinux:HAVE_SELINUX="no"}
 
 %ifarch ppc
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
