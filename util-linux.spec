@@ -1046,7 +1046,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/tunelp.8*
 %lang(pl) %{_mandir}/pl/man8/tunelp.8*
 
-%if %{without uClibc}
+%if !%{with uClibc}
 %files -n login
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/login
@@ -1072,7 +1072,7 @@ fi
 %lang(es) %{_mandir}/es/man8/agetty.8*
 %lang(ja) %{_mandir}/ja/man8/agetty.8*
 
-%if %{without uClibc}
+%if !%{with uClibc}
 %files -n rawdevices
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/raw
