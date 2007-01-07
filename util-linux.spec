@@ -67,7 +67,7 @@ Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 Patch30:	%{name}-as_needed-fix.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
-BuildRequires:	libselinux-devel
+%{?with_selinux:BuildRequires:	libselinux-devel}
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
 BuildRequires:	rpmbuild(macros) >= 1.268
@@ -443,6 +443,7 @@ install -d $RPM_BUILD_ROOT{/bin,/sbin,/etc/{pam.d,logrotate,rc.d/init.d,sysconfi
 	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
 	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
 	USE_TTY_GROUP=no \
+	%{!?with_selinux:HAVE_SELINUX="no"} \
 	%{!?with_uClibc:ADD_RAW="yes"} \
 	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
 
