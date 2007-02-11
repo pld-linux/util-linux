@@ -18,7 +18,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12r
-Release:	6
+Release:	7
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -69,11 +69,11 @@ BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
-%{!?with_uClibc:BuildRequires:	pam-devel >= 0.79.0}
+%{!?with_uClibc:BuildRequires:	pam-devel >= 0.99.7.1}
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 %{!?with_uClibc:BuildRequires:	zlib-devel}
-%{!?with_uClibc:Requires:	pam >= 0.79.0}
+%{!?with_uClibc:Requires:	pam >= 0.99.7.1}
 Provides:	fdisk
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
@@ -333,7 +333,7 @@ Paralel baðlantý noktasý sürücüsünü ayarlar.
 Summary:	login is used when signing onto a system
 Summary(pl):	login jest u¿ywany do rozpoczêcia pracy w systemie
 Group:		Applications/System
-Requires:	pam >= 0.77.3
+Requires:	pam >= 0.99.7.1
 Obsoletes:	heimdal-login
 
 %description -n login
