@@ -7,14 +7,14 @@
 # - move raw to /sbin (potentially can be used before mount partitions)??
 
 Summary:	Collection of basic system utilities for Linux
-Summary(de):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
-Summary(es):	Colectánea de utilitarios básicos de sistema para Linux
-Summary(fr):	Ensemble d'utilitaires système de base pour Linux
-Summary(pl):	Zbiór podstawowych narzêdzi systemowych dla Linuksa
-Summary(pt_BR):	Coletânea de utilitários básicos de sistema para Linux
-Summary(ru):	îÁÂÏÒ ÂÁÚÏ×ÙÈ ÓÉÓÔÅÍÎÙÈ ÕÔÉÌÉÔ ÄÌÑ Linux
-Summary(tr):	Temel sistem araçlarý
-Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
+Summary(de.UTF-8):   Sammlung von grundlegenden Systemdienstprogrammen fÃ¼r Linux
+Summary(es.UTF-8):   ColectÃ¡nea de utilitarios bÃ¡sicos de sistema para Linux
+Summary(fr.UTF-8):   Ensemble d'utilitaires systÃ¨me de base pour Linux
+Summary(pl.UTF-8):   ZbiÃ³r podstawowych narzÄ™dzi systemowych dla Linuksa
+Summary(pt_BR.UTF-8):   ColetÃ¢nea de utilitÃ¡rios bÃ¡sicos de sistema para Linux
+Summary(ru.UTF-8):   ÐÐ°Ð±Ð¾Ñ€ Ð±Ð°Ð·Ð¾Ð²Ñ‹Ñ… ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ñ‹Ñ… ÑƒÑ‚Ð¸Ð»Ð¸Ñ‚ Ð´Ð»Ñ Linux
+Summary(tr.UTF-8):   Temel sistem araÃ§larÄ±
+Summary(uk.UTF-8):   ÐÐ°Ð±Ñ–Ñ€ Ð±Ð°Ð·Ð¾Ð²Ð¸Ñ… ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¸Ñ… ÑƒÑ‚Ð¸Ð»Ñ–Ñ‚ Ð´Ð»Ñ Linux
 Name:		util-linux
 Version:	2.12
 Release:	11
@@ -72,61 +72,61 @@ necessary for a functional Linux system. This includes, among other
 things, configuration tools such as fdisk and system programs such as
 logger.
 
-%description -l de
-util-linux enthält eine große Anzahl an
-low-level-Systemdienstprogrammen, die für ein funktionierendes
-Linux-System erforderlich sind. Dazu gehören Konfigurationstools wie
+%description -l de.UTF-8
+util-linux enthÃ¤lt eine groÃŸe Anzahl an
+low-level-Systemdienstprogrammen, die fÃ¼r ein funktionierendes
+Linux-System erforderlich sind. Dazu gehÃ¶ren Konfigurationstools wie
 'fdisk' und Systemprogramme wie 'logger'.
 
-%description -l es
+%description -l es.UTF-8
 util-linux contiene una gran variedad de utilitarios de sistema de
 bajo nivel necesarios a un sistema Linux funcional. Esto incluye,
-entre otras cosas, herramientas de configuración como fdisk y
+entre otras cosas, herramientas de configuraciÃ³n como fdisk y
 programas de sistema como login.
 
-%description -l fr
-util-linux contient une grande variété d'utilitaire système bas niveau
-nécessaires au fonctionnement d'un système Linux. Cela comprend, entre
+%description -l fr.UTF-8
+util-linux contient une grande variÃ©tÃ© d'utilitaire systÃ¨me bas niveau
+nÃ©cessaires au fonctionnement d'un systÃ¨me Linux. Cela comprend, entre
 autres, les outils de configuration comme fdisk et des programmes
-systèmes comme logger.
+systÃ¨mes comme logger.
 
-%description -l pl
-util-linux zawiera wiele ró¿nych, niskopoziomowych narzêdzi
-systemowych niezbêdnych do prawid³owego dzia³ania Linuksa. W pakiecie
-znajduj± siê miêdzy innymi narzêdzia konfiguracyjne, takie jak fdisk i
+%description -l pl.UTF-8
+util-linux zawiera wiele rÃ³Å¼nych, niskopoziomowych narzÄ™dzi
+systemowych niezbÄ™dnych do prawidÅ‚owego dziaÅ‚ania Linuksa. W pakiecie
+znajdujÄ… siÄ™ miÄ™dzy innymi narzÄ™dzia konfiguracyjne, takie jak fdisk i
 programy systemowe, takie jak logger.
 
-%description -l pt_BR
-util-linux contém uma grande variedade de utilitários de sistema de
-baixo-nível necessários para um sistema Linux funcional. Isso inclui,
-entre outras coisas, ferramentas de configuração como fdisk e
+%description -l pt_BR.UTF-8
+util-linux contÃ©m uma grande variedade de utilitÃ¡rios de sistema de
+baixo-nÃ­vel necessÃ¡rios para um sistema Linux funcional. Isso inclui,
+entre outras coisas, ferramentas de configuraÃ§Ã£o como fdisk e
 programas de sistema como login.
 
-%description -l ru
-üÔÏÔ ÐÁËÅÔ ÓÏÄÅÒÖÉÔ ÂÏÌØÛÏÊ ÎÁÂÏÒ ÓÉÓÔÅÍÎÙÈ ÕÔÉÌÉÔ ÎÉÚËÏÇÏ ÕÒÏ×ÎÑ,
-ËÏÔÏÒÙÅ ÎÅÏÂÈÏÄÉÍÙ ÄÌÑ ÆÕÎËÃÉÏÎÉÒÏ×ÁÎÉÑ ÓÉÓÔÅÍÙ Linux. ïÎ ×ËÌÀÞÁÅÔ, ×
-ÞÉÓÌÅ ÐÒÏÞÉÈ, ÉÎÓÔÒÕÍÅÎÔÙ ËÏÎÆÉÇÕÒÁÃÉÉ, ÔÁËÉÅ ËÁË fdisk, É ÓÉÓÔÅÍÎÙÅ
-ÐÒÏÇÒÁÍÍÙ, ÔÁËÉÅ ËÁË login.
+%description -l ru.UTF-8
+Ð­Ñ‚Ð¾Ñ‚ Ð¿Ð°ÐºÐµÑ‚ ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ Ð±Ð¾Ð»ÑŒÑˆÐ¾Ð¹ Ð½Ð°Ð±Ð¾Ñ€ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ñ‹Ñ… ÑƒÑ‚Ð¸Ð»Ð¸Ñ‚ Ð½Ð¸Ð·ÐºÐ¾Ð³Ð¾ ÑƒÑ€Ð¾Ð²Ð½Ñ,
+ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ Ð½ÐµÐ¾Ð±Ñ…Ð¾Ð´Ð¸Ð¼Ñ‹ Ð´Ð»Ñ Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¾Ð½Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹ Linux. ÐžÐ½ Ð²ÐºÐ»ÑŽÑ‡Ð°ÐµÑ‚, Ð²
+Ñ‡Ð¸ÑÐ»Ðµ Ð¿Ñ€Ð¾Ñ‡Ð¸Ñ…, Ð¸Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ñ‹ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸, Ñ‚Ð°ÐºÐ¸Ðµ ÐºÐ°Ðº fdisk, Ð¸ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ñ‹Ðµ
+Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹, Ñ‚Ð°ÐºÐ¸Ðµ ÐºÐ°Ðº login.
 
-%description -l tr
-þlevsel durumdaki bir Linux sistemi için gerekli birçok alt düzey
-sistem araçlarýný içerir. Bunlar arasýnda fdisk gibi yapýlandýrma
-uygulamalarý ve logger gibi sistem programlarý sayýlabilir.
+%description -l tr.UTF-8
+ÅŸlevsel durumdaki bir Linux sistemi iÃ§in gerekli birÃ§ok alt dÃ¼zey
+sistem araÃ§larÄ±nÄ± iÃ§erir. Bunlar arasÄ±nda fdisk gibi yapÄ±landÄ±rma
+uygulamalarÄ± ve logger gibi sistem programlarÄ± sayÄ±labilir.
 
-%description -l uk
-ãÅÊ ÐÁËÅÔ Í¦ÓÔÉÔØ ×ÅÌÉËÉÊ ÎÁÂ¦Ò ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÎÉÚØËÏÇÏ Ò¦×ÎÑ, ÑË¦
-ÎÅÏÂÈ¦ÄÎ¦ ÄÌÑ ÆÕÎËÃ¦ÏÎÕ×ÁÎÎÑ ÓÉÓÔÅÍÉ Linux. ÷¦Î Í¦ÓÔÉÔØ, ÏËÒ¦Í ¦ÎÛÉÈ,
-ËÏÎÆ¦ÇÕÒÁÃ¦ÊÎ¦ ¦ÎÓÔÒÕÍÅÎÔÉ (ÔÁË¦ ÑË fdisk) ÔÁ ÓÉÓÔÅÍÎ¦ ÐÒÏÇÒÁÍÉ (ÔÁË¦
-ÑË login).
+%description -l uk.UTF-8
+Ð¦ÐµÐ¹ Ð¿Ð°ÐºÐµÑ‚ Ð¼Ñ–ÑÑ‚Ð¸Ñ‚ÑŒ Ð²ÐµÐ»Ð¸ÐºÐ¸Ð¹ Ð½Ð°Ð±Ñ–Ñ€ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¸Ñ… ÑƒÑ‚Ð¸Ð»Ñ–Ñ‚ Ð½Ð¸Ð·ÑŒÐºÐ¾Ð³Ð¾ Ñ€Ñ–Ð²Ð½Ñ, ÑÐºÑ–
+Ð½ÐµÐ¾Ð±Ñ…Ñ–Ð´Ð½Ñ– Ð´Ð»Ñ Ñ„ÑƒÐ½ÐºÑ†Ñ–Ð¾Ð½ÑƒÐ²Ð°Ð½Ð½Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ð¸ Linux. Ð’Ñ–Ð½ Ð¼Ñ–ÑÑ‚Ð¸Ñ‚ÑŒ, Ð¾ÐºÑ€Ñ–Ð¼ Ñ–Ð½ÑˆÐ¸Ñ…,
+ÐºÐ¾Ð½Ñ„Ñ–Ð³ÑƒÑ€Ð°Ñ†Ñ–Ð¹Ð½Ñ– Ñ–Ð½ÑÑ‚Ñ€ÑƒÐ¼ÐµÐ½Ñ‚Ð¸ (Ñ‚Ð°ÐºÑ– ÑÐº fdisk) Ñ‚Ð° ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ñ– Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¸ (Ñ‚Ð°ÐºÑ–
+ÑÐº login).
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
-Summary(de):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
-Summary(fr):	Programmes pour mettre en place et configurer les loopback
-Summary(pl):	Program do konfiguracji urz±dzenia blokowego loopback
-Summary(tr):	Yerel-çevrim aygýtlarýnýn kurulmasý ve ayarlanmasý için programlar
-Summary(ru):	ðÒÏÇÒÁÍÍÙ ÄÌÑ ÎÁÓÔÒÏÊËÉ loopback-ÕÓÔÒÏÊÓÔ×
-Summary(uk):	ðÒÏÇÒÁÍÉ ÄÌÑ ËÏÎÆ¦ÇÕÒÁÃ¦§ loopback-ÐÒÉÓÔÒÏ§×
+Summary(de.UTF-8):   Programme zum Einrichten und Konfigurieren von Loopback-GerÃ¤ten
+Summary(fr.UTF-8):   Programmes pour mettre en place et configurer les loopback
+Summary(pl.UTF-8):   Program do konfiguracji urzÄ…dzenia blokowego loopback
+Summary(tr.UTF-8):   Yerel-Ã§evrim aygÄ±tlarÄ±nÄ±n kurulmasÄ± ve ayarlanmasÄ± iÃ§in programlar
+Summary(ru.UTF-8):   ÐŸÑ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ Ð´Ð»Ñ Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸ loopback-ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²
+Summary(uk.UTF-8):   ÐŸÑ€Ð¾Ð³Ñ€Ð°Ð¼Ð¸ Ð´Ð»Ñ ÐºÐ¾Ð½Ñ„Ñ–Ð³ÑƒÑ€Ð°Ñ†Ñ–Ñ— loopback-Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾Ñ—Ð²
 Group:		Applications/System
 
 %description -n losetup
@@ -138,63 +138,63 @@ files and loopback devices.
 Block loopback devices should not be confused with the networking
 loopback device, which is configured with the normal ifconfig command.
 
-%description -n losetup -l de
-Linux unterstützt ein spezielles Blockgerät, das sogenannte Loopback,
-das eine normale Datei auf ein virtuelles Blockgerät abbildet. Das
-Paket enthält Programme zum Einrichten und Entfernen der Zuordnung
-zwischen Dateien und Loopback-Geräten.
+%description -n losetup -l de.UTF-8
+Linux unterstÃ¼tzt ein spezielles BlockgerÃ¤t, das sogenannte Loopback,
+das eine normale Datei auf ein virtuelles BlockgerÃ¤t abbildet. Das
+Paket enthÃ¤lt Programme zum Einrichten und Entfernen der Zuordnung
+zwischen Dateien und Loopback-GerÃ¤ten.
 
-%description -n losetup -l fr
-Linux gère un périphérique bloc spécial appelé « loopback », qui
-correspond à un fichier normal sur un périphérique bloc virtuel. Ce
+%description -n losetup -l fr.UTF-8
+Linux gÃ¨re un pÃ©riphÃ©rique bloc spÃ©cial appelÃ© Â« loopback Â», qui
+correspond Ã  un fichier normal sur un pÃ©riphÃ©rique bloc virtuel. Ce
 paquetage contient les programmes pour configurer et supprimer la
-correspondance entre les fichiers et les périphériques loopback.
+correspondance entre les fichiers et les pÃ©riphÃ©riques loopback.
 
-Les périphériques bloc loopback ne doivent pas être confondus avec le
-périphérique loopback du réseau, configuré avec la commande ifconfig
+Les pÃ©riphÃ©riques bloc loopback ne doivent pas Ãªtre confondus avec le
+pÃ©riphÃ©rique loopback du rÃ©seau, configurÃ© avec la commande ifconfig
 normale.
 
-%description -n losetup -l pl
-Linux wspiera specjalne urz±dzenie blokowe loopback, które mapuje
-normalny plik w wirtualne urz±dzenie blokowe. Pakiet ten zawiera
-program, przy pomocy którego bêdziesz móg³ je skonfigurowaæ.
+%description -n losetup -l pl.UTF-8
+Linux wspiera specjalne urzÄ…dzenie blokowe loopback, ktÃ³re mapuje
+normalny plik w wirtualne urzÄ…dzenie blokowe. Pakiet ten zawiera
+program, przy pomocy ktÃ³rego bÄ™dziesz mÃ³gÅ‚ je skonfigurowaÄ‡.
 
-Urz±dzenie blokowe loopback nie powinno byæ mylone z sieciowym
-interfejsem loopback, który jest konfigurowany przy pomocy polecenia
+UrzÄ…dzenie blokowe loopback nie powinno byÄ‡ mylone z sieciowym
+interfejsem loopback, ktÃ³ry jest konfigurowany przy pomocy polecenia
 ifconfig.
 
-%description -n losetup -l ru
-Linux ÐÏÄÄÅÒÖÉ×ÁÅÔ ÓÐÅÃÉÁÌØÎÏÅ ÂÌÏÞÎÏÅ ÕÓÔÒÏÊÓÔ×Ï, ÎÁÚÙ×ÁÅÍÏÅ
-loopback, ËÏÔÏÒÏÅ ÏÔÏÂÒÁÖÁÅÔ ÏÂÙÞÎÙÊ ÆÁÊÌ × ×ÉÒÔÕÁÌØÎÏÅ ÂÌÏÞÎÏÅ
-ÕÓÔÒÏÊÓÔ×Ï. üÔÏ ÐÏÚ×ÏÌÑÅÔ ÉÓÐÏÌØÚÏ×ÁÔØ ÆÁÊÌ ËÁË ×ÉÒÔÕÁÌØÎÕÀ ÆÁÊÌÏ×ÕÀ
-ÓÉÓÔÅÍÕ. Losetup ÉÓÐÏÌØÚÕÅÔÓÑ ÄÌÑ Ó×ÑÚÉ loopback-ÕÓÔÒÏÊÓÔ× Ó ÏÂÙÞÎÙÍÉ
-ÆÁÊÌÁÍÉ ÉÌÉ ÂÌÏÞÎÙÍÉ ÕÓÔÒÏÊÓÔ×ÁÍÉ, ÄÌÑ ÏÔÓÏÅÄÉÎÅÎÉÑ loopback-ÕÓÔÒÏÊÓÔ×
-É ÚÁÐÒÏÓÏ× ÉÈ ÓÔÁÔÕÓÁ.
+%description -n losetup -l ru.UTF-8
+Linux Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÐµÑ‚ ÑÐ¿ÐµÑ†Ð¸Ð°Ð»ÑŒÐ½Ð¾Ðµ Ð±Ð»Ð¾Ñ‡Ð½Ð¾Ðµ ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð¾, Ð½Ð°Ð·Ñ‹Ð²Ð°ÐµÐ¼Ð¾Ðµ
+loopback, ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ðµ Ð¾Ñ‚Ð¾Ð±Ñ€Ð°Ð¶Ð°ÐµÑ‚ Ð¾Ð±Ñ‹Ñ‡Ð½Ñ‹Ð¹ Ñ„Ð°Ð¹Ð» Ð² Ð²Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð¾Ðµ Ð±Ð»Ð¾Ñ‡Ð½Ð¾Ðµ
+ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð¾. Ð­Ñ‚Ð¾ Ð¿Ð¾Ð·Ð²Ð¾Ð»ÑÐµÑ‚ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ Ñ„Ð°Ð¹Ð» ÐºÐ°Ðº Ð²Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½ÑƒÑŽ Ñ„Ð°Ð¹Ð»Ð¾Ð²ÑƒÑŽ
+ÑÐ¸ÑÑ‚ÐµÐ¼Ñƒ. Losetup Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐµÑ‚ÑÑ Ð´Ð»Ñ ÑÐ²ÑÐ·Ð¸ loopback-ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð² Ñ Ð¾Ð±Ñ‹Ñ‡Ð½Ñ‹Ð¼Ð¸
+Ñ„Ð°Ð¹Ð»Ð°Ð¼Ð¸ Ð¸Ð»Ð¸ Ð±Ð»Ð¾Ñ‡Ð½Ñ‹Ð¼Ð¸ ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð°Ð¼Ð¸, Ð´Ð»Ñ Ð¾Ñ‚ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ loopback-ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²
+Ð¸ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ¾Ð² Ð¸Ñ… ÑÑ‚Ð°Ñ‚ÑƒÑÐ°.
 
-%description -n losetup -l tr
-Linux özel bir blok aygýt olan yerel-çevrim aygýtýný (loopback device)
-destekler. Bu aygýt normal bir dosyanýn sanal bir blok aygýtý üzerine
-haritasýný çýkarýr. Bu paket, dosyalar ve yerel-çevrim aygýtlarý
-arasýndaki haritalama iþleminin kurulmasý ve kaldýrýlmasý için
-programlar içerir. Blok yerel-çevrim aygýtý ifconfig komutu ile
-yapýlandýrýlan að yerel-çevrim aygýtý ile karýþtýrýlmamalýdýr.
+%description -n losetup -l tr.UTF-8
+Linux Ã¶zel bir blok aygÄ±t olan yerel-Ã§evrim aygÄ±tÄ±nÄ± (loopback device)
+destekler. Bu aygÄ±t normal bir dosyanÄ±n sanal bir blok aygÄ±tÄ± Ã¼zerine
+haritasÄ±nÄ± Ã§Ä±karÄ±r. Bu paket, dosyalar ve yerel-Ã§evrim aygÄ±tlarÄ±
+arasÄ±ndaki haritalama iÅŸleminin kurulmasÄ± ve kaldÄ±rÄ±lmasÄ± iÃ§in
+programlar iÃ§erir. Blok yerel-Ã§evrim aygÄ±tÄ± ifconfig komutu ile
+yapÄ±landÄ±rÄ±lan aÄŸ yerel-Ã§evrim aygÄ±tÄ± ile karÄ±ÅŸtÄ±rÄ±lmamalÄ±dÄ±r.
 
-%description -n losetup -l uk
-Linux Ð¦ÄÔÒÉÍÕ¤ ÓÐÅÃ¦ÁÌØÎÉÊ ÂÌÏÞÎÉÊ ÐÒÉÓÔÒ¦Ê, loopback, ÑËÉÊ
-×¦ÄÏÂÒÁÖÕ¤ Ú×ÉÞÁÊÎÉÊ ÆÁÊÌ Õ ×¦ÒÔÕÁÌØÎÉÊ ÂÌÏÞÎÉÊ ÐÒÉÓÔÒ¦Ê. ãÅ ÄÏÚ×ÏÌÑ¤
-×ÉËÏÒÉÓÔÏ×Õ×ÁÔÉ ÆÁÊÌ ÑË ×¦ÒÔÕÁÌØÎÕ ÆÁÊÌÏ×Õ ÓÉÓÔÅÍÕ. Losetup
-×ÉËÏÒÉÓÔÏ×ÕÀÔØ ÄÌÑ Ú×'ÑÚËÕ loopback-ÐÒÉÓÔÒÏ§× Ú¦ Ú×ÉÞÁÊÎÉÍÉ ÆÁÊÌÁÍÉ
-ÁÂÏ ÂÌÏÞÎÉÍÉ ÐÒÉÓÔÒÏÑÍÉ, ÄÌÑ ×¦Ä'¤ÄÎÁÎÎÑ loopback-ÐÒÉÓÔÒÏ§× ÔÁ
-ÚÁÐÒÏÓ¦× §È ÓÔÁÎÕ.
+%description -n losetup -l uk.UTF-8
+Linux Ð¿Ñ–Ð´Ñ‚Ñ€Ð¸Ð¼ÑƒÑ” ÑÐ¿ÐµÑ†Ñ–Ð°Ð»ÑŒÐ½Ð¸Ð¹ Ð±Ð»Ð¾Ñ‡Ð½Ð¸Ð¹ Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ñ–Ð¹, loopback, ÑÐºÐ¸Ð¹
+Ð²Ñ–Ð´Ð¾Ð±Ñ€Ð°Ð¶ÑƒÑ” Ð·Ð²Ð¸Ñ‡Ð°Ð¹Ð½Ð¸Ð¹ Ñ„Ð°Ð¹Ð» Ñƒ Ð²Ñ–Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð¸Ð¹ Ð±Ð»Ð¾Ñ‡Ð½Ð¸Ð¹ Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ñ–Ð¹. Ð¦Ðµ Ð´Ð¾Ð·Ð²Ð¾Ð»ÑÑ”
+Ð²Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð¾Ð²ÑƒÐ²Ð°Ñ‚Ð¸ Ñ„Ð°Ð¹Ð» ÑÐº Ð²Ñ–Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ñƒ Ñ„Ð°Ð¹Ð»Ð¾Ð²Ñƒ ÑÐ¸ÑÑ‚ÐµÐ¼Ñƒ. Losetup
+Ð²Ð¸ÐºÐ¾Ñ€Ð¸ÑÑ‚Ð¾Ð²ÑƒÑŽÑ‚ÑŒ Ð´Ð»Ñ Ð·Ð²'ÑÐ·ÐºÑƒ loopback-Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾Ñ—Ð² Ð·Ñ– Ð·Ð²Ð¸Ñ‡Ð°Ð¹Ð½Ð¸Ð¼Ð¸ Ñ„Ð°Ð¹Ð»Ð°Ð¼Ð¸
+Ð°Ð±Ð¾ Ð±Ð»Ð¾Ñ‡Ð½Ð¸Ð¼Ð¸ Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾ÑÐ¼Ð¸, Ð´Ð»Ñ Ð²Ñ–Ð´'Ñ”Ð´Ð½Ð°Ð½Ð½Ñ loopback-Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾Ñ—Ð² Ñ‚Ð°
+Ð·Ð°Ð¿Ñ€Ð¾ÑÑ–Ð² Ñ—Ñ… ÑÑ‚Ð°Ð½Ñƒ.
 
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
-Summary(de):	Programme zum montieren und abmontieren von Dateisystemen
-Summary(fr):	Programme pour monter et démonter des systèmes de fichiers
-Summary(pl):	Programy do montowania i odmontowywania systemów plików
-Summary(tr):	Dosya sistemlerini baðlamak ve çözmek için programlar
-Summary(uk):	ðÒÏÇÒÁÍÉ ÄÌÑ ÍÏÎÔÕ×ÁÎÎÑ ÔÁ ÒÏÚÍÏÎÔÕ×ÁÎÎÑ ÆÁÊÌÏ×ÉÈ ÓÉÓÔÅÍ
-Summary(ru):	ðÒÏÇÒÁÍÍÙ ÄÌÑ ÍÏÎÔÉÒÏ×ÁÎÉÑ É ÒÁÚÍÏÎÔÉÒÏ×ÁÎÉÑ ÆÁÊÌÏ×ÙÈ ÓÉÓÔÅÍ
+Summary(de.UTF-8):   Programme zum montieren und abmontieren von Dateisystemen
+Summary(fr.UTF-8):   Programme pour monter et dÃ©monter des systÃ¨mes de fichiers
+Summary(pl.UTF-8):   Programy do montowania i odmontowywania systemÃ³w plikÃ³w
+Summary(tr.UTF-8):   Dosya sistemlerini baÄŸlamak ve Ã§Ã¶zmek iÃ§in programlar
+Summary(uk.UTF-8):   ÐŸÑ€Ð¾Ð³Ñ€Ð°Ð¼Ð¸ Ð´Ð»Ñ Ð¼Ð¾Ð½Ñ‚ÑƒÐ²Ð°Ð½Ð½Ñ Ñ‚Ð° Ñ€Ð¾Ð·Ð¼Ð¾Ð½Ñ‚ÑƒÐ²Ð°Ð½Ð½Ñ Ñ„Ð°Ð¹Ð»Ð¾Ð²Ð¸Ñ… ÑÐ¸ÑÑ‚ÐµÐ¼
+Summary(ru.UTF-8):   ÐŸÑ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ Ð´Ð»Ñ Ð¼Ð¾Ð½Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ð¸ Ñ€Ð°Ð·Ð¼Ð¾Ð½Ñ‚Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ñ Ñ„Ð°Ð¹Ð»Ð¾Ð²Ñ‹Ñ… ÑÐ¸ÑÑ‚ÐµÐ¼
 Group:		Applications/System
 
 %description -n mount
@@ -205,56 +205,56 @@ kernel uses for already-mounted filesystems.
 
 This package is critical for the functionality of your system.
 
-%description -n mount -l de
-mount wird zum Hinzufügen neuer Dateisysteme (lokal und im Netzwerk)
+%description -n mount -l de.UTF-8
+mount wird zum HinzufÃ¼gen neuer Dateisysteme (lokal und im Netzwerk)
 zu Ihrer aktuellen Verzeichnisstruktur verwendet. Die Dateisysteme
-müssen bereits existieren. Außerdem können die Zugriffstypen geändert
-werden, die der Kernel für bereits montierte Dateisysteme verwendet.
+mÃ¼ssen bereits existieren. AuÃŸerdem kÃ¶nnen die Zugriffstypen geÃ¤ndert
+werden, die der Kernel fÃ¼r bereits montierte Dateisysteme verwendet.
 
-Dieses Paket ist für Ihr System unbedingt erforderlich.
+Dieses Paket ist fÃ¼r Ihr System unbedingt erforderlich.
 
-%description -n mount -l fr
-mount sert à ajouter de nouveaux systèmes de fichiers, locaux ou
-réseaux, à votre structure de répertoire. Les systèmes de fichiers
-doivent déjà exister pour que cela fonctionne. Il peut aussi servir à
-changer les types d'accès pour les systèmes de fichiers déjà montés.
+%description -n mount -l fr.UTF-8
+mount sert Ã  ajouter de nouveaux systÃ¨mes de fichiers, locaux ou
+rÃ©seaux, Ã  votre structure de rÃ©pertoire. Les systÃ¨mes de fichiers
+doivent dÃ©jÃ  exister pour que cela fonctionne. Il peut aussi servir Ã 
+changer les types d'accÃ¨s pour les systÃ¨mes de fichiers dÃ©jÃ  montÃ©s.
 
-Ce paquetage est critique pour le fonctionnement de votre système.
+Ce paquetage est critique pour le fonctionnement de votre systÃ¨me.
 
-%description -n mount -l pl
-Program mount jest u¿ywany przez system do montowania systemów plików,
-zarówno lokalnych jak i sieciowych (np. NFS).
+%description -n mount -l pl.UTF-8
+Program mount jest uÅ¼ywany przez system do montowania systemÃ³w plikÃ³w,
+zarÃ³wno lokalnych jak i sieciowych (np. NFS).
 
-Pakiet ten jest niezbêdny do prawid³owej pracy twojego Linuksa.
+Pakiet ten jest niezbÄ™dny do prawidÅ‚owej pracy twojego Linuksa.
 
-%description -n mount -l ru
-ðÁËÅÔ mount ÓÏÄÅÒÖÉÔ ÐÒÏÇÒÁÍÍÙ mount, umount, swapon É swapoff. æÁÊÌÙ
-× ×ÁÛÅÊ ÓÉÓÔÅÍÅ ÏÒÇÁÎÉÚÏ×ÁÎÙ × ×ÉÄÅ ÏÄÎÏÇÏ ÂÏÌØÛÏÇÏ ÄÅÒÅ×Á ÉÌÉ
-ÉÅÒÁÒÈÉÉ. üÔÉ ÆÁÊÌÙ ÍÏÇÕÔ ÂÙÔØ ÒÁÚÍÅÝÅÎÙ ÎÁ ÒÁÚÎÙÈ ÕÓÔÒÏÊÓÔ×ÁÈ.
-ëÏÍÁÎÄÁ mount ÐÒÉÓÏÅÄÉÎÑÅÔ ÆÁÊÌÏ×ÕÀ ÓÉÓÔÅÍÕ ÎÁ ÎÅËÏÔÏÒÏÍ ÕÓÔÒÏÊÓÔ×Å Ë
-ÄÅÒÅ×Õ ÆÁÊÌÏ× ×ÁÛÅÊ ÓÉÓÔÅÍÙ. ëÏÍÁÎÄÁ umount ÏÔÓÏÅÄÉÎÑÅÔ ÆÁÊÌÏ×ÕÀ
-ÓÉÓÔÅÍÕ ÏÔ ÄÅÒÅ×Á. Swapon É swapoff, ÓÏÏÔ×ÅÔÓÔ×ÅÎÎÏ, ÒÁÚÒÅÛÁÅÔ É
-ÚÁÐÒÅÝÁÅÔ Ó×ÏÐÐÉÎÇ × ÏÐÒÅÄÅÌÅÎÎÙÅ ÆÁÊÌÙ É ÕÓÔÒÏÊÓÔ×Á.
+%description -n mount -l ru.UTF-8
+ÐŸÐ°ÐºÐµÑ‚ mount ÑÐ¾Ð´ÐµÑ€Ð¶Ð¸Ñ‚ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹ mount, umount, swapon Ð¸ swapoff. Ð¤Ð°Ð¹Ð»Ñ‹
+Ð² Ð²Ð°ÑˆÐµÐ¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ðµ Ð¾Ñ€Ð³Ð°Ð½Ð¸Ð·Ð¾Ð²Ð°Ð½Ñ‹ Ð² Ð²Ð¸Ð´Ðµ Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð±Ð¾Ð»ÑŒÑˆÐ¾Ð³Ð¾ Ð´ÐµÑ€ÐµÐ²Ð° Ð¸Ð»Ð¸
+Ð¸ÐµÑ€Ð°Ñ€Ñ…Ð¸Ð¸. Ð­Ñ‚Ð¸ Ñ„Ð°Ð¹Ð»Ñ‹ Ð¼Ð¾Ð³ÑƒÑ‚ Ð±Ñ‹Ñ‚ÑŒ Ñ€Ð°Ð·Ð¼ÐµÑ‰ÐµÐ½Ñ‹ Ð½Ð° Ñ€Ð°Ð·Ð½Ñ‹Ñ… ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð°Ñ….
+ÐšÐ¾Ð¼Ð°Ð½Ð´Ð° mount Ð¿Ñ€Ð¸ÑÐ¾ÐµÐ´Ð¸Ð½ÑÐµÑ‚ Ñ„Ð°Ð¹Ð»Ð¾Ð²ÑƒÑŽ ÑÐ¸ÑÑ‚ÐµÐ¼Ñƒ Ð½Ð° Ð½ÐµÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð¼ ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ðµ Ðº
+Ð´ÐµÑ€ÐµÐ²Ñƒ Ñ„Ð°Ð¹Ð»Ð¾Ð² Ð²Ð°ÑˆÐµÐ¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ‹. ÐšÐ¾Ð¼Ð°Ð½Ð´Ð° umount Ð¾Ñ‚ÑÐ¾ÐµÐ´Ð¸Ð½ÑÐµÑ‚ Ñ„Ð°Ð¹Ð»Ð¾Ð²ÑƒÑŽ
+ÑÐ¸ÑÑ‚ÐµÐ¼Ñƒ Ð¾Ñ‚ Ð´ÐµÑ€ÐµÐ²Ð°. Swapon Ð¸ swapoff, ÑÐ¾Ð¾Ñ‚Ð²ÐµÑ‚ÑÑ‚Ð²ÐµÐ½Ð½Ð¾, Ñ€Ð°Ð·Ñ€ÐµÑˆÐ°ÐµÑ‚ Ð¸
+Ð·Ð°Ð¿Ñ€ÐµÑ‰Ð°ÐµÑ‚ ÑÐ²Ð¾Ð¿Ð¿Ð¸Ð½Ð³ Ð² Ð¾Ð¿Ñ€ÐµÐ´ÐµÐ»ÐµÐ½Ð½Ñ‹Ðµ Ñ„Ð°Ð¹Ð»Ñ‹ Ð¸ ÑƒÑÑ‚Ñ€Ð¾Ð¹ÑÑ‚Ð²Ð°.
 
-%description -n mount -l tr
-mount, hem yerel hem de að dosya sistemlerinin dizin yapýsýna
-eklenmesi için kullanýlýr. Bunun için baðlanacak dosya sisteminin
-önceden hazýrlanmýþ olmasý gerekir. Ayný zamanda çekirdeðin baðlanmýþ
-dosya sistemlerine eriþimini deðiþtirmek için de kullanýlýr. Bu paket
-sisteminizin iþlevselliði açýsýndan kritiktir.
+%description -n mount -l tr.UTF-8
+mount, hem yerel hem de aÄŸ dosya sistemlerinin dizin yapÄ±sÄ±na
+eklenmesi iÃ§in kullanÄ±lÄ±r. Bunun iÃ§in baÄŸlanacak dosya sisteminin
+Ã¶nceden hazÄ±rlanmÄ±ÅŸ olmasÄ± gerekir. AynÄ± zamanda Ã§ekirdeÄŸin baÄŸlanmÄ±ÅŸ
+dosya sistemlerine eriÅŸimini deÄŸiÅŸtirmek iÃ§in de kullanÄ±lÄ±r. Bu paket
+sisteminizin iÅŸlevselliÄŸi aÃ§Ä±sÄ±ndan kritiktir.
 
-%description -n mount -l uk
-ðÁËÅÔ mount Í¦ÓÔÉÔØ ÐÒÏÇÒÁÍÉ mount, umount, swapon ÔÁ swapoff. æÁÊÌÉ Õ
-×ÁÛ¦Ê ÓÉÓÔÅÍ¦ ÏÒÇÁÎ¦ÚÏ×ÁÎ¦ Õ ×ÉÇÌÑÄ¦ ÏÄÎÏÇÏ ×ÅÌÉËÏÇÏ ÄÅÒÅ×Á ÁÂÏ
-¦¤ÒÁÒÈ¦§. ã¦ ÆÁÊÌÉ ÍÏÖÕÔØ ÂÕÔÉ ÒÏÚÔÁÛÏ×ÁÎ¦ ÎÁ Ò¦ÚÎÉÈ ÐÒÉÓÔÒÏÑÈ.
-ëÏÍÁÎÄÁ mount Ð¦Ä'¤ÄÎÕ¤ ÆÁÊÌÏ×Õ ÓÉÓÔÅÍÕ ÎÁ ÄÅÑËÏÍÕ ÐÒÉÓÔÒÏ§ ÄÏ ÄÅÒÅ×Á
-ÆÁÊÌ¦× ×ÁÛÏ§ ÓÉÓÔÅÍÉ. ëÏÍÁÎÄÁ umount ×¦Ä'¤ÄÎÕ¤ ÆÁÊÌÏ×Õ ÓÉÓÔÅÍÕ ×¦Ä
-ÄÅÒÅ×Á. Swapon ÔÁ swapoff, ×¦ÄÐÏ×¦ÄÎÏ, ÄÏÚ×ÏÌÑ¤ ÔÁ ÚÁÂÏÒÏÎÀ¤ Ó×ÏÐ¦ÎÇ Õ
-×ÉÚÎÁÞÅÎ¦ ÆÁÊÌÉ ÁÂÏ ÐÒÉÓÔÒÏ§.
+%description -n mount -l uk.UTF-8
+ÐŸÐ°ÐºÐµÑ‚ mount Ð¼Ñ–ÑÑ‚Ð¸Ñ‚ÑŒ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¸ mount, umount, swapon Ñ‚Ð° swapoff. Ð¤Ð°Ð¹Ð»Ð¸ Ñƒ
+Ð²Ð°ÑˆÑ–Ð¹ ÑÐ¸ÑÑ‚ÐµÐ¼Ñ– Ð¾Ñ€Ð³Ð°Ð½Ñ–Ð·Ð¾Ð²Ð°Ð½Ñ– Ñƒ Ð²Ð¸Ð³Ð»ÑÐ´Ñ– Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð²ÐµÐ»Ð¸ÐºÐ¾Ð³Ð¾ Ð´ÐµÑ€ÐµÐ²Ð° Ð°Ð±Ð¾
+Ñ–Ñ”Ñ€Ð°Ñ€Ñ…Ñ–Ñ—. Ð¦Ñ– Ñ„Ð°Ð¹Ð»Ð¸ Ð¼Ð¾Ð¶ÑƒÑ‚ÑŒ Ð±ÑƒÑ‚Ð¸ Ñ€Ð¾Ð·Ñ‚Ð°ÑˆÐ¾Ð²Ð°Ð½Ñ– Ð½Ð° Ñ€Ñ–Ð·Ð½Ð¸Ñ… Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾ÑÑ….
+ÐšÐ¾Ð¼Ð°Ð½Ð´Ð° mount Ð¿Ñ–Ð´'Ñ”Ð´Ð½ÑƒÑ” Ñ„Ð°Ð¹Ð»Ð¾Ð²Ñƒ ÑÐ¸ÑÑ‚ÐµÐ¼Ñƒ Ð½Ð° Ð´ÐµÑÐºÐ¾Ð¼Ñƒ Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾Ñ— Ð´Ð¾ Ð´ÐµÑ€ÐµÐ²Ð°
+Ñ„Ð°Ð¹Ð»Ñ–Ð² Ð²Ð°ÑˆÐ¾Ñ— ÑÐ¸ÑÑ‚ÐµÐ¼Ð¸. ÐšÐ¾Ð¼Ð°Ð½Ð´Ð° umount Ð²Ñ–Ð´'Ñ”Ð´Ð½ÑƒÑ” Ñ„Ð°Ð¹Ð»Ð¾Ð²Ñƒ ÑÐ¸ÑÑ‚ÐµÐ¼Ñƒ Ð²Ñ–Ð´
+Ð´ÐµÑ€ÐµÐ²Ð°. Swapon Ñ‚Ð° swapoff, Ð²Ñ–Ð´Ð¿Ð¾Ð²Ñ–Ð´Ð½Ð¾, Ð´Ð¾Ð·Ð²Ð¾Ð»ÑÑ” Ñ‚Ð° Ð·Ð°Ð±Ð¾Ñ€Ð¾Ð½ÑŽÑ” ÑÐ²Ð¾Ð¿Ñ–Ð½Ð³ Ñƒ
+Ð²Ð¸Ð·Ð½Ð°Ñ‡ÐµÐ½Ñ– Ñ„Ð°Ð¹Ð»Ð¸ Ð°Ð±Ð¾ Ð¿Ñ€Ð¸ÑÑ‚Ñ€Ð¾Ñ—.
 
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
-Summary(pl):	chkdupexe odszukuje powtarzaj±ce siê pliki uruchamialne
+Summary(pl.UTF-8):   chkdupexe odszukuje powtarzajÄ…ce siÄ™ pliki uruchamialne
 Group:		Applications/System
 
 %description chkdupexe
@@ -262,38 +262,38 @@ chkdupexe will scan the union of $PATH and a hardcoded list of common
 locations for binaries. It will report dangling symlinks and
 duplicately-named binaries.
 
-%description chkdupexe -l pl
+%description chkdupexe -l pl.UTF-8
 chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane
-katalogi z plikami uruchamialnymi i informuje o powtarzaj±cych siê
-plikach w ró¿nych katalogach.
+katalogi z plikami uruchamialnymi i informuje o powtarzajÄ…cych siÄ™
+plikach w rÃ³Å¼nych katalogach.
 
 %package -n tunelp
 Summary:	Configures kernel parallel port driver
-Summary(de):	Konfiguriert den Kerneltreiber für den parallelen Port
-Summary(fr):	Configure le pilote du port parallèle dans le noyau
-Summary(pl):	Program do konfigurowania sterownika portu równoleg³ego
-Summary(tr):	Çekirdeðin paralel baðlantý noktasý sürücüsünü ayarlar
+Summary(de.UTF-8):   Konfiguriert den Kerneltreiber fÃ¼r den parallelen Port
+Summary(fr.UTF-8):   Configure le pilote du port parallÃ¨le dans le noyau
+Summary(pl.UTF-8):   Program do konfigurowania sterownika portu rÃ³wnolegÅ‚ego
+Summary(tr.UTF-8):   Ã‡ekirdeÄŸin paralel baÄŸlantÄ± noktasÄ± sÃ¼rÃ¼cÃ¼sÃ¼nÃ¼ ayarlar
 Group:		Applications/System
 
 %description -n tunelp
 tunelp aids in configuring the kernel parallel port driver.
 
-%description -n tunelp -l de
+%description -n tunelp -l de.UTF-8
 tunelp hilft bei der Konfiguration des Kernel-Parallelport-Treibers.
 
-%description -n tunelp -l fr
-« tunelp » aide à configurer le pilote du noyau pour le port
-parallèle.
+%description -n tunelp -l fr.UTF-8
+Â« tunelp Â» aide Ã  configurer le pilote du noyau pour le port
+parallÃ¨le.
 
-%description -n tunelp -l pl
-Program do konfigurowania sterownika portu równoleg³ego.
+%description -n tunelp -l pl.UTF-8
+Program do konfigurowania sterownika portu rÃ³wnolegÅ‚ego.
 
-%description -n tunelp -l tr
-Paralel baðlantý noktasý sürücüsünü ayarlar.
+%description -n tunelp -l tr.UTF-8
+Paralel baÄŸlantÄ± noktasÄ± sÃ¼rÃ¼cÃ¼sÃ¼nÃ¼ ayarlar.
 
 %package -n login
 Summary:	login is used when signing onto a system
-Summary(pl):	login jest u¿ywany do rozpoczêcia pracy w systemie
+Summary(pl.UTF-8):   login jest uÅ¼ywany do rozpoczÄ™cia pracy w systemie
 Group:		Applications/System
 Requires:	pam >= 0.77.3
 Obsoletes:	heimdal-login
@@ -303,26 +303,26 @@ login is used when signing onto a system. It can also be used to
 switch from one user to another at any time (most modern shells have
 support for this feature built into them, however).
 
-%description -n login -l pl
-login jest u¿ywany do rozpoczêcia pracy w systemie. Mo¿e byæ u¿ywany
-do prze³±czania z jednego u¿ytkownika na innego w ka¿dym momencie
-(jednak wiêkszo¶æ nowoczesnych pow³ok ma takie funkcje wbudowane).
+%description -n login -l pl.UTF-8
+login jest uÅ¼ywany do rozpoczÄ™cia pracy w systemie. MoÅ¼e byÄ‡ uÅ¼ywany
+do przeÅ‚Ä…czania z jednego uÅ¼ytkownika na innego w kaÅ¼dym momencie
+(jednak wiÄ™kszoÅ›Ä‡ nowoczesnych powÅ‚ok ma takie funkcje wbudowane).
 
 %package -n agetty
 Summary:	Alternative Linux getty
-Summary(pl):	Alternatywny getty
+Summary(pl.UTF-8):   Alternatywny getty
 Group:		Applications/System
 Requires:	login
 
 %description -n agetty
 agetty is simple Linux getty with serial support.
 
-%description -n agetty -l pl
-agetty jest prostym linuksowym getty z obs³ug± portu szeregowego.
+%description -n agetty -l pl.UTF-8
+agetty jest prostym linuksowym getty z obsÅ‚ugÄ… portu szeregowego.
 
 %package -n rawdevices
 Summary:	Support for raw-devices
-Summary(pl):	Obs³uga raw-device'ów
+Summary(pl.UTF-8):   ObsÅ‚uga raw-device'Ã³w
 Group:		Applications/System
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
@@ -330,19 +330,19 @@ Requires(post,preun):	/sbin/chkconfig
 %description -n rawdevices
 Support for raw-devices.
 
-%description -n rawdevices -l pl
-Obs³uga raw-device'ów.
+%description -n rawdevices -l pl.UTF-8
+ObsÅ‚uga raw-device'Ã³w.
 
 %package simpleinit
 Summary:	An alternative to SysVinit
-Summary(pl):	Alternatywa dla SysVinit
+Summary(pl.UTF-8):   Alternatywa dla SysVinit
 Group:		Applications/System
 Conflicts:	SysVinit
 
 %description simpleinit
 An alternative to SysVinit.
 
-%description simpleinit -l pl
+%description simpleinit -l pl.UTF-8
 Alternatywa dla SysVinit.
 
 %prep
