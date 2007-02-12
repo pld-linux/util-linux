@@ -8,14 +8,14 @@
 # - move logger to separate package (to avoid conflicts with inetutils)
 
 Summary:	Collection of basic system utilities for Linux
-Summary(de.UTF-8):   Sammlung von grundlegenden Systemdienstprogrammen für Linux
-Summary(es.UTF-8):   Colectánea de utilitarios básicos de sistema para Linux
-Summary(fr.UTF-8):   Ensemble d'utilitaires système de base pour Linux
-Summary(pl.UTF-8):   Zbiór podstawowych narzędzi systemowych dla Linuksa
-Summary(pt_BR.UTF-8):   Coletânea de utilitários básicos de sistema para Linux
-Summary(ru.UTF-8):   Набор базовых системных утилит для Linux
-Summary(tr.UTF-8):   Temel sistem araçları
-Summary(uk.UTF-8):   Набір базових системних утиліт для Linux
+Summary(de.UTF-8):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
+Summary(es.UTF-8):	Colectánea de utilitarios básicos de sistema para Linux
+Summary(fr.UTF-8):	Ensemble d'utilitaires système de base pour Linux
+Summary(pl.UTF-8):	Zbiór podstawowych narzędzi systemowych dla Linuksa
+Summary(pt_BR.UTF-8):	Coletânea de utilitários básicos de sistema para Linux
+Summary(ru.UTF-8):	Набор базовых системных утилит для Linux
+Summary(tr.UTF-8):	Temel sistem araçları
+Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.12r
 Release:	7
@@ -137,7 +137,7 @@ uygulamaları ve logger gibi sistem programları sayılabilir.
 
 %package -n blockdev
 Summary:	Support for blockdev
-Summary(pl.UTF-8):   Obsługa blockdev
+Summary(pl.UTF-8):	Obsługa blockdev
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	coreutils
@@ -156,12 +156,12 @@ ustawiania parametrów blockdev przy starcie systemu.
 
 %package -n losetup
 Summary:	Programs for setting up and configuring loopback devices
-Summary(de.UTF-8):   Programme zum Einrichten und Konfigurieren von Loopback-Geräten
-Summary(fr.UTF-8):   Programmes pour mettre en place et configurer les loopback
-Summary(pl.UTF-8):   Program do konfiguracji urządzenia blokowego loopback
-Summary(ru.UTF-8):   Программы для настройки loopback-устройств
-Summary(tr.UTF-8):   Yerel-çevrim aygıtlarının kurulması ve ayarlanması için programlar
-Summary(uk.UTF-8):   Програми для конфігурації loopback-пристроїв
+Summary(de.UTF-8):	Programme zum Einrichten und Konfigurieren von Loopback-Geräten
+Summary(fr.UTF-8):	Programmes pour mettre en place et configurer les loopback
+Summary(pl.UTF-8):	Program do konfiguracji urządzenia blokowego loopback
+Summary(ru.UTF-8):	Программы для настройки loopback-устройств
+Summary(tr.UTF-8):	Yerel-çevrim aygıtlarının kurulması ve ayarlanması için programlar
+Summary(uk.UTF-8):	Програми для конфігурації loopback-пристроїв
 Group:		Applications/System
 
 %description -n losetup
@@ -224,12 +224,12 @@ Linux підтримує спеціальний блочний пристрій,
 
 %package -n mount
 Summary:	Programs for mounting and unmounting filesystems
-Summary(de.UTF-8):   Programme zum montieren und abmontieren von Dateisystemen
-Summary(fr.UTF-8):   Programme pour monter et démonter des systèmes de fichiers
-Summary(pl.UTF-8):   Programy do montowania i odmontowywania systemów plików
-Summary(ru.UTF-8):   Программы для монтирования и размонтирования файловых систем
-Summary(tr.UTF-8):   Dosya sistemlerini bağlamak ve çözmek için programlar
-Summary(uk.UTF-8):   Програми для монтування та розмонтування файлових систем
+Summary(de.UTF-8):	Programme zum montieren und abmontieren von Dateisystemen
+Summary(fr.UTF-8):	Programme pour monter et démonter des systèmes de fichiers
+Summary(pl.UTF-8):	Programy do montowania i odmontowywania systemów plików
+Summary(ru.UTF-8):	Программы для монтирования и размонтирования файловых систем
+Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
+Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
 Group:		Applications/System
 Requires:	cryptsetup >= 0.2-1.pre1.4
 Requires:	libgcrypt >= 1.2.0-6
@@ -292,7 +292,7 @@ sisteminizin işlevselliği açısından kritiktir.
 
 %package chkdupexe
 Summary:	chkdupexe - find duplicate executables
-Summary(pl.UTF-8):   chkdupexe odszukuje powtarzające się pliki uruchamialne
+Summary(pl.UTF-8):	chkdupexe odszukuje powtarzające się pliki uruchamialne
 Group:		Applications/System
 
 %description chkdupexe
@@ -307,10 +307,10 @@ plikach w różnych katalogach.
 
 %package -n tunelp
 Summary:	Configures kernel parallel port driver
-Summary(de.UTF-8):   Konfiguriert den Kerneltreiber für den parallelen Port
-Summary(fr.UTF-8):   Configure le pilote du port parallèle dans le noyau
-Summary(pl.UTF-8):   Program do konfigurowania sterownika portu równoległego
-Summary(tr.UTF-8):   Çekirdeğin paralel bağlantı noktası sürücüsünü ayarlar
+Summary(de.UTF-8):	Konfiguriert den Kerneltreiber für den parallelen Port
+Summary(fr.UTF-8):	Configure le pilote du port parallèle dans le noyau
+Summary(pl.UTF-8):	Program do konfigurowania sterownika portu równoległego
+Summary(tr.UTF-8):	Çekirdeğin paralel bağlantı noktası sürücüsünü ayarlar
 Group:		Applications/System
 
 %description -n tunelp
@@ -331,7 +331,7 @@ Paralel bağlantı noktası sürücüsünü ayarlar.
 
 %package -n login
 Summary:	login is used when signing onto a system
-Summary(pl.UTF-8):   login jest używany do rozpoczęcia pracy w systemie
+Summary(pl.UTF-8):	login jest używany do rozpoczęcia pracy w systemie
 Group:		Applications/System
 Requires:	pam >= 0.99.7.1
 Obsoletes:	heimdal-login
@@ -348,7 +348,7 @@ do przełączania z jednego użytkownika na innego w każdym momencie
 
 %package -n agetty
 Summary:	Alternative Linux getty
-Summary(pl.UTF-8):   Alternatywny getty
+Summary(pl.UTF-8):	Alternatywny getty
 Group:		Applications/System
 Requires:	login
 
@@ -360,7 +360,7 @@ agetty jest prostym linuksowym getty z obsługą portu szeregowego.
 
 %package -n rawdevices
 Summary:	Support for raw-devices
-Summary(pl.UTF-8):   Obsługa raw-device'ów
+Summary(pl.UTF-8):	Obsługa raw-device'ów
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	rc-scripts
