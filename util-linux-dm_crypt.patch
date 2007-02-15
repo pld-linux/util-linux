@@ -113,7 +113,7 @@ diff -urN util-linux-2.12q.org/mount/cryptsetup.c util-linux-2.12q/mount/cryptse
 +	options.passphrase_fd = (pfd >= 0) ? pfd : 0;
 +	options.flags = 0;
 +	if (!options.key_file)
-+		options.flags |= CRYPT_FLAG_PASSPHRASE;
++		options.flags |= CRYPT_FLAG_VERIFY;
 +	if (*cryptro)
 +		options.flags |= CRYPT_FLAG_READONLY;
 +	options.offset = offset;
