@@ -17,13 +17,14 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.12r
-Release:	8.1
+Version:	2.13
+%define	_pre	pre7
+Release:	0.%{_pre}.1
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
-Source0:	ftp://ftp.kernel.org/pub/linux/utils/util-linux/%{name}-%{version}.tar.gz
-# Source0-md5:	c261230b27fc0fbcc287c76884caf2d3
+Source0:	ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing/%{name}-%{version}-%{_pre}.tar.bz2
+# Source0-md5:	13cdf4b76533e8421dc49de188f85291
 #Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	81bbcc9a820512ecde87a8f31de0b745
@@ -36,27 +37,23 @@ Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
 Patch2:		%{name}-utmpx.patch
 Patch3:		%{name}-fhs.patch
-Patch4:		%{name}-login.patch
-Patch5:		%{name}-info.patch
-Patch7:		%{name}-syscall.patch
-Patch8:		%{name}-raw.patch
-Patch9:		%{name}-gecos.patch
-Patch10:	%{name}-glibc.patch
-Patch11:	%{name}-posixsh.patch
-Patch12:	%{name}-ppc-hwclock.patch
-Patch13:	%{name}-no_multiline.patch
-Patch14:	%{name}-amd64.patch
-Patch15:	%{name}-dm_crypt.patch
-Patch16:	%{name}-blk.patch
-Patch17:	%{name}-managed.patch
-Patch18:	%{name}-page.patch
-Patch19:	%{name}-gcc4.patch
-Patch26:	%{name}-2.12q-update-mtab-when-moving.patch
-Patch27:	%{name}-2.12q-use-update_mtab-for-fake.patch
-Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
-Patch29:	%{name}-2.12q-update_mtab-fixes.patch
-Patch30:	%{name}-as_needed-fix.patch
-Patch31:	%{name}-mount.helper-fake.patch
+Patch4:		%{name}-info.patch
+Patch5:		%{name}-syscall.patch
+Patch6:		%{name}-raw.patch
+Patch7:		%{name}-posixsh.patch
+Patch8:		%{name}-ppc-hwclock.patch
+Patch9:		%{name}-amd64.patch
+Patch10:	%{name}-dm_crypt.patch
+Patch11:	%{name}-blk.patch
+Patch12:	%{name}-managed.patch
+Patch13:	%{name}-page.patch
+Patch14:	%{name}-gcc4.patch
+Patch15:	%{name}-2.12q-update-mtab-when-moving.patch
+Patch16:	%{name}-2.12q-use-update_mtab-for-fake.patch
+Patch17:	%{name}-2.12q-more-fake-checks-v2.patch
+Patch18:	%{name}-2.12q-update_mtab-fixes.patch
+Patch19:	%{name}-as_needed-fix.patch
+Patch20:	%{name}-mount.helper-fake.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 %{?with_selinux:BuildRequires:	libselinux-devel}
@@ -371,25 +368,21 @@ Obsługa raw-device'ów.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p0
+%patch12 -p0
+%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
-%patch19 -p1
-%patch26 -p0
-%patch27 -p1
-%patch28 -p0
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
+%patch19 -p0
+%patch20 -p1
 
 %build
 CC="%{__cc}"
