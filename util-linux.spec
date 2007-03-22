@@ -65,6 +65,7 @@ Patch27:	%{name}-2.12q-use-update_mtab-for-fake.patch
 Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
 Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 Patch30:	%{name}-as_needed-fix.patch
+Patch31:	%{name}-mount.helper-fake.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 %{?with_selinux:BuildRequires:	libselinux-devel}
@@ -404,6 +405,7 @@ Obsługa raw-device'ów.
 %patch28 -p0
 %patch29 -p1
 %patch30 -p1
+%patch31 -p1
 
 %build
 CC="%{__cc}"
