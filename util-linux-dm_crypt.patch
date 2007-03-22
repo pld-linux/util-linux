@@ -226,32 +226,31 @@ diff -urN util-linux-2.12q.org/mount/cryptsetup.h util-linux-2.12q/mount/cryptse
 +extern int set_crypt(char **, const char *, int, char **,
 +		     int, int *);
 +extern int del_crypt(const char *);
-diff -urN util-linux-2.12q.org/mount/Makefile util-linux-2.12q/mount/Makefile
---- util-linux-2.12q.org/mount/Makefile	2005-02-27 19:25:37.000000000 +0100
-+++ util-linux-2.12q/mount/Makefile	2005-02-27 19:27:21.000000000 +0100
-@@ -30,6 +30,7 @@
- MAYBE = pivot_root swapoff
+diff -urN util-linux-2.12q.org/mount/Makefile.am util-linux-2.12q/mount/Makefile.am
+--- util-linux-2.12q.org/mount/Makefile.am	2005-02-27 19:25:37.000000000 +0100
++++ util-linux-2.12q/mount/Makefile.am	2005-02-27 19:27:21.000000000 +0100
+@@ -9,17 +9,17 @@
  
- LO_OBJS = lomount.o $(LIB)/xstrncpy.o
-+CRYPT_OBJS = cryptsetup.o -lcryptsetup
- NFS_OBJS = nfsmount.o nfsmount_xdr.o nfsmount_clnt.o
- GEN_FILES = nfsmount.h nfsmount_xdr.c nfsmount_clnt.c
+ mount_SOURCES = mount.c fstab.c sundries.c xmalloc.c realpath.c mntent.c \
+ 	get_label_uuid.c mount_by_label.c mount_blkid.c mount_guess_fstype.c \
+-	getusername.c \
++	getusername.c cryptsetup.c \
+ 	nfsmount.c nfsmount_xdr.c nfsmount_clnt.c \
+ 	lomount.c
  
-@@ -49,12 +50,12 @@
+-mount_LDADD = $(top_srcdir)/lib/libenv.a $(top_srcdir)/lib/libsetproctitle.a
++mount_LDADD = $(top_srcdir)/lib/libenv.a $(top_srcdir)/lib/libsetproctitle.a -lcryptsetup
  
- mount: mount.o fstab.o sundries.o xmalloc.o realpath.o mntent.o version.o \
-        get_label_uuid.o mount_by_label.o mount_blkid.o mount_guess_fstype.o \
--       getusername.o $(LIB)/setproctitle.o $(LIB)/env.o $(NFS_OBJS) $(LO_OBJS)
-+       getusername.o $(LIB)/setproctitle.o $(LIB)/env.o $(NFS_OBJS) $(LO_OBJS) $(CRYPT_OBJS)
- 	$(LINK) $^ -o $@ $(BLKID_LIB)
+ umount_SOURCES = umount.c fstab.c sundries.c xmalloc.c realpath.c mntent.c \
+ 	getusername.c get_label_uuid.c mount_by_label.c mount_blkid.c \
+-	lomount.c
++	lomount.c cryptsetup.c
  
- umount: umount.o fstab.o sundries.o xmalloc.o realpath.o mntent.o \
- 	getusername.o get_label_uuid.o mount_by_label.o mount_blkid.o \
--	version.o $(LIB)/env.o $(LO_OBJS)
-+	version.o $(LIB)/env.o $(LO_OBJS) $(CRYPT_OBJS)
- 	$(LINK) $^ -o $@ $(BLKID_LIB)
+-umount_LDADD = $(top_srcdir)/lib/libenv.a
++umount_LDADD = $(top_srcdir)/lib/libenv.a -lcryptsetup
  
- swapon:	swapon.o version.o xmalloc.o \
+ swapon_SOURCES = swapon.c xmalloc.c \
+ 	get_label_uuid.c mount_by_label.c mount_blkid.c
 diff -urN util-linux-2.12q.org/mount/mount.c util-linux-2.12q/mount/mount.c
 --- util-linux-2.12q.org/mount/mount.c	2004-12-21 23:00:36.000000000 +0100
 +++ util-linux-2.12q/mount/mount.c	2005-02-27 19:29:40.000000000 +0100
