@@ -18,7 +18,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.12r
-Release:	8
+Release:	8.1
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -38,8 +38,6 @@ Patch2:		%{name}-utmpx.patch
 Patch3:		%{name}-fhs.patch
 Patch4:		%{name}-login.patch
 Patch5:		%{name}-info.patch
-# from ftp://ftp.linuxnfs.sourceforge.org/pub/nfs/ :
-Patch6:		%{name}-2.10m-mount-compat.patch
 Patch7:		%{name}-syscall.patch
 Patch8:		%{name}-raw.patch
 Patch9:		%{name}-gecos.patch
@@ -53,13 +51,6 @@ Patch16:	%{name}-blk.patch
 Patch17:	%{name}-managed.patch
 Patch18:	%{name}-page.patch
 Patch19:	%{name}-gcc4.patch
-# from http://www.citi.umich.edu/projects/nfsv4/linux/util-linux-patches/2.12-3/ :
-Patch20:	%{name}-2.12-01-nfs.dif
-Patch21:	%{name}-2.12-02-base-nfsv4.dif
-Patch22:	%{name}-2.12-03-krb5.dif
-Patch23:	%{name}-2.12-04-modify_mount_to_support_multiple_security_flavors.dif
-Patch24:	%{name}-2.12-05-mount_sloppy_fix.dif
-Patch25:	%{name}-2.12-06-redhat-nfs-mount.dif
 Patch26:	%{name}-2.12q-update-mtab-when-moving.patch
 Patch27:	%{name}-2.12q-use-update_mtab-for-fake.patch
 Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
@@ -380,7 +371,6 @@ Obsługa raw-device'ów.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
@@ -394,12 +384,6 @@ Obsługa raw-device'ów.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
 %patch26 -p0
 %patch27 -p1
 %patch28 -p0
