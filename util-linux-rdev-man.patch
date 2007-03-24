@@ -1,0 +1,20 @@
+--- util-linux-2.12a/sys-utils/rdev.8.sopwith	2004-08-20 11:35:56.740842004 -0400
++++ util-linux-2.12a/sys-utils/rdev.8	2004-08-20 11:38:38.291622818 -0400
+@@ -79,7 +79,8 @@
+ .B ramsize
+ command, the
+ .B size
+-parameter specifies the size of the RAM disk in kilobytes.
++parameter specifies the size of the RAM disk in kilobytes. 2.0.x kernels and newer dynamically allocate the ramdisk 
++and do not need this setting.
+ 
+ For the
+ .B rootflags
+@@ -121,6 +122,7 @@
+ .B rdev
+ to act like
+ .BR ramsize .
++(Not relevant for 2.0.x and newer kernels.)
+ .TP
+ .B \-R
+ Causes
