@@ -1,11 +1,8 @@
 #
 # TODO:
-# - move raw to /sbin (potentially can be used before mount partitions)??
 # - move logger to separate package (to avoid conflicts with inetutils)
 # - what to do with scriptreplay? (req: perl)
 # 
-# - check utmp(x)/wtmp(x) access
-#
 # Conditional build:
 %bcond_with	uClibc	# don't build few utilities
 %bcond_without	selinux # build without SELinux support
@@ -114,11 +111,13 @@ Patch75:	%{name}-swaponsymlink.patch
 Patch76:	%{name}-swap-page.patch
 Patch77:	%{name}-umount-sysfs.patch
 Patch78:	%{name}-ac-dirs.patch
+BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	intltool
 BuildRequires:	cryptsetup-devel
+BuildRequires:	e2fsprogs-devel >= 1.36
 BuildRequires:	gettext-devel
+BuildRequires:	intltool
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.99.7.1}
