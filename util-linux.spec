@@ -122,6 +122,7 @@ BuildRequires:	intltool
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
 %{!?with_uClibc:BuildRequires:	pam-devel >= 0.99.7.1}
 BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	sed >= 4.0
 BuildRequires:	texinfo
 %{!?with_uClibc:BuildRequires:	zlib-devel}
 %{!?with_uClibc:Requires:	pam >= 0.99.7.1}
@@ -543,6 +544,11 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security} \
 
 install misc-utils/scriptreplay.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 
+sed -i -e 's,/usr/spool/mail,/var/mail,g' $RPM_BUILD_ROOT%{_mandir}/man1/login.1
+
+mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
+mv $RPM_BUILD_ROOT%{_bindir}/{taskset,raw} $RPM_BUILD_ROOT/bin
+
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
@@ -642,10 +648,14 @@ fi
 
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
+%attr(755,root,root) /bin/taskset
 %{!?with_uClibc:%attr(755,root,root) /bin/more}
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkswap
 %attr(755,root,root) /sbin/ctrlaltdel
+%attr(755,root,root) /sbin/addpart
+%attr(755,root,root) /sbin/delpart
+%attr(755,root,root) /sbin/partx
 %attr(755,root,root) %{_bindir}/cal
 %attr(755,root,root) %{_bindir}/chrt
 %attr(755,root,root) %{_bindir}/col
@@ -674,13 +684,9 @@ fi
 %attr(755,root,root) %{_bindir}/setsid
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/setterm}
 %attr(755,root,root) %{_bindir}/tailf
-%attr(755,root,root) %{_bindir}/taskset
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/ul}
 %attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
-%attr(755,root,root) %{_sbindir}/addpart
-%attr(755,root,root) %{_sbindir}/delpart
-%attr(755,root,root) %{_sbindir}/partx
 %attr(755,root,root) %{_sbindir}/readprofile
 
 %{_mandir}/man1/cal.1*
@@ -1152,7 +1158,7 @@ fi
 %if !%{with uClibc}
 %files -n rawdevices
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/raw
+%attr(755,root,root) /bin/raw
 %attr(754,root,root) /etc/rc.d/init.d/rawdevices
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rawdevices
 
