@@ -1,12 +1,15 @@
 #
+# TODO:
+# - move raw to /sbin (potentially can be used before mount partitions)??
+# - move logger to separate package (to avoid conflicts with inetutils)
+# - what to do with scriptreplay? (req: perl)
+# 
+# - check utmp(x)/wtmp(x) access
+#
 # Conditional build:
 %bcond_with	uClibc	# don't build few utilities
 %bcond_without	selinux # build without SELinux support
 #
-# TODO:
-# - move raw to /sbin (potentially can be used before mount partitions)??
-# - move logger to separate package (to avoid conflicts with inetutils)
-
 Summary:	Collection of basic system utilities for Linux
 Summary(de.UTF-8):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
 Summary(es.UTF-8):	Colectánea de utilitarios básicos de sistema para Linux
@@ -33,27 +36,87 @@ Source3:	rawdevices.init
 Source4:	rawdevices.sysconfig
 Source5:	%{name}-blockdev.init
 Source6:	%{name}-blockdev.sysconfig
-Patch0:		%{name}-MCONFIG.patch
 Patch1:		%{name}-fdisk.patch
-Patch2:		%{name}-utmpx.patch
-Patch3:		%{name}-fhs.patch
-Patch4:		%{name}-info.patch
-Patch5:		%{name}-syscall.patch
-Patch6:		%{name}-raw.patch
-Patch7:		%{name}-posixsh.patch
-Patch8:		%{name}-ppc-hwclock.patch
-Patch9:		%{name}-amd64.patch
-Patch10:	%{name}-dm_crypt.patch
-Patch11:	%{name}-blk.patch
-Patch12:	%{name}-managed.patch
-Patch13:	%{name}-page.patch
-Patch14:	%{name}-gcc4.patch
-Patch15:	%{name}-2.12q-update-mtab-when-moving.patch
-Patch16:	%{name}-2.12q-use-update_mtab-for-fake.patch
-Patch17:	%{name}-2.12q-more-fake-checks-v2.patch
-Patch18:	%{name}-2.12q-update_mtab-fixes.patch
-Patch19:	%{name}-as_needed-fix.patch
-Patch20:	%{name}-mount.helper-fake.patch
+Patch2:		%{name}-fhs.patch
+Patch3:		%{name}-info.patch
+Patch4:		%{name}-syscall.patch
+Patch5:		%{name}-ncurses.patch
+Patch6:		%{name}-ppc-hwclock.patch
+Patch7:		%{name}-amd64.patch
+Patch8:		%{name}-dm_crypt.patch
+Patch9:		%{name}-blk.patch
+Patch10:	%{name}-managed.patch
+Patch11:	%{name}-gcc4.patch
+Patch12:	%{name}-2.12q-update-mtab-when-moving.patch
+Patch13:	%{name}-2.12q-use-update_mtab-for-fake.patch
+Patch14:	%{name}-2.12q-more-fake-checks-v2.patch
+Patch15:	%{name}-2.12q-update_mtab-fixes.patch
+Patch16:	%{name}-audit-hwclock.patch
+Patch17:	%{name}-audit-login.patch
+Patch18:	%{name}-multibyte.patch
+Patch19:	%{name}-chsh.patch
+Patch20:	%{name}-col-EILSEQ.patch
+Patch21:	%{name}-cramfs-maxentries.patch
+Patch22:	%{name}-cramfs-zerofiles.patch
+Patch23:	%{name}-ctrlaltdel-man.patch
+Patch24:	%{name}-ctty3.patch
+Patch25:	%{name}-execl.patch
+Patch26:	%{name}-fdformat-ide.patch
+Patch27:	%{name}-fdisk-b-4096.patch
+Patch28:	%{name}-fdisk-gpt.patch
+Patch29:	%{name}-fdisk-isfull.patch
+Patch30:	%{name}-fdisk-sectors.patch
+Patch31:	%{name}-fdisksegv.patch
+Patch32:	%{name}-hexdump-gcc.patch
+Patch33:	%{name}-hotkeys.patch
+Patch34:	%{name}-ipcs-shmax.patch
+Patch35:	%{name}-ipcs-typo.patch
+Patch36:	%{name}-login-hang.patch
+Patch37:	%{name}-login-ipv6.patch
+Patch38:	%{name}-login-lastlog.patch
+Patch39:	%{name}-login-pam-acct.patch
+Patch40:	%{name}-login-timeval.patch
+Patch41:	%{name}-look-separator.patch
+Patch42:	%{name}-losetup-all.patch
+Patch43:	%{name}-losetup-deprecated.patch
+Patch44:	%{name}-losetup-rdonly.patch
+Patch45:	%{name}-lvm2dupes.patch
+Patch46:	%{name}-mkswap-mounted.patch
+Patch47:	%{name}-mkswap-selinux.patch
+Patch48:	%{name}-more-CLOEXEC.patch
+Patch49:	%{name}-mountbylabel-dm.patch
+Patch50:	%{name}-mount-context.patch
+Patch51:	%{name}-mount.helper-fake.patch
+Patch52:	%{name}-mount-man-bugs.patch
+Patch53:	%{name}-mount-man-cifs.patch
+Patch54:	%{name}-mount-man-nfs4.patch
+Patch55:	%{name}-mount-man-nfs.patch
+Patch56:	%{name}-mount-nonfs.patch
+Patch57:	%{name}-mount-sloppy.patch
+Patch58:	%{name}-mount-subtree.patch
+Patch59:	%{name}-mount-twiceloop.patch
+Patch60:	%{name}-mount-uhelper.patch
+Patch61:	%{name}-mount-uuid.patch
+Patch62:	%{name}-mtab-lock.patch
+Patch63:	%{name}-namei-logic.patch
+Patch64:	%{name}-pamsession.patch
+Patch65:	%{name}-partx-man.patch
+Patch66:	%{name}-procpartitions.patch
+Patch67:	%{name}-raw-handle-nonpresent-devs.patch
+Patch68:	%{name}-raw-man.patch
+Patch69:	%{name}-raw-raw0.patch
+Patch70:	%{name}-rdev-man.patch
+Patch71:	%{name}-schedutils-man.patch
+Patch72:	%{name}-schedutils-SCHED_BATCH.patch
+Patch73:	%{name}-skipraid2.patch
+Patch74:	%{name}-swapon-suspend.patch
+Patch75:	%{name}-swaponsymlink.patch
+Patch76:	%{name}-swap-page.patch
+Patch77:	%{name}-umount-sysfs.patch
+Patch78:	%{name}-ac-dirs.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	intltool
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 %{?with_selinux:BuildRequires:	libselinux-devel}
@@ -65,6 +128,7 @@ BuildRequires:	texinfo
 %{!?with_uClibc:Requires:	pam >= 0.99.7.1}
 Provides:	fdisk
 Obsoletes:	cramfs
+Obsoletes:	schedutils
 Obsoletes:	util-linux-suids
 Conflicts:	shadow-extras < 1:4.0.3-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -361,8 +425,7 @@ Support for raw-devices.
 Obsługa raw-device'ów.
 
 %prep
-%setup -q -a1
-%patch0 -p1
+%setup -q -a1 -n %{name}-%{version}-%{_pre}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -376,30 +439,93 @@ Obsługa raw-device'ów.
 %patch11 -p1
 %patch12 -p0
 %patch13 -p1
-%patch14 -p1
+%patch14 -p0
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
-%patch19 -p0
+%patch19 -p1
 %patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+%patch39 -p1
+%patch40 -p1
+%patch41 -p1
+%patch42 -p1
+%patch43 -p1
+%patch44 -p1
+%patch45 -p1
+%patch46 -p1
+%patch47 -p1
+%patch48 -p1
+%patch49 -p1
+%patch50 -p1
+%patch51 -p1
+%patch52 -p1
+%patch53 -p1
+%patch54 -p1
+%patch55 -p1
+%patch56 -p1
+%patch57 -p1
+%patch58 -p1
+%patch59 -p1
+%patch60 -p1
+%patch61 -p1
+%patch62 -p1
+%patch63 -p1
+%patch64 -p1
+%patch65 -p1
+%patch66 -p1
+%patch67 -p1
+%patch68 -p1
+%patch69 -p1
+%patch70 -p1
+%patch71 -p1
+%patch72 -p1
+%patch73 -p1
+%patch74 -p1
+%patch75 -p1
+%patch76 -p1
+%patch77 -p1
+%patch78 -p1
 
 %build
-CC="%{__cc}"
-LDFLAGS="%{rpmldflags}"
-CFLAGS="%{rpmcflags} -I/usr/include/ncurses"
-export CC CFLAGS LDFLAGS
-# using %%configure2_13 isn't very wise here, it is not autoconf generated
-# configure and it doesn't take any parameters
-./configure
+%{__gettextize}
+%{__aclocal} -I m4
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure \
+	--bindir=/bin \
+	--sbindir=/sbin \
+	--enable-kill \
+	--enable-partx \
+	%{!?with_uClibc:--enable-raw} \
+	--enable-rdev \
+	--enable-write \
+	--enable-login-utils \
+	--disable-wall \
+	--disable-use-tty-group \
+	%{?with_uClibc:--disable-pam} \
+	%{!?with_selinux:--disable-selinux}
 
-%{?with_uClibc:echo 'char *nl_langinfo (nl_item x){return "";}' >> misc-utils/cal.c}
-%{__make} \
-	OPT="%{rpmcflags}" \
-	MOREHELPDIR=%{_datadir}/misc \
-	%{!?with_uClibc:ADD_RAW="yes"} \
-	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"} \
-	%{!?with_selinux:HAVE_SELINUX="no"}
+%{__make}
 
 %ifarch ppc
 %{__cc} %{rpmcflags} %{rpmldflags} clock-ppc.c -o clock-ppc
@@ -410,21 +536,13 @@ makeinfo ipc.texi
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT{/bin,/sbin,/etc/{pam.d,logrotate,rc.d/init.d,sysconfig}} \
-	$RPM_BUILD_ROOT{%{_bindir},%{_sbindir},%{_infodir},%{_datadir}/misc} \
-	$RPM_BUILD_ROOT{%{_examplesdir},%{_mandir}/man{1,5,6,8}}
+install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security} \
+	$RPM_BUILD_ROOT/var/lock
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	INSTALLSUID="install -m 755" \
-	MOREHELPDIR=$RPM_BUILD_ROOT%{_datadir}/misc \
-	GETOPTDIR=$RPM_BUILD_ROOT%{_examplesdir}/getopt \
-	USRGAMESDIR=$RPM_BUILD_ROOT%{_bindir} \
-	USE_TTY_GROUP=no \
-	%{!?with_selinux:HAVE_SELINUX="no"} \
-	%{!?with_uClibc:ADD_RAW="yes"} \
-	%{?with_uClibc:HAVE_RAW_H="no" HAVE_PAM="no"}
+	DESTDIR=$RPM_BUILD_ROOT
+
+install misc-utils/scriptreplay.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
@@ -432,10 +550,7 @@ install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/rawdevices
 install %{SOURCE5} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
 
-install -d $RPM_BUILD_ROOT{/etc/security,/var/lock}
-
-> $RPM_BUILD_ROOT/etc/security/blacklist.login
-
+:> $RPM_BUILD_ROOT/etc/security/blacklist.login
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 
 %ifarch ppc
@@ -450,8 +565,6 @@ ln -sf hwclock.adb $RPM_BUILD_ROOT/sbin/hwclock
 ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
-ln -sf swapon $RPM_BUILD_ROOT/sbin/swapoff
-
 for d in cs de es fi fr hu id it ja ko nl pl ; do
 	for m in man1 man5 man8 ; do
 		if [ -d man/$d/$m ]; then
@@ -462,12 +575,14 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 done
 
 # cleanup, remove files not included in package
-rm -f $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
-	$RPM_BUILD_ROOT%{_sbindir}/{vifr,vipw} \
-	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh,newgrp,sg}.1 \
-	$RPM_BUILD_ROOT%{_mandir}/man8/{sln,vigr,vipw}.8 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,clear,last,mesg,newgrp,od,passwd,reset,sg,wall}.1 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man8/{display-services,fast*,halt,initctl,need,provide,reboot,shutdown,simpleinit,sln,vigr,vipw}.8
+rm $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
+	$RPM_BUILD_ROOT%{_sbindir}/{vigr,vipw} \
+	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh,newgrp}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/man8/{vigr,vipw}.8 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,chfn,chsh,clear,last,mesg,newgrp,od,passwd,reset,sg,wall}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man8/{display-services,elvtune,fast*,halt,initctl,need,provide,reboot,setfdprm,shutdown,simpleinit,sln,vigr,vipw}.8
+
 %ifnarch %{ix86}
 rm -f $RPM_BUILD_ROOT%{_mandir}/*/man8/{ramsize,rdev,rootflags,vidmode}.8
 %endif
@@ -508,7 +623,7 @@ fi
 
 %files %{!?with_uClibc:-f %{name}.lang}
 %defattr(644,root,root,755)
-%doc */README.* text-utils/LICENSE.pg
+%doc */README.* text-utils/LICENSE.pg NEWS
 
 %attr(755,root,root) /sbin/clock
 %ifarch ppc
@@ -526,17 +641,14 @@ fi
 %lang(ja) %{_mandir}/ja/man8/clock.8*
 %lang(ja) %{_mandir}/ja/man8/hwclock.8*
 
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/fdprm
-
-%attr(755,root,root) /bin/arch
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
 %{!?with_uClibc:%attr(755,root,root) /bin/more}
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkswap
 %attr(755,root,root) /sbin/ctrlaltdel
-%attr(755,root,root) /sbin/elvtune
 %attr(755,root,root) %{_bindir}/cal
+%attr(755,root,root) %{_bindir}/chrt
 %attr(755,root,root) %{_bindir}/col
 %attr(755,root,root) %{_bindir}/colcrt
 %attr(755,root,root) %{_bindir}/colrm
@@ -546,6 +658,7 @@ fi
 %attr(755,root,root) %{_bindir}/flock
 %attr(755,root,root) %{_bindir}/getopt
 %attr(755,root,root) %{_bindir}/hexdump
+%attr(755,root,root) %{_bindir}/ionice
 %attr(755,root,root) %{_bindir}/ipcrm
 %attr(755,root,root) %{_bindir}/ipcs
 %attr(755,root,root) %{_bindir}/isosize
@@ -555,21 +668,24 @@ fi
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/pg}
+%attr(755,root,root) %{_bindir}/rename
 %attr(755,root,root) %{_bindir}/renice
 %attr(755,root,root) %{_bindir}/rev
 %attr(755,root,root) %{_bindir}/script
 %attr(755,root,root) %{_bindir}/setsid
-%attr(755,root,root) %{_bindir}/setfdprm
-%attr(755,root,root) %{_bindir}/rename
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/setterm}
+%attr(755,root,root) %{_bindir}/tailf
+%attr(755,root,root) %{_bindir}/taskset
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/ul}
 %attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
-%attr(755,root,root) %{_bindir}/tailf
+%attr(755,root,root) %{_sbindir}/addpart
+%attr(755,root,root) %{_sbindir}/delpart
+%attr(755,root,root) %{_sbindir}/partx
 %attr(755,root,root) %{_sbindir}/readprofile
 
-%{_mandir}/man1/arch.1*
 %{_mandir}/man1/cal.1*
+%{_mandir}/man1/chrt.1*
 %{_mandir}/man1/col.1*
 %{_mandir}/man1/colcrt.1*
 %{_mandir}/man1/colrm.1*
@@ -578,6 +694,7 @@ fi
 %{_mandir}/man1/flock.1*
 %{_mandir}/man1/getopt.1*
 %{_mandir}/man1/hexdump.1*
+%{_mandir}/man1/ionice.1*
 %{_mandir}/man1/kill.1*
 %{_mandir}/man1/line.1*
 %{_mandir}/man1/logger.1*
@@ -591,22 +708,24 @@ fi
 %{_mandir}/man1/rename.1*
 %{_mandir}/man1/script.1*
 %{!?with_uClibc:%{_mandir}/man1/setterm.1*}
+%{_mandir}/man1/tailf.1*
+%{_mandir}/man1/taskset.1*
 %{!?with_uClibc:%{_mandir}/man1/ul.1*}
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
-%{_mandir}/man1/tailf.1*
 
+%{_mandir}/man8/addpart.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/cytune.8*
+%{_mandir}/man8/delpart.8*
 %{_mandir}/man8/dmesg.8*
-%{_mandir}/man8/elvtune.8*
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/ipcrm.8*
 %{_mandir}/man8/ipcs.8*
 %{_mandir}/man8/isosize.8*
 %{_mandir}/man8/mkswap.8*
+%{_mandir}/man8/partx.8*
 %{_mandir}/man8/renice.8*
-%{_mandir}/man8/setfdprm.8*
 %{_mandir}/man8/setsid.8*
 
 %lang(cs) %{_mandir}/cs/man1/write.1*
@@ -617,7 +736,6 @@ fi
 
 %lang(de) %{_mandir}/de/man8/fdformat.8*
 
-%lang(es) %{_mandir}/es/man1/arch.1*
 %lang(es) %{_mandir}/es/man1/colrm.1*
 %lang(es) %{_mandir}/es/man1/column.1*
 %lang(es) %{_mandir}/es/man1/ddate.1*
@@ -639,10 +757,8 @@ fi
 %lang(es) %{_mandir}/es/man8/ipcs.8*
 %lang(es) %{_mandir}/es/man8/mkswap.8*
 %lang(es) %{_mandir}/es/man8/renice.8*
-%lang(es) %{_mandir}/es/man8/setfdprm.8*
 %lang(es) %{_mandir}/es/man8/setsid.8*
 
-%lang(fi) %{_mandir}/fi/man1/arch.1*
 %lang(fi) %{_mandir}/fi/man1/cal.1*
 %lang(fi) %{_mandir}/fi/man1/column.1*
 %lang(fi) %{_mandir}/fi/man1/kill.1*
@@ -650,7 +766,6 @@ fi
 %lang(fi) %{_mandir}/fi/man1/whereis.1*
 %lang(fi) %{_mandir}/fi/man1/write.1*
 
-%lang(fr) %{_mandir}/fr/man1/arch.1*
 %lang(fr) %{_mandir}/fr/man1/cal.1*
 %lang(fr) %{_mandir}/fr/man1/col.1*
 %lang(fr) %{_mandir}/fr/man1/kill.1*
@@ -666,7 +781,6 @@ fi
 %lang(fr) %{_mandir}/fr/man8/ipcs.8*
 %lang(fr) %{_mandir}/fr/man8/setsid.8*
 
-%lang(hu) %{_mandir}/hu/man1/arch.1*
 %lang(hu) %{_mandir}/hu/man1/cal.1*
 %lang(hu) %{_mandir}/hu/man1/colrm.1*
 %lang(hu) %{_mandir}/hu/man1/hexdump.1*
@@ -690,7 +804,6 @@ fi
 
 %lang(id) %{_mandir}/id/man8/fdformat.8*
 
-%lang(it) %{_mandir}/it/man1/arch.1*
 %lang(it) %{_mandir}/it/man1/cal.1*
 %lang(it) %{_mandir}/it/man1/kill.1*
 %lang(it) %{_mandir}/it/man1/rename.1*
@@ -705,7 +818,6 @@ fi
 %lang(it) %{_mandir}/it/man8/mkswap.8*
 %lang(it) %{_mandir}/it/man8/setsid.8*
 
-%lang(ja) %{_mandir}/ja/man1/arch.1*
 %lang(ja) %{_mandir}/ja/man1/cal.1*
 %lang(ja) %{_mandir}/ja/man1/col.1*
 %lang(ja) %{_mandir}/ja/man1/colcrt.1*
@@ -734,17 +846,14 @@ fi
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
 %lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/dmesg.8*
-%lang(ja) %{_mandir}/ja/man8/elvtune.8*
 %lang(ja) %{_mandir}/ja/man8/fdformat.8*
 %lang(ja) %{_mandir}/ja/man8/ipcrm.8*
 %lang(ja) %{_mandir}/ja/man8/ipcs.8*
 %lang(ja) %{_mandir}/ja/man8/isosize.8*
 %lang(ja) %{_mandir}/ja/man8/mkswap.8*
 %lang(ja) %{_mandir}/ja/man8/renice.8*
-%lang(ja) %{_mandir}/ja/man8/setfdprm.8*
 %lang(ja) %{_mandir}/ja/man8/setsid.8*
 
-%lang(ko) %{_mandir}/ko/man1/arch.1*
 %lang(ko) %{_mandir}/ko/man1/cal.1*
 %lang(ko) %{_mandir}/ko/man1/col.1*
 %lang(ko) %{_mandir}/ko/man1/colcrt.1*
@@ -774,12 +883,10 @@ fi
 %lang(ko) %{_mandir}/ko/man8/ipcs.8*
 %lang(ko) %{_mandir}/ko/man8/mkswap.8*
 %lang(ko) %{_mandir}/ko/man8/renice.8*
-%lang(ko) %{_mandir}/ko/man8/setfdprm.8*
 %lang(ko) %{_mandir}/ko/man8/setsid.8*
 
 %lang(nl) %{_mandir}/nl/man1/kill.1*
 
-%lang(pl) %{_mandir}/pl/man1/arch.1*
 %lang(pl) %{_mandir}/pl/man1/cal.1*
 %lang(pl) %{_mandir}/pl/man1/col.1*
 %lang(pl) %{_mandir}/pl/man1/colcrt.1*
@@ -804,7 +911,6 @@ fi
 %lang(pl) %{_mandir}/pl/man8/ipcs.8*
 %lang(pl) %{_mandir}/pl/man8/mkswap.8*
 %lang(pl) %{_mandir}/pl/man8/renice.8*
-%lang(pl) %{_mandir}/pl/man8/setfdprm.8*
 
 %dir %{_examplesdir}/getopt
 %attr(755,root,root) %{_examplesdir}/getopt/*
@@ -932,7 +1038,6 @@ fi
 %attr(755,root,root) /sbin/swapoff
 
 %{_mandir}/man5/fstab.5*
-%{_mandir}/man5/nfs.5*
 
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/umount.8*
@@ -943,10 +1048,8 @@ fi
 %lang(cs) %{_mandir}/cs/man5/fstab.5*
 
 %lang(de) %{_mandir}/de/man5/fstab.5*
-%lang(de) %{_mandir}/de/man5/nfs.5*
 
 %lang(es) %{_mandir}/es/man5/fstab.5*
-%lang(es) %{_mandir}/es/man5/nfs.5*
 
 %lang(es) %{_mandir}/es/man8/mount.8*
 %lang(es) %{_mandir}/es/man8/umount.8*
@@ -954,7 +1057,6 @@ fi
 %lang(es) %{_mandir}/es/man8/swapoff.8*
 
 %lang(fr) %{_mandir}/fr/man5/fstab.5*
-%lang(fr) %{_mandir}/fr/man5/nfs.5*
 
 %lang(fr) %{_mandir}/fr/man8/mount.8*
 %lang(fr) %{_mandir}/fr/man8/umount.8*
@@ -965,7 +1067,6 @@ fi
 %lang(hu) %{_mandir}/hu/man8/umount.8*
 
 %lang(it) %{_mandir}/it/man5/fstab.5*
-%lang(it) %{_mandir}/it/man5/nfs.5*
 
 %lang(it) %{_mandir}/it/man8/mount.8*
 %lang(it) %{_mandir}/it/man8/umount.8*
@@ -973,7 +1074,6 @@ fi
 %lang(it) %{_mandir}/it/man8/swapoff.8*
 
 %lang(ja) %{_mandir}/ja/man5/fstab.5*
-%lang(ja) %{_mandir}/ja/man5/nfs.5*
 
 %lang(ja) %{_mandir}/ja/man8/mount.8*
 %lang(ja) %{_mandir}/ja/man8/umount.8*
@@ -982,7 +1082,6 @@ fi
 %lang(ja) %{_mandir}/ja/man8/swapoff.8*
 
 %lang(ko) %{_mandir}/ko/man5/fstab.5*
-%lang(ko) %{_mandir}/ko/man5/nfs.5*
 
 %lang(ko) %{_mandir}/ko/man8/mount.8*
 %lang(ko) %{_mandir}/ko/man8/umount.8*
@@ -990,7 +1089,6 @@ fi
 %lang(ko) %{_mandir}/ko/man8/swapoff.8*
 
 %lang(pl) %{_mandir}/pl/man5/fstab.5*
-%lang(pl) %{_mandir}/pl/man5/nfs.5*
 
 %lang(pl) %{_mandir}/pl/man8/mount.8*
 %lang(pl) %{_mandir}/pl/man8/umount.8*
