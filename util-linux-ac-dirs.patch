@@ -1,0 +1,22 @@
+--- util-linux-2.13-pre7/config/include-Makefile.am~	2005-11-17 02:30:10.000000000 +0100
++++ util-linux-2.13-pre7/config/include-Makefile.am	2007-03-24 02:11:24.000000000 +0100
+@@ -1,6 +1,6 @@
+-usrbinexecdir = $(prefix)/usr/bin
+-usrsbinexecdir = $(prefix)/usr/sbin
+-datadir = $(prefix)/usr/share
++usrbinexecdir = $(prefix)/bin
++usrsbinexecdir = $(prefix)/sbin
++datadir = $(prefix)/share
+ infodir = $(datadir)/info
+ mandir = $(datadir)/man
+ 
+--- util-linux-2.13-pre7/getopt/Makefile.am~	2005-08-14 13:33:14.000000000 +0200
++++ util-linux-2.13-pre7/getopt/Makefile.am	2007-03-24 02:18:15.000000000 +0100
+@@ -6,6 +6,6 @@
+ 
+ man_MANS = getopt.1
+ 
+-exampledir = $(prefix)/usr/share/getopt/
++exampledir = $(prefix)/src/examples/getopt/
+ example_DATA = getopt-parse.bash getopt-parse.tcsh \
+ 	getopt-test.bash getopt-test.tcsh
