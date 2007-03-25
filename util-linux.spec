@@ -547,7 +547,7 @@ install misc-utils/scriptreplay.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 sed -i -e 's,/usr/spool/mail,/var/mail,g' $RPM_BUILD_ROOT%{_mandir}/man1/login.1
 
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
-mv $RPM_BUILD_ROOT%{_bindir}/{taskset,raw} $RPM_BUILD_ROOT/bin
+mv $RPM_BUILD_ROOT%{_bindir}/raw $RPM_BUILD_ROOT/sbin
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/rawdevices
@@ -648,7 +648,6 @@ fi
 
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
-%attr(755,root,root) /bin/taskset
 %{!?with_uClibc:%attr(755,root,root) /bin/more}
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkswap
@@ -684,6 +683,7 @@ fi
 %attr(755,root,root) %{_bindir}/setsid
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/setterm}
 %attr(755,root,root) %{_bindir}/tailf
+%attr(755,root,root) %{_bindir}/taskset
 %{!?with_uClibc:%attr(755,root,root) %{_bindir}/ul}
 %attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
@@ -1158,7 +1158,7 @@ fi
 %if !%{with uClibc}
 %files -n rawdevices
 %defattr(644,root,root,755)
-%attr(755,root,root) /bin/raw
+%attr(755,root,root) /sbin/raw
 %attr(754,root,root) /etc/rc.d/init.d/rawdevices
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/rawdevices
 
