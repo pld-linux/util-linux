@@ -6,8 +6,8 @@
         if (stat(mountprog, &statbuf) == 0) {
  	    res = fork();
  	    if (res == 0) {
--		 const char *oo, *mountargs[10];
-+		 const char *oo, *mountargs[12];
+-		 char *oo, *mountargs[10];
++		 char *oo, *mountargs[12];
  		 int i = 0;
  
  		 setuid(getuid());
