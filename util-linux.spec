@@ -111,6 +111,7 @@ Patch75:	%{name}-swaponsymlink.patch
 Patch76:	%{name}-swap-page.patch
 Patch77:	%{name}-umount-sysfs.patch
 Patch78:	%{name}-ac-dirs.patch
+Patch79:	%{name}-mount-helper-auto.patch
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -476,6 +477,7 @@ Obsługa raw-device'ów.
 %patch48 -p1
 %patch49 -p1
 %patch50 -p1
+%patch79 -p1
 %patch51 -p1
 %patch52 -p1
 %patch53 -p1
