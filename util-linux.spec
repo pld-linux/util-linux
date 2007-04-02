@@ -19,7 +19,7 @@ Summary(uk.UTF-8):	Набір базових системних утиліт д�
 Name:		util-linux
 Version:	2.13
 %define	_pre	pre7
-Release:	0.%{_pre}.1
+Release:	0.%{_pre}.2
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
