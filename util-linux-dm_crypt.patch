@@ -1,7 +1,7 @@
 diff -urN util-linux-2.12q.org/mount/cryptsetup.c util-linux-2.12q/mount/cryptsetup.c
 --- util-linux-2.12q.org/mount/cryptsetup.c	1970-01-01 01:00:00.000000000 +0100
 +++ util-linux-2.12q/mount/cryptsetup.c	2005-02-27 19:26:34.000000000 +0100
-@@ -0,0 +1,216 @@
+@@ -0,0 +1,214 @@
 +/*
 + * cryptsetup.c - setup and control encrypted devices
 + */
@@ -112,8 +112,6 @@ diff -urN util-linux-2.12q.org/mount/cryptsetup.c util-linux-2.12q/mount/cryptse
 +		options.key_file = NULL;
 +	options.passphrase_fd = (pfd >= 0) ? pfd : 0;
 +	options.flags = 0;
-+	if (!options.key_file)
-+		options.flags |= CRYPT_FLAG_VERIFY;
 +	if (*cryptro)
 +		options.flags |= CRYPT_FLAG_READONLY;
 +	options.offset = offset;
