@@ -115,7 +115,7 @@ Patch79:	%{name}-mount-helper-auto.patch
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	cryptsetup-devel
+BuildRequires:	cryptsetup-luks-devel
 BuildRequires:	e2fsprogs-devel >= 1.36
 BuildRequires:	gettext-devel
 BuildRequires:	intltool
@@ -285,7 +285,7 @@ Summary(ru.UTF-8):	Программы для монтирования и раз�
 Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
 Group:		Applications/System
-Requires:	cryptsetup >= 0.2-1.pre1.4
+Requires:	cryptsetup-luks >= 1.0.4
 Requires:	libgcrypt >= 1.2.0-6
 Requires:	libgpg-error >= 1.0-4
 
