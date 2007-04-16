@@ -112,6 +112,7 @@ Patch76:	%{name}-swap-page.patch
 Patch77:	%{name}-umount-sysfs.patch
 Patch78:	%{name}-ac-dirs.patch
 Patch79:	%{name}-mount-helper-auto.patch
+Patch80:	%{name}-sparc.patch
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -506,6 +507,7 @@ Obsługa raw-device'ów.
 %patch76 -p1
 %patch77 -p1
 %patch78 -p1
+%patch80 -p1
 
 %build
 %{__gettextize}
