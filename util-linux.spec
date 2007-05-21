@@ -518,16 +518,17 @@ Obsługa raw-device'ów.
 %configure \
 	--bindir=/bin \
 	--sbindir=/sbin \
+	%{?with_uClibc:--disable-pam} \
+	%{!?with_selinux:--disable-selinux} \
+	--disable-use-tty-group \
+	--disable-wall \
 	--enable-kill \
+	--enable-login-chown-vcs \
+	--enable-login-utils \
 	--enable-partx \
 	%{!?with_uClibc:--enable-raw} \
 	--enable-rdev \
-	--enable-write \
-	--enable-login-utils \
-	--disable-wall \
-	--disable-use-tty-group \
-	%{?with_uClibc:--disable-pam} \
-	%{!?with_selinux:--disable-selinux}
+	--enable-write
 
 %{__make}
 
