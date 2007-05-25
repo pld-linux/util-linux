@@ -43,14 +43,6 @@ diff -urN util-linux-2.12q.org/mount/mount.c util-linux-2.12q/mount/mount.c
  #include "loop.h"
  #include "linux_fs.h"		/* for BLKGETSIZE */
  #include "mount_guess_rootdev.h"
-@@ -98,6 +99,7 @@
- #define MS_USER		0x20000000
- #define MS_OWNER	0x10000000
- #define MS_GROUP	0x08000000
-+#define	MS_CRYPT	0x00040000
- #define MS_COMMENT	0x00020000
- #define MS_LOOP		0x00010000
- 
 @@ -607,7 +609,7 @@
        *type = opt_vfstype;
    }
@@ -69,7 +61,7 @@ diff -urN util-linux-2.12q.org/mount/mount.c util-linux-2.12q/mount/mount.c
  	if (verbose)
  	  printf(_("mount: failed setting up loop device\n"));
  	return EX_FAIL;
-@@ -636,6 +638,42 @@
+@@ -636,6 +638,41 @@
        *spec = *loopdev;
        if (loopro)
  	*flags |= MS_RDONLY;
@@ -86,11 +78,10 @@ diff -urN util-linux-2.12q.org/mount/mount.c util-linux-2.12q/mount/mount.c
 +	    int *crypt, char **cryptdev, char **realdev) {
 +  int offset;
 +
-+  *crypt = ((*flags & MS_CRYPT) || opt_encryption);
++  *crypt = opt_encryption;
 +  *realdev = *spec;
 +
 +  if (*crypt) {
-+    *flags |= MS_CRYPT;
 +    if (fake) {
 +      if (verbose)
 +	printf(_("mount: skipping the setup of an encrypted device\n"));
