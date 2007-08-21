@@ -19,7 +19,7 @@ Summary(uk.UTF-8):	Набір базових системних утиліт д�
 Name:		util-linux
 Version:	2.13
 %define	_pre	pre7
-Release:	0.%{_pre}.2
+Release:	0.%{_pre}.3
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -113,6 +113,7 @@ Patch77:	%{name}-umount-sysfs.patch
 Patch78:	%{name}-ac-dirs.patch
 Patch79:	%{name}-mount-helper-auto.patch
 Patch80:	%{name}-sparc.patch
+Patch81:	%{name}-single_letter_weekday.patch
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -508,6 +509,7 @@ Obsługa raw-device'ów.
 %patch77 -p1
 %patch78 -p1
 %patch80 -p1
+%patch81 -p1
 
 %build
 %{__gettextize}
