@@ -1,0 +1,11 @@
+--- util-linux-2.13-pre7/misc-utils/cal.c~	2007-08-21 23:23:53.000000000 +0200
++++ util-linux-2.13-pre7/misc-utils/cal.c	2007-08-21 23:23:53.000000000 +0200
+@@ -389,7 +389,7 @@
+      wd = (i + week1stday) % 7;
+ #ifdef HAVE_WIDECHAR
+      swprintf(day_headings_wc, sizeof(day_headings_wc)/sizeof(day_headings_wc[0]),
+-		L"%1.2s ", weekday(wd));
++		L"%2.2s ", weekday(wd));
+      swprintf(j_day_headings_wc, sizeof(j_day_headings_wc)/sizeof(j_day_headings_wc[0]),
+ 		L"%3.3s ", weekday(wd));
+      space_left = sizeof(day_headings)-(cur_dh-day_headings);
