@@ -4,6 +4,7 @@
 # - what to do with scriptreplay? (req: perl)
 # 
 # Conditional build:
+%bcond_without	audit	# don't include audit support
 %bcond_with	uClibc	# don't build few utilities
 %bcond_without	selinux # build without SELinux support
 #
@@ -114,7 +115,7 @@ Patch78:	%{name}-ac-dirs.patch
 Patch79:	%{name}-mount-helper-auto.patch
 Patch80:	%{name}-sparc.patch
 Patch81:	%{name}-single_letter_weekday.patch
-BuildRequires:	audit-libs-devel >= 1.0.6
+%{?with_audit:BuildRequires:	audit-libs-devel}
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	cryptsetup-luks-devel
@@ -444,8 +445,8 @@ Obsługa raw-device'ów.
 %patch13 -p1
 %patch14 -p0
 %patch15 -p1
-%patch16 -p1
-%patch17 -p1
+%{?with_audit:%patch16 -p1}
+%{?with_audit:%patch17 -p1}
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
