@@ -18,7 +18,7 @@ Summary(tr):	Temel sistem araçlarý
 Summary(uk):	îÁÂ¦Ò ÂÁÚÏ×ÉÈ ÓÉÓÔÅÍÎÉÈ ÕÔÉÌ¦Ô ÄÌÑ Linux
 Name:		util-linux
 Version:	2.12r
-Release:	7
+Release:	8
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -65,6 +65,7 @@ Patch27:	%{name}-2.12q-use-update_mtab-for-fake.patch
 Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
 Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 Patch30:	%{name}-as_needed-fix.patch
+Patch31:	%{name}-CVE-2007-5191.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
@@ -73,8 +74,8 @@ BuildRequires:	libselinux-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 BuildRequires:	texinfo
 %{!?with_uClibc:BuildRequires:	zlib-devel}
-%{!?with_uClibc:Requires:	pam >= 0.79.0}
 Provides:	fdisk
+%{!?with_uClibc:Requires:	pam >= 0.79.0}
 Obsoletes:	cramfs
 Obsoletes:	util-linux-suids
 Conflicts:	shadow-extras < 1:4.0.3-6
@@ -404,6 +405,7 @@ Obs³uga raw-device'ów.
 %patch28 -p0
 %patch29 -p1
 %patch30 -p1
+%patch31 -p1
 
 %build
 CC="%{__cc}"
