@@ -67,6 +67,7 @@ Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 Patch30:	%{name}-as_needed-fix.patch
 Patch31:	%{name}-CVE-2007-5191.patch
 Patch32:	%{name}-lseek.patch
+Patch33:	%{name}-umount-sparc.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
@@ -408,6 +409,7 @@ Obs³uga raw-device'ów.
 %patch30 -p1
 %patch31 -p1
 %patch32 -p1
+%patch33 -p1
 
 %build
 CC="%{__cc}"
