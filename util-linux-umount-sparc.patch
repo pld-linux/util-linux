@@ -1,0 +1,13 @@
+http://lists.pld-linux.org/mailman/pipermail/pld-devel-pl/2007-April/140647.html
+
+--- util-linux-2.12r/mount/umount.c~	2008-07-22 14:48:56.041210276 +0000
++++ util-linux-2.12r/mount/umount.c	2008-07-22 22:34:56.452372763 +0000
+@@ -32,7 +32,7 @@
+ #include <arpa/inet.h>
+ #endif
+ 
+-#if defined(MNT_FORCE) && !defined(__sparc__) && !defined(__arm__)
++#if defined(MNT_FORCE) && !defined(__arm__)
+ /* Interesting ... it seems libc knows about MNT_FORCE and presumably
+    about umount2 as well -- need not do anything */
+ #else /* MNT_FORCE */
