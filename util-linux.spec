@@ -18,7 +18,7 @@ Summary(tr):	Temel sistem araГlarЩ
 Summary(uk):	Наб╕р базових системних утил╕т для Linux
 Name:		util-linux
 Version:	2.12r
-Release:	9
+Release:	10
 License:	distributable
 Group:		Applications/System
 # devel versions at ftp://ftp.kernel.org/pub/linux/utils/util-linux/testing
@@ -66,6 +66,7 @@ Patch28:	%{name}-2.12q-more-fake-checks-v2.patch
 Patch29:	%{name}-2.12q-update_mtab-fixes.patch
 Patch30:	%{name}-as_needed-fix.patch
 Patch31:	%{name}-CVE-2007-5191.patch
+Patch32:	%{name}-lseek.patch
 BuildRequires:	cryptsetup-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
@@ -406,6 +407,7 @@ ObsЁuga raw-device'Сw.
 %patch29 -p1
 %patch30 -p1
 %patch31 -p1
+%patch32 -p1
 
 %build
 CC="%{__cc}"
