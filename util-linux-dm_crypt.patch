@@ -423,3 +423,58 @@ diff -urN util-linux-2.12q.org/mount/cryptsetup.c util-linux-2.12q/mount/cryptse
 +}
 +
 +#endif
+diff -urN util-linux-2.12r.orig/mount/cryptsetup.c util-linux-2.12r/mount/cryptsetup.c
+--- util-linux-2.12r/mount/cryptsetup.c	2008-08-24 18:14:06.000000000 +0200
++++ util-linux-2.12r.orig/mount/cryptsetup.c	2008-08-24 18:09:22.000000000 +0200
+@@ -22,6 +22,26 @@
+ #define DEFAULT_HASH	"ripemd160"
+ #define DEFAULT_KEYSIZE	256
+ 
++static int crypto_yesDialog(char *msg) {
++    return(0);
++}
++
++static void crypto_log(int class, char *msg) {
++    switch(class) {
++	case CRYPT_LOG_NORMAL:
++	    fputs(msg, stdout);
++	    break;
++	case CRYPT_LOG_ERROR:
++	    fputs(msg, stderr);
++	    break;
++	default:
++	    fprintf(stderr, "Internal error on logging class for msg: %s", msg);
++	    break;	
++    }
++}
++
++static struct interface_callbacks crypto_callbacks = { crypto_yesDialog, crypto_log };
++
+ static char *
+ xstrtok(char *s, char delim) {
+ 	static char *p;
+@@ -93,6 +113,7 @@
+ 	p = xstrdup(*encryption);
+ 
+ 	memset(&options, 0, sizeof options);
++	options.icb = &crypto_callbacks;
+ 	options.name = name;
+ 	options.device = realdev;
+ 	options.cipher = xstrtok(p, ':');
+@@ -109,8 +130,6 @@
+ 		options.key_file = NULL;
+ 	options.passphrase_fd = (pfd >= 0) ? pfd : 0;
+ 	options.flags = 0;
+-	if (!options.key_file)
+-		options.flags |= CRYPT_FLAG_PASSPHRASE;
+ 	if (*cryptro)
+ 		options.flags |= CRYPT_FLAG_READONLY;
+ 	options.offset = offset;
+@@ -176,6 +195,7 @@
+ 
+ 	memset(&options, 0, sizeof options);
+ 	options.name = device;
++	options.icb = &crypto_callbacks;
+ 
+ 	ret = crypt_remove_device(&options);
+ 	if (ret < 0) {
