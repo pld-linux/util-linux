@@ -68,7 +68,7 @@ Patch30:	%{name}-as_needed-fix.patch
 Patch31:	%{name}-CVE-2007-5191.patch
 Patch32:	%{name}-lseek.patch
 Patch33:	%{name}-umount-sparc.patch
-BuildRequires:	cryptsetup-devel
+BuildRequires:	cryptsetup-luks-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libselinux-devel
 %{!?with_uClibc:BuildRequires:	ncurses-devel >= 5.0}
