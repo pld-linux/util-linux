@@ -1,0 +1,5 @@
+- some progress made: initrd version still won't build with either dietlibc
+  or uClibc
+- info documentation is no more; dropped BR: texinfo
+- gettextize, libtoolize; BR: autoconf, gtk-doc-automake
+- locale files changed name to util-linux
