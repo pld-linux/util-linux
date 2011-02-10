@@ -1,0 +1,1 @@
+- invoke fix-info-dir via /sbin/postshell where possible to avoid extra /bin/sh dep
