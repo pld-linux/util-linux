@@ -1,0 +1,3 @@
+- BR: fresh rpm-build-macros
+- remove cryptsetup deps (used with dm_crypt.patch)
+- BR: libtool
