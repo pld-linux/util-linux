@@ -1,0 +1,3 @@
+- dropped obsolete ac patch
+- adapted remaining patches from old util-linux:
+  ctrlaltdel-man,fdformat-ide,fhs,hotkeys,info,login-lastlog,procpartitions,swaponsymlink
