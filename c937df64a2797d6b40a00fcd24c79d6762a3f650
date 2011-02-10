@@ -1,0 +1,1 @@
+- use hwclock.rtc as hwclock on ppc (now it works on macs)
