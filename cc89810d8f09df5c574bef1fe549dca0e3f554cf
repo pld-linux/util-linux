@@ -1,0 +1,6 @@
+- updated to 2.18
+- new libmount-* packages (library using libblkid)
+- libblkid depends on libuuid (use strict internal deps)
+- new findmnt utility (temporarily in libmount;
+  to be moved to mount when mount starts to depend on libmount - probably in 2.19)
+- new fsfreeze and swaplabel utils (in base)
