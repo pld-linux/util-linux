@@ -28,12 +28,12 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.19
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.19/%{name}-%{version}.tar.bz2
 # Source0-md5:	590ca71aad0b254e2631d84401f28255
-Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/util-linux-non-english-man-pages.tar.bz2
+Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
 Source3:	%{name}-blockdev.init
@@ -597,8 +597,8 @@ Sprawdzanie i naprawa linuksowego systemu plików.
 Summary:	blkid - initrd version
 Summary(pl.UTF-8):	blkid - wersja dla initrd
 Group:		Base
-Conflicts:	geninitrd < 10000.10
 Obsoletes:	util-linux-ng-initrd
+Conflicts:	geninitrd < 10000.10
 
 %description initrd
 This package includes a blkid utility to recognize partitions by label
