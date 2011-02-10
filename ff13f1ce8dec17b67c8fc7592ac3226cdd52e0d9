@@ -1,0 +1,4 @@
+- dietlibc 2:0.32-7 has program_invocation_short_name and UINTMAX_MAX
+- regenerate ac/am stuff (sed configure.ac in prep)
+- build more stuff for initrd (fdisk, mkswap, etc.)
+- add libmount-dietlibc for completness
