@@ -26,28 +26,28 @@ Summary(pt_BR.UTF-8):	Coletânea de utilitários básicos de sistema para Linux
 Summary(ru.UTF-8):	Набор базовых системных утилит для Linux
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
-Name:		util-linux-ng
+Name:		util-linux
 Version:	2.19
 Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.19/util-linux-%{version}.tar.bz2
+Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.19/%{name}-%{version}.tar.bz2
 # Source0-md5:	590ca71aad0b254e2631d84401f28255
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/util-linux-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
-Source3:	util-linux-blockdev.init
-Source4:	util-linux-blockdev.sysconfig
-Patch0:		%{name}-ppc.patch
-Patch1:		%{name}-union-mount.patch
-Patch2:		util-linux-ctrlaltdel-man.patch
-Patch3:		util-linux-fdformat-ide.patch
-Patch4:		util-linux-fhs.patch
-Patch5:		util-linux-hotkeys.patch
-Patch7:		util-linux-login-lastlog.patch
-Patch8:		util-linux-procpartitions.patch
-Patch9:		util-linux-swaponsymlink.patch
-Patch10:	util-linux-diet.patch
+Source3:	%{name}-blockdev.init
+Source4:	%{name}-blockdev.sysconfig
+Patch0:		%{name}-ng-ppc.patch
+Patch1:		%{name}-ng-union-mount.patch
+Patch2:		%{name}-ctrlaltdel-man.patch
+Patch3:		%{name}-fdformat-ide.patch
+Patch4:		%{name}-fhs.patch
+Patch5:		%{name}-hotkeys.patch
+Patch7:		%{name}-login-lastlog.patch
+Patch8:		%{name}-procpartitions.patch
+Patch9:		%{name}-swaponsymlink.patch
+Patch10:	%{name}-diet.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf
@@ -81,7 +81,6 @@ Requires:	pam >= %{pam_ver}
 Provides:	fdisk
 Provides:	linux32
 Provides:	sparc32
-Provides:	util-linux = %{version}-%{release}
 Obsoletes:	cramfs
 Obsoletes:	ionice
 Obsoletes:	linux32
@@ -89,7 +88,7 @@ Obsoletes:	rawdevices
 Obsoletes:	schedutils
 Obsoletes:	setarch
 Obsoletes:	sparc32
-Obsoletes:	util-linux
+Obsoletes:	util-linux-ng <= %{version}-%{release}
 Obsoletes:	util-linux-suids
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
@@ -315,8 +314,7 @@ sisteminizin işlevselliği açısından kritiktir.
 Summary:	chkdupexe - find duplicate executables
 Summary(pl.UTF-8):	chkdupexe odszukuje powtarzające się pliki uruchamialne
 Group:		Applications/System
-Provides:	util-linux-chkdupexe = %{version}-%{release}
-Obsoletes:	util-linux-chkdupexe
+Obsoletes:	util-linux-ng-chkdupexe
 
 %description chkdupexe
 chkdupexe will scan the union of $PATH and a hardcoded list of common
@@ -600,6 +598,7 @@ Summary:	blkid - initrd version
 Summary(pl.UTF-8):	blkid - wersja dla initrd
 Group:		Base
 Conflicts:	geninitrd < 10000.10
+Obsoletes:	util-linux-ng-initrd
 
 %description initrd
 This package includes a blkid utility to recognize partitions by label
@@ -610,7 +609,7 @@ Pakiet ten zawiera narzędzie blkid do rozpoznawania partycji przez
 etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
 %prep
-%setup -q -a1 -n util-linux-%{version}
+%setup -q -a1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -759,7 +758,7 @@ cp -a initrd%{_libdir}/lib*.a $RPM_BUILD_ROOT%{dietlibdir}
 %endif
 %endif
 
-%find_lang util-linux
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -799,7 +798,7 @@ fi
 %post	-n libmount -p /sbin/ldconfig
 %postun -n libmount -p /sbin/ldconfig
 
-%files -f util-linux.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc */README.* text-utils/LICENSE.pg NEWS
 
