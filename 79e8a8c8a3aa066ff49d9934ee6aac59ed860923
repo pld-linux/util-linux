@@ -1,0 +1,2 @@
+- rel 6
+- libblkid-{devel,static,dietlibc} R libuuid-{devel,static,dietlibc}
