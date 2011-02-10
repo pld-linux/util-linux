@@ -1,0 +1,2 @@
+- replace libs,devel and static with libblkid{,-devel,-static}
+- added libblkid-dietlibc package
