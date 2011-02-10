@@ -1,0 +1,4 @@
+- no need to regenerate auto* (no relevant file patched)
+- needs newer llh (tested with 2.6.27) for ionice related syscalls
+- disable switch_root on ac
+- fix without initrd packaging
