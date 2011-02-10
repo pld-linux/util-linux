@@ -1,0 +1,2 @@
+- build libblkid as we want it to replace the one shipped with e2fsprogs
+- rel 2
