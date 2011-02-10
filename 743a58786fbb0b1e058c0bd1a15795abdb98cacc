@@ -1,0 +1,2 @@
+- added initrd package with blkid and findfs
+- changed meaning of uClibc bcond (what was that hack anyway?)
