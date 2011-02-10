@@ -1,0 +1,2 @@
+- rel 7
+- C e2fsprogs < 1.41.5 (for blkid and findfs)
