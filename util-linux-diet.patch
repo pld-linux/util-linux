@@ -106,14 +106,14 @@
  	if (rc <= 0)
  		return -errno;
  
-+#ifndef HAVE_MKOSTEMP
-+	if ( mktemp( n ) == NULL ) {
++#ifdef HAVE_MKOSTEMP
+ 	fd = mkostemp(n, flags | O_EXCL);
++#else
++	if ( mktemp(n) == NULL || n[0] == '\0' ) {
 +		free(n);
 +		return -errno;
 +	}
-+	fd = open(n, flags | O_EXCL);
-+#else
- 	fd = mkostemp(n, flags | O_EXCL);
++	fd = open(n, flags | O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 +#endif
  	if (fd >= 0 && name)
  		*name = n;
