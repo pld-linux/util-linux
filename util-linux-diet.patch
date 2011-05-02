@@ -73,23 +73,20 @@
  	if (!groupname || !gid)
 --- util-linux-2.19/shlibs/mount/src/tab_update.c~	2011-02-09 14:23:48.000000000 +0100
 +++ util-linux-2.19/shlibs/mount/src/tab_update.c	2011-02-10 20:26:15.846797059 +0100
-@@ -610,8 +610,14 @@
+@@ -653,7 +653,12 @@
+ 	sigfillset(&sigs);
+ 	sigprocmask(SIG_BLOCK, &sigs, &upd->oldsigmask);
  
- 	DBG(UPDATE, mnt_debug("%s: locking", lfile));
- 
--	fd = open(lfile, O_RDONLY|O_CREAT|O_CLOEXEC, S_IWUSR|
--			                             S_IRUSR|S_IRGRP|S_IROTH);
-+	fd = open(lfile,
+-	upd->utab_lock = open(lfile, O_RDONLY|O_CREAT|O_CLOEXEC, S_IWUSR|
++	upd->utab_lock = open(lfile, O_RDONLY|
 +#ifdef O_CLOEXEC
-+		O_RDONLY|O_CREAT|O_CLOEXEC,
-+#else
-+		O_RDONLY|O_CREAT,
++			O_CLOEXEC|
 +#endif
-+		S_IWUSR|S_IRUSR|S_IRGRP|S_IROTH);
-+
++			O_CREAT,
++			S_IWUSR|
+ 			             S_IRUSR|S_IRGRP|S_IROTH);
  	free(lfile);
  
- 	if (fd < 0)
 --- util-linux-2.19/lib/at.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/lib/at.c	2011-02-10 20:30:37.336797058 +0100
 @@ -7,6 +7,7 @@
@@ -100,24 +97,6 @@
  
  #include "at.h"
  
---- util-linux-2.19/shlibs/mount/src/utils.c~	2011-02-10 20:32:07.906797058 +0100
-+++ util-linux-2.19/shlibs/mount/src/utils.c	2011-02-10 20:49:24.336797058 +0100
-@@ -664,7 +664,15 @@
- 	if (rc <= 0)
- 		return -errno;
- 
-+#ifdef HAVE_MKOSTEMP
- 	fd = mkostemp(n, flags | O_EXCL);
-+#else
-+	if ( mktemp(n) == NULL || n[0] == '\0' ) {
-+		free(n);
-+		return -errno;
-+	}
-+	fd = open(n, flags | O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
-+#endif
- 	if (fd >= 0 && name)
- 		*name = n;
- 	else
 --- util-linux-2.19/misc-utils/findmnt.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/misc-utils/findmnt.c	2011-02-10 20:54:23.100130391 +0100
 @@ -30,6 +30,9 @@
