@@ -1,0 +1,115 @@
+--- util-linux-2.19.1/po/pl.po.orig	2011-05-02 11:10:08.000000000 +0200
++++ util-linux-2.19.1/po/pl.po	2011-05-02 20:37:15.091353691 +0200
+@@ -6,10 +6,10 @@
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: util-linux 2.19-rc2\n"
++"Project-Id-Version: util-linux 2.19.1\n"
+ "Report-Msgid-Bugs-To: Karel Zak <kzak@redhat.com>\n"
+ "POT-Creation-Date: 2011-04-19 15:22+0200\n"
+-"PO-Revision-Date: 2011-01-30 09:01+0100\n"
++"PO-Revision-Date: 2011-05-02 20:34+0200\n"
+ "Last-Translator: Jakub Bogusz <qboosh@pld-linux.org>\n"
+ "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+ "Language: pl\n"
+@@ -7407,9 +7407,8 @@
+ msgstr "zmiana w³a¶ciciela terminala nie powiod³a siê"
+ 
+ #: login-utils/login.c:1041
+-#, fuzzy
+ msgid "setgid() failed"
+-msgstr "setuid() nie powiod³o siê"
++msgstr "setgid() nie powiod³o siê"
+ 
+ #: login-utils/login.c:1105
+ #, c-format
+@@ -8960,9 +8959,8 @@
+ msgstr "b³±d zapisu %s: %s"
+ 
+ #: mount/fstab.c:970
+-#, fuzzy, c-format
+ msgid "%s: cannot fflush changes: %s"
+-msgstr "%s: nie mo¿na dowi±zaæ %s: %s\n"
++msgstr "%s: nie mo¿na wykonaæ fflush zmian: %s"
+ 
+ #: mount/fstab.c:987
+ #, c-format
+@@ -10009,27 +10007,27 @@
+ #: mount/umount.c:231
+ #, c-format
+ msgid "umount: internal error: invalid abs path: %s"
+-msgstr ""
++msgstr "umount: b³±d wewnêtrzny: b³êdna ¶cie¿ka bezwzglêdna: %s"
+ 
+ #: mount/umount.c:246
+-#, fuzzy, c-format
++#, c-format
+ msgid "umount: failed to chdir to %s: %s"
+-msgstr "mount: b³±d podczas zmiany uprawnieñ %s: %s"
++msgstr "umount: nie uda³o siê zmieniæ katalogu na %s: %s"
+ 
+ #: mount/umount.c:250
+-#, fuzzy, c-format
++#, c-format
+ msgid "umount: failed to obtain current directory: %s"
+-msgstr "nie uda³o siê otworzyæ katalogu urz±dzenia w sysfs"
++msgstr "umount: nie uda³o siê uzyskaæ katalogu bie¿±cego: %s"
+ 
+ #: mount/umount.c:254
+-#, fuzzy, c-format
++#, c-format
+ msgid "umount: mountpoint moved (%s -> %s)"
+-msgstr "mount: punkt montowania %s nie istnieje"
++msgstr "umount: punkt montowania przeniesiony (%s -> %s)"
+ 
+ #: mount/umount.c:257
+ #, c-format
+ msgid "current directory moved to %s\n"
+-msgstr ""
++msgstr "katalog bie¿±cy przeniesiony do %s\n"
+ 
+ #: mount/umount.c:329
+ #, c-format
+@@ -10086,14 +10084,14 @@
+ msgstr "Nie mo¿na odmontowaæ \"\"\n"
+ 
+ #: mount/umount.c:600
+-#, fuzzy, c-format
++#, c-format
+ msgid "%s is associated with %s, trying to unmount it\n"
+-msgstr "urz±dzenie %s jest powi±zane z %s\n"
++msgstr "%s powi±zano z %s, próba odmontowania\n"
+ 
+ #: mount/umount.c:606
+ #, c-format
+ msgid "%s is associated with more than one loop device: not unmounting\n"
+-msgstr ""
++msgstr "%s powi±zano z wiêcej ni¿ jednym urz±dzeniem loop; nie zostanie odmontowane\n"
+ 
+ #: mount/umount.c:613
+ #, c-format
+@@ -11177,14 +11175,12 @@
+ msgstr "Sk³adnia: %s [-c] [-n poziom] [-r] [-s rozm_bufora]\n"
+ 
+ #: sys-utils/dmesg.c:74
+-#, fuzzy
+ msgid "failed to parse level"
+-msgstr "nie uda³o siê przeanalizowaæ klasy"
++msgstr "nie uda³o siê przeanalizowaæ poziomu"
+ 
+ #: sys-utils/dmesg.c:80
+-#, fuzzy
+ msgid "failed to parse buffer size"
+-msgstr "nie uda³o siê przeanalizowaæ offsetu: %s"
++msgstr "nie uda³o siê przeanalizowaæ rozmiaru bufora"
+ 
+ #: sys-utils/fallocate.c:52
+ #, c-format
+@@ -13477,6 +13473,3 @@
+ #: text-utils/ul.c:588
+ msgid "Input line too long."
+ msgstr "Linia wej¶ciowa zbyt d³uga."
+-
+-#~ msgid "mount: can't open %s: %s"
+-#~ msgstr "mount: nie mo¿na otworzyæ %s: %s"

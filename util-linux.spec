@@ -44,13 +44,14 @@ Patch2:		%{name}-ctrlaltdel-man.patch
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
 Patch5:		%{name}-hotkeys.patch
+Patch6:		%{name}-pl.po-update.patch
 Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		%{name}-swaponsymlink.patch
 Patch10:	%{name}-diet.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-devel
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
@@ -616,12 +617,15 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
 
 sed -i -e 's/-lncursesw/-lncursesw -ltinfow/' configure.ac
+
+%{__rm} po/stamp-po
 
 %build
 %{__gettextize}
