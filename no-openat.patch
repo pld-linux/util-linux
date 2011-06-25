@@ -1,0 +1,12 @@
+--- util-linux-2.19.1/Makefile.am	2011-06-25 20:30:22.848372212 +0300
++++ util-linux-2.19.1/Makefile.am	2011-06-25 20:33:07.240163948 +0300
+@@ -38,8 +38,7 @@
+ 
+ if LINUX
+ SUBDIRS += \
+-	hwclock \
+-	partx
++	hwclock
+ endif
+ 
+ if BUILD_INIT

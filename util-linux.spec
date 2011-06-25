@@ -6,9 +6,11 @@
 %if "%{pld_release}" == "ac"
 %bcond_with		initrd		# don't build initrd version
 %bcond_with		fallocate	# fallocate utility (needs glibc 2.11 to compile)
+%bcond_with		partx		# partx utility (needs glibc 2.x to compile)
 %else
 %bcond_without	initrd		# don't build initrd version
 %bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
+%bcond_without	partx		# partx utility (needs glibc 2.x to compile)
 %endif
 
 %if "%{pld_release}" == "ac"
@@ -49,6 +51,7 @@ Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		%{name}-swaponsymlink.patch
 Patch10:	%{name}-diet.patch
+Patch11:	no-openat.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -622,8 +625,13 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%if %{without partx}
+%patch11 -p1
+%endif
 
+%if "%{pld_release}" != "ac"
 sed -i -e 's/-lncursesw/-lncursesw -ltinfow/' configure.ac
+%endif
 
 %{__rm} po/stamp-po
 
@@ -707,7 +715,9 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security} \
 
 sed -i -e 's,/usr/spool/mail,/var/mail,g' $RPM_BUILD_ROOT%{_mandir}/man1/login.1
 
+%if %{with partx}
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
+%endif
 
 cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
@@ -854,16 +864,18 @@ fi
 
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
-%attr(755,root,root) /bin/lsblk
 %attr(755,root,root) /bin/more
-%attr(755,root,root) /sbin/addpart
 %attr(755,root,root) /sbin/ctrlaltdel
+%if %{with partx}
+%attr(755,root,root) /sbin/addpart
 %attr(755,root,root) /sbin/delpart
+%attr(755,root,root) /sbin/partx
+%attr(755,root,root) /bin/lsblk
+%endif
 %attr(755,root,root) /sbin/fsfreeze
 %attr(755,root,root) /sbin/fstrim
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkswap
-%attr(755,root,root) /sbin/partx
 %attr(755,root,root) /sbin/swaplabel
 %if "%{pld_release}" != "ac"
 %attr(755,root,root) /sbin/switch_root
@@ -950,18 +962,20 @@ fi
 %{_mandir}/man1/unshare.1*
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
+%if %{with partx}
 %{_mandir}/man8/addpart.8*
+%{_mandir}/man8/delpart.8*
+%{_mandir}/man8/partx.8*
+%{_mandir}/man8/lsblk.8*
+%endif
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/cytune.8*
-%{_mandir}/man8/delpart.8*
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/fsfreeze.8*
 %{_mandir}/man8/fstrim.8*
 %{_mandir}/man8/isosize.8*
 %{_mandir}/man8/ldattach.8*
-%{_mandir}/man8/lsblk.8*
 %{_mandir}/man8/mkswap.8*
-%{_mandir}/man8/partx.8*
 %{_mandir}/man8/rtcwake.8*
 %{_mandir}/man8/swaplabel.8*
 %if "%{pld_release}" != "ac"
