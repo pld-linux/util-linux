@@ -6,11 +6,11 @@
 %if "%{pld_release}" == "ac"
 %bcond_with		initrd		# don't build initrd version
 %bcond_with		fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%bcond_with		partx		# partx utility (needs glibc 2.x to compile)
+%bcond_with		partx		# partx utility (needs glibc 2.10 for openat to compile)
 %else
 %bcond_without	initrd		# don't build initrd version
 %bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%bcond_without	partx		# partx utility (needs glibc 2.x to compile)
+%bcond_without	partx		# partx utility (needs glibc 2.10 for openat to compile)
 %endif
 
 %if "%{pld_release}" == "ac"
