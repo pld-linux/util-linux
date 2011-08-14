@@ -13,7 +13,7 @@
 
 blockdevs=$(awk -F= '!/^#/ && !/^$/ {if ($2) print $1}' /etc/sysconfig/blockdev)
 if [ -z "$blockdevs" ]; then
-   	case "$1" in
+	case "$1" in
 	start|stop|restart|force-reload)
 		exit 0
 		;;
@@ -71,7 +71,7 @@ stop() {
 }
 
 status() {
-  	if [ -z "$blockdevs" ]; then
+	if [ -z "$blockdevs" ]; then
 		echo "no devices configured for blockdev"
 		RETVAL=1
 		return
