@@ -27,43 +27,80 @@ fi
 . /etc/sysconfig/blockdev
 
 start() {
-	if [ ! -f /var/lock/subsys/blockdev ]; then
-		for var in $blockdevs; do
-			realdrive=
-			drive=${var#BLOCKDEV_}
-			if [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
-				realdrive="/dev/${drive}"
-			elif [ -e "/dev/mapper/${drive}" ]; then
-				realdrive="/dev/mapper/${drive}"
-			elif drive=$(echo $drive | tr _ -) && [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
-				realdrive="/dev/${drive}"
-			elif [ -e "/dev/mapper/${drive}" ]; then
-				realdrive="/dev/mapper/${drive}"
-			fi
-
-			if [ -n "$realdrive" ]; then
-				eval PARAMS=\$$var
-				if [ -n "${PARAMS}" ]; then
-					show "Setting parameters for block drive %s (%s)" "$drive" "$PARAMS"
-					busy
-					/sbin/blockdev ${PARAMS} $realdrive
-					ok
-				fi
-			fi
-		done
-		RETVAL=$?
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/blockdev
-	else
+	if [ -f /var/lock/subsys/blockdev ]; then
 		msg_already_running blockdev
+		return
 	fi
+
+	local var realdrive drive PARAMS
+	for var in $blockdevs; do
+		realdrive=
+		drive=${var#BLOCKDEV_}
+		if [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
+			realdrive="/dev/${drive}"
+		elif [ -e "/dev/mapper/${drive}" ]; then
+			realdrive="/dev/mapper/${drive}"
+		elif drive=$(echo $drive | tr _ -) && [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
+			realdrive="/dev/${drive}"
+		elif [ -e "/dev/mapper/${drive}" ]; then
+			realdrive="/dev/mapper/${drive}"
+		fi
+
+		if [ -n "$realdrive" ]; then
+			eval PARAMS=\$$var
+			if [ -n "${PARAMS}" ]; then
+				show "Setting parameters for block drive %s (%s)" "$drive" "$PARAMS"
+				busy
+				/sbin/blockdev ${PARAMS} $realdrive
+				ok
+			fi
+		fi
+	done
+	# TODO: retval not really handled here
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/blockdev
 }
 
 stop() {
 	# Stop daemons.
 	if [ ! -f /var/lock/subsys/blockdev ]; then
 		msg_not_running blockdev
+		return
 	fi
 	rm -f /var/lock/subsys/blockdev
+}
+
+status() {
+  	if [ -z "$blockdevs" ]; then
+		echo "no devices configured for blockdev"
+		RETVAL=1
+		return
+	fi
+
+	echo "blockdev configured for:"
+	local var drive realdrive PARAMS
+	for var in $blockdevs; do
+		drive=${var#BLOCKDEV_}
+		echo -n "- $drive: "
+
+		realdrive=
+		if [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
+			realdrive="/dev/${drive}"
+		elif [ -e "/dev/mapper/${drive}" ]; then
+			realdrive="/dev/mapper/${drive}"
+		elif drive=$(echo $drive | tr _ -) && [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
+			realdrive="/dev/${drive}"
+		elif [ -e "/dev/mapper/${drive}" ]; then
+			realdrive="/dev/mapper/${drive}"
+		fi
+
+		eval PARAMS=\$$var
+		if [ -n "$realdrive" ]; then
+			echo "${PARAMS}; device=$realdrive"
+		else
+			echo "${PARAMS}; device not present"
+		fi
+	done
 }
 
 RETVAL=0
@@ -80,34 +117,7 @@ case "$1" in
 	start
 	;;
   status)
-  	if [ "$blockdevs" ]; then
-		echo "blockdev configured for:"
-		for var in $blockdevs; do
-			drive=${var#BLOCKDEV_}
-			echo -n "- $drive: "
-
-			realdrive=
-			if [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
-				realdrive="/dev/${drive}"
-			elif [ -e "/dev/mapper/${drive}" ]; then
-				realdrive="/dev/mapper/${drive}"
-			elif drive=$(echo $drive | tr _ -) && [ -d "/sys/block/${drive}" -a -e "/dev/${drive}" ]; then
-				realdrive="/dev/${drive}"
-			elif [ -e "/dev/mapper/${drive}" ]; then
-				realdrive="/dev/mapper/${drive}"
-			fi
-
-			eval PARAMS=\$$var
-			if [ -n "$realdrive" ]; then
-				echo "${PARAMS}; device=$realdrive"
-			else
-				echo "${PARAMS}; device not present"
-			fi
-
-		done
-	else
-		echo "no devices configured for blockdev"
-	fi
+	status
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|force-reload|status}"
