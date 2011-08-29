@@ -29,18 +29,17 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.19.1
-Release:	1
+Version:	2.20
+Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.19/%{name}-%{version}.tar.bz2
-# Source0-md5:	3eab06f05163dfa65479c44e5231932c
+Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
+# Source0-md5:	4dcacdbdafa116635e52b977d9d0e879
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
 Source3:	%{name}-blockdev.init
 Source4:	%{name}-blockdev.sysconfig
-Patch0:		%{name}-ng-ppc.patch
 Patch1:		%{name}-ng-union-mount.patch
 Patch2:		%{name}-ctrlaltdel-man.patch
 Patch3:		%{name}-fdformat-ide.patch
@@ -614,13 +613,12 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
 %prep
 %setup -q -a1
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
+#%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
@@ -670,7 +668,7 @@ sed -i -e 's/#define HAVE_WIDECHAR 1//' config.h
 
 sed -i -e 's/ cal\$(EXEEXT) / /; s/ lsblk\$(EXEEXT)//' misc-utils/Makefile
 
-for dir in shlibs/* disk-utils misc-utils fsck fdisk schedutils hwclock; do
+for dir in libblkid libmount libuuid disk-utils misc-utils fsck fdisk schedutils hwclock; do
 	%{__make} -C $dir \
 	%if %{with uClibc}
 		LDFLAGS="-Wl,-static"
@@ -693,6 +691,8 @@ done
 	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-wall \
+	--enable-ddate \
+	--enable-line \
 	--enable-kill \
 	--enable-login-chown-vcs \
 	--enable-login-utils \
@@ -765,7 +765,7 @@ install -p initrd%{_sbindir}/* $RPM_BUILD_ROOT%{_libdir}/initrd/
 ln -s fsck $RPM_BUILD_ROOT%{_libdir}/initrd/e2fsck
 
 # We don't need those
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{chkdupexe,ddate,uuidd,mcookie,whereis,mkfs*,fsck.minix,isosize,logger}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{chkdupexe,uuidd,mcookie,whereis,mkfs*,fsck.minix,isosize,logger}
 
 %if %{with dietlibc}
 cp -a initrd%{_libdir}/lib*.a $RPM_BUILD_ROOT%{dietlibdir}
@@ -1223,10 +1223,13 @@ fi
 %files -n mount
 %defattr(644,root,root,755)
 %attr(4755,root,root) /bin/mount
+%attr(755,root,root) /bin/mountpoint
 %attr(4755,root,root) /bin/umount
 %attr(755,root,root) /sbin/pivot_root
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
+
+%{_mandir}/man1/mountpoint.1*
 
 %{_mandir}/man5/fstab.5*
 

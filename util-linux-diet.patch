@@ -1,5 +1,5 @@
---- util-linux-ng-2.18/shlibs/mount/src/fs.c~	2010-06-08 10:44:20.000000000 +0200
-+++ util-linux-ng-2.18/shlibs/mount/src/fs.c	2010-08-26 11:12:31.326572794 +0200
+--- util-linux-ng-2.18/libmount/src/fs.c~	2010-06-08 10:44:20.000000000 +0200
++++ util-linux-ng-2.18/libmount/src/fs.c	2010-08-26 11:12:31.326572794 +0200
 @@ -17,6 +17,9 @@
  #include <errno.h>
  #include <blkid.h>
@@ -10,29 +10,18 @@
  
  #include "nls.h"
  #include "mountP.h"
---- util-linux-ng-2.18/shlibs/mount/src/tab_parse.c~	2010-06-07 12:35:06.000000000 +0200
-+++ util-linux-ng-2.18/shlibs/mount/src/tab_parse.c	2010-08-26 11:16:35.762572782 +0200
+--- util-linux-ng-2.18/libmount/src/tab_parse.c~	2010-06-07 12:35:06.000000000 +0200
++++ util-linux-ng-2.18/libmount/src/tab_parse.c	2010-08-26 11:16:35.762572782 +0200
 @@ -9,6 +9,9 @@
+ #include <limits.h>
  #include <dirent.h>
  #include <fcntl.h>
- #include <unistd.h>
 +#ifdef __dietlibc__
 +#include <sys/stat.h> /* for makedev macro */
 +#endif
  
- #include "nls.h"
+ #include "at.h"
  #include "mangle.h"
---- util-linux-ng-2.18/lib/tt.c~	2010-06-07 11:44:06.000000000 +0200
-+++ util-linux-ng-2.18/lib/tt.c	2010-08-26 11:32:34.886572774 +0200
-@@ -54,7 +54,7 @@
- };
- 
- #else /* !HAVE_WIDECHAR */
--# define mbs_width       strlen(_s)
-+# define mbs_width(_s)	strlen(_s)
- #endif /* !HAVE_WIDECHAR */
- 
- #define is_last_column(_tb, _cl) \
 --- util-linux-2.19/lib/strutils.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/lib/strutils.c	2011-02-10 12:49:12.221843465 +0100
 @@ -12,6 +12,9 @@
@@ -45,8 +34,8 @@
  
  static int do_scale_by_power (uintmax_t *x, int base, int power)
  {
---- util-linux-2.19/shlibs/mount/src/utils.c~	2011-01-24 23:46:29.000000000 +0100
-+++ util-linux-2.19/shlibs/mount/src/utils.c	2011-02-10 20:12:00.499611392 +0100
+--- util-linux-2.19/libmount/src/utils.c~	2011-01-24 23:46:29.000000000 +0100
++++ util-linux-2.19/libmount/src/utils.c	2011-02-10 20:12:00.499611392 +0100
 @@ -398,7 +398,11 @@
  	int rc = -1;
          struct passwd pwd;
@@ -71,22 +60,6 @@
  	char *buf;
  
  	if (!groupname || !gid)
---- util-linux-2.19/shlibs/mount/src/tab_update.c~	2011-02-09 14:23:48.000000000 +0100
-+++ util-linux-2.19/shlibs/mount/src/tab_update.c	2011-02-10 20:26:15.846797059 +0100
-@@ -653,7 +653,12 @@
- 	sigfillset(&sigs);
- 	sigprocmask(SIG_BLOCK, &sigs, &upd->oldsigmask);
- 
--	upd->utab_lock = open(lfile, O_RDONLY|O_CREAT|O_CLOEXEC, S_IWUSR|
-+	upd->utab_lock = open(lfile, O_RDONLY|
-+#ifdef O_CLOEXEC
-+			O_CLOEXEC|
-+#endif
-+			O_CREAT,
-+			S_IWUSR|
- 			             S_IRUSR|S_IRGRP|S_IROTH);
- 	free(lfile);
- 
 --- util-linux-2.19/lib/at.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/lib/at.c	2011-02-10 20:30:37.336797058 +0100
 @@ -7,6 +7,7 @@
@@ -100,15 +73,15 @@
 --- util-linux-2.19/misc-utils/findmnt.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/misc-utils/findmnt.c	2011-02-10 20:54:23.100130391 +0100
 @@ -30,6 +30,9 @@
- #include <sys/ioctl.h>
  #endif
  #include <assert.h>
+ #include <poll.h>
 +#ifdef __dietlibc__
 +#include <sys/stat.h> /* for major and minor macros */
 +#endif
  
- #define USE_UNSTABLE_LIBMOUNT_API
  #include <libmount.h>
+ 
 --- util-linux-2.19/fsck/fsck.c~	2011-02-07 16:19:29.000000000 +0100
 +++ util-linux-2.19/fsck/fsck.c	2011-02-10 21:09:27.024658725 +0100
 @@ -270,7 +270,13 @@
@@ -147,8 +120,8 @@
  #include "nls.h"
  
  static void __attribute__((__noreturn__)) usage(int rc)
---- util-linux-2.19/misc-utils/scriptreplay.c~	2011-01-31 16:43:47.000000000 +0100
-+++ util-linux-2.19/misc-utils/scriptreplay.c	2011-02-10 22:26:22.019069258 +0100
+--- util-linux-2.19/term-utils/scriptreplay.c~	2011-01-31 16:43:47.000000000 +0100
++++ util-linux-2.19/term-utils/scriptreplay.c	2011-02-10 22:26:22.019069258 +0100
 @@ -28,6 +28,7 @@
  #include <unistd.h>
  #include <err.h>
@@ -157,8 +130,8 @@
  #include "nls.h"
  
  #define SCRIPT_MIN_DELAY 0.0001		/* from original sripreplay.pl */
---- util-linux-2.19/shlibs/mount/src/tab_parse.c~	2011-02-10 23:28:02.091461025 +0100
-+++ util-linux-2.19/shlibs/mount/src/tab_parse.c	2011-02-10 23:29:04.934794359 +0100
+--- util-linux-2.19/libmount/src/tab_parse.c~	2011-02-10 23:28:02.091461025 +0100
++++ util-linux-2.19/libmount/src/tab_parse.c	2011-02-10 23:29:04.934794359 +0100
 @@ -422,7 +422,13 @@
  
  	/* TODO: it would be nice to have a scandir() implementaion that
