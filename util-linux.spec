@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -1223,13 +1223,13 @@ fi
 %files -n mount
 %defattr(644,root,root,755)
 %attr(4755,root,root) /bin/mount
-%attr(755,root,root) /bin/mountpoint
+#%attr(755,root,root) /bin/mountpoint
 %attr(4755,root,root) /bin/umount
 %attr(755,root,root) /sbin/pivot_root
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
-%{_mandir}/man1/mountpoint.1*
+#%{_mandir}/man1/mountpoint.1*
 
 %{_mandir}/man5/fstab.5*
 
