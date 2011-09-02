@@ -40,6 +40,7 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 Source2:	login.pamd
 Source3:	%{name}-blockdev.init
 Source4:	%{name}-blockdev.sysconfig
+Source5:	blockdev.upstart
 Patch1:		%{name}-ng-union-mount.patch
 Patch2:		%{name}-ctrlaltdel-man.patch
 Patch3:		%{name}-fdformat-ide.patch
@@ -706,7 +707,7 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security} \
+install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 	$RPM_BUILD_ROOT{/%{_lib},/var/{lock,lib/libuuid}}
 %{?with_dietlibc:install -d $RPM_BUILD_ROOT%{dietlibdir}}
 
@@ -719,9 +720,10 @@ sed -i -e 's,/usr/spool/mail,/var/mail,g' $RPM_BUILD_ROOT%{_mandir}/man1/login.1
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 %endif
 
-cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
-cp -a %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
+cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
+cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
 
 :> $RPM_BUILD_ROOT/etc/security/blacklist.login
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
@@ -1216,6 +1218,7 @@ fi
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/blockdev
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/blockdev
+%config(noreplace) %verify(not md5 mtime size) /etc/init/blockdev.conf
 %attr(755,root,root) /sbin/blockdev
 %{_mandir}/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*

@@ -1,0 +1,20 @@
+description	"This shell script takes care of starting and stopping blockdev."
+
+start on pld.sysinit-done
+stop on pld.shutdown-started
+
+console output
+
+pre-start script
+	# test that we have any blockdevs
+
+	. /etc/sysconfig/blockdev
+	blockdevs=$(awk -F= '!/^#/ && !/^$/ {if ($2) print $1}' /etc/sysconfig/blockdev)
+	test -n "$blockdevs"
+end script
+
+script
+set -x
+	export USE_UPSTART=no
+	exec /etc/rc.d/init.d/blockdev start
+end script
