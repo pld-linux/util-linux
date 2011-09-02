@@ -14,7 +14,6 @@ pre-start script
 end script
 
 script
-set -x
 	export USE_UPSTART=no
 	exec /etc/rc.d/init.d/blockdev start
 end script
