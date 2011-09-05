@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -95,7 +95,7 @@ Obsoletes:	sparc32
 Obsoletes:	util-linux-ng <= %{version}-%{release}
 Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
-Conflicts:	upstart-SysVinit < 2.86-26
+Conflicts:	upstart-SysVinit < 2.86-28
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
