@@ -651,6 +651,9 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	ac_cv_header_crypt_h="no" \
 %endif
 	CC="$xCC" \
+%if "%{?configure_cache}" == "1"
+	--cache-file=%{?configure_cache_file}%{!?configure_cache_file:configure}-initrd.cache \
+%endif
 	--disable-shared \
 	--enable-static \
 	--disable-fsck \
