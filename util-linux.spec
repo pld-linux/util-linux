@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -94,6 +94,8 @@ Obsoletes:	setarch
 Obsoletes:	sparc32
 Obsoletes:	util-linux-ng <= %{version}-%{release}
 Obsoletes:	util-linux-suids
+Conflicts:	SysVinit < 2.86-26
+Conflicts:	upstart-SysVinit < 2.86-26
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -870,6 +872,8 @@ fi
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
 %attr(755,root,root) /bin/more
+%attr(755,root,root) /bin/mountpoint
+
 %attr(755,root,root) /sbin/ctrlaltdel
 %if %{with partx}
 %attr(755,root,root) /sbin/addpart
@@ -951,6 +955,7 @@ fi
 %{_mandir}/man1/lscpu.1*
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/more.1*
+%{_mandir}/man1/mountpoint.1*
 %{_mandir}/man1/namei.1*
 %{_mandir}/man1/pg.1*
 %{_mandir}/man1/readprofile.1*
@@ -1229,13 +1234,10 @@ fi
 %files -n mount
 %defattr(644,root,root,755)
 %attr(4755,root,root) /bin/mount
-#%attr(755,root,root) /bin/mountpoint
 %attr(4755,root,root) /bin/umount
 %attr(755,root,root) /sbin/pivot_root
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
-
-#%{_mandir}/man1/mountpoint.1*
 
 %{_mandir}/man5/fstab.5*
 
