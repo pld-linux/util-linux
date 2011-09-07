@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20
-Release:	6
+Release:	7
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -872,7 +872,6 @@ fi
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
 %attr(755,root,root) /bin/more
-%attr(755,root,root) /bin/mountpoint
 
 %attr(755,root,root) /sbin/ctrlaltdel
 %if %{with partx}
@@ -955,7 +954,6 @@ fi
 %{_mandir}/man1/lscpu.1*
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/more.1*
-%{_mandir}/man1/mountpoint.1*
 %{_mandir}/man1/namei.1*
 %{_mandir}/man1/pg.1*
 %{_mandir}/man1/readprofile.1*
@@ -1233,14 +1231,15 @@ fi
 
 %files -n mount
 %defattr(644,root,root,755)
+%attr(755,root,root) /bin/mountpoint
 %attr(4755,root,root) /bin/mount
 %attr(4755,root,root) /bin/umount
 %attr(755,root,root) /sbin/pivot_root
 %attr(755,root,root) /sbin/swapon
 %attr(755,root,root) /sbin/swapoff
 
+%{_mandir}/man1/mountpoint.1*
 %{_mandir}/man5/fstab.5*
-
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/umount.8*
 %{_mandir}/man8/pivot_root.8*
