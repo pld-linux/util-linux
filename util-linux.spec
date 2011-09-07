@@ -41,6 +41,7 @@ Source2:	login.pamd
 Source3:	%{name}-blockdev.init
 Source4:	%{name}-blockdev.sysconfig
 Source5:	blockdev.upstart
+Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-ng-union-mount.patch
 Patch2:		%{name}-ctrlaltdel-man.patch
 Patch3:		%{name}-fdformat-ide.patch
@@ -616,6 +617,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
 %prep
 %setup -q -a1
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
