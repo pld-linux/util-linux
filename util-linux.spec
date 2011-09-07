@@ -57,9 +57,9 @@ URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-devel >= 0.14.1
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
-BuildRequires:	gtk-doc-automake
+BuildRequires:	gtk-doc-automake >= 1.10
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{?with_selinux:BuildRequires:	libsepol-devel}
 BuildRequires:	libtool >= 2:2.2
