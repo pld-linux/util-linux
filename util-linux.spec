@@ -171,7 +171,7 @@ Summary(pl.UTF-8):	Obsługa blockdev
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	coreutils
-Requires:	rc-scripts
+Requires:	rc-scripts >= 0.4.3.0
 
 %description -n blockdev
 The utility blockdev allows one to call block device ioctls from the
