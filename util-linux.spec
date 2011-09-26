@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20
-Release:	7
+Release:	8
 License:	GPL
 Group:		Applications/System
 Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -93,7 +93,7 @@ Obsoletes:	rawdevices
 Obsoletes:	schedutils
 Obsoletes:	setarch
 Obsoletes:	sparc32
-Obsoletes:	util-linux-ng <= %{version}-%{release}
+Obsoletes:	util-linux-ng < 2.20
 Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
 Conflicts:	upstart-SysVinit < 2.86-28
@@ -321,7 +321,7 @@ sisteminizin işlevselliği açısından kritiktir.
 Summary:	chkdupexe - find duplicate executables
 Summary(pl.UTF-8):	chkdupexe odszukuje powtarzające się pliki uruchamialne
 Group:		Applications/System
-Obsoletes:	util-linux-ng-chkdupexe
+Obsoletes:	util-linux-ng-chkdupexe < 2.20
 
 %description chkdupexe
 chkdupexe will scan the union of $PATH and a hardcoded list of common
@@ -393,7 +393,7 @@ Summary(pl.UTF-8):	Biblioteka do obsługi identyfikacji urządzeń
 License:	LGPL v2.1+
 Group:		Libraries
 Requires:	libuuid = %{version}-%{release}
-Obsoletes:	util-linux-ng-libs
+Obsoletes:	util-linux-ng-libs < 2.20
 
 %description -n libblkid
 Library to handle device identification and token extraction.
@@ -408,7 +408,7 @@ License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libblkid = %{version}-%{release}
 Requires:	libuuid-devel = %{version}-%{release}
-Obsoletes:	util-linux-ng-devel
+Obsoletes:	util-linux-ng-devel < 2.20
 
 %description -n libblkid-devel
 Header files for blkid library.
@@ -423,7 +423,7 @@ License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libblkid-devel = %{version}-%{release}
 Requires:	libuuid-static = %{version}-%{release}
-Obsoletes:	util-linux-ng-static
+Obsoletes:	util-linux-ng-static < 2.20
 
 %description -n libblkid-static
 Static library to handle device identification and token extraction.
@@ -604,7 +604,7 @@ Sprawdzanie i naprawa linuksowego systemu plików.
 Summary:	blkid - initrd version
 Summary(pl.UTF-8):	blkid - wersja dla initrd
 Group:		Base
-Obsoletes:	util-linux-ng-initrd
+Obsoletes:	util-linux-ng-initrd < 2.20
 Conflicts:	geninitrd < 10000.10
 
 %description initrd
