@@ -260,6 +260,7 @@ Summary(ru.UTF-8):	Программы для монтирования и раз�
 Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
 Group:		Applications/System
+Requires:	libmount = %{version}-%{release}
 Conflicts:	nfs-utils-common < 1.1.3-3
 Conflicts:	SysVinit < 2.86-26
 
