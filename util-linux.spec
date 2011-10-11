@@ -595,6 +595,7 @@ Statyczna wersja biblioteki mount dla dietlibc.
 Summary:	Check and repair a Linux file system
 Summary(pl.UTF-8):	Sprawdzanie i naprawa linuksowego systemu plików
 Group:		Applications/System
+Requires:	libblkid = %{version}-%{release}
 
 %description -n fsck
 Check and repair a Linux file system.
