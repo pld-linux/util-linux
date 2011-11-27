@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20.1
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 #Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -54,6 +54,7 @@ Patch8:		%{name}-procpartitions.patch
 Patch9:		%{name}-swaponsymlink.patch
 Patch10:	%{name}-diet.patch
 Patch11:	no-openat.patch
+Patch12:	%{name}-build.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -635,6 +636,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %if %{without partx}
 %patch11 -p1
 %endif
+%patch12 -p1
 
 %if "%{pld_release}" != "ac"
 sed -i -e 's/-lncursesw/-lncursesw -ltinfow/' configure.ac
@@ -665,6 +667,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-shared \
 	--enable-static \
 	--disable-fsck \
+	--disable-libmount \
 	--disable-login-utils \
 	--disable-schedutils \
 	--disable-silent-rules \
@@ -680,7 +683,7 @@ sed -i -e 's/#define HAVE_WIDECHAR 1//' config.h
 
 sed -i -e 's/ cal\$(EXEEXT) / /; s/ lsblk\$(EXEEXT)//' misc-utils/Makefile
 
-for dir in libblkid libmount libuuid disk-utils misc-utils fsck fdisk schedutils hwclock; do
+for dir in libblkid libuuid disk-utils misc-utils fsck fdisk schedutils hwclock; do
 	%{__make} -C $dir \
 	%if %{with uClibc}
 		LDFLAGS="-Wl,-static"
@@ -1416,11 +1419,6 @@ fi
 %{_libdir}/libmount.a
 
 %if %{with initrd} && %{with dietlibc}
-%files -n libmount-dietlibc
-%defattr(644,root,root,755)
-%{dietlibdir}/libmount.a
-%endif
-
 %files -n fsck
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/fsck
