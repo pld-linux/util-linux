@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 #Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -1418,7 +1418,6 @@ fi
 %defattr(644,root,root,755)
 %{_libdir}/libmount.a
 
-%if %{with initrd} && %{with dietlibc}
 %files -n fsck
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/fsck
