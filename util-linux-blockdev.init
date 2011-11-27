@@ -6,8 +6,6 @@
 # description:	blockdev
 #
 # processname:	blockdev
-# config:
-# pidfile:
 
 [ -f /etc/sysconfig/blockdev ] || exit 0
 

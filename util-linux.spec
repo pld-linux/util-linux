@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with		uClibc		# link initrd version with static glibc instead of uClibc
+%bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
 %bcond_without	selinux 	# SELinux support
 %if "%{pld_release}" == "ac"
@@ -29,12 +29,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.20
-Release:	10
+Version:	2.20.1
+Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
-# Source0-md5:	4dcacdbdafa116635e52b977d9d0e879
+#Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.infradead.org/pub/util-linux/v2.20/%{name}-%{version}.tar.bz2
+# Source0-md5:	079b37517fd4e002a2e6e992e8b4e361
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -76,7 +77,7 @@ BuildRequires:	zlib-devel
 BuildRequires:	uClibc-static >= 2:0.9.29
 	%else
 		%if %{with dietlibc}
-BuildRequires:	dietlibc-static >= 2:0.32-14
+BuildRequires:	dietlibc-static >= 2:0.32-16
 		%else
 BuildRequires:	glibc-static
 		%endif
