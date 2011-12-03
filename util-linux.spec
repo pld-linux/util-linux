@@ -30,7 +30,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.20.1
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 #Source0:	http://ftp.kernel.org/pub/linux/utils/util-linux/v2.20/%{name}-%{version}.tar.bz2
@@ -84,6 +84,7 @@ BuildRequires:	glibc-static
 	%endif
 %endif
 Requires:	pam >= %{pam_ver}
+Requires:	libblkid = %{version}-%{release}
 Provides:	fdisk
 Provides:	linux32
 Provides:	sparc32
