@@ -48,7 +48,6 @@ Patch2:		%{name}-ctrlaltdel-man.patch
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
 Patch5:		%{name}-hotkeys.patch
-Patch6:		%{name}-pl.po-update.patch
 Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		%{name}-swaponsymlink.patch
@@ -628,7 +627,6 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
