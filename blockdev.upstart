@@ -10,7 +10,7 @@ pre-start script
 
 	. /etc/sysconfig/blockdev
 	blockdevs=$(awk -F= '!/^#/ && !/^$/ {if ($2) print $1}' /etc/sysconfig/blockdev)
-	test -n "$blockdevs"
+	test -n "$blockdevs" || /sbin/initctl -q stop
 end script
 
 script
