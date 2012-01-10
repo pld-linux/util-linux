@@ -637,10 +637,6 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %endif
 %patch12 -p1
 
-%if "%{pld_release}" != "ac"
-sed -i -e 's/-lncursesw/-lncursesw -ltinfow/' configure.ac
-%endif
-
 %{__rm} po/stamp-po
 
 %build
@@ -678,9 +674,9 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--without-selinux
 
 # configure gets it unconditionally wrong
-sed -i -e 's/#define HAVE_WIDECHAR 1//' config.h
+%{__sed} -i -e 's/#define HAVE_WIDECHAR 1//' config.h
 
-sed -i -e 's/ cal\$(EXEEXT) / /; s/ lsblk\$(EXEEXT)//' misc-utils/Makefile
+%{__sed} -i -e 's/ cal\$(EXEEXT) / /; s/ lsblk\$(EXEEXT)//' misc-utils/Makefile
 
 for dir in libblkid libuuid disk-utils misc-utils fsck fdisk schedutils hwclock; do
 	%{__make} -C $dir \
@@ -727,7 +723,7 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-sed -i -e 's,/usr/spool/mail,/var/mail,g' $RPM_BUILD_ROOT%{_mandir}/man1/login.1
+%{__sed} -i -e 's,/usr/spool/mail,/var/mail,g' $RPM_BUILD_ROOT%{_mandir}/man1/login.1
 
 %if %{with partx}
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
