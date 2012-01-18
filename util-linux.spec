@@ -83,8 +83,8 @@ BuildRequires:	glibc-static
 		%endif
 	%endif
 %endif
-Requires:	pam >= %{pam_ver}
 Requires:	libblkid = %{version}-%{release}
+Requires:	pam >= %{pam_ver}
 Provides:	fdisk
 Provides:	linux32
 Provides:	sparc32
@@ -98,9 +98,9 @@ Obsoletes:	sparc32
 Obsoletes:	util-linux-ng < 2.20-1
 Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
-Conflicts:	upstart-SysVinit < 2.86-28
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
+Conflicts:	upstart-SysVinit < 2.86-28
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		debugcflags	-O1 -g
@@ -263,8 +263,9 @@ Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
 Group:		Applications/System
 Requires:	libmount = %{version}-%{release}
-Conflicts:	nfs-utils-common < 1.1.3-3
 Conflicts:	SysVinit < 2.86-26
+# C: nfs-utils-common is opposite to http://cvs.pld-linux.org/packages/nfs-utils/nfs-utils.spec?r1=1.165&r2=1.166
+Conflicts:	nfs-utils-common < 1.1.3-3
 
 %description -n mount
 mount is used for adding new filesystems, both local and networked, to
