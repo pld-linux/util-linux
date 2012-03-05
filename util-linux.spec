@@ -1,13 +1,7 @@
 # TODO
 # - follow readprofile.1 -> redprofile.8 change in translated manuals as well
-#   /sbin/chcpu
-#   /sbin/raw
-#   /usr/bin/prlimit
 #   /usr/share/getopt/getopt-parse.bash
 #   /usr/share/getopt/getopt-parse.tcsh
-#   /usr/share/man/man1/prlimit.1.gz
-#   /usr/share/man/man8/chcpu.8.gz
-#   /usr/share/man/man8/raw.8.gz
 #
 # Conditional build:
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
@@ -40,7 +34,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.21
-Release:	0.3
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.21/%{name}-%{version}.tar.xz
@@ -739,6 +733,7 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 %if %{with partx}
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 %endif
+mv $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
@@ -888,6 +883,7 @@ fi
 %attr(755,root,root) /bin/kill
 %attr(755,root,root) /bin/more
 
+%attr(755,root,root) /sbin/chcpu
 %attr(755,root,root) /sbin/ctrlaltdel
 %if %{with partx}
 %attr(755,root,root) /sbin/addpart
@@ -928,6 +924,8 @@ fi
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
 %attr(755,root,root) %{_bindir}/pg
+%attr(755,root,root) %{_bindir}/prlimit
+%attr(755,root,root) %{_bindir}/raw
 %attr(755,root,root) %{_bindir}/rename
 %attr(755,root,root) %{_bindir}/renice
 %attr(755,root,root) %{_bindir}/rev
@@ -970,6 +968,7 @@ fi
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/more.1*
 %{_mandir}/man1/namei.1*
+%{_mandir}/man1/prlimit.1*
 %{_mandir}/man1/pg.1*
 %{_mandir}/man1/renice.1*
 %{_mandir}/man1/rev.1*
@@ -990,6 +989,7 @@ fi
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/lsblk.8*
 %endif
+%{_mandir}/man8/chcpu.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/cytune.8*
 %{_mandir}/man8/fdformat.8*
@@ -998,6 +998,7 @@ fi
 %{_mandir}/man8/isosize.8*
 %{_mandir}/man8/ldattach.8*
 %{_mandir}/man8/mkswap.8*
+%{_mandir}/man8/raw.8*
 %{_mandir}/man8/readprofile.8*
 %{_mandir}/man8/rtcwake.8*
 %{_mandir}/man8/swaplabel.8*
