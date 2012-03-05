@@ -34,32 +34,32 @@
  
  static int do_scale_by_power (uintmax_t *x, int base, int power)
  {
---- util-linux-2.19/libmount/src/utils.c~	2011-01-24 23:46:29.000000000 +0100
-+++ util-linux-2.19/libmount/src/utils.c	2011-02-10 20:12:00.499611392 +0100
-@@ -398,7 +398,11 @@
- 	int rc = -1;
-         struct passwd pwd;
- 	struct passwd *pw;
-+#ifdef _SC_GETPW_R_SIZE_MAX
- 	size_t sz = sysconf(_SC_GETPW_R_SIZE_MAX);
-+#else
-+	size_t sz = 0;
-+#endif
- 	char *buf;
- 
- 	if (!username || !uid)
-@@ -427,7 +431,11 @@
- 	int rc = -1;
-         struct group grp;
- 	struct group *gr;
-+#ifdef _SC_GETGR_R_SIZE_MAX
- 	size_t sz = sysconf(_SC_GETGR_R_SIZE_MAX);
-+#else
-+	size_t sz = 0;
-+#endif
- 	char *buf;
- 
- 	if (!groupname || !gid)
+#--- util-linux-2.19/libmount/src/utils.c~	2011-01-24 23:46:29.000000000 +0100
+#+++ util-linux-2.19/libmount/src/utils.c	2011-02-10 20:12:00.499611392 +0100
+#@@ -398,7 +398,11 @@
+# 	int rc = -1;
+#         struct passwd pwd;
+# 	struct passwd *pw;
+#+#ifdef _SC_GETPW_R_SIZE_MAX
+# 	size_t sz = sysconf(_SC_GETPW_R_SIZE_MAX);
+#+#else
+#+	size_t sz = 0;
+#+#endif
+# 	char *buf;
+# 
+# 	if (!username || !uid)
+#@@ -427,7 +431,11 @@
+# 	int rc = -1;
+#         struct group grp;
+# 	struct group *gr;
+#+#ifdef _SC_GETGR_R_SIZE_MAX
+# 	size_t sz = sysconf(_SC_GETGR_R_SIZE_MAX);
+#+#else
+#+	size_t sz = 0;
+#+#endif
+# 	char *buf;
+# 
+# 	if (!groupname || !gid)
 --- util-linux-2.19/lib/at.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/lib/at.c	2011-02-10 20:30:37.336797058 +0100
 @@ -7,6 +7,7 @@
@@ -99,17 +99,17 @@
  	if (inst->lock >= 0) {
  		int rc = -1;
  
---- util-linux-2.19/configure.ac~	2011-02-10 21:28:23.395401725 +0100
-+++ util-linux-2.19/configure.ac	2011-02-10 22:12:29.997898392 +0100
-@@ -188,6 +188,8 @@
+--- util-linux-2.21/configure.ac~	2012-02-24 12:53:35.000000000 +0200
++++ util-linux-2.21/configure.ac	2012-03-05 21:03:25.833675080 +0200
+@@ -263,6 +263,8 @@
  	lchown \
  	llseek \
  	lseek64 \
 +	mkostemp \
 +	versionsort \
+ 	scandirat \
  	strtoull \
  	sysconf \
- 	getdtablesize \
 --- util-linux-2.19/misc-utils/findfs.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/misc-utils/findfs.c	2011-02-10 22:24:39.615735924 +0100
 @@ -12,6 +12,7 @@
@@ -130,20 +130,20 @@
  #include "nls.h"
  
  #define SCRIPT_MIN_DELAY 0.0001		/* from original sripreplay.pl */
---- util-linux-2.19/libmount/src/tab_parse.c~	2011-02-10 23:28:02.091461025 +0100
-+++ util-linux-2.19/libmount/src/tab_parse.c	2011-02-10 23:29:04.934794359 +0100
-@@ -422,7 +422,13 @@
+--- util-linux-2.21/libmount/src/tab_parse.c~	2012-03-05 21:00:14.000000000 +0200
++++ util-linux-2.21/libmount/src/tab_parse.c	2012-03-05 21:05:27.562569076 +0200
+@@ -524,7 +524,13 @@
+ 	DIR *dir = NULL;
+ 	struct dirent **namelist = NULL;
  
- 	/* TODO: it would be nice to have a scandir() implementaion that
- 	 *       is able to use already opened directory */
--	n = scandir(dirname, &namelist, NULL, versionsort);
-+	n = scandir(dirname, &namelist, NULL,
+-	n = scandir(dirname, &namelist, mnt_table_parse_dir_filter, versionsort);
++	n = scandir(dirname, &namelist, mnt_table_parse_dir_filter,
 +#ifdef HAVE_VERSIONSORT
-+			versionsort
++		versionsort
 +#else
-+			alphasort
++		alphasort
 +#endif
-+			);
++	);
  	if (n <= 0)
  		return 0;
  

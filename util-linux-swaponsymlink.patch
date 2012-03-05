@@ -2,8 +2,8 @@ When swap is a symlink, the swap entry in
 /etc/fstab may not match /proc/swaps. That
 means strcmp shouldn't be used for swapon.
 
---- util-linux-2.12p/mount/swapon.c.sopwith	Wed Dec 22 04:50:19 2004
-+++ util-linux-2.12p/mount/swapon.c	Thu Dec 23 14:44:49 2004
+--- util-linux-2.12p/sys-utils/swapon.c.sopwith	Wed Dec 22 04:50:19 2004
++++ util-linux-2.12p/sys-utils/swapon.c	Thu Dec 23 14:44:49 2004
 @@ -138,9 +138,19 @@
  is_in_proc_swaps(const char *fname) {
  	int i;
