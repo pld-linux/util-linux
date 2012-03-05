@@ -677,7 +677,6 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-wall \
 	--without-audit \
 	--without-ncurses \
-	--without-pam \
 	--without-selinux
 
 # configure gets it unconditionally wrong
@@ -716,7 +715,6 @@ done
 	--enable-partx \
 	--enable-write \
 	--with-audit \
-	--with-pam \
 	--with%{!?with_selinux:out}-selinux
 
 %{__make}
