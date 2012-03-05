@@ -661,7 +661,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE -DHAVE_LLSEEK_PROTOTYPE"
 %if %{with initrd}
 %{?with_uClibc:xCC="%{_target_cpu}-uclibc-gcc"}
-%{?with_dietlibc:xCC="diet %{__cc}"; xCC=${xCC#*ccache }}
+%{?with_dietlibc:xCC="%{__cc}"; xCC="diet ${xCC#*ccache }"}
 %configure \
 %if %{with dietlibc}
 	ac_cv_header_crypt_h="no" \
