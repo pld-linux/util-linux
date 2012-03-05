@@ -673,6 +673,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-shared \
 	--enable-static \
 	--disable-fsck \
+	--disable-cramfs \
+	--disable-raw \
 	--disable-libmount \
 	--disable-login-utils \
 	--disable-schedutils \
