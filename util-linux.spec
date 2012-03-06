@@ -34,7 +34,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.21
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.21/%{name}-%{version}.tar.xz
@@ -57,6 +57,7 @@ Patch10:	%{name}-diet.patch
 Patch11:	no-openat.patch
 Patch12:	https://github.com/karelzak/util-linux/commit/2f595c001b4528b3b9a4aea04d72b6918c434efb.patch
 # Patch12-md5:	6671ea54ea50f49ef56e05a7b3c8bd37
+Patch13:	fix-crash-on-fdisk-l.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -641,6 +642,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch11 -p1
 %endif
 %patch12 -p1
+%patch13 -p1
 
 %{__rm} po/stamp-po
 

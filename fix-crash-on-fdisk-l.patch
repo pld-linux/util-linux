@@ -1,0 +1,34 @@
+From b2cfdbb023ad06afec00ad44761e244d74119034 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Elan=20Ruusam=C3=A4e?= <glen@delfi.ee>
+Date: Tue, 6 Mar 2012 12:19:41 +0200
+Subject: [PATCH] fix crash on fdisk -l
+
+---
+ libblkid/src/topology/sysfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libblkid/src/topology/sysfs.c b/libblkid/src/topology/sysfs.c
+index e62b84c..41be036 100644
+--- a/libblkid/src/topology/sysfs.c
++++ b/libblkid/src/topology/sysfs.c
+@@ -76,7 +76,7 @@ static int probe_sysfs_tp(blkid_probe pr,
+ 				}
+ 			}
+ 			if (!ok)
+-				continue;	/* attrinute does not exist */
++				continue;	/* attribute does not exist */
+ 		}
+ 
+ 		if (val->set_ulong) {
+@@ -102,7 +102,7 @@ static int probe_sysfs_tp(blkid_probe pr,
+ 
+ done:
+ 	sysfs_deinit(&sysfs);
+-	if (disk)
++	if (disk && disk != dev)
+ 		sysfs_deinit(&parent);
+ 	if (count)
+ 		return 0;		/* success */
+-- 
+1.7.9.2
+
