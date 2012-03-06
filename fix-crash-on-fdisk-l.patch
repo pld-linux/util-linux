@@ -1,17 +1,105 @@
-From b2cfdbb023ad06afec00ad44761e244d74119034 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Elan=20Ruusam=C3=A4e?= <glen@delfi.ee>
-Date: Tue, 6 Mar 2012 12:19:41 +0200
-Subject: [PATCH] fix crash on fdisk -l
+From 4c5bbc5d7e34b16591a1dec1347492e5d10bb1ab Mon Sep 17 00:00:00 2001
+From: Karel Zak <kzak@redhat.com>
+Date: Tue, 6 Mar 2012 11:24:54 +0100
+Subject: [PATCH] libblkid: fix sysfs context usage
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Reported-by: Elan Ruusamäe <glen@delfi.ee>
+Signed-off-by: Karel Zak <kzak@redhat.com>
 ---
- libblkid/src/topology/sysfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/sysfs.h               |    1 +
+ lib/sysfs.c                   |    6 +++---
+ libblkid/src/devname.c        |    2 +-
+ libblkid/src/devno.c          |    2 +-
+ libblkid/src/topology/sysfs.c |    9 +++++----
+ 5 files changed, 11 insertions(+), 9 deletions(-)
 
+diff --git a/include/sysfs.h b/include/sysfs.h
+index c1e6352..affd2bb 100644
+--- a/include/sysfs.h
++++ b/include/sysfs.h
+@@ -23,6 +23,7 @@ struct sysfs_cxt {
+ 	struct sysfs_cxt *parent;
+ };
+ 
++#define UL_SYSFSCXT_EMPTY { 0, -1, NULL, NULL }
+ 
+ extern char *sysfs_devno_attribute_path(dev_t devno, char *buf,
+                                  size_t bufsiz, const char *attr);
+diff --git a/lib/sysfs.c b/lib/sysfs.c
+index 89600bf..2340d30 100644
+--- a/lib/sysfs.c
++++ b/lib/sysfs.c
+@@ -137,7 +137,7 @@ dev_t sysfs_devname_to_devno(const char *name, const char *parent)
+ int sysfs_init(struct sysfs_cxt *cxt, dev_t devno, struct sysfs_cxt *parent)
+ {
+ 	char path[PATH_MAX];
+-	int fd, rc = 0;
++	int fd, rc;
+ 
+ 	memset(cxt, 0, sizeof(*cxt));
+ 	cxt->dir_fd = -1;
+@@ -157,7 +157,7 @@ int sysfs_init(struct sysfs_cxt *cxt, dev_t devno, struct sysfs_cxt *parent)
+ 	cxt->parent = parent;
+ 	return 0;
+ err:
+-	rc = -errno;
++	rc = errno > 0 ? -errno : -1;
+ 	sysfs_deinit(cxt);
+ 	return rc;
+ }
+@@ -445,7 +445,7 @@ int sysfs_count_partitions(struct sysfs_cxt *cxt, const char *devname)
+ 
+ int main(int argc, char *argv[])
+ {
+-	struct sysfs_cxt cxt;
++	struct sysfs_cxt cxt = UL_SYSFSCXT_EMPTY;
+ 	char *devname;
+ 	dev_t devno;
+ 	char path[PATH_MAX];
+diff --git a/libblkid/src/devname.c b/libblkid/src/devname.c
+index 12cd93a..4a08452 100644
+--- a/libblkid/src/devname.c
++++ b/libblkid/src/devname.c
+@@ -550,7 +550,7 @@ static int probe_all_removable(blkid_cache cache)
+ 		return -BLKID_ERR_PROC;
+ 
+ 	while((d = readdir(dir))) {
+-		struct sysfs_cxt sysfs;
++		struct sysfs_cxt sysfs = UL_SYSFSCXT_EMPTY;
+ 		int removable = 0;
+ 		dev_t devno;
+ 
+diff --git a/libblkid/src/devno.c b/libblkid/src/devno.c
+index b2a8be5..59edfd8 100644
+--- a/libblkid/src/devno.c
++++ b/libblkid/src/devno.c
+@@ -346,7 +346,7 @@ static int get_dm_wholedisk(struct sysfs_cxt *cxt, char *diskname,
+ int blkid_devno_to_wholedisk(dev_t dev, char *diskname,
+ 			size_t len, dev_t *diskdevno)
+ {
+-	struct sysfs_cxt cxt;
++	struct sysfs_cxt cxt = UL_SYSFSCXT_EMPTY;
+ 	int is_part = 0;
+ 
+ 	if (!dev || sysfs_init(&cxt, dev, NULL) != 0)
 diff --git a/libblkid/src/topology/sysfs.c b/libblkid/src/topology/sysfs.c
-index e62b84c..41be036 100644
+index e62b84c..a04b20a 100644
 --- a/libblkid/src/topology/sysfs.c
 +++ b/libblkid/src/topology/sysfs.c
-@@ -76,7 +76,7 @@ static int probe_sysfs_tp(blkid_probe pr,
+@@ -44,7 +44,8 @@ static int probe_sysfs_tp(blkid_probe pr,
+ {
+ 	dev_t dev, disk = 0;
+ 	int rc;
+-	struct sysfs_cxt sysfs, parent;
++	struct sysfs_cxt sysfs = UL_SYSFSCXT_EMPTY,
++			 parent = UL_SYSFSCXT_EMPTY;
+ 	size_t i, count = 0;
+ 
+ 	dev = blkid_probe_get_devno(pr);
+@@ -76,7 +77,7 @@ static int probe_sysfs_tp(blkid_probe pr,
  				}
  			}
  			if (!ok)
@@ -20,15 +108,17 @@ index e62b84c..41be036 100644
  		}
  
  		if (val->set_ulong) {
-@@ -102,7 +102,7 @@ static int probe_sysfs_tp(blkid_probe pr,
+@@ -102,8 +103,8 @@ static int probe_sysfs_tp(blkid_probe pr,
  
  done:
  	sysfs_deinit(&sysfs);
 -	if (disk)
-+	if (disk && disk != dev)
- 		sysfs_deinit(&parent);
+-		sysfs_deinit(&parent);
++	sysfs_deinit(&parent);
++
  	if (count)
  		return 0;		/* success */
+ 	return rc;			/* error or nothing */
 -- 
-1.7.9.2
+1.7.5.4
 
