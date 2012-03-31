@@ -1,5 +1,4 @@
 # TODO
-# - follow readprofile.1 -> redprofile.8 change in translated manuals as well
 #   /usr/share/getopt/getopt-parse.bash
 #   /usr/share/getopt/getopt-parse.tcsh
 #
@@ -62,6 +61,7 @@ BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-devel >= 0.14.1
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
+BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
 %{?with_selinux:BuildRequires:	libselinux-devel}
 %{?with_selinux:BuildRequires:	libsepol-devel}
@@ -759,6 +759,12 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 		fi
 	done
 done
+# it's been moved from man1 to man8
+for d in es ja ko ; do
+	mv -f $RPM_BUILD_ROOT%{_mandir}/$d/man1/readprofile.1 \
+		$RPM_BUILD_ROOT%{_mandir}/$d/man8/readprofile.8
+	%{__sed} -i -e 's/READPROFILE 1/READPROFILE 8/' $RPM_BUILD_ROOT%{_mandir}/$d/man8/readprofile.8
+done
 
 # cleanup, remove files not included in package
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
@@ -1017,7 +1023,6 @@ fi
 %lang(es) %{_mandir}/es/man1/look.1*
 %lang(es) %{_mandir}/es/man1/more.1*
 %lang(es) %{_mandir}/es/man1/namei.1*
-%lang(es) %{_mandir}/es/man1/readprofile.1*
 %lang(es) %{_mandir}/es/man1/rev.1*
 %lang(es) %{_mandir}/es/man1/script.1*
 %lang(es) %{_mandir}/es/man1/setterm.1*
@@ -1029,6 +1034,7 @@ fi
 %lang(es) %{_mandir}/es/man8/ipcrm.8*
 %lang(es) %{_mandir}/es/man8/ipcs.8*
 %lang(es) %{_mandir}/es/man8/mkswap.8*
+%lang(es) %{_mandir}/es/man8/readprofile.8*
 %lang(es) %{_mandir}/es/man8/renice.8*
 %lang(es) %{_mandir}/es/man8/setsid.8*
 
@@ -1093,7 +1099,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/mcookie.1*
 %lang(ja) %{_mandir}/ja/man1/more.1*
 %lang(ja) %{_mandir}/ja/man1/namei.1*
-%lang(ja) %{_mandir}/ja/man1/readprofile.1*
 %lang(ja) %{_mandir}/ja/man1/rename.1*
 %lang(ja) %{_mandir}/ja/man1/rev.1*
 %lang(ja) %{_mandir}/ja/man1/script.1*
@@ -1109,6 +1114,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/ipcs.8*
 %lang(ja) %{_mandir}/ja/man8/isosize.8*
 %lang(ja) %{_mandir}/ja/man8/mkswap.8*
+%lang(ja) %{_mandir}/ja/man8/readprofile.8*
 %lang(ja) %{_mandir}/ja/man8/renice.8*
 %lang(ja) %{_mandir}/ja/man8/setsid.8*
 
@@ -1126,7 +1132,6 @@ fi
 %lang(ko) %{_mandir}/ko/man1/mcookie.1*
 %lang(ko) %{_mandir}/ko/man1/more.1*
 %lang(ko) %{_mandir}/ko/man1/namei.1*
-%lang(ko) %{_mandir}/ko/man1/readprofile.1*
 %lang(ko) %{_mandir}/ko/man1/rev.1*
 %lang(ko) %{_mandir}/ko/man1/script.1*
 %lang(ko) %{_mandir}/ko/man1/setterm.1*
@@ -1139,6 +1144,7 @@ fi
 %lang(ko) %{_mandir}/ko/man8/ipcrm.8*
 %lang(ko) %{_mandir}/ko/man8/ipcs.8*
 %lang(ko) %{_mandir}/ko/man8/mkswap.8*
+%lang(ko) %{_mandir}/ko/man8/readprofile.8*
 %lang(ko) %{_mandir}/ko/man8/renice.8*
 %lang(ko) %{_mandir}/ko/man8/setsid.8*
 

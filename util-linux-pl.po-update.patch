@@ -1,11 +1,13 @@
---- util-linux-2.21/po/pl.po~	2012-02-24 12:35:23.000000000 +0200
-+++ util-linux-2.21/po/pl.po	2012-03-05 21:36:38.404584366 +0200
-@@ -13376,7 +13376,7 @@
- " -3, --3gb                limits the used address space to a maximum of 3 "
- "GB\n"
- "     --4gb                ignored (for backward compatibility only)\n"
--"     --uname-2.6          turns on UNAME26\n"
-+"     --uname-2.6          w³±czenie UNAME26\n"
- msgstr ""
- " -v, --verbose            szczegó³owa informacja o w³±czanych opcjach\n"
- " -R, --addr-no-randomize  wy³±czenie losowo¶ci wirtualnej przestrzeni "
+--- util-linux-2.21.1/po/pl.po.orig	2012-03-30 19:12:39.378885877 +0200
++++ util-linux-2.21.1/po/pl.po	2012-03-31 18:58:02.098412734 +0200
+@@ -1273,9 +1273,8 @@
+ msgstr "nie uda³o siê przeanalizowaæ argumentu rozmiaru bloku"
+ 
+ #: disk-utils/mkfs.cramfs.c:733
+-#, fuzzy
+ msgid "invalid block size"
+-msgstr "%s: nieprawid³owe urz±dzenie blokowe"
++msgstr "b³êdny rozmiar bloku"
+ 
+ #: disk-utils/mkfs.cramfs.c:741
+ msgid "edition number argument failed"
