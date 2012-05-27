@@ -32,12 +32,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.21.1
+Version:	2.21.2
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.21/%{name}-%{version}.tar.xz
-# Source0-md5:	ad602dcd528f340b1329cfa6200d8f80
+# Source0-md5:	54ba880f1d66782c2287ee2c898520e9
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -54,7 +54,6 @@ Patch8:		%{name}-procpartitions.patch
 Patch9:		%{name}-swaponsymlink.patch
 Patch10:	%{name}-diet.patch
 Patch11:	no-openat.patch
-Patch12:	fix-crash-on-fdisk-l.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -640,7 +639,6 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %if %{without partx}
 %patch11 -p1
 %endif
-%patch12 -p1
 
 %{__rm} po/stamp-po
 
