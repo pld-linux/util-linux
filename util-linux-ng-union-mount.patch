@@ -18,10 +18,10 @@ ftp://ftp.suse.com/pub/people/jblunck/union-mount/util-linux-2.13-union_mount.di
  mount/mount_constants.h |    3 +++
  2 files changed, 8 insertions(+), 0 deletions(-)
 
-diff --git a/mount/mount.c b/mount/mount.c
+diff --git a/mount-deprecated/mount.c b/mount-deprecated/mount.c
 index 9cbc466..9bf766b 100644
---- a/mount/mount.c
-+++ b/mount/mount.c
+--- a/mount-deprecated/mount.c
++++ b/mount-deprecated/mount.c
 @@ -138,6 +138,7 @@ static const struct opt_map opt_map[] = {
    { "sync",	0, 0, MS_SYNCHRONOUS},	/* synchronous I/O */
    { "async",	0, 1, MS_SYNCHRONOUS},	/* asynchronous I/O */
@@ -48,10 +48,10 @@ index 9cbc466..9bf766b 100644
  
  		case '?':
  		default:
-diff --git a/mount/mount_constants.h b/mount/mount_constants.h
+diff --git a/mount-deprecated/mount_constants.h b/mount-deprecated/mount_constants.h
 index dc3ca27..fb4c663 100644
---- a/mount/mount_constants.h
-+++ b/mount/mount_constants.h
+--- a/mount-deprecated/mount_constants.h
++++ b/mount-deprecated/mount_constants.h
 @@ -39,6 +39,9 @@ flags had been set; if we have a union with more than one element - fail;
  if we have a stack or plain mount - mount atop of it, forming a stack. */
  #define	MS_OVER		0x200	/* 512 */

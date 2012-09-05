@@ -73,17 +73,17 @@
 --- util-linux-2.19/misc-utils/findmnt.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/misc-utils/findmnt.c	2011-02-10 20:54:23.100130391 +0100
 @@ -30,6 +30,9 @@
- #endif
- #include <assert.h>
  #include <poll.h>
+ #include <sys/statvfs.h>
+ #include <sys/types.h>
 +#ifdef __dietlibc__
 +#include <sys/stat.h> /* for major and minor macros */
 +#endif
  
  #include <libmount.h>
  
---- util-linux-2.19/fsck/fsck.c~	2011-02-07 16:19:29.000000000 +0100
-+++ util-linux-2.19/fsck/fsck.c	2011-02-10 21:09:27.024658725 +0100
+--- util-linux-2.19/disk-utils/fsck.c~	2011-02-07 16:19:29.000000000 +0100
++++ util-linux-2.19/disk-utils/fsck.c	2011-02-10 21:09:27.024658725 +0100
 @@ -270,7 +270,13 @@
  	if (verbose)
  		printf(_("Locking disk %s ... "), diskname);
@@ -101,15 +101,22 @@
  
 --- util-linux-2.21/configure.ac~	2012-02-24 12:53:35.000000000 +0200
 +++ util-linux-2.21/configure.ac	2012-03-05 21:03:25.833675080 +0200
-@@ -263,6 +263,8 @@
+@@ -311,6 +311,7 @@
  	lchown \
  	llseek \
  	lseek64 \
 +	mkostemp \
+ 	nanosleep \
+ 	personality \
+ 	posix_fadvise \
+@@ -330,6 +331,7 @@
+ 	usleep \
+ 	warn \
+ 	warnx \
 +	versionsort \
- 	scandirat \
- 	strtoull \
- 	sysconf \
+ ])
+ AC_FUNC_FSEEKO
+ 
 --- util-linux-2.19/misc-utils/findfs.c~	2011-01-31 16:43:47.000000000 +0100
 +++ util-linux-2.19/misc-utils/findfs.c	2011-02-10 22:24:39.615735924 +0100
 @@ -12,6 +12,7 @@
@@ -120,16 +127,6 @@
  #include "nls.h"
  
  static void __attribute__((__noreturn__)) usage(int rc)
---- util-linux-2.19/term-utils/scriptreplay.c~	2011-01-31 16:43:47.000000000 +0100
-+++ util-linux-2.19/term-utils/scriptreplay.c	2011-02-10 22:26:22.019069258 +0100
-@@ -28,6 +28,7 @@
- #include <unistd.h>
- #include <err.h>
- 
-+#include "c.h"
- #include "nls.h"
- 
- #define SCRIPT_MIN_DELAY 0.0001		/* from original sripreplay.pl */
 --- util-linux-2.21/libmount/src/tab_parse.c~	2012-03-05 21:00:14.000000000 +0200
 +++ util-linux-2.21/libmount/src/tab_parse.c	2012-03-05 21:05:27.562569076 +0200
 @@ -524,7 +524,13 @@

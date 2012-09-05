@@ -1,6 +1,10 @@
 # TODO
-#   /usr/share/getopt/getopt-parse.bash
-#   /usr/share/getopt/getopt-parse.tcsh
+# - unpackaged files:
+#	/usr/share/getopt/getopt-parse.bash
+#	/usr/share/getopt/getopt-parse.tcsh
+# - fix initrd build
+# - some sysvinit binaries moved here: su(1):, sulogin(8),
+#    utmpdump(1): - has been merged from coreutils into util-linux
 #
 # Conditional build:
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
@@ -32,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.21.2
-Release:	3
+Version:	2.22
+Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.21/%{name}-%{version}.tar.xz
-# Source0-md5:	54ba880f1d66782c2287ee2c898520e9
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
+# Source0-md5:	ba2d8cc12a937231c80a04f7f7149303
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -51,7 +55,7 @@ Patch4:		%{name}-fhs.patch
 Patch5:		%{name}-hotkeys.patch
 Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
-Patch9:		%{name}-swaponsymlink.patch
+
 Patch10:	%{name}-diet.patch
 Patch11:	no-openat.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
@@ -89,10 +93,12 @@ BuildRequires:	glibc-static
 %endif
 Requires:	libblkid = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
+Provides:	eject = %{version}-%{release}
 Provides:	fdisk
 Provides:	linux32
 Provides:	sparc32
 Obsoletes:	cramfs
+Obsoletes:	eject
 Obsoletes:	ionice
 Obsoletes:	linux32
 Obsoletes:	rawdevices
@@ -527,7 +533,9 @@ Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
+Requires(post,preun,postun):    systemd-units >= 38
 Requires:	libuuid = %{version}-%{release}
+Requires:	systemd-units >= 38
 Provides:	group(uuidd)
 Provides:	user(uuidd)
 Conflicts:	libuuid < 1.40.5-0.1
@@ -627,14 +635,14 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
 %prep
 %setup -q -a1
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
+
 %patch10 -p1
 %if %{without partx}
 %patch11 -p1
@@ -664,14 +672,21 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 %endif
 	--disable-shared \
 	--enable-static \
+	--disable-libblkid \
 	--disable-fsck \
 	--disable-cramfs \
 	--disable-raw \
 	--disable-libmount \
-	--disable-login-utils \
+	--disable-su \
+	--disable-sulogin \
+	--disable-chfn-chsh \
+	--disable-login \
+	--disable-newgrp \
+	--disable-vipw \
 	--disable-schedutils \
 	--disable-silent-rules \
 	--disable-use-tty-group \
+	--disable-utmpdump \
 	--disable-wall \
 	--without-audit \
 	--without-ncurses \
@@ -679,8 +694,6 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 
 # configure gets it unconditionally wrong
 %{__sed} -i -e 's/#define HAVE_WIDECHAR 1//' config.h
-
-%{__sed} -i -e 's/ cal\$(EXEEXT) / /; s/ lsblk\$(EXEEXT)//' misc-utils/Makefile
 
 for dir in libblkid libuuid disk-utils misc-utils fsck fdisk schedutils hwclock; do
 	%{__make} -C $dir \
@@ -705,11 +718,19 @@ done
 	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-wall \
+	--enable-su \
+	--enable-sulogin \
+	--enable-utmpdump \
+	--enable-libblkid \
+	--enable-chkdupexe \
 	--enable-ddate \
+	--enable-chfn-chsh \
+	--enable-login \
+	--enable-newgrp \
+	--enable-vipw \
 	--enable-line \
 	--enable-kill \
 	--enable-login-chown-vcs \
-	--enable-login-utils \
 	--enable-partx \
 	--enable-write \
 	--with-audit \
@@ -884,6 +905,8 @@ fi
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
 %attr(755,root,root) /bin/more
+%attr(755,root,root) /bin/su
+%attr(755,root,root) /bin/wdctl
 
 %attr(755,root,root) /sbin/chcpu
 %attr(755,root,root) /sbin/ctrlaltdel
@@ -897,6 +920,7 @@ fi
 %attr(755,root,root) /sbin/fstrim
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkswap
+%attr(755,root,root) /sbin/sulogin
 %attr(755,root,root) /sbin/swaplabel
 %if "%{pld_release}" != "ac"
 %attr(755,root,root) /sbin/switch_root
@@ -910,6 +934,7 @@ fi
 %attr(755,root,root) %{_bindir}/column
 %attr(755,root,root) %{_bindir}/cytune
 %attr(755,root,root) %{_bindir}/ddate
+%attr(755,root,root) %{_bindir}/eject
 %attr(755,root,root) %{_bindir}/flock
 %{?with_fallocate:%attr(755,root,root) %{_bindir}/fallocate}
 %attr(755,root,root) %{_bindir}/getopt
@@ -923,6 +948,7 @@ fi
 %attr(755,root,root) %{_bindir}/logger
 %attr(755,root,root) %{_bindir}/look
 %attr(755,root,root) %{_bindir}/lscpu
+%attr(755,root,root) %{_bindir}/lslocks
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
 %attr(755,root,root) %{_bindir}/pg
@@ -939,11 +965,13 @@ fi
 %attr(755,root,root) %{_bindir}/taskset
 %attr(755,root,root) %{_bindir}/ul
 %attr(755,root,root) %{_bindir}/unshare
+%attr(755,root,root) %{_bindir}/utmpdump
 %attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
 %attr(755,root,root) %{_sbindir}/fdformat
 %attr(755,root,root) %{_sbindir}/ldattach
 %attr(755,root,root) %{_sbindir}/readprofile
+%attr(755,root,root) %{_sbindir}/resizepart
 %attr(755,root,root) %{_sbindir}/rtcwake
 
 %{_mandir}/man1/cal.1*
@@ -954,6 +982,7 @@ fi
 %{_mandir}/man1/column.1*
 %{_mandir}/man1/ddate.1*
 %{_mandir}/man1/dmesg.1*
+%{_mandir}/man1/eject.1*
 %{?with_fallocate:%{_mandir}/man1/fallocate.1*}
 %{_mandir}/man1/flock.1*
 %{_mandir}/man1/getopt.1*
@@ -983,6 +1012,7 @@ fi
 %{_mandir}/man1/taskset.1*
 %{_mandir}/man1/ul.1*
 %{_mandir}/man1/unshare.1*
+%{_mandir}/man1/utmpdump.1*
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
 %if %{with partx}
@@ -999,14 +1029,18 @@ fi
 %{_mandir}/man8/fstrim.8*
 %{_mandir}/man8/isosize.8*
 %{_mandir}/man8/ldattach.8*
+%{_mandir}/man8/lslocks.8*
 %{_mandir}/man8/mkswap.8*
 %{_mandir}/man8/raw.8*
 %{_mandir}/man8/readprofile.8*
+%{_mandir}/man8/resizepart.8*
 %{_mandir}/man8/rtcwake.8*
 %{_mandir}/man8/swaplabel.8*
 %if "%{pld_release}" != "ac"
 %{_mandir}/man8/switch_root.8*
 %endif
+%{_mandir}/man8/sulogin.8*
+%{_mandir}/man8/wdctl.8*
 %{_mandir}/man8/wipefs.8*
 
 %lang(de) %{_mandir}/de/man1/kill.1*
@@ -1407,6 +1441,8 @@ fi
 %attr(6755,uuidd,uuidd) %{_sbindir}/uuidd
 %attr(2775,uuidd,uuidd) /var/lib/libuuid
 %{_mandir}/man8/uuidd.8*
+%{systemdunitdir}/uuidd.service
+%{systemdunitdir}/uuidd.socket
 
 %files -n libmount
 %defattr(644,root,root,755)
