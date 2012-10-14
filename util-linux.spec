@@ -15,11 +15,9 @@
 %if "%{pld_release}" == "ac"
 %bcond_with	initrd		# don't build initrd version
 %bcond_with	fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%bcond_with	partx		# partx utility (needs glibc 2.10 for openat to compile)
 %else
 %bcond_without	initrd		# don't build initrd version
 %bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%bcond_without	partx		# partx utility (needs glibc 2.10 for openat to compile)
 %endif
 
 %if "%{pld_release}" == "ac"
@@ -59,7 +57,6 @@ Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 
 Patch10:	%{name}-diet.patch
-Patch11:	no-openat.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -644,11 +641,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
-
 %patch10 -p1
-%if %{without partx}
-%patch11 -p1
-%endif
 
 %{__rm} po/stamp-po
 
@@ -759,9 +752,7 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%if %{with partx}
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
-%endif
 mv $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
@@ -926,12 +917,10 @@ fi
 
 %attr(755,root,root) /sbin/chcpu
 %attr(755,root,root) /sbin/ctrlaltdel
-%if %{with partx}
 %attr(755,root,root) /sbin/addpart
 %attr(755,root,root) /sbin/delpart
 %attr(755,root,root) /sbin/partx
 %attr(755,root,root) /bin/lsblk
-%endif
 %attr(755,root,root) /sbin/fsfreeze
 %attr(755,root,root) /sbin/fstrim
 %attr(755,root,root) /sbin/mkfs
@@ -1032,12 +1021,10 @@ fi
 %{_mandir}/man1/utmpdump.1*
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
-%if %{with partx}
 %{_mandir}/man8/addpart.8*
 %{_mandir}/man8/delpart.8*
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/lsblk.8*
-%endif
 %{_mandir}/man8/chcpu.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/cytune.8*
