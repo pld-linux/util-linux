@@ -144,3 +144,162 @@
  	if (n <= 0)
  		return 0;
  
+--- util-linux-2.22.1/lib/Makemodule.am.orig	2012-09-20 15:16:51.344635140 +0200
++++ util-linux-2.22.1/lib/Makemodule.am	2012-10-13 16:15:53.662070426 +0200
+@@ -5,7 +5,6 @@
+ 	lib/at.c \
+ 	lib/blkdev.c \
+ 	lib/canonicalize.c \
+-	lib/cpuset.c \
+ 	lib/crc32.c \
+ 	lib/env.c \
+ 	lib/fileutils.c \
+@@ -15,7 +14,6 @@
+ 	lib/mbsalign.c \
+ 	lib/md5.c \
+ 	lib/pager.c \
+-	lib/path.c \
+ 	lib/procutils.c \
+ 	lib/randutils.c \
+ 	lib/setproctitle.c \
+@@ -25,6 +23,12 @@
+ 	lib/wholedisk.c \
+ 	lib/xgetpass.c
+ 
++if HAVE_CPU_SET_T
++libcommon_la_SOURCES += \
++	lib/cpuset.c \
++	lib/path.c
++endif
++
+ if LINUX
+ libcommon_la_SOURCES += \
+ 	lib/linux_version.c \
+--- util-linux-2.22.1/lib/tt.c.orig	2012-09-20 15:16:51.349635172 +0200
++++ util-linux-2.22.1/lib/tt.c	2012-10-13 16:58:37.331962836 +0200
+@@ -59,11 +59,13 @@
+  */
+ static size_t mbs_safe_width(const char *s)
+ {
+-	mbstate_t st;
+ 	const char *p = s;
+ 	size_t width = 0;
++#ifdef HAVE_WIDECHAR
++	mbstate_t st;
+ 
+ 	memset(&st, 0, sizeof(st));
++#endif
+ 
+ 	while (p && *p) {
+ 		if (iscntrl((unsigned char) *p)) {
+@@ -108,7 +110,9 @@
+  */
+ static char *mbs_safe_encode(const char *s, size_t *width)
+ {
++#ifdef HAVE_WIDECHAR
+ 	mbstate_t st;
++#endif
+ 	const char *p = s;
+ 	char *res, *r;
+ 	size_t sz = s ? strlen(s) : 0;
+@@ -117,8 +121,9 @@
+ 	if (!sz)
+ 		return NULL;
+ 
++#ifdef HAVE_WIDECHAR
+ 	memset(&st, 0, sizeof(st));
+-
++#endif
+ 	res = malloc((sz * 4) + 1);
+ 	if (!res)
+ 		return NULL;
+--- util-linux-2.22.1/include/ttyutils.h.orig	2012-09-20 15:16:51.343635134 +0200
++++ util-linux-2.22.1/include/ttyutils.h	2012-10-13 16:58:53.058628843 +0200
+@@ -11,6 +11,7 @@
+ #define UL_TTY_KEEPCFLAGS	(1 << 1)
+ #define UL_TTY_UTF8		(1 << 2)
+ 
++#ifndef __dietlibc__
+ static inline void reset_virtual_console(struct termios *tp, int flags)
+ {
+ 	/* Use defaults of <sys/ttydefaults.h> for base settings */
+@@ -78,6 +79,7 @@
+ 	tp->c_cc[VLNEXT]   = CLNEXT;
+ 	tp->c_cc[VEOL2]    = _POSIX_VDISABLE;
+ }
++#endif
+ 
+ static inline int get_terminal_width(void)
+ {
+--- util-linux-2.22.1/configure.ac.orig	2012-10-13 17:14:16.488590090 +0200
++++ util-linux-2.22.1/configure.ac	2012-10-13 22:11:41.324507881 +0200
+@@ -915,6 +915,9 @@
+ UL_REQUIRES_HAVE([cramfs], [z], [z library])
+ AM_CONDITIONAL(BUILD_CRAMFS, test "x$build_cramfs" = xyes)
+ 
++AC_ARG_ENABLE([minix], AS_HELP_STRING([--disable-minix], [do not build fsck.minix]), [], enable_minix=yes)
++UL_BUILD_INIT([minix])
++AM_CONDITIONAL(BUILD_MINIX, test "x$build_minix" = xyes)
+ 
+ if test "x$have_io" = xyes -o "x$linux_os" = xyes; then
+   build_hwclock=yes
+@@ -1193,6 +1196,12 @@
+ 	[sched_getaffinity])
+ AM_CONDITIONAL(BUILD_TASKSET, test "x$build_taskset" = xyes)
+ 
++AC_ARG_ENABLE([setarch], AS_HELP_STRING([--disable-setarch], [do not build setarch]), [], enable_setarch=yes)
++UL_BUILD_INIT([setarch])
++AM_CONDITIONAL(BUILD_SETARCH, test "x$build_setarch" = xyes)
++AC_ARG_ENABLE([ldattach], AS_HELP_STRING([--disable-ldattach], [do not build ldattach]), [], enable_ldattach=yes)
++UL_BUILD_INIT([ldattach])
++AM_CONDITIONAL(BUILD_LDATTACH, test "x$build_ldattach" = xyes)
+ 
+ AC_ARG_ENABLE([wall],
+   AS_HELP_STRING([--disable-wall], [do not build wall]),
+--- util-linux-2.22.1/disk-utils/Makemodule.am.orig	2012-09-20 15:16:51.321634997 +0200
++++ util-linux-2.22.1/disk-utils/Makemodule.am	2012-10-13 22:12:29.384505863 +0200
+@@ -1,4 +1,4 @@
+-
++if BUILD_MINIX
+ sbin_PROGRAMS += fsck.minix
+ dist_man_MANS += disk-utils/fsck.minix.8
+ fsck_minix_SOURCES = \
+@@ -6,6 +6,7 @@
+ 	disk-utils/minix_programs.h \
+ 	lib/ismounted.c
+ fsck_minix_LDADD = $(LDADD) libcommon.la
++endif
+ 
+ sbin_PROGRAMS += mkfs.minix
+ dist_man_MANS += disk-utils/mkfs.minix.8
+--- util-linux-2.22.1/sys-utils/Makemodule.am.orig	2012-10-10 14:14:06.515276813 +0200
++++ util-linux-2.22.1/sys-utils/Makemodule.am	2012-10-13 22:18:31.467824001 +0200
+@@ -59,10 +59,12 @@
+ cytune_SOURCES = sys-utils/cytune.c sys-utils/cyclades.h
+ cytune_LDADD = $(LDADD) libcommon.la
+ 
++if BUILD_LDATTACH
+ usrsbin_exec_PROGRAMS += ldattach
+ dist_man_MANS += sys-utils/ldattach.8
+ ldattach_SOURCES = sys-utils/ldattach.c
+ ldattach_LDADD = $(LDADD) libcommon.la
++endif
+ 
+ usrsbin_exec_PROGRAMS += tunelp
+ dist_man_MANS += sys-utils/tunelp.8
+@@ -73,6 +75,7 @@
+ rtcwake_SOURCES = sys-utils/rtcwake.c
+ rtcwake_LDADD = $(LDADD) libcommon.la
+ 
++if BUILD_SETARCH
+ usrbin_exec_PROGRAMS += setarch
+ dist_man_MANS += sys-utils/setarch.8
+ setarch_SOURCES = sys-utils/setarch.c
+@@ -123,6 +124,7 @@
+ 
+ INSTALL_EXEC_HOOKS += install-exec-hook-setarch
+ UNINSTALL_HOOKS += uninstall-hook-setarch
++endif
+ 
+ endif # LINUX
+ 

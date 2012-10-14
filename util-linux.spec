@@ -1,8 +1,10 @@
 # TODO
-# - unpackaged files:
-#	/usr/share/getopt/getopt-parse.bash
-#	/usr/share/getopt/getopt-parse.tcsh
-# - fix initrd build
+# - verify initrd tools set:
+#   - I've taken list from 2.21.3 package, but there was no explicit list, so
+#     there are probably some unneeded tools
+#   - chrt is not built now (because of --disable-schedutils), but it's probably not needed
+#   - fsck is not built now (because of --disable-libmount)
+#   - maybe we want some more now?
 # - some sysvinit binaries moved here: su(1):, sulogin(8),
 #    utmpdump(1): - has been merged from coreutils into util-linux
 #
@@ -11,9 +13,9 @@
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
 %bcond_without	selinux 	# SELinux support
 %if "%{pld_release}" == "ac"
-%bcond_with		initrd		# don't build initrd version
-%bcond_with		fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%bcond_with		partx		# partx utility (needs glibc 2.10 for openat to compile)
+%bcond_with	initrd		# don't build initrd version
+%bcond_with	fallocate	# fallocate utility (needs glibc 2.11 to compile)
+%bcond_with	partx		# partx utility (needs glibc 2.10 for openat to compile)
 %else
 %bcond_without	initrd		# don't build initrd version
 %bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
@@ -664,29 +666,40 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 %{?with_dietlibc:xCC="%{__cc}"; xCC="diet ${xCC#*ccache }"}
 %configure \
 %if %{with dietlibc}
-	ac_cv_header_crypt_h="no" \
+	ac_cv_header_crypt_h=no \
+	ac_cv_header_stdio_ext_h=no \
 %endif
 	CC="$xCC" \
 %if "%{?configure_cache}" == "1"
 	--cache-file=%{?configure_cache_file}%{!?configure_cache_file:configure}-initrd.cache \
 %endif
+	--exec-prefix= \
+	--bindir=/bin \
+	--sbindir=/sbin \
+	--libdir=/%{_lib} \
 	--disable-shared \
 	--enable-static \
-	--disable-libblkid \
-	--disable-fsck \
+	--disable-agetty \
+	--disable-chfn-chsh \
 	--disable-cramfs \
-	--disable-raw \
+	--disable-kill \
+	--disable-ldattach \
 	--disable-libmount \
+	--disable-login \
+	--disable-losetup \
+	--disable-minix \
+	--disable-newgrp \
+	--disable-partx \
+	--disable-raw \
+	--disable-schedutils \
+	--disable-setarch \
+	--disable-silent-rules \
 	--disable-su \
 	--disable-sulogin \
-	--disable-chfn-chsh \
-	--disable-login \
-	--disable-newgrp \
-	--disable-vipw \
-	--disable-schedutils \
-	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-utmpdump \
+	--disable-uuidd \
+	--disable-vipw \
 	--disable-wall \
 	--without-audit \
 	--without-ncurses \
@@ -695,18 +708,17 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 # configure gets it unconditionally wrong
 %{__sed} -i -e 's/#define HAVE_WIDECHAR 1//' config.h
 
-for dir in libblkid libuuid disk-utils misc-utils fsck fdisk schedutils hwclock; do
-	%{__make} -C $dir \
-	%if %{with uClibc}
-		LDFLAGS="-Wl,-static"
-	%endif
-	%if %{with dietlibc}
-		CPPFLAGS="$CPPFLAGS -D_BSD_SOURCE" \
-		LDFLAGS="-lcompat"
-	%endif
-	# empty line required because there is a backslash up there
-	%{__make} -C $dir install DESTDIR=$(pwd)/initrd
-done
+%{__make} \
+%if %{with uClibc}
+	LDFLAGS="-Wl,-static"
+%endif
+%if %{with dietlibc}
+	CPPFLAGS="$CPPFLAGS -D_BSD_SOURCE" \
+	LDFLAGS="-lcompat"
+%endif
+
+%{__make} install \
+	DESTDIR=$(pwd)/initrd
 
 %{__make} clean
 %endif
@@ -718,23 +730,23 @@ done
 	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-wall \
+	--enable-chfn-chsh \
+	--enable-chkdupexe \
+	--enable-ddate \
+	--enable-kill \
+	--enable-libblkid \
+	--enable-line \
+	--enable-login \
+	--enable-login-chown-vcs \
+	--enable-newgrp \
+	--enable-partx \
 	--enable-su \
 	--enable-sulogin \
 	--enable-utmpdump \
-	--enable-libblkid \
-	--enable-chkdupexe \
-	--enable-ddate \
-	--enable-chfn-chsh \
-	--enable-login \
-	--enable-newgrp \
 	--enable-vipw \
-	--enable-line \
-	--enable-kill \
-	--enable-login-chown-vcs \
-	--enable-partx \
 	--enable-write \
 	--with-audit \
-	--with%{!?with_selinux:out}-selinux
+	--with-selinux%{!?with_selinux:=no}
 
 %{__make}
 
@@ -794,21 +806,25 @@ done
 	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man8/{elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
 
-%ifarch sparc sparc64
+%ifarch sparc sparcv9 sparc64
+# programs not built on sparc
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man8/{cfdisk,sfdisk}.8
 %endif
 
+# examples
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/getopt/getopt-parse.*sh
+
 %if %{with initrd}
 install -d $RPM_BUILD_ROOT%{_libdir}/initrd
-install -p initrd%{_bindir}/* $RPM_BUILD_ROOT%{_libdir}/initrd/
-install -p initrd%{_sbindir}/* $RPM_BUILD_ROOT%{_libdir}/initrd/
+install -p initrd/bin/* $RPM_BUILD_ROOT%{_libdir}/initrd
+install -p initrd/sbin/* $RPM_BUILD_ROOT%{_libdir}/initrd
 ln -s fsck $RPM_BUILD_ROOT%{_libdir}/initrd/e2fsck
 
 # We don't need those
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{chkdupexe,uuidd,mcookie,whereis,mkfs*,fsck.minix,isosize,logger}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{cal,col,colcrt,colrm,column,ctrlaltdel,cytune,dmesg,flock,fsfreeze,fstrim,getopt,hexdump,ipcmk,ipcrm,ipcs,isosize,logger,lslocks,mcookie,mkfs*,readprofile,renice,rev,rtcwake,script,scriptreplay,setsid,tailf,tunelp,wdctl,whereis}
 
 %if %{with dietlibc}
-cp -a initrd%{_libdir}/lib*.a $RPM_BUILD_ROOT%{dietlibdir}
+cp -a initrd/%{_lib}/lib*.a $RPM_BUILD_ROOT%{dietlibdir}
 %endif
 %endif
 
@@ -854,7 +870,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc */README.* NEWS
+%doc AUTHORS ChangeLog NEWS README README.licensing Documentation misc-utils/getopt-parse.{bash,tcsh}
 
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock*
@@ -1008,6 +1024,7 @@ fi
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/scriptreplay.1*
 %{_mandir}/man1/setterm.1*
+%{_mandir}/man1/su.1*
 %{_mandir}/man1/tailf.1*
 %{_mandir}/man1/taskset.1*
 %{_mandir}/man1/ul.1*
@@ -1470,5 +1487,25 @@ fi
 %if %{with initrd}
 %files initrd
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/initrd/*
+%attr(755,root,root) %{_libdir}/initrd/blkid
+%attr(755,root,root) %{_libdir}/initrd/blockdev
+%attr(755,root,root) %{_libdir}/initrd/fdformat
+%attr(755,root,root) %{_libdir}/initrd/fdisk
+%attr(755,root,root) %{_libdir}/initrd/findfs
+%attr(755,root,root) %{_libdir}/initrd/hwclock
+%attr(755,root,root) %{_libdir}/initrd/look
+%attr(755,root,root) %{_libdir}/initrd/mkswap
+%attr(755,root,root) %{_libdir}/initrd/namei
+%attr(755,root,root) %{_libdir}/initrd/rename
+%ifnarch sparc sparcv9 sparc64
+%attr(755,root,root) %{_libdir}/initrd/sfdisk
+%endif
+%attr(755,root,root) %{_libdir}/initrd/swaplabel
+%attr(755,root,root) %{_libdir}/initrd/uuidgen
+%attr(755,root,root) %{_libdir}/initrd/wipefs
+# not needed?
+#%attr(755,root,root) %{_libdir}/initrd/chrt
+# not built because of disabled libmount
+#%attr(755,root,root) %{_libdir}/initrd/e2fsck
+#%attr(755,root,root) %{_libdir}/initrd/fsck
 %endif
