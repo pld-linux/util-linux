@@ -113,13 +113,13 @@ Obsoletes:	sparc32
 Obsoletes:	util-linux-ng < 2.20-1
 Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
+Conflicts:	SysVinit-tools < 2.88-9
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
 Conflicts:	upstart-SysVinit < 2.86-28
 %if %{with su}
 Provides:	coreutils-su
 Obsoletes:	coreutils-su
-Conflicts:	SysVinit-tools < 2.88-9
 Conflicts:	coreutils < 8.19
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
