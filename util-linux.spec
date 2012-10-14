@@ -48,6 +48,8 @@ Source2:	login.pamd
 Source3:	%{name}-blockdev.init
 Source4:	%{name}-blockdev.sysconfig
 Source5:	blockdev.upstart
+Source6:	su.pamd
+Source7:	su-l.pamd
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-ng-union-mount.patch
 Patch3:		%{name}-fdformat-ide.patch
@@ -55,7 +57,7 @@ Patch4:		%{name}-fhs.patch
 Patch5:		%{name}-hotkeys.patch
 Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
-
+Patch9:		su-paths.patch
 Patch10:	%{name}-diet.patch
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
@@ -96,6 +98,8 @@ Provides:	eject = %{version}-%{release}
 Provides:	fdisk
 Provides:	linux32
 Provides:	sparc32
+Provides:	coreutils-su
+Obsoletes:	coreutils-su
 Obsoletes:	cramfs
 Obsoletes:	eject
 Obsoletes:	ionice
@@ -641,6 +645,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %patch10 -p1
 
 %{__rm} po/stamp-po
@@ -759,6 +764,8 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
 cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
 cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
+cp -p %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/su
+cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/su-l
 
 :> $RPM_BUILD_ROOT/etc/security/blacklist.login
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
@@ -914,7 +921,11 @@ fi
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
 %attr(755,root,root) /bin/more
-%attr(755,root,root) /bin/su
+
+%attr(4755,root,root) /bin/su
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su-l
+
 %attr(755,root,root) /bin/wdctl
 
 %attr(755,root,root) /sbin/chcpu
