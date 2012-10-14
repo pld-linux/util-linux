@@ -1,5 +1,5 @@
---- coreutils-4.5.3/login-utils/su.c.orig	Sun Oct 27 21:57:03 2002
-+++ coreutils-4.5.3/login-utils/su.c	Sun Oct 27 22:15:05 2002
+--- coreutils-4.5.3/login-utils/su-common.c.orig	Sun Oct 27 21:57:03 2002
++++ coreutils-4.5.3/login-utils/su-common.c	Sun Oct 27 22:15:05 2002
 @@ -154,6 +154,15 @@
  # define DEFAULT_ROOT_LOGIN_PATH "/usr/ucb:/bin:/usr/bin:/etc"
  #endif

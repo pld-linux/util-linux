@@ -12,6 +12,7 @@
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
 %bcond_without	selinux 	# SELinux support
+%bcond_without	su		# su/runuser programs
 %if "%{pld_release}" == "ac"
 %bcond_with	initrd		# don't build initrd version
 %bcond_with	fallocate	# fallocate utility (needs glibc 2.11 to compile)
@@ -50,8 +51,11 @@ Source4:	%{name}-blockdev.sysconfig
 Source5:	blockdev.upstart
 Source6:	su.pamd
 Source7:	su-l.pamd
+Source8:	runuser.pamd
+Source9:	runuser-l.pamd
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-ng-union-mount.patch
+Patch2:		%{name}-runuser.patch
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
 Patch5:		%{name}-hotkeys.patch
@@ -98,8 +102,6 @@ Provides:	eject = %{version}-%{release}
 Provides:	fdisk
 Provides:	linux32
 Provides:	sparc32
-Provides:	coreutils-su
-Obsoletes:	coreutils-su
 Obsoletes:	cramfs
 Obsoletes:	eject
 Obsoletes:	ionice
@@ -114,6 +116,12 @@ Conflicts:	SysVinit < 2.86-26
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
 Conflicts:	upstart-SysVinit < 2.86-28
+%if %{with su}
+Provides:	coreutils-su
+Obsoletes:	coreutils-su
+Conflicts:	SysVinit-tools < 2.88-9
+Conflicts:	coreutils < 8.19
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		debugcflags	-O1 -g
@@ -640,6 +648,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %setup -q -a1
 #%patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -689,6 +698,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-newgrp \
 	--disable-partx \
 	--disable-raw \
+	--disable-runuser \
 	--disable-schedutils \
 	--disable-setarch \
 	--disable-silent-rules \
@@ -738,7 +748,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-login-chown-vcs \
 	--enable-newgrp \
 	--enable-partx \
-	--enable-su \
+	--enable-runuser%{!?with_su:=no} \
+	--enable-su%{!?with_su:=no} \
 	--enable-sulogin \
 	--enable-utmpdump \
 	--enable-vipw \
@@ -764,8 +775,12 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
 cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
 cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
+%if %{with su}
 cp -p %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/su
 cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/su-l
+cp -p %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/runuser
+cp -p %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/runuser-l
+%endif
 
 :> $RPM_BUILD_ROOT/etc/security/blacklist.login
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
@@ -922,10 +937,6 @@ fi
 %attr(755,root,root) /bin/kill
 %attr(755,root,root) /bin/more
 
-%attr(4755,root,root) /bin/su
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su-l
-
 %attr(755,root,root) /bin/wdctl
 
 %attr(755,root,root) /sbin/chcpu
@@ -1027,7 +1038,6 @@ fi
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/scriptreplay.1*
 %{_mandir}/man1/setterm.1*
-%{_mandir}/man1/su.1*
 %{_mandir}/man1/tailf.1*
 %{_mandir}/man1/taskset.1*
 %{_mandir}/man1/ul.1*
@@ -1286,6 +1296,17 @@ fi
 %attr(755,root,root) /sbin/fsck.cramfs
 %attr(755,root,root) /sbin/mkfs.cramfs
 %attr(755,root,root) /sbin/mkfs.bfs
+
+%if %{with su}
+%attr(755,root,root) /bin/runuser
+%attr(4755,root,root) /bin/su
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/runuser
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/runuser-l
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su-l
+%{_mandir}/man1/runuser.1*
+%{_mandir}/man1/su.1*
+%endif
 
 %ghost /var/lock/wtmpxlock
 
