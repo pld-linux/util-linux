@@ -773,6 +773,8 @@ done
 ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
+ln -s utmpdump $RPM_BUILD_ROOT%{_bindir}/utmpx-dump
+
 for d in cs de es fi fr hu id it ja ko nl pl ; do
 	for m in man1 man5 man8 ; do
 		if [ -d man/$d/$m ]; then
@@ -971,6 +973,7 @@ fi
 %attr(755,root,root) %{_bindir}/ul
 %attr(755,root,root) %{_bindir}/unshare
 %attr(755,root,root) %{_bindir}/utmpdump
+%attr(755,root,root) %{_bindir}/utmpx-dump
 %attr(755,root,root) %{_bindir}/whereis
 %attr(2755,root,tty) %{_bindir}/write
 %attr(755,root,root) %{_sbindir}/fdformat
