@@ -5,8 +5,6 @@
 #   - chrt is not built now (because of --disable-schedutils), but it's probably not needed
 #   - fsck is not built now (because of --disable-libmount)
 #   - maybe we want some more now?
-# - some sysvinit binaries moved here: su(1):, sulogin(8),
-#    utmpdump(1): - has been merged from coreutils into util-linux
 #
 # Conditional build:
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
@@ -38,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.22.1
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
