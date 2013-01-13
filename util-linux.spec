@@ -36,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.22.2
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
@@ -116,8 +116,6 @@ Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
 Conflicts:	upstart-SysVinit < 2.86-28
 %if %{with su}
-Provides:	coreutils-su
-Obsoletes:	coreutils-su
 Conflicts:	coreutils < 8.19
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
