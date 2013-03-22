@@ -36,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.22.2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
@@ -51,6 +51,8 @@ Source6:	su.pamd
 Source7:	su-l.pamd
 Source8:	runuser.pamd
 Source9:	runuser-l.pamd
+Source10:	nologin.c
+Source11:	nologin.8
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-ng-union-mount.patch
 Patch2:		%{name}-runuser.patch
@@ -653,6 +655,8 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch9 -p1
 %patch10 -p1
 
+install %{SOURCE10} nologin.c
+
 %{__rm} po/stamp-po
 
 %build
@@ -755,6 +759,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 
 %{__make}
 
+%{__cc} %{rpmcflags} nologin.c -o nologin
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
@@ -766,6 +772,9 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 mv $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
+
+install nologin $RPM_BUILD_ROOT/sbin
+install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
@@ -885,8 +894,10 @@ fi
 
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock*
+%attr(755,root,root) /sbin/nologin
 %{_mandir}/man8/clock.8*
 %{_mandir}/man8/hwclock.8*
+%{_mandir}/man8/nologin.8*
 %lang(es) %{_mandir}/es/man8/clock.8*
 %lang(es) %{_mandir}/es/man8/hwclock.8*
 %lang(ja) %{_mandir}/ja/man8/clock.8*
