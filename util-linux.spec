@@ -36,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.22.2
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
@@ -798,7 +798,7 @@ for lib in blkid uuid mount; do
 done
 
 ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
-echo '.so hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
+echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -s utmpdump $RPM_BUILD_ROOT%{_bindir}/utmpx-dump
 
@@ -816,6 +816,14 @@ for d in es ja ko ; do
 		$RPM_BUILD_ROOT%{_mandir}/$d/man8/readprofile.8
 	%{__sed} -i -e 's/READPROFILE 1/READPROFILE 8/' $RPM_BUILD_ROOT%{_mandir}/$d/man8/readprofile.8
 done
+# fix inconsistent man links
+echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/es/man8/clock.8
+echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/ja/man8/clock.8
+echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/es/man8/swapoff.8
+echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/it/man8/swapoff.8
+echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/ja/man8/swapoff.8
+echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/ko/man8/swapoff.8
+echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
 # cleanup, remove files not included in package
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
