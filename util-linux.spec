@@ -36,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.22.2
-Release:	5
+Release:	6
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
@@ -63,6 +63,8 @@ Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		su-paths.patch
 Patch10:	%{name}-diet.patch
+Patch11:	https://github.com/karelzak/util-linux/commit/38db00f17824f41679c99a6c711a11e4585a0484.patch
+# Patch11-md5:	2a37a871117466841edb3e8be692825b
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -654,6 +656,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 install %{SOURCE10} nologin.c
 
