@@ -15,7 +15,7 @@
 %bcond_with	initrd		# don't build initrd version
 %bcond_with	fallocate	# fallocate utility (needs glibc 2.11 to compile)
 %else
-%bcond_without	initrd		# don't build initrd version
+%bcond_with	initrd		# don't build initrd version
 %bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
 %endif
 
@@ -36,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.23.1
-Release:	0.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.23/%{name}-%{version}.tar.xz
