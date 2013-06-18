@@ -36,7 +36,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.23.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.23/%{name}-%{version}.tar.xz
@@ -781,6 +781,7 @@ install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
 cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
 cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
 %if %{with su}
+ln -s ../sbin/runuser  $RPM_BUILD_ROOT/bin/runuser
 cp -p %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/su
 cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/su-l
 cp -p %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/runuser
@@ -1314,6 +1315,7 @@ fi
 %{_mandir}/man8/mkfs.cramfs.8*
 
 %if %{with su}
+%attr(755,root,root) /bin/runuser
 %attr(755,root,root) /sbin/runuser
 %attr(4755,root,root) /bin/su
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/runuser
