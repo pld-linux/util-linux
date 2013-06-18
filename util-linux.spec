@@ -35,12 +35,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.22.2
-Release:	6
+Version:	2.23.1
+Release:	0.1
 License:	GPL
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.22/%{name}-%{version}.tar.xz
-# Source0-md5:	eeacbfdd2556acd899a2d0ffdb446185
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.23/%{name}-%{version}.tar.xz
+# Source0-md5:	33ba55ce82f8e3b8d7a38fac0f62779a
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -55,7 +55,7 @@ Source10:	nologin.c
 Source11:	nologin.8
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-ng-union-mount.patch
-Patch2:		%{name}-runuser.patch
+
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
 Patch5:		%{name}-hotkeys.patch
@@ -63,7 +63,6 @@ Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		su-paths.patch
 Patch10:	%{name}-diet.patch
-Patch11:	https://github.com/karelzak/util-linux/commit/38db00f17824f41679c99a6c711a11e4585a0484.patch
 # Patch11-md5:	2a37a871117466841edb3e8be692825b
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
@@ -112,6 +111,7 @@ Obsoletes:	rawdevices
 Obsoletes:	schedutils
 Obsoletes:	setarch
 Obsoletes:	sparc32
+Obsoletes:	util-linux-chkdupexe
 Obsoletes:	util-linux-ng < 2.20-1
 Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
@@ -342,22 +342,6 @@ sisteminizin işlevselliği açısından kritiktir.
 файлів вашої системи. Команда umount від'єднує файлову систему від
 дерева. Swapon та swapoff, відповідно, дозволяє та заборонює свопінг у
 визначені файли або пристрої.
-
-%package chkdupexe
-Summary:	chkdupexe - find duplicate executables
-Summary(pl.UTF-8):	chkdupexe odszukuje powtarzające się pliki uruchamialne
-Group:		Applications/System
-Obsoletes:	util-linux-ng-chkdupexe < 2.20-1
-
-%description chkdupexe
-chkdupexe will scan the union of $PATH and a hardcoded list of common
-locations for binaries. It will report dangling symlinks and
-duplicately-named binaries.
-
-%description chkdupexe -l pl.UTF-8
-chkdupexe przeszukuje katalogi z $PATH oraz inne powszechnie znane
-katalogi z plikami uruchamialnymi i informuje o powtarzających się
-plikach w różnych katalogach.
 
 %package -n tunelp
 Summary:	Configures kernel parallel port driver
@@ -644,19 +628,31 @@ or UUID - staticaly linked for initrd.
 Pakiet ten zawiera narzędzie blkid do rozpoznawania partycji przez
 etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
+%package -n bash-completion-util-linux
+Summary:        bash completion for util-linux
+Summary(pl.UTF-8):      Dopełnienia basha dla util-linux
+Group:          Applications/Shells
+Requires:       %{name} = %{version}-%{release}
+Requires:       bash-completion
+
+%description -n bash-completion-util-linux
+Bash completion for util-linux.
+
+%description -n bash-completion-util-linux -l pl.UTF-8
+Dopełnienia basha dla util-linux.
+
 %prep
 %setup -q -a1
 #%patch0 -p1
 %patch1 -p1
-%patch2 -p1
+
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
-%patch11 -p1
+%{?with_initrd:%patch10 -p1}
 
 install %{SOURCE10} nologin.c
 
@@ -707,6 +703,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-silent-rules \
 	--disable-su \
 	--disable-sulogin \
+	--disable-tunelp \
 	--disable-use-tty-group \
 	--disable-utmpdump \
 	--disable-uuidd \
@@ -742,8 +739,6 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-use-tty-group \
 	--disable-wall \
 	--enable-chfn-chsh \
-	--enable-chkdupexe \
-	--enable-ddate \
 	--enable-kill \
 	--enable-libblkid \
 	--enable-line \
@@ -754,10 +749,12 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-runuser%{!?with_su:=no} \
 	--enable-su%{!?with_su:=no} \
 	--enable-sulogin \
+	--enable-tunelp \
 	--enable-utmpdump \
 	--enable-vipw \
 	--enable-write \
 	--with-audit \
+	--with-bashcompletiondir=/etc/bash_completion.d \
 	--with-selinux%{!?with_selinux:=no}
 
 %{__make}
@@ -960,6 +957,7 @@ fi
 %attr(755,root,root) /sbin/chcpu
 %attr(755,root,root) /sbin/ctrlaltdel
 %attr(755,root,root) /sbin/addpart
+%attr(755,root,root) /sbin/blkdiscard
 %attr(755,root,root) /sbin/delpart
 %attr(755,root,root) /sbin/partx
 %attr(755,root,root) /bin/lsblk
@@ -980,7 +978,6 @@ fi
 %attr(755,root,root) %{_bindir}/colrm
 %attr(755,root,root) %{_bindir}/column
 %attr(755,root,root) %{_bindir}/cytune
-%attr(755,root,root) %{_bindir}/ddate
 %attr(755,root,root) %{_bindir}/eject
 %attr(755,root,root) %{_bindir}/flock
 %{?with_fallocate:%attr(755,root,root) %{_bindir}/fallocate}
@@ -998,6 +995,7 @@ fi
 %attr(755,root,root) %{_bindir}/lslocks
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
+%attr(755,root,root) %{_bindir}/nsenter
 %attr(755,root,root) %{_bindir}/pg
 %attr(755,root,root) %{_bindir}/prlimit
 %attr(755,root,root) %{_bindir}/raw
@@ -1006,6 +1004,7 @@ fi
 %attr(755,root,root) %{_bindir}/rev
 %attr(755,root,root) %{_bindir}/script
 %attr(755,root,root) %{_bindir}/scriptreplay
+%attr(755,root,root) %{_bindir}/setpriv
 %attr(755,root,root) %{_bindir}/setsid
 %attr(755,root,root) %{_bindir}/setterm
 %attr(755,root,root) %{_bindir}/tailf
@@ -1028,7 +1027,6 @@ fi
 %{_mandir}/man1/colcrt.1*
 %{_mandir}/man1/colrm.1*
 %{_mandir}/man1/column.1*
-%{_mandir}/man1/ddate.1*
 %{_mandir}/man1/dmesg.1*
 %{_mandir}/man1/eject.1*
 %{?with_fallocate:%{_mandir}/man1/fallocate.1*}
@@ -1047,11 +1045,13 @@ fi
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/more.1*
 %{_mandir}/man1/namei.1*
+%{_mandir}/man1/nsenter.1*
 %{_mandir}/man1/prlimit.1*
 %{_mandir}/man1/pg.1*
 %{_mandir}/man1/renice.1*
 %{_mandir}/man1/rev.1*
 %{_mandir}/man1/rename.1*
+%{_mandir}/man1/setpriv.1*
 %{_mandir}/man1/setsid.1*
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/scriptreplay.1*
@@ -1064,6 +1064,7 @@ fi
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
 %{_mandir}/man8/addpart.8*
+%{_mandir}/man8/blkdiscard.8*
 %{_mandir}/man8/delpart.8*
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/lsblk.8*
@@ -1096,7 +1097,6 @@ fi
 
 %lang(es) %{_mandir}/es/man1/colrm.1*
 %lang(es) %{_mandir}/es/man1/column.1*
-%lang(es) %{_mandir}/es/man1/ddate.1*
 %lang(es) %{_mandir}/es/man1/getopt.1*
 %lang(es) %{_mandir}/es/man1/look.1*
 %lang(es) %{_mandir}/es/man1/more.1*
@@ -1166,7 +1166,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/colcrt.1*
 %lang(ja) %{_mandir}/ja/man1/colrm.1*
 %lang(ja) %{_mandir}/ja/man1/column.1*
-%lang(ja) %{_mandir}/ja/man1/ddate.1*
 %lang(ja) %{_mandir}/ja/man1/getopt.1*
 %lang(ja) %{_mandir}/ja/man1/hexdump.1*
 %lang(ja) %{_mandir}/ja/man1/kill.1*
@@ -1200,7 +1199,6 @@ fi
 %lang(ko) %{_mandir}/ko/man1/colcrt.1*
 %lang(ko) %{_mandir}/ko/man1/colrm.1*
 %lang(ko) %{_mandir}/ko/man1/column.1*
-%lang(ko) %{_mandir}/ko/man1/ddate.1*
 %lang(ko) %{_mandir}/ko/man1/getopt.1*
 %lang(ko) %{_mandir}/ko/man1/hexdump.1*
 %lang(ko) %{_mandir}/ko/man1/kill.1*
@@ -1250,8 +1248,6 @@ fi
 %lang(pl) %{_mandir}/pl/man8/ipcs.8*
 %lang(pl) %{_mandir}/pl/man8/mkswap.8*
 %lang(pl) %{_mandir}/pl/man8/renice.8*
-
-%lang(ru) %{_mandir}/ru/man1/ddate.1*
 
 %attr(755,root,root) /sbin/fdisk
 %attr(755,root,root) /sbin/fsck.minix
@@ -1314,9 +1310,11 @@ fi
 %attr(755,root,root) /sbin/fsck.cramfs
 %attr(755,root,root) /sbin/mkfs.cramfs
 %attr(755,root,root) /sbin/mkfs.bfs
+%{_mandir}/man8/fsck.cramfs.8*
+%{_mandir}/man8/mkfs.cramfs.8*
 
 %if %{with su}
-%attr(755,root,root) /bin/runuser
+%attr(755,root,root) /sbin/runuser
 %attr(4755,root,root) /bin/su
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/runuser
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/runuser-l
@@ -1407,14 +1405,6 @@ fi
 %lang(ko) %{_mandir}/ko/man8/losetup.8*
 %lang(pl) %{_mandir}/pl/man8/losetup.8*
 
-%files chkdupexe
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/chkdupexe
-%{_mandir}/man1/chkdupexe.1*
-%lang(ja) %{_mandir}/ja/man1/chkdupexe.1*
-%lang(ko) %{_mandir}/ko/man1/chkdupexe.1*
-%lang(pl) %{_mandir}/pl/man1/chkdupexe.1*
-
 %files -n tunelp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/tunelp
@@ -1485,6 +1475,10 @@ fi
 %files -n libuuid-static
 %defattr(644,root,root,755)
 %{_libdir}/libuuid.a
+
+%files -n bash-completion-util-linux
+%defattr(644,root,root,755)
+/etc/bash_completion.d/*
 
 %if %{with initrd} && %{with dietlibc}
 %files -n libuuid-dietlibc
