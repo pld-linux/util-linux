@@ -63,7 +63,6 @@ Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		su-paths.patch
 Patch10:	%{name}-diet.patch
-# Patch11-md5:	2a37a871117466841edb3e8be692825b
 URL:		http://userweb.kernel.org/~kzak/util-linux/
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
