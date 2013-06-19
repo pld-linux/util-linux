@@ -830,7 +830,7 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 	$RPM_BUILD_ROOT%{_sbindir}/{vigr,vipw} \
 	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh,newgrp}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/man8/{vigr,vipw}.8 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,reset}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,chkdupexe,ddate,reset}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man8/{elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
 
