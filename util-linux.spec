@@ -1,4 +1,5 @@
 # TODO
+# - remote chfn/chsh (BR: libuser)?
 # - verify initrd tools set:
 #   - I've taken list from 2.21.3 package, but there was no explicit list, so
 #     there are probably some unneeded tools
@@ -71,7 +72,7 @@ BuildRequires:	gettext-devel >= 0.14.1
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
-%{?with_selinux:BuildRequires:	libselinux-devel}
+%{?with_selinux:BuildRequires:	libselinux-devel >= 2.0}
 %{?with_selinux:BuildRequires:	libsepol-devel}
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	linux-libc-headers >= 7:2.6.27
@@ -97,6 +98,7 @@ BuildRequires:	glibc-static
 	%endif
 %endif
 Requires:	libblkid = %{version}-%{release}
+%{?with_selinux:Requires:	libselinux >= 2.0}
 Requires:	pam >= %{pam_ver}
 Provides:	eject = %{version}-%{release}
 Provides:	fdisk
@@ -628,17 +630,18 @@ Pakiet ten zawiera narzędzie blkid do rozpoznawania partycji przez
 etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
 %package -n bash-completion-util-linux
-Summary:        bash completion for util-linux
-Summary(pl.UTF-8):      Dopełnienia basha dla util-linux
+Summary:        bash completion for util-linux commands
+Summary(pl.UTF-8):      Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux
 Group:          Applications/Shells
 Requires:       %{name} = %{version}-%{release}
-Requires:       bash-completion
+Requires:       bash-completion >= 2.0
 
 %description -n bash-completion-util-linux
-Bash completion for util-linux.
+Bash completion for util-linux commands.
 
 %description -n bash-completion-util-linux -l pl.UTF-8
-Dopełnienia basha dla util-linux.
+Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
+
 
 %prep
 %setup -q -a1
@@ -753,7 +756,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-vipw \
 	--enable-write \
 	--with-audit \
-	--with-bashcompletiondir=/etc/bash_completion.d \
+	--with-bashcompletiondir=/usr/share/bash-completion/completions \
 	--with-selinux%{!?with_selinux:=no}
 
 %{__make}
@@ -1479,7 +1482,7 @@ fi
 
 %files -n bash-completion-util-linux
 %defattr(644,root,root,755)
-/etc/bash_completion.d/*
+/usr/share/bash-completion/completions/*
 
 %if %{with initrd} && %{with dietlibc}
 %files -n libuuid-dietlibc
