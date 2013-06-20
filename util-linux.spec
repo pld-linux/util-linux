@@ -529,7 +529,7 @@ Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
-Requires(post,preun,postun):    systemd-units >= 38
+Requires(post,preun,postun):	systemd-units >= 38
 Requires:	libuuid = %{version}-%{release}
 Requires:	systemd-units >= 38
 Provides:	group(uuidd)
@@ -630,18 +630,20 @@ Pakiet ten zawiera narzędzie blkid do rozpoznawania partycji przez
 etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 
 %package -n bash-completion-util-linux
-Summary:        bash completion for util-linux commands
-Summary(pl.UTF-8):      Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux
-Group:          Applications/Shells
-Requires:       %{name} = %{version}-%{release}
-Requires:       bash-completion >= 2.0
+Summary:	bash completion for util-linux commands
+Summary(pl.UTF-8):	Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux
+Group:		Applications/Shells
+Requires:	%{name} = %{version}-%{release}
+Requires:	bash-completion >= 2.0
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description -n bash-completion-util-linux
 Bash completion for util-linux commands.
 
 %description -n bash-completion-util-linux -l pl.UTF-8
 Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
-
 
 %prep
 %setup -q -a1
@@ -656,7 +658,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch9 -p1
 %{?with_initrd:%patch10 -p1}
 
-install %{SOURCE10} nologin.c
+cp -p %{SOURCE10} nologin.c
 
 %{__rm} po/stamp-po
 
@@ -775,8 +777,8 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 mv $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
 
-install nologin $RPM_BUILD_ROOT/sbin
-install %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
+install -p nologin $RPM_BUILD_ROOT/sbin
+cp - %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
@@ -809,7 +811,7 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 	for m in man1 man5 man8 ; do
 		if [ -d man/$d/$m ]; then
 			install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
-			cp -a man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
+			cp -p man/$d/$m/* $RPM_BUILD_ROOT%{_mandir}/$d/$m
 		fi
 	done
 done
