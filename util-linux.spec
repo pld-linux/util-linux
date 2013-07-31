@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.23.1
-Release:	2
+Version:	2.23.2
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.23/%{name}-%{version}.tar.xz
-# Source0-md5:	33ba55ce82f8e3b8d7a38fac0f62779a
+# Source0-md5:	b39fde897334a4858bb2098edcce5b3f
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -778,7 +778,7 @@ mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 mv $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
 
 install -p nologin $RPM_BUILD_ROOT/sbin
-cp - %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
+cp -p %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
