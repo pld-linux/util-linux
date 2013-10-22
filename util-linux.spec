@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.23.2
+Version:	2.24
 Release:	1
 License:	GPL
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.23/%{name}-%{version}.tar.xz
-# Source0-md5:	b39fde897334a4858bb2098edcce5b3f
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
+# Source0-md5:	4fac6443427f575fc5f3531a4ad2ca01
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -79,6 +79,7 @@ BuildRequires:	linux-libc-headers >= 7:2.6.27
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel >= %{pam_ver}
 BuildRequires:	pkgconfig
+BuildRequires:	python3-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.470
 BuildRequires:	sed >= 4.0
@@ -116,7 +117,7 @@ Obsoletes:	util-linux-chkdupexe
 Obsoletes:	util-linux-ng < 2.20-1
 Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
-Conflicts:	SysVinit-tools < 2.88-9
+Conflicts:	SysVinit-tools < 2.88-15
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	shadow-extras < 1:4.0.3-6
 Conflicts:	upstart-SysVinit < 2.86-28
@@ -645,6 +646,18 @@ Bash completion for util-linux commands.
 %description -n bash-completion-util-linux -l pl.UTF-8
 Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 
+%package -n python3-libmount
+Summary:	libmount bindings
+Summary(pl.UTF-8):	Dowiązania do biblioteki libmount
+Group:		Libraries/Python
+Requires:	libmount = %{version}-%{release}
+
+%description -n python3-libmount
+libmount bindings.
+
+%description -n python3-libmount -l pl.UTF-8
+Dowiązania do biblioteki libmount.
+
 %prep
 %setup -q -a1
 #%patch0 -p1
@@ -757,6 +770,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-utmpdump \
 	--enable-vipw \
 	--enable-write \
+	--with-python=3 \
 	--with-audit \
 	--with-bashcompletiondir=/usr/share/bash-completion/completions \
 	--with-selinux%{!?with_selinux:=no}
@@ -845,7 +859,7 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 %endif
 
 # examples
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/getopt/getopt-parse.*sh
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt/getopt-parse.*sh
 
 %if %{with initrd}
 install -d $RPM_BUILD_ROOT%{_libdir}/initrd
@@ -994,10 +1008,13 @@ fi
 %attr(755,root,root) %{_bindir}/ipcs
 %attr(755,root,root) %{_bindir}/isosize
 %attr(755,root,root) %{_bindir}/line
+%attr(755,root,root) %{_bindir}/last
+%attr(755,root,root) %{_bindir}/lastb
 %attr(755,root,root) %{_bindir}/logger
 %attr(755,root,root) %{_bindir}/look
 %attr(755,root,root) %{_bindir}/lscpu
 %attr(755,root,root) %{_bindir}/lslocks
+%attr(755,root,root) %{_bindir}/mesg
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
 %attr(755,root,root) %{_bindir}/nsenter
@@ -1043,11 +1060,14 @@ fi
 %{_mandir}/man1/ipcmk.1*
 %{_mandir}/man1/ipcs.1*
 %{_mandir}/man1/kill.1*
+%{_mandir}/man1/last.1*
+%{_mandir}/man1/lastb.1*
 %{_mandir}/man1/line.1*
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/lscpu.1*
 %{_mandir}/man1/mcookie.1*
+%{_mandir}/man1/mesg.1*
 %{_mandir}/man1/more.1*
 %{_mandir}/man1/namei.1*
 %{_mandir}/man1/nsenter.1*
@@ -1523,6 +1543,12 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/fsck
 %{_mandir}/man8/fsck.8*
+
+%files -n python3-libmount
+%defattr(644,root,root,755)
+%dir %{py3_sitedir}/libmount
+%{py3_sitedir}/libmount/__init__.py
+%attr(755,root,root) %{py3_sitedir}/libmount/pylibmount.so
 
 %if %{with initrd}
 %files initrd

@@ -1,6 +1,6 @@
 --- util-linux-2.21/include/pathnames.h~	2011-12-18 22:28:28.000000000 +0200
 +++ util-linux-2.21/include/pathnames.h	2012-03-05 17:32:49.986673893 +0200
-@@ -26,13 +26,13 @@
+@@ -26,7 +26,7 @@
  #define	_PATH_DEFPATH_ROOT	"/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
  
  #define _PATH_SECURETTY		"/etc/securetty"
@@ -9,6 +9,8 @@
  
  #define	_PATH_HUSHLOGIN		".hushlogin"
  #define	_PATH_HUSHLOGINS	"/etc/hushlogins"
+@@ -34,7 +34,7 @@
+ #define _PATH_NOLOGIN_TXT	"/etc/nologin.txt"
  
  #ifndef _PATH_MAILDIR
 -#define	_PATH_MAILDIR		"/var/spool/mail"

@@ -24,18 +24,21 @@ drastic as it doesn't bail out like fsck does.
  		if (sscanf (line, " %d %d %d %[^\n ]",
 --- util-linux-ng-2.17.2/fdisks/fdisk.c.orig	2010-03-22 09:21:34.000000000 +0100
 +++ util-linux-ng-2.17.2/fdisks/fdisk.c	2010-05-09 12:31:53.050933394 +0200
-@@ -2844,12 +2844,14 @@
- 	char line[128], ptname[128], devname[256];
- 	int ma, mi;
- 	unsigned long long sz;
+@@ -343,6 +343,7 @@ static void print_all_devices_pt(struct
+ {
+ 	FILE *f;
+ 	char line[128 + 1];
 +	char iobuf[32*1024];
  
- 	procpt = fopen(_PATH_PROC_PARTITIONS, "r");
- 	if (procpt == NULL) {
- 		fprintf(stderr, _("cannot open %s\n"), _PATH_PROC_PARTITIONS);
- 		return;
- 	}
-+	setvbuf(procpt, iobuf, _IOFBF, sizeof(iobuf));
+ 	f = fopen(_PATH_PROC_PARTITIONS, "r");
+ 	if (!f) {
+@@ -352,6 +353,8 @@ static void print_all_devices_pt(struct
  
- 	while (fgets(line, sizeof(line), procpt)) {
- 		if (sscanf (line, " %d %d %llu %128[^\n ]",
+ 	DBG(FRONTEND, dbgprint("reading "_PATH_PROC_PARTITIONS));
+ 
++	setvbuf(f, iobuf, _IOFBF, sizeof(iobuf));
++
+ 	while (fgets(line, sizeof(line), f)) {
+ 		char ptname[128 + 1], devname[256];
+ 
+

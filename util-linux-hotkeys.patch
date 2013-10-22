@@ -33,17 +33,18 @@
  
  #: login-utils/wall.c:112
  #, c-format
---- util-linux-2.12j/po/pt_BR.po.sopwith	2004-12-05 14:08:15.000000000 -0500
-+++ util-linux-2.12j/po/pt_BR.po	2004-12-10 13:11:47.560587674 -0500
-@@ -7161,7 +7161,7 @@
- #: login-utils/vipw.c:354
- #, c-format
- msgid "Would you like to edit %s now [y/n]? "
--msgstr "Você gostaria de editar %s agora [s/n]"
-+msgstr "Você gostaria de editar %s agora [y/n]"
- 
- #: login-utils/wall.c:104
- #, c-format
+; FIXME FIXME
+;--- util-linux-2.12j/po/pt_BR.po.sopwith	2004-12-05 14:08:15.000000000 -0500
+;+++ util-linux-2.12j/po/pt_BR.po	2004-12-10 13:11:47.560587674 -0500
+;@@ -7161,7 +7161,7 @@
+; #: login-utils/vipw.c:357
+; #, c-format
+; msgid "Would you like to edit %s now [y/n]? "
+;-msgstr "Você gostaria de editar %s agora [s/n]? "
+;+msgstr "Você gostaria de editar %s agora [y/n]? "
+; 
+; #: misc-utils/cal.c:372
+; msgid "illegal day value"
 --- util-linux-ng-2.17.2/po/ru.po.orig	2010-05-09 12:51:15.306941775 +0200
 +++ util-linux-ng-2.17.2/po/ru.po	2010-05-09 12:51:21.562935070 +0200
 @@ -7799,7 +7799,7 @@
