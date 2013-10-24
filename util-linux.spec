@@ -647,20 +647,20 @@ Bash completion for util-linux commands.
 Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 
 %package -n python3-libmount
-Summary:	libmount bindings
-Summary(pl.UTF-8):	Dowiązania do biblioteki libmount
+Summary:	Python 3.x libmount bindings
+Summary(pl.UTF-8):	Wiązania Pythona 3.x do biblioteki libmount
 Group:		Libraries/Python
 Requires:	libmount = %{version}-%{release}
 
 %description -n python3-libmount
-libmount bindings.
+Python 3.x libmount bindings.
 
 %description -n python3-libmount -l pl.UTF-8
-Dowiązania do biblioteki libmount.
+Wiązania Pythona 3.x do biblioteki libmount.
 
 %prep
 %setup -q -a1
-#%patch0 -p1
+%patch0 -p1
 %patch1 -p1
 
 %patch3 -p1
@@ -860,6 +860,8 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
 # examples
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt/getopt-parse.*sh
+
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/libmount/pylibmount.la
 
 %if %{with initrd}
 install -d $RPM_BUILD_ROOT%{_libdir}/initrd

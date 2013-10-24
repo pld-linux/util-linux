@@ -1,13 +1,29 @@
---- util-linux-2.21.1/po/pl.po.orig	2012-03-30 19:12:39.378885877 +0200
-+++ util-linux-2.21.1/po/pl.po	2012-03-31 18:58:02.098412734 +0200
-@@ -1273,9 +1273,8 @@
- msgstr "nie uda³o siê przeanalizowaæ argumentu rozmiaru bloku"
+--- util-linux-2.24/po/pl.po.orig	2013-10-21 13:14:20.448967431 +0200
++++ util-linux-2.24/po/pl.po	2013-10-24 15:43:04.968869314 +0200
+@@ -6059,7 +6059,7 @@
  
- #: disk-utils/mkfs.cramfs.c:733
--#, fuzzy
- msgid "invalid block size"
--msgstr "%s: nieprawid³owe urz±dzenie blokowe"
-+msgstr "b³êdny rozmiar bloku"
+ #: libfdisk/src/gpt.c:145
+ msgid "Intel Fast Flash"
+-msgstr ""
++msgstr "Intel Fast Flash"
  
- #: disk-utils/mkfs.cramfs.c:741
- msgid "edition number argument failed"
+ #: libfdisk/src/gpt.c:148
+ msgid "BIOS boot partition"
+@@ -6400,13 +6400,13 @@
+ msgstr "W uÅ¼yciu jest %u z %d partycji."
+ 
+ #: libfdisk/src/gpt.c:1539
+-#, fuzzy, c-format
++#, c-format
+ msgid "A total of %ju free sectors is available in %d segment."
+ msgid_plural ""
+ "A total of %ju free sectors is available in %d segments (the largest is %ju)."
+-msgstr[0] "DostÄ™pne sektory: razem %ld w %d segmencie."
+-msgstr[1] "DostÄ™pne sektory: razem %ld w %d segmentach (najwiÄ™kszy %ld)."
+-msgstr[2] "DostÄ™pne sektory: razem %ld w %d segmentach (najwiÄ™kszy %ld)."
++msgstr[0] "DostÄ™pne sektory: razem %ju w %d segmencie."
++msgstr[1] "DostÄ™pne sektory: razem %ju w %d segmentach (najwiÄ™kszy %ju)."
++msgstr[2] "DostÄ™pne sektory: razem %ju w %d segmentach (najwiÄ™kszy %ju)."
+ 
+ #: libfdisk/src/gpt.c:1545
+ #, c-format
