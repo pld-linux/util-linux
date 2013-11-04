@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.24
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
@@ -816,10 +816,11 @@ for lib in blkid uuid mount; do
 		 $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so
 done
 
-ln -sf hwclock $RPM_BUILD_ROOT/sbin/clock
+ln -s hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
 
 ln -s utmpdump $RPM_BUILD_ROOT%{_bindir}/utmpx-dump
+ln -s mkswap $RPM_BUILD_ROOT/sbin/mkfs.swap
 
 for d in cs de es fi fr hu id it ja ko nl pl ; do
 	for m in man1 man5 man8 ; do
@@ -985,6 +986,7 @@ fi
 %attr(755,root,root) /sbin/fsfreeze
 %attr(755,root,root) /sbin/fstrim
 %attr(755,root,root) /sbin/mkfs
+%attr(755,root,root) /sbin/mkfs.swap
 %attr(755,root,root) /sbin/mkswap
 %attr(755,root,root) /sbin/sulogin
 %attr(755,root,root) /sbin/swaplabel
