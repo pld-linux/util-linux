@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.24
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
@@ -119,6 +119,7 @@ Obsoletes:	util-linux-suids
 Conflicts:	SysVinit < 2.86-26
 Conflicts:	SysVinit-tools < 2.88-15
 Conflicts:	e2fsprogs < 1.41.8-5
+Conflicts:	rc-scripts < 0.4.9-2
 Conflicts:	shadow-extras < 1:4.0.3-6
 Conflicts:	upstart-SysVinit < 2.86-28
 %if %{with su}
