@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.24
-Release:	3
+Release:	4
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
@@ -54,6 +54,8 @@ Source8:	runuser.pamd
 Source9:	runuser-l.pamd
 Source10:	nologin.c
 Source11:	nologin.8
+Source12:	blockdev.service
+Source13:	blockdev.sh
 Patch0:		%{name}-pl.po-update.patch
 Patch1:		%{name}-ng-union-mount.patch
 
@@ -72,6 +74,7 @@ BuildRequires:	gettext-devel >= 0.14.1
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
+BuildRequires:	libcap-ng-devel
 %{?with_selinux:BuildRequires:	libselinux-devel >= 2.0}
 %{?with_selinux:BuildRequires:	libsepol-devel}
 BuildRequires:	libtool >= 2:2.2
@@ -81,7 +84,7 @@ BuildRequires:	pam-devel >= %{pam_ver}
 BuildRequires:	pkgconfig
 BuildRequires:	python3-devel
 BuildRequires:	rpm >= 4.4.9-56
-BuildRequires:	rpmbuild(macros) >= 1.470
+BuildRequires:	rpmbuild(macros) >= 1.671
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
@@ -196,8 +199,10 @@ Summary:	Support for blockdev
 Summary(pl.UTF-8):	Obsługa blockdev
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
+Requires(post,preun,postun):	systemd-units >= 38
 Requires:	coreutils
 Requires:	rc-scripts >= 0.4.3.0
+Requires:	systemd-units >= 38
 
 %description -n blockdev
 The utility blockdev allows one to call block device ioctls from the
@@ -783,7 +788,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
-	$RPM_BUILD_ROOT{/%{_lib},/var/{lock,lib/libuuid}}
+	$RPM_BUILD_ROOT{/%{_lib},/var/{lock,lib/libuuid}} \
+	$RPM_BUILD_ROOT{/lib/systemd/pld-helpers.d,%{systemdunitdir}}
 %{?with_dietlibc:install -d $RPM_BUILD_ROOT%{dietlibdir}}
 
 %{__make} install \
@@ -799,6 +805,8 @@ cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
 cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
 cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
+cp -p %{SOURCE12} $RPM_BUILD_ROOT%{systemdunitdir}/blockdev.service
+cp -p %{SOURCE13} $RPM_BUILD_ROOT/lib/systemd/pld-helpers.d/blockdev.sh
 %if %{with su}
 ln -s ../sbin/runuser  $RPM_BUILD_ROOT/bin/runuser
 cp -p %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/su
@@ -887,12 +895,20 @@ rm -rf $RPM_BUILD_ROOT
 %post -n blockdev
 /sbin/chkconfig --add blockdev
 %service blockdev restart
+%systemd_post blockdev.service
 
 %preun -n blockdev
 if [ "$1" = "0" ]; then
 	%service blockdev stop
 	/sbin/chkconfig --del blockdev
 fi
+%systemd_preun blockdev.service
+
+%postun -n blockdev
+%systemd_reload
+
+%triggerpostun -n blockdev -- blockdev < 2.24-4
+%systemd_trigger blockdev.service
 
 %post	-n libblkid -p /sbin/ldconfig
 %postun -n libblkid -p /sbin/ldconfig
@@ -1365,6 +1381,8 @@ fi
 %attr(755,root,root) /sbin/blockdev
 %{_mandir}/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*
+%{systemdunitdir}/blockdev.service
+%attr(755,root,root) /lib/systemd/pld-helpers.d/blockdev.sh
 
 %files -n mount
 %defattr(644,root,root,755)

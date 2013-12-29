@@ -1,0 +1,10 @@
+[Unit]
+Description=Advanced block devices setup
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/lib/systemd/pld-helpers.d/blockdev.sh
+
+[Install]
+WantedBy=multi-user.target
