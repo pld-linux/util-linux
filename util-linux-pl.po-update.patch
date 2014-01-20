@@ -12,7 +12,7 @@
 @@ -6400,13 +6400,13 @@
  msgstr "W użyciu jest %u z %d partycji."
  
- #: libfdisk/src/gpt.c:1539
+ #: libfdisk/src/gpt.c:1601
 -#, fuzzy, c-format
 +#, c-format
  msgid "A total of %ju free sectors is available in %d segment."
@@ -25,5 +25,5 @@
 +msgstr[1] "Dostępne sektory: razem %ju w %d segmentach (największy %ju)."
 +msgstr[2] "Dostępne sektory: razem %ju w %d segmentach (największy %ju)."
  
- #: libfdisk/src/gpt.c:1545
+ #: libfdisk/src/gpt.c:1607
  #, c-format

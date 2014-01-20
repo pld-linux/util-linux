@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.24
-Release:	4
+Version:	2.24.1
+Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
-# Source0-md5:	4fac6443427f575fc5f3531a4ad2ca01
+# Source0-md5:	88d46ae23ca599ac5af9cf96b531590f
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -734,7 +734,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-wall \
 	--without-audit \
 	--without-ncurses \
-	--without-selinux
+	--without-selinux \
+	--without-smack
 
 # configure gets it unconditionally wrong
 %{__sed} -i -e 's/#define HAVE_WIDECHAR 1//' config.h
@@ -779,7 +780,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--with-python=3 \
 	--with-audit \
 	--with-bashcompletiondir=/usr/share/bash-completion/completions \
-	--with-selinux%{!?with_selinux:=no}
+	--with-selinux%{!?with_selinux:=no} \
+	--with-smack
 
 %{__make}
 
