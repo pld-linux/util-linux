@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.24.1
+Version:	2.24.2
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
-# Source0-md5:	88d46ae23ca599ac5af9cf96b531590f
+# Source0-md5:	3f191727a0d28f7204b755cf1b6ea0aa
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -61,7 +61,6 @@ Patch1:		%{name}-ng-union-mount.patch
 
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
-Patch5:		%{name}-hotkeys.patch
 Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		su-paths.patch
@@ -671,7 +670,6 @@ Wiązania Pythona 3.x do biblioteki libmount.
 
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
