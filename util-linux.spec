@@ -118,12 +118,10 @@ Obsoletes:	sparc32
 Obsoletes:	util-linux-chkdupexe
 Obsoletes:	util-linux-ng < 2.20-1
 Obsoletes:	util-linux-suids
-Conflicts:	SysVinit < 2.86-26
 Conflicts:	SysVinit-tools < 2.88-15
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	rc-scripts < 0.4.9-2
 Conflicts:	shadow-extras < 1:4.0.3-6
-Conflicts:	upstart-SysVinit < 2.86-28
 %if %{with su}
 Conflicts:	coreutils < 8.19
 %endif
@@ -292,6 +290,7 @@ Summary(uk.UTF-8):	Програми для монтування та розмо�
 Group:		Applications/System
 Requires:	libmount = %{version}-%{release}
 Conflicts:	SysVinit < 2.86-26
+Conflicts:	upstart-SysVinit < 2.86-28
 # C: nfs-utils-common is opposite to http://cvs.pld-linux.org/packages/nfs-utils/nfs-utils.spec?r1=1.165&r2=1.166
 Conflicts:	nfs-utils-common < 1.1.3-3
 
@@ -808,7 +807,7 @@ cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
 cp -p %{SOURCE12} $RPM_BUILD_ROOT%{systemdunitdir}/blockdev.service
 cp -p %{SOURCE13} $RPM_BUILD_ROOT/lib/systemd/pld-helpers.d/blockdev.sh
 %if %{with su}
-ln -s ../sbin/runuser  $RPM_BUILD_ROOT/bin/runuser
+ln -s ../sbin/runuser $RPM_BUILD_ROOT/bin/runuser
 cp -p %{SOURCE6} $RPM_BUILD_ROOT/etc/pam.d/su
 cp -p %{SOURCE7} $RPM_BUILD_ROOT/etc/pam.d/su-l
 cp -p %{SOURCE8} $RPM_BUILD_ROOT/etc/pam.d/runuser
@@ -881,6 +880,7 @@ ln -s fsck $RPM_BUILD_ROOT%{_libdir}/initrd/e2fsck
 
 # We don't need those
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{cal,col,colcrt,colrm,column,ctrlaltdel,cytune,dmesg,flock,fsfreeze,fstrim,getopt,hexdump,ipcmk,ipcrm,ipcs,isosize,logger,lslocks,mcookie,mkfs*,readprofile,renice,rev,rtcwake,script,scriptreplay,setsid,tailf,tunelp,wdctl,whereis}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{blkid,mount}.la
 
 %if %{with dietlibc}
 cp -a initrd/%{_lib}/lib*.a $RPM_BUILD_ROOT%{dietlibdir}
@@ -918,18 +918,18 @@ fi
 
 %pre    -n uuidd
 if [ "$(getgid libuuid 2>/dev/null)" = "222" ]; then
-        /usr/sbin/groupmod -n uuidd libuuid
+	/usr/sbin/groupmod -n uuidd libuuid
 fi
 %groupadd -g 222 uuidd
 if [ "$(id -u libuuid 2>/dev/null)" = "222" ]; then
-        /usr/sbin/usermod -l uuidd libuuid
+	/usr/sbin/usermod -l uuidd libuuid
 fi
 %useradd -u 222 -r -d /var/lib/libuuid -s /bin/false -c "UUID generator helper daemon" -g uuidd uuidd
 
 %postun -n uuidd
 if [ "$1" = "0" ]; then
-        %userremove uuidd
-        %groupremove uuidd
+	%userremove uuidd
+	%groupremove uuidd
 fi
 
 %post	-n libmount -p /sbin/ldconfig
@@ -1491,7 +1491,6 @@ fi
 %files -n libblkid-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libblkid.so
-%{_libdir}/libblkid.la
 %{_includedir}/blkid
 %{_pkgconfigdir}/blkid.pc
 %{_mandir}/man3/libblkid.3*
@@ -1554,7 +1553,6 @@ fi
 %files -n libmount-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libmount.so
-%{_libdir}/libmount.la
 %{_includedir}/libmount
 %{_pkgconfigdir}/mount.pc
 
