@@ -1,29 +1,91 @@
---- util-linux-2.24/po/pl.po.orig	2013-10-21 13:14:20.448967431 +0200
-+++ util-linux-2.24/po/pl.po	2013-10-24 15:43:04.968869314 +0200
-@@ -6059,7 +6059,7 @@
+--- util-linux-2.25/po/pl.po.orig	2014-08-01 23:17:19.135717387 +0200
++++ util-linux-2.25/po/pl.po	2014-08-01 23:17:24.159050506 +0200
+@@ -401,9 +401,8 @@
+ msgstr "  t          Zmiana typu partycji"
  
- #: libfdisk/src/gpt.c:145
- msgid "Intel Fast Flash"
+ #: disk-utils/cfdisk.c:1648
+-#, fuzzy
+ msgid "  s          Fix partitions order (only when in disarray)"
+-msgstr "  s          Poprawienie kolejności partycji"
++msgstr "  s          Poprawienie kolejności partycji (tylko jeśli nie uporządkowane)"
+ 
+ #: disk-utils/cfdisk.c:1649
+ msgid "  W          Write partition table to disk (must enter upper case W)"
+@@ -7190,7 +7189,7 @@
+ #: login-utils/lslogins.c:287 misc-utils/findmnt.c:158 misc-utils/lsblk.c:208
+ #, c-format
+ msgid "too many columns specified, the limit is %zu columns."
 -msgstr ""
-+msgstr "Intel Fast Flash"
++msgstr "podano za dużo kolumn, ograniczenie to %zu."
  
- #: libfdisk/src/gpt.c:148
- msgid "BIOS boot partition"
-@@ -6400,13 +6400,13 @@
- msgstr "W użyciu jest %u z %d partycji."
+ #: login-utils/lslogins.c:352
+ msgid "unssupported time type"
+@@ -7267,9 +7266,8 @@
+ msgstr " -n, --newline            każda informacja w nowej linii\n"
  
- #: libfdisk/src/gpt.c:1601
+ #: login-utils/lslogins.c:1197
+-#, fuzzy
+ msgid "     --noheadings         don't print headings\n"
+-msgstr " -n, --noheadings      bez wypisywania nagłówków\n"
++msgstr "     --noheadings         bez wypisywania nagłówków\n"
+ 
+ #: login-utils/lslogins.c:1198
+ msgid "     --notruncate         don't truncate output\n"
+@@ -8290,37 +8288,35 @@
+ msgstr "nieznany sygnał %s; poprawne sygnały:"
+ 
+ #: misc-utils/kill.c:306
 -#, fuzzy, c-format
 +#, c-format
- msgid "A total of %ju free sectors is available in %d segment."
- msgid_plural ""
- "A total of %ju free sectors is available in %d segments (the largest is %ju)."
--msgstr[0] "Dostępne sektory: razem %ld w %d segmencie."
--msgstr[1] "Dostępne sektory: razem %ld w %d segmentach (największy %ld)."
--msgstr[2] "Dostępne sektory: razem %ld w %d segmentach (największy %ld)."
-+msgstr[0] "Dostępne sektory: razem %ju w %d segmencie."
-+msgstr[1] "Dostępne sektory: razem %ju w %d segmentach (największy %ju)."
-+msgstr[2] "Dostępne sektory: razem %ju w %d segmentach (największy %ju)."
+ msgid " %s [options] <pid>|<name>...\n"
+-msgstr " %s [opcje] <pid|nazwa>...\n"
++msgstr " %s [opcje] <pid>|<nazwa>...\n"
  
- #: libfdisk/src/gpt.c:1607
+ #: misc-utils/kill.c:309
+-#, fuzzy
+ msgid ""
+ " -a, --all              do not restrict the name-to-pid conversion to processes\n"
+ "                          with the same uid as the present process\n"
+ msgstr ""
+ " -a, --all              bez ograniczania przekształcenia nazwa-pid do procesów\n"
+-"                        z tym samym uidem, co proces bieżący\n"
++"                          z tym samym uidem, co proces bieżący\n"
+ 
+ #: misc-utils/kill.c:311
+-#, fuzzy
+ msgid " -s, --signal <signal>  send this <signal> instead of SIGTERM\n"
+-msgstr " -s, --signal <sygnał>  wysłanie podanego sygnału\n"
++msgstr " -s, --signal <sygnał>  wysłanie podanego <sygnału> zamiast SIGTERM\n"
+ 
+ #: misc-utils/kill.c:313
+-#, fuzzy
+ msgid " -q, --queue <value>    use sigqueue(2), not kill(2), and pass <value> as data\n"
+-msgstr " -q, --queue <sygnał>   użycie sigqueue(2) zamiast kill(2)\n"
++msgstr ""
++" -q, --queue <wartość>  użycie sigqueue(2) zamiast kill(2) i przekazanie\n"
++"                          <wartości> jako danych\n"
+ 
+ #: misc-utils/kill.c:315
+ msgid " -p, --pid              print pids without signaling them\n"
+ msgstr " -p, --pid              wypisanie pidów bez wysyłania sygnału\n"
+ 
+ #: misc-utils/kill.c:316
+-#, fuzzy
+ msgid " -l, --list[=<signal>]  list signal names, or convert a signal number to a name\n"
+-msgstr " -l, --list [=<sygnał>] wypisanie nazw sygnałów lub zamiana na nazwę\n"
++msgstr " -l, --list[=<sygnał>]  wypisanie nazw sygnałów lub zamiana numeru na nazwę\n"
+ 
+ #: misc-utils/kill.c:317
+ msgid " -L, --table            list signal names and numbers\n"
+@@ -8359,9 +8355,9 @@
+ msgstr "błąd argumentu"
+ 
+ #: misc-utils/kill.c:432
+-#, fuzzy, c-format
++#, c-format
+ msgid "invalid signal name or number: %s"
+-msgstr "błędne oznaczenie sygnału"
++msgstr "błędna nazwa lub numer sygnału: %s"
+ 
+ #: misc-utils/kill.c:449
  #, c-format

@@ -22,8 +22,8 @@ drastic as it doesn't bail out like fsck does.
  
  	while (fgets(line, sizeof(line), procpt)) {
  		if (sscanf (line, " %d %d %d %[^\n ]",
---- util-linux-ng-2.17.2/fdisks/fdisk.c.orig	2010-03-22 09:21:34.000000000 +0100
-+++ util-linux-ng-2.17.2/fdisks/fdisk.c	2010-05-09 12:31:53.050933394 +0200
+--- util-linux-2.25/disk-utils/fdisk.c.orig	2010-03-22 09:21:34.000000000 +0100
++++ util-linux-2.25/disk-utils/fdisk.c	2010-05-09 12:31:53.050933394 +0200
 @@ -343,6 +343,7 @@ static void print_all_devices_pt(struct
  {
  	FILE *f;

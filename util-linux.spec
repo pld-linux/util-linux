@@ -1,5 +1,5 @@
 # TODO
-# - remote chfn/chsh (BR: libuser)?
+# - remote chfn/chsh (BR: libuser)? - but PLD uses pwdutils/shadow implementation currently
 # - verify initrd tools set:
 #   - I've taken list from 2.21.3 package, but there was no explicit list, so
 #     there are probably some unneeded tools
@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.24.2
+Version:	2.25
 Release:	1
 License:	GPL
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.24/%{name}-%{version}.tar.xz
-# Source0-md5:	3f191727a0d28f7204b755cf1b6ea0aa
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.25/%{name}-%{version}.tar.xz
+# Source0-md5:	4c78fdef4cb882caafad61e33cafbc14
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -57,7 +57,6 @@ Source11:	nologin.8
 Source12:	blockdev.service
 Source13:	blockdev.sh
 Patch0:		%{name}-pl.po-update.patch
-Patch1:		%{name}-ng-union-mount.patch
 
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
@@ -65,7 +64,7 @@ Patch7:		%{name}-login-lastlog.patch
 Patch8:		%{name}-procpartitions.patch
 Patch9:		su-paths.patch
 Patch10:	%{name}-diet.patch
-URL:		http://userweb.kernel.org/~kzak/util-linux/
+URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
@@ -102,6 +101,7 @@ BuildRequires:	glibc-static
 %endif
 Requires:	libblkid = %{version}-%{release}
 %{?with_selinux:Requires:	libselinux >= 2.0}
+Requires:	libsmartcols = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
 Provides:	eject = %{version}-%{release}
 Provides:	fdisk
@@ -220,6 +220,7 @@ Summary(ru.UTF-8):	Программы для настройки loopback-уст�
 Summary(tr.UTF-8):	Yerel-çevrim aygıtlarının kurulması ve ayarlanması için programlar
 Summary(uk.UTF-8):	Програми для конфігурації loopback-пристроїв
 Group:		Applications/System
+Requires:	libsmartcols = %{version}-%{release}
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -289,6 +290,7 @@ Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
 Group:		Applications/System
 Requires:	libmount = %{version}-%{release}
+Requires:	libsmartcols = %{version}-%{release}
 Conflicts:	SysVinit < 2.86-26
 Conflicts:	upstart-SysVinit < 2.86-28
 # C: nfs-utils-common is opposite to http://cvs.pld-linux.org/packages/nfs-utils/nfs-utils.spec?r1=1.165&r2=1.166
@@ -591,21 +593,17 @@ Static version of mount library.
 %description -n libmount-static -l pl.UTF-8
 Statyczna wersja biblioteki mount.
 
-%package -n libmount-dietlibc
-Summary:	Static dietlibc mount library
-Summary(pl.UTF-8):	Statyczna biblioteka mount dla dietlibc
-License:	LGPL v2.1+
-Group:		Development/Libraries
-Requires:	libblkid-devel = %{version}-%{release}
-Requires:	libblkid-dietlibc = %{version}-%{release}
-Requires:	libuuid-devel = %{version}-%{release}
-Requires:	libuuid-dietlibc = %{version}-%{release}
+%package -n python3-libmount
+Summary:	Python 3.x libmount bindings
+Summary(pl.UTF-8):	Wiązania Pythona 3.x do biblioteki libmount
+Group:		Libraries/Python
+Requires:	libmount = %{version}-%{release}
 
-%description -n libmount-dietlibc
-Static dietlibc version of mount library.
+%description -n python3-libmount
+Python 3.x libmount bindings.
 
-%description -n libmount-dietlibc -l pl.UTF-8
-Statyczna wersja biblioteki mount dla dietlibc.
+%description -n python3-libmount -l pl.UTF-8
+Wiązania Pythona 3.x do biblioteki libmount.
 
 %package -n fsck
 Summary:	Check and repair a Linux file system
@@ -618,6 +616,44 @@ Check and repair a Linux file system.
 
 %description -n fsck -l pl.UTF-8
 Sprawdzanie i naprawa linuksowego systemu plików.
+
+%package -n libsmartcols
+Summary:	Library to handle tables and trees
+Summary(pl.UTF-8):	Biblioteka do obsługi tabelek i drzewek
+License:	LGPL
+Group:		Libraries
+
+%description -n libsmartcols
+Library to handle tables and trees.
+
+%description -n libsmartcols -l pl.UTF-8
+Biblioteka do obsługi tabelek i drzewek.
+
+%package -n libsmartcols-devel
+Summary:	Header files for smartcols library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki smartcols
+License:	LGPL
+Group:		Development/Libraries
+Requires:	libsmartcols = %{version}-%{release}
+
+%description -n libsmartcols-devel
+Header files for smartcols library.
+
+%description -n libsmartcols-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki smartcols.
+
+%package -n libsmartcols-static
+Summary:	Static version of smartcols library
+Summary(pl.UTF-8):	Statyczna wersja biblioteki smartcols
+License:	LGPL
+Group:		Development/Libraries
+Requires:	libsmartcols-devel = %{version}-%{release}
+
+%description -n libsmartcols-static
+Static version of smartcols library.
+
+%description -n libsmartcols-static -l pl.UTF-8
+Statyczna wersja biblioteki smartcols.
 
 %package initrd
 Summary:	blkid - initrd version
@@ -650,22 +686,9 @@ Bash completion for util-linux commands.
 %description -n bash-completion-util-linux -l pl.UTF-8
 Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 
-%package -n python3-libmount
-Summary:	Python 3.x libmount bindings
-Summary(pl.UTF-8):	Wiązania Pythona 3.x do biblioteki libmount
-Group:		Libraries/Python
-Requires:	libmount = %{version}-%{release}
-
-%description -n python3-libmount
-Python 3.x libmount bindings.
-
-%description -n python3-libmount -l pl.UTF-8
-Wiązania Pythona 3.x do biblioteki libmount.
-
 %prep
 %setup -q -a1
 %patch0 -p1
-%patch1 -p1
 
 %patch3 -p1
 %patch4 -p1
@@ -794,8 +817,8 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
-mv $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
+%{__mv} $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
+%{__mv} $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
 
 install -p nologin $RPM_BUILD_ROOT/sbin
 cp -p %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
@@ -818,11 +841,16 @@ cp -p %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/runuser-l
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 :> $RPM_BUILD_ROOT%{_sysconfdir}/blkid.tab
 
-for lib in blkid uuid mount; do
+for lib in blkid uuid mount smartcols; do
 	mv $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so.* $RPM_BUILD_ROOT/%{_lib}
 	ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/lib${lib}.so.*.*.*) \
 		 $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so
 done
+
+# python module
+%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/libmount/pylibmount.la
+# obsoleted by pkg-config (libuuid.la temporarily kept because of packages built with it)
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{blkid,mount,smartcols}.la
 
 ln -s hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
@@ -860,7 +888,7 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 	$RPM_BUILD_ROOT%{_mandir}/man8/{vigr,vipw}.8 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,chkdupexe,ddate,reset}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man8/{elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
+	$RPM_BUILD_ROOT%{_mandir}/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
 
 %ifarch sparc sparcv9 sparc64
 # programs not built on sparc
@@ -870,8 +898,6 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 # examples
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt/getopt-parse.*sh
 
-%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/libmount/pylibmount.la
-
 %if %{with initrd}
 install -d $RPM_BUILD_ROOT%{_libdir}/initrd
 install -p initrd/bin/* $RPM_BUILD_ROOT%{_libdir}/initrd
@@ -879,7 +905,7 @@ install -p initrd/sbin/* $RPM_BUILD_ROOT%{_libdir}/initrd
 ln -s fsck $RPM_BUILD_ROOT%{_libdir}/initrd/e2fsck
 
 # We don't need those
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{cal,col,colcrt,colrm,column,ctrlaltdel,cytune,dmesg,flock,fsfreeze,fstrim,getopt,hexdump,ipcmk,ipcrm,ipcs,isosize,logger,lslocks,mcookie,mkfs*,readprofile,renice,rev,rtcwake,script,scriptreplay,setsid,tailf,tunelp,wdctl,whereis}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{cal,col,colcrt,colrm,column,ctrlaltdel,dmesg,flock,fsfreeze,fstrim,getopt,hexdump,ipcmk,ipcrm,ipcs,isosize,logger,lslocks,mcookie,mkfs*,readprofile,renice,rev,rtcwake,script,scriptreplay,setsid,tailf,tunelp,wdctl,whereis}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{blkid,mount}.la
 
 %if %{with dietlibc}
@@ -934,6 +960,9 @@ fi
 
 %post	-n libmount -p /sbin/ldconfig
 %postun -n libmount -p /sbin/ldconfig
+
+%post	-n libsmartcols -p /sbin/ldconfig
+%postun -n libsmartcols -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -1017,7 +1046,6 @@ fi
 %attr(755,root,root) %{_bindir}/colcrt
 %attr(755,root,root) %{_bindir}/colrm
 %attr(755,root,root) %{_bindir}/column
-%attr(755,root,root) %{_bindir}/cytune
 %attr(755,root,root) %{_bindir}/eject
 %attr(755,root,root) %{_bindir}/flock
 %{?with_fallocate:%attr(755,root,root) %{_bindir}/fallocate}
@@ -1035,6 +1063,7 @@ fi
 %attr(755,root,root) %{_bindir}/look
 %attr(755,root,root) %{_bindir}/lscpu
 %attr(755,root,root) %{_bindir}/lslocks
+%attr(755,root,root) %{_bindir}/lslogins
 %attr(755,root,root) %{_bindir}/mesg
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
@@ -1053,6 +1082,7 @@ fi
 %attr(755,root,root) %{_bindir}/tailf
 %attr(755,root,root) %{_bindir}/taskset
 %attr(755,root,root) %{_bindir}/ul
+%attr(755,root,root) %{_bindir}/uname26
 %attr(755,root,root) %{_bindir}/unshare
 %attr(755,root,root) %{_bindir}/utmpdump
 %attr(755,root,root) %{_bindir}/utmpx-dump
@@ -1063,6 +1093,9 @@ fi
 %attr(755,root,root) %{_sbindir}/readprofile
 %attr(755,root,root) %{_sbindir}/resizepart
 %attr(755,root,root) %{_sbindir}/rtcwake
+
+%{systemdunitdir}/fstrim.service
+%{systemdunitdir}/fstrim.timer
 
 %{_mandir}/man1/cal.1*
 %{_mandir}/man1/chrt.1*
@@ -1087,6 +1120,7 @@ fi
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/lscpu.1*
+%{_mandir}/man1/lslogins.1*
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/mesg.1*
 %{_mandir}/man1/more.1*
@@ -1116,7 +1150,6 @@ fi
 %{_mandir}/man8/lsblk.8*
 %{_mandir}/man8/chcpu.8*
 %{_mandir}/man8/ctrlaltdel.8*
-%{_mandir}/man8/cytune.8*
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/fsfreeze.8*
 %{_mandir}/man8/fstrim.8*
@@ -1133,6 +1166,7 @@ fi
 %{_mandir}/man8/switch_root.8*
 %endif
 %{_mandir}/man8/sulogin.8*
+%{_mandir}/man8/uname26.8*
 %{_mandir}/man8/wdctl.8*
 %{_mandir}/man8/wipefs.8*
 
@@ -1153,7 +1187,6 @@ fi
 %lang(es) %{_mandir}/es/man1/ul.1*
 %lang(es) %{_mandir}/es/man1/whereis.1*
 %lang(es) %{_mandir}/es/man1/write.1*
-%lang(es) %{_mandir}/es/man8/cytune.8*
 %lang(es) %{_mandir}/es/man8/ctrlaltdel.8*
 %lang(es) %{_mandir}/es/man8/ipcrm.8*
 %lang(es) %{_mandir}/es/man8/ipcs.8*
@@ -1229,7 +1262,6 @@ fi
 %lang(ja) %{_mandir}/ja/man1/whereis.1*
 %lang(ja) %{_mandir}/ja/man1/write.1*
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
-%lang(ja) %{_mandir}/ja/man8/cytune.8*
 %lang(ja) %{_mandir}/ja/man8/dmesg.8*
 %lang(ja) %{_mandir}/ja/man8/fdformat.8*
 %lang(ja) %{_mandir}/ja/man8/ipcrm.8*
@@ -1386,6 +1418,7 @@ fi
 
 %files -n mount
 %defattr(644,root,root,755)
+%attr(755,root,root) /bin/findmnt
 %attr(755,root,root) /bin/mountpoint
 %attr(4755,root,root) /bin/mount
 %attr(4755,root,root) /bin/umount
@@ -1395,6 +1428,7 @@ fi
 
 %{_mandir}/man1/mountpoint.1*
 %{_mandir}/man5/fstab.5*
+%{_mandir}/man8/findmnt.8*
 %{_mandir}/man8/mount.8*
 %{_mandir}/man8/umount.8*
 %{_mandir}/man8/pivot_root.8*
@@ -1524,10 +1558,6 @@ fi
 %defattr(644,root,root,755)
 %{_libdir}/libuuid.a
 
-%files -n bash-completion-util-linux
-%defattr(644,root,root,755)
-/usr/share/bash-completion/completions/*
-
 %if %{with initrd} && %{with dietlibc}
 %files -n libuuid-dietlibc
 %defattr(644,root,root,755)
@@ -1546,9 +1576,6 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) /%{_lib}/libmount.so.*.*
 %attr(755,root,root) %ghost /%{_lib}/libmount.so.1
-# move to -n mount when mount starts to use libmount
-%attr(755,root,root) /bin/findmnt
-%{_mandir}/man8/findmnt.8*
 
 %files -n libmount-devel
 %defattr(644,root,root,755)
@@ -1560,16 +1587,34 @@ fi
 %defattr(644,root,root,755)
 %{_libdir}/libmount.a
 
+%files -n python3-libmount
+%defattr(644,root,root,755)
+%dir %{py3_sitedir}/libmount
+%attr(755,root,root) %{py3_sitedir}/libmount/pylibmount.so
+%{py3_sitedir}/libmount/__init__.py
+%{py3_sitedir}/libmount/__pycache__
+
 %files -n fsck
 %defattr(644,root,root,755)
 %attr(755,root,root) /sbin/fsck
 %{_mandir}/man8/fsck.8*
 
-%files -n python3-libmount
+%files -n libsmartcols
 %defattr(644,root,root,755)
-%dir %{py3_sitedir}/libmount
-%{py3_sitedir}/libmount/__init__.py
-%attr(755,root,root) %{py3_sitedir}/libmount/pylibmount.so
+%attr(755,root,root) /%{_lib}/libsmartcols.so.*.*.*
+%attr(755,root,root) %ghost /%{_lib}/libsmartcols.so.1
+# common for many utilities (hexdump,cal,dmesg,fdisk,cfdisk; also libblkid,libmount?)
+%{_mandir}/man5/terminal-colors.d.5*
+
+%files -n libsmartcols-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libsmartcols.so
+%{_includedir}/libsmartcols
+%{_pkgconfigdir}/smartcols.pc
+
+%files -n libsmartcols-static
+%defattr(644,root,root,755)
+%{_libdir}/libsmartcols.a
 
 %if %{with initrd}
 %files initrd
@@ -1596,3 +1641,7 @@ fi
 #%attr(755,root,root) %{_libdir}/initrd/e2fsck
 #%attr(755,root,root) %{_libdir}/initrd/fsck
 %endif
+
+%files -n bash-completion-util-linux
+%defattr(644,root,root,755)
+/usr/share/bash-completion/completions/*
