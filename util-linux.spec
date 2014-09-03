@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.25
+Version:	2.25.1
 Release:	1
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.25/%{name}-%{version}.tar.xz
-# Source0-md5:	4c78fdef4cb882caafad61e33cafbc14
+# Source0-md5:	2ff36a8f8ede70f66c5ad0fb09e40e79
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -56,7 +56,6 @@ Source10:	nologin.c
 Source11:	nologin.8
 Source12:	blockdev.service
 Source13:	blockdev.sh
-Patch0:		%{name}-pl.po-update.patch
 
 Patch3:		%{name}-fdformat-ide.patch
 Patch4:		%{name}-fhs.patch
@@ -688,7 +687,6 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 
 %prep
 %setup -q -a1
-%patch0 -p1
 
 %patch3 -p1
 %patch4 -p1
