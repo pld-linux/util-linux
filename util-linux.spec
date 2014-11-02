@@ -23,7 +23,7 @@
 %if "%{pld_release}" == "ac"
 %define		pam_ver 0.79.0
 %else
-%define		pam_ver 1.1.8-5
+%define		pam_ver 1:1.1.8-5
 %endif
 
 Summary:	Collection of basic system utilities for Linux
@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.25.2
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.25/%{name}-%{version}.tar.xz
