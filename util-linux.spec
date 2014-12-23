@@ -67,7 +67,7 @@ URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
-BuildRequires:	gettext-devel >= 0.14.1
+BuildRequires:	gettext-tools >= 0.14.1
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
