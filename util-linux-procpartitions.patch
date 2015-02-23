@@ -22,23 +22,21 @@ drastic as it doesn't bail out like fsck does.
  
  	while (fgets(line, sizeof(line), procpt)) {
  		if (sscanf (line, " %d %d %d %[^\n ]",
---- util-linux-2.25/disk-utils/fdisk.c.orig	2010-03-22 09:21:34.000000000 +0100
-+++ util-linux-2.25/disk-utils/fdisk.c	2010-05-09 12:31:53.050933394 +0200
-@@ -343,6 +343,7 @@ static void print_all_devices_pt(struct
+--- util-linux-2.26/disk-utils/fdisk-list.c.orig	2015-02-10 10:49:46.346584245 +0100
++++ util-linux-2.26/disk-utils/fdisk-list.c	2015-02-23 21:04:01.522730338 +0100
+@@ -198,6 +198,7 @@
+ char *next_proc_partition(FILE **f)
  {
- 	FILE *f;
  	char line[128 + 1];
-+	char iobuf[32*1024];
++	static char iobuf[32*1024];
  
- 	f = fopen(_PATH_PROC_PARTITIONS, "r");
- 	if (!f) {
-@@ -352,6 +353,8 @@ static void print_all_devices_pt(struct
+ 	if (!*f) {
+ 		*f = fopen(_PATH_PROC_PARTITIONS, "r");
+@@ -205,6 +206,7 @@
+ 			warn(_("cannot open %s"), _PATH_PROC_PARTITIONS);
+ 			return NULL;
+ 		}
++		setvbuf(*f, iobuf, _IOFBF, sizeof(iobuf));
+ 	}
  
- 	DBG(FRONTEND, dbgprint("reading "_PATH_PROC_PARTITIONS));
- 
-+	setvbuf(f, iobuf, _IOFBF, sizeof(iobuf));
-+
- 	while (fgets(line, sizeof(line), f)) {
- 		char ptname[128 + 1], devname[256];
- 
-
+ 	while (fgets(line, sizeof(line), *f)) {

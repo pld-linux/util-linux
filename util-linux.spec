@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.25.2
-Release:	3
-License:	GPL
+Version:	2.26
+Release:	1
+License:	GPL v2+
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.25/%{name}-%{version}.tar.xz
-# Source0-md5:	cab3d7be354000f629bc601238b629b3
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.26/%{name}-%{version}.tar.xz
+# Source0-md5:	912c550a4e5c47c0ce9abd0733fa9a64
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -99,6 +99,7 @@ BuildRequires:	glibc-static
 	%endif
 %endif
 Requires:	libblkid = %{version}-%{release}
+Requires:	libfdisk = %{version}-%{release}
 %{?with_selinux:Requires:	libselinux >= 2.0}
 Requires:	libsmartcols = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
@@ -552,10 +553,52 @@ Ten pakiet zawiera działającego w przestrzeni użytkownika demona
 (uuidd) gwarantującego unikalność generowania UUID-ów opartych na
 czasie nawet przy bardzo dużej częstotliwości na systemach SMP.
 
+%package -n libfdisk
+Summary:	fdisk library
+Summary(pl.UTF-8):	Biblioteka fdisk
+License:	LGPL v2.1+
+Group:		Libraries
+Requires:	libblkid = %{version}-%{release}
+Requires:	libuuid = %{version}-%{release}
+
+%description -n libfdisk
+fdisk library.
+
+%description -n libfdisk -l pl.UTF-8
+Biblioteka fdisk.
+
+%package -n libfdisk-devel
+Summary:	Header files for fdisk library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki fdisk
+License:	LGPL v2.1+
+Group:		Development/Libraries
+Requires:	libblkid-devel = %{version}-%{release}
+Requires:	libfdisk = %{version}-%{release}
+Requires:	libuuid-devel = %{version}-%{release}
+
+%description -n libfdisk-devel
+Header files for fdisk library.
+
+%description -n libfdisk-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki fdisk.
+
+%package -n libfdisk-static
+Summary:	Static version of fdisk library
+Summary(pl.UTF-8):	Statyczna wersja biblioteki fdisk
+License:	LGPL v2.1+
+Group:		Development/Libraries
+Requires:	libfdisk-devel = %{version}-%{release}
+
+%description -n libfdisk-static
+Static version of fdisk library.
+
+%description -n libfdisk-static -l pl.UTF-8
+Statyczna wersja biblioteki fdisk.
+
 %package -n libmount
 Summary:	Library to handle mounting-related tasks
 Summary(pl.UTF-8):	Biblioteka obsługująca zadania związane z montowaniem
-License:	LGPL
+License:	LGPL v2.1+
 Group:		Libraries
 Requires:	libblkid = %{version}-%{release}
 
@@ -568,7 +611,7 @@ Biblioteka obsługująca zadania związane z montowaniem.
 %package -n libmount-devel
 Summary:	Header files for mount library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki mount
-License:	LGPL
+License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libblkid-devel = %{version}-%{release}
 Requires:	libmount = %{version}-%{release}
@@ -582,7 +625,7 @@ Pliki nagłówkowe biblioteki mount.
 %package -n libmount-static
 Summary:	Static version of mount library
 Summary(pl.UTF-8):	Statyczna wersja biblioteki mount
-License:	LGPL
+License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libmount-devel = %{version}-%{release}
 
@@ -595,6 +638,7 @@ Statyczna wersja biblioteki mount.
 %package -n python3-libmount
 Summary:	Python 3.x libmount bindings
 Summary(pl.UTF-8):	Wiązania Pythona 3.x do biblioteki libmount
+License:	LGPL v3+
 Group:		Libraries/Python
 Requires:	libmount = %{version}-%{release}
 
@@ -839,7 +883,7 @@ cp -p %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/runuser-l
 :> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 :> $RPM_BUILD_ROOT%{_sysconfdir}/blkid.tab
 
-for lib in blkid uuid mount smartcols; do
+for lib in blkid fdisk mount smartcols uuid; do
 	mv $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so.* $RPM_BUILD_ROOT/%{_lib}
 	ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/lib${lib}.so.*.*.*) \
 		 $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so
@@ -848,7 +892,7 @@ done
 # python module
 %{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/libmount/pylibmount.la
 # obsoleted by pkg-config (libuuid.la temporarily kept because of packages built with it)
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{blkid,mount,smartcols}.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{blkid,fdisk,mount,smartcols}.la
 
 ln -s hwclock $RPM_BUILD_ROOT/sbin/clock
 echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/man8/clock.8
@@ -956,6 +1000,9 @@ if [ "$1" = "0" ]; then
 	%groupremove uuidd
 fi
 
+%post	-n libfdisk -p /sbin/ldconfig
+%postun -n libfdisk -p /sbin/ldconfig
+
 %post	-n libmount -p /sbin/ldconfig
 %postun -n libmount -p /sbin/ldconfig
 
@@ -1038,6 +1085,7 @@ fi
 %attr(755,root,root) /sbin/switch_root
 %endif
 %attr(755,root,root) /sbin/wipefs
+%attr(755,root,root) /sbin/zramctl
 %attr(755,root,root) %{_bindir}/cal
 %attr(755,root,root) %{_bindir}/chrt
 %attr(755,root,root) %{_bindir}/col
@@ -1167,6 +1215,7 @@ fi
 %{_mandir}/man8/uname26.8*
 %{_mandir}/man8/wdctl.8*
 %{_mandir}/man8/wipefs.8*
+%{_mandir}/man8/zramctl.8*
 
 %lang(de) %{_mandir}/de/man1/kill.1*
 %lang(de) %{_mandir}/de/man1/more.1*
@@ -1570,8 +1619,25 @@ fi
 %{systemdunitdir}/uuidd.service
 %{systemdunitdir}/uuidd.socket
 
+%files -n libfdisk
+%defattr(644,root,root,755)
+%doc libfdisk/COPYING
+%attr(755,root,root) /%{_lib}/libfdisk.so.*.*
+%attr(755,root,root) %ghost /%{_lib}/libfdisk.so.1
+
+%files -n libfdisk-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libfdisk.so
+%{_includedir}/libfdisk
+%{_pkgconfigdir}/fdisk.pc
+
+%files -n libfdisk-static
+%defattr(644,root,root,755)
+%{_libdir}/libfdisk.a
+
 %files -n libmount
 %defattr(644,root,root,755)
+%doc libmount/COPYING
 %attr(755,root,root) /%{_lib}/libmount.so.*.*
 %attr(755,root,root) %ghost /%{_lib}/libmount.so.1
 
