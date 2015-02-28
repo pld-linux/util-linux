@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.26
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.26/%{name}-%{version}.tar.xz
@@ -1038,10 +1038,10 @@ fi
 %attr(755,root,root) %{_bindir}/s390*
 %{_mandir}/man8/s390*
 %endif
-%ifarch %{ix86} %{x8664}
+%ifarch %{ix86} %{x8664} x32
 %attr(755,root,root) %{_bindir}/i386
 %{_mandir}/man8/i386*
-%ifarch %{x8664}
+%ifarch %{x8664} x32
 %attr(755,root,root) %{_bindir}/x86_64
 %{_mandir}/man8/x86_64*
 %endif
