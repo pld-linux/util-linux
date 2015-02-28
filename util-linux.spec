@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.26
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.26/%{name}-%{version}.tar.xz
@@ -56,13 +56,13 @@ Source10:	nologin.c
 Source11:	nologin.8
 Source12:	blockdev.service
 Source13:	blockdev.sh
-
-Patch3:		%{name}-fdformat-ide.patch
-Patch4:		%{name}-fhs.patch
-Patch7:		%{name}-login-lastlog.patch
-Patch8:		%{name}-procpartitions.patch
-Patch9:		su-paths.patch
-Patch10:	%{name}-diet.patch
+Patch0:		%{name}-fdformat-ide.patch
+Patch1:		%{name}-fhs.patch
+Patch2:		%{name}-login-lastlog.patch
+Patch3:		%{name}-procpartitions.patch
+Patch4:		su-paths.patch
+Patch5:		%{name}-diet.patch
+Patch6:		systemd-link.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -731,13 +731,13 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 
 %prep
 %setup -q -a1
-
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%{?with_initrd:%patch10 -p1}
+%{?with_initrd:%patch5 -p1}
+%patch6 -p1
 
 cp -p %{SOURCE10} nologin.c
 

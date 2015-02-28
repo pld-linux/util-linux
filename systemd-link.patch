@@ -1,0 +1,13 @@
+--- util-linux-2.26/misc-utils/Makemodule.am~	2015-02-10 10:49:46.000000000 +0100
++++ util-linux-2.26/misc-utils/Makemodule.am	2015-02-28 17:22:44.747702370 +0100
+@@ -23,8 +23,8 @@
+ dist_man_MANS += misc-utils/logger.1
+ logger_SOURCES = misc-utils/logger.c lib/strutils.c
+ if HAVE_SYSTEMD
+-logger_LDADD = $(SYSTEMD_LIBS) $(SYSTEMD_JOURNAL_LIBS)
+-logger_CFLAGS = $(SYSTEMD_CFLAGS) $(SYSTEMD_JOURNAL_CFLAGS)
++logger_LDADD = $(SYSTEMD_LIBS) $(SYSTEMD_JOURNAL_LIBS) $(SYSTEMD_DAEMON_LIBS)
++logger_CFLAGS = $(SYSTEMD_CFLAGS) $(SYSTEMD_JOURNAL_CFLAGS) $(SYSTEMD_DAEMON_CFLAGS)
+ endif
+ endif # BUILD_LOGGER
+ 
