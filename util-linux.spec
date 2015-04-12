@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.26
-Release:	4
+Version:	2.26.1
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.26/%{name}-%{version}.tar.xz
-# Source0-md5:	912c550a4e5c47c0ce9abd0733fa9a64
+# Source0-md5:	2308850946766677f3fabe0685e85de8
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -62,7 +62,6 @@ Patch2:		%{name}-login-lastlog.patch
 Patch3:		%{name}-procpartitions.patch
 Patch4:		su-paths.patch
 Patch5:		%{name}-diet.patch
-Patch6:		systemd-link.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -737,7 +736,6 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch3 -p1
 %patch4 -p1
 %{?with_initrd:%patch5 -p1}
-%patch6 -p1
 
 cp -p %{SOURCE10} nologin.c
 
