@@ -10,7 +10,7 @@
 # Conditional build:
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
-%bcond_without	selinux 	# SELinux support
+%bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
 %if "%{pld_release}" == "ac"
 %bcond_with	initrd		# don't build initrd version
@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.26.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/System
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.26/%{name}-%{version}.tar.xz
@@ -47,7 +47,6 @@ Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-ma
 Source2:	login.pamd
 Source3:	%{name}-blockdev.init
 Source4:	%{name}-blockdev.sysconfig
-Source5:	blockdev.upstart
 Source6:	su.pamd
 Source7:	su-l.pamd
 Source8:	runuser.pamd
@@ -291,7 +290,6 @@ Group:		Applications/System
 Requires:	libmount = %{version}-%{release}
 Requires:	libsmartcols = %{version}-%{release}
 Conflicts:	SysVinit < 2.86-26
-Conflicts:	upstart-SysVinit < 2.86-28
 # C: nfs-utils-common is opposite to http://cvs.pld-linux.org/packages/nfs-utils/nfs-utils.spec?r1=1.165&r2=1.166
 Conflicts:	nfs-utils-common < 1.1.3-3
 
@@ -849,7 +847,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,init,security} \
+install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security} \
 	$RPM_BUILD_ROOT{/%{_lib},/var/{lock,lib/libuuid}} \
 	$RPM_BUILD_ROOT{/lib/systemd/pld-helpers.d,%{systemdunitdir}}
 %{?with_dietlibc:install -d $RPM_BUILD_ROOT%{dietlibdir}}
@@ -866,7 +864,6 @@ cp -p %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
 cp -p %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/blockdev
-cp -p %{SOURCE5} $RPM_BUILD_ROOT/etc/init/blockdev.conf
 cp -p %{SOURCE12} $RPM_BUILD_ROOT%{systemdunitdir}/blockdev.service
 cp -p %{SOURCE13} $RPM_BUILD_ROOT/lib/systemd/pld-helpers.d/blockdev.sh
 %if %{with su}
@@ -1454,7 +1451,6 @@ fi
 %defattr(644,root,root,755)
 %attr(754,root,root) /etc/rc.d/init.d/blockdev
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/blockdev
-%config(noreplace) %verify(not md5 mtime size) /etc/init/blockdev.conf
 %attr(755,root,root) /sbin/blockdev
 %{_mandir}/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*
