@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.26.2
-Release:	2
+Version:	2.27
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.26/%{name}-%{version}.tar.xz
-# Source0-md5:	9bdf368c395f1b70325d0eb22c7f48fb
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.27/%{name}-%{version}.tar.xz
+# Source0-md5:	5b06bbda9309624ee7add15bc8d8ca22
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -78,6 +78,7 @@ BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel >= %{pam_ver}
 BuildRequires:	pkgconfig
 BuildRequires:	python3-devel
+BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.671
 BuildRequires:	sed >= 4.0
@@ -839,7 +840,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--with-audit \
 	--with-bashcompletiondir=/usr/share/bash-completion/completions \
 	--with-selinux%{!?with_selinux:=no} \
-	--with-smack
+	--with-smack \
+	--with-readline
 
 %{__make}
 
@@ -1103,6 +1105,7 @@ fi
 %attr(755,root,root) %{_bindir}/logger
 %attr(755,root,root) %{_bindir}/look
 %attr(755,root,root) %{_bindir}/lscpu
+%attr(755,root,root) %{_bindir}/lsipc
 %attr(755,root,root) %{_bindir}/lslocks
 %attr(755,root,root) %{_bindir}/lslogins
 %attr(755,root,root) %{_bindir}/mesg
@@ -1161,6 +1164,7 @@ fi
 %{_mandir}/man1/logger.1*
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/lscpu.1*
+%{_mandir}/man1/lsipc.1*
 %{_mandir}/man1/lslogins.1*
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/mesg.1*
