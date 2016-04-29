@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.27.1
-Release:	2
+Version:	2.28
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.27/%{name}-%{version}.tar.xz
-# Source0-md5:	3cd2698d1363a2c64091c2dadc974647
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.28/%{name}-%{version}.tar.xz
+# Source0-md5:	e534e6ccc49107e5d31c329af798ef7d
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -1108,6 +1108,7 @@ fi
 %attr(755,root,root) %{_bindir}/lsipc
 %attr(755,root,root) %{_bindir}/lslocks
 %attr(755,root,root) %{_bindir}/lslogins
+%attr(755,root,root) %{_bindir}/lsns
 %attr(755,root,root) %{_bindir}/mesg
 %attr(755,root,root) %{_bindir}/mcookie
 %attr(755,root,root) %{_bindir}/namei
@@ -1193,6 +1194,7 @@ fi
 %{_mandir}/man8/delpart.8*
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/lsblk.8*
+%{_mandir}/man8/lsns.8*
 %{_mandir}/man8/chcpu.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/fdformat.8*

@@ -1,9 +1,9 @@
 --- util-linux-2.21/include/pathnames.h~	2011-12-18 22:28:28.000000000 +0200
 +++ util-linux-2.21/include/pathnames.h	2012-03-05 17:32:49.986673893 +0200
-@@ -26,7 +26,7 @@
- #define	_PATH_DEFPATH_ROOT	"/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+@@ -35,7 +35,7 @@
+ # define _PATH_DEFPATH_ROOT	"/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+ #endif
  
- #define _PATH_SECURETTY		"/etc/securetty"
 -#define _PATH_WTMPLOCK		"/etc/wtmplock"
 +#define _PATH_WTMPLOCK		"/var/lock/wtmplock"
  
