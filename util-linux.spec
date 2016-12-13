@@ -1,5 +1,5 @@
 # TODO
-# - remote chfn/chsh (BR: libuser)? - but PLD uses pwdutils/shadow implementation currently
+# - remote chfn/chsh (BR: libuser >= 0.58)? - but PLD uses pwdutils/shadow implementation currently
 # - verify initrd tools set:
 #   - I've taken list from 2.21.3 package, but there was no explicit list, so
 #     there are probably some unneeded tools
@@ -36,12 +36,12 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.28.2
-Release:	2
+Version:	2.29
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.28/%{name}-%{version}.tar.xz
-# Source0-md5:	46a232a37bce45371a86d19300edc47a
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.29/%{name}-%{version}.tar.xz
+# Source0-md5:	07b6845f48a421ad5844aa9d58edb837
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -65,7 +65,7 @@ URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
-BuildRequires:	gettext-tools >= 0.14.1
+BuildRequires:	gettext-tools >= 0.18.3
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
@@ -830,6 +830,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-login-chown-vcs \
 	--enable-newgrp \
 	--enable-partx \
+	--enable-pg \
 	--enable-runuser%{!?with_su:=no} \
 	--enable-su%{!?with_su:=no} \
 	--enable-sulogin \
