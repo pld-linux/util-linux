@@ -40,7 +40,7 @@ Version:	2.29
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.29/%{name}-%{version}.tar.xz
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	07b6845f48a421ad5844aa9d58edb837
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
