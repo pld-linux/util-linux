@@ -1229,18 +1229,8 @@ fi
 %lang(de) %{_mandir}/de/man1/write.1*
 %lang(de) %{_mandir}/de/man8/fdformat.8*
 
-%lang(es) %{_mandir}/es/man1/colrm.1*
-%lang(es) %{_mandir}/es/man1/column.1*
-%lang(es) %{_mandir}/es/man1/getopt.1*
-%lang(es) %{_mandir}/es/man1/look.1*
-%lang(es) %{_mandir}/es/man1/more.1*
-%lang(es) %{_mandir}/es/man1/namei.1*
-%lang(es) %{_mandir}/es/man1/rev.1*
-%lang(es) %{_mandir}/es/man1/script.1*
-%lang(es) %{_mandir}/es/man1/setterm.1*
-%lang(es) %{_mandir}/es/man1/ul.1*
-%lang(es) %{_mandir}/es/man1/whereis.1*
-%lang(es) %{_mandir}/es/man1/write.1*
+%lang(es) %{_mandir}/es/man1/*.1*
+%exclude  %{_mandir}/es/man1/login.1*
 %lang(es) %{_mandir}/es/man8/ctrlaltdel.8*
 %lang(es) %{_mandir}/es/man8/ipcrm.8*
 %lang(es) %{_mandir}/es/man8/ipcs.8*
@@ -1249,19 +1239,9 @@ fi
 %lang(es) %{_mandir}/es/man8/renice.8*
 %lang(es) %{_mandir}/es/man8/setsid.8*
 
-%lang(fi) %{_mandir}/fi/man1/cal.1*
-%lang(fi) %{_mandir}/fi/man1/column.1*
-%lang(fi) %{_mandir}/fi/man1/kill.1*
-%lang(fi) %{_mandir}/fi/man1/more.1*
-%lang(fi) %{_mandir}/fi/man1/whereis.1*
-%lang(fi) %{_mandir}/fi/man1/write.1*
+%lang(fi) %{_mandir}/fi/man1/*.1*
 
-%lang(fr) %{_mandir}/fr/man1/cal.1*
-%lang(fr) %{_mandir}/fr/man1/col.1*
-%lang(fr) %{_mandir}/fr/man1/kill.1*
-%lang(fr) %{_mandir}/fr/man1/more.1*
-%lang(fr) %{_mandir}/fr/man1/whereis.1*
-%lang(fr) %{_mandir}/fr/man1/write.1*
+%lang(fr) %{_mandir}/fr/man1/*.1*
 %lang(fr) %{_mandir}/fr/man8/ctrlaltdel.8*
 %lang(fr) %{_mandir}/fr/man8/dmesg.8*
 %lang(fr) %{_mandir}/fr/man8/fdformat.8*
@@ -1269,52 +1249,22 @@ fi
 %lang(fr) %{_mandir}/fr/man8/ipcs.8*
 %lang(fr) %{_mandir}/fr/man8/setsid.8*
 
-%lang(hu) %{_mandir}/hu/man1/cal.1*
-%lang(hu) %{_mandir}/hu/man1/colrm.1*
-%lang(hu) %{_mandir}/hu/man1/hexdump.1*
-%lang(hu) %{_mandir}/hu/man1/kill.1*
-%lang(hu) %{_mandir}/hu/man1/logger.1*
-%lang(hu) %{_mandir}/hu/man1/more.1*
-%lang(hu) %{_mandir}/hu/man1/setterm.1*
-%lang(hu) %{_mandir}/hu/man1/whereis.1*
-%lang(hu) %{_mandir}/hu/man1/write.1*
+%lang(hu) %{_mandir}/hu/man1/*.1*
+%exclude  %{_mandir}/hu/man1/login.1*
 %lang(hu) %{_mandir}/hu/man8/ctrlaltdel.8*
 %lang(hu) %{_mandir}/hu/man8/fdformat.8*
 %lang(hu) %{_mandir}/hu/man8/mkswap.8*
 
-%lang(id) %{_mandir}/id/man1/cal.1*
-%lang(id) %{_mandir}/id/man1/kill.1*
-%lang(id) %{_mandir}/id/man1/logger.1*
-%lang(id) %{_mandir}/id/man1/more.1*
-%lang(id) %{_mandir}/id/man1/script.1*
-%lang(id) %{_mandir}/id/man1/write.1*
+%lang(id) %{_mandir}/id/man1/*.1*
+%exclude  %{_mandir}/id/man1/login.1*
 %lang(id) %{_mandir}/id/man8/fdformat.8*
 
 %lang(it) %{_mandir}/it/man1/kill.1*
 %lang(it) %{_mandir}/it/man8/mkswap.8*
 %lang(it) %{_mandir}/it/man8/setsid.8*
 
-%lang(ja) %{_mandir}/ja/man1/cal.1*
-%lang(ja) %{_mandir}/ja/man1/col.1*
-%lang(ja) %{_mandir}/ja/man1/colcrt.1*
-%lang(ja) %{_mandir}/ja/man1/colrm.1*
-%lang(ja) %{_mandir}/ja/man1/column.1*
-%lang(ja) %{_mandir}/ja/man1/getopt.1*
-%lang(ja) %{_mandir}/ja/man1/hexdump.1*
-%lang(ja) %{_mandir}/ja/man1/kill.1*
-%lang(ja) %{_mandir}/ja/man1/line.1*
-%lang(ja) %{_mandir}/ja/man1/logger.1*
-%lang(ja) %{_mandir}/ja/man1/look.1*
-%lang(ja) %{_mandir}/ja/man1/mcookie.1*
-%lang(ja) %{_mandir}/ja/man1/more.1*
-%lang(ja) %{_mandir}/ja/man1/namei.1*
-%lang(ja) %{_mandir}/ja/man1/rename.1*
-%lang(ja) %{_mandir}/ja/man1/rev.1*
-%lang(ja) %{_mandir}/ja/man1/script.1*
-%lang(ja) %{_mandir}/ja/man1/setterm.1*
-%lang(ja) %{_mandir}/ja/man1/ul.1*
-%lang(ja) %{_mandir}/ja/man1/whereis.1*
-%lang(ja) %{_mandir}/ja/man1/write.1*
+%lang(ja) %{_mandir}/ja/man1/*.1*
+%exclude  %{_mandir}/ja/man1/login.1*
 %lang(ja) %{_mandir}/ja/man8/ctrlaltdel.8*
 %lang(ja) %{_mandir}/ja/man8/dmesg.8*
 %lang(ja) %{_mandir}/ja/man8/fdformat.8*
@@ -1326,25 +1276,8 @@ fi
 %lang(ja) %{_mandir}/ja/man8/renice.8*
 %lang(ja) %{_mandir}/ja/man8/setsid.8*
 
-%lang(ko) %{_mandir}/ko/man1/cal.1*
-%lang(ko) %{_mandir}/ko/man1/col.1*
-%lang(ko) %{_mandir}/ko/man1/colcrt.1*
-%lang(ko) %{_mandir}/ko/man1/colrm.1*
-%lang(ko) %{_mandir}/ko/man1/column.1*
-%lang(ko) %{_mandir}/ko/man1/getopt.1*
-%lang(ko) %{_mandir}/ko/man1/hexdump.1*
-%lang(ko) %{_mandir}/ko/man1/kill.1*
-%lang(ko) %{_mandir}/ko/man1/logger.1*
-%lang(ko) %{_mandir}/ko/man1/look.1*
-%lang(ko) %{_mandir}/ko/man1/mcookie.1*
-%lang(ko) %{_mandir}/ko/man1/more.1*
-%lang(ko) %{_mandir}/ko/man1/namei.1*
-%lang(ko) %{_mandir}/ko/man1/rev.1*
-%lang(ko) %{_mandir}/ko/man1/script.1*
-%lang(ko) %{_mandir}/ko/man1/setterm.1*
-%lang(ko) %{_mandir}/ko/man1/ul.1*
-%lang(ko) %{_mandir}/ko/man1/whereis.1*
-%lang(ko) %{_mandir}/ko/man1/write.1*
+%lang(ko) %{_mandir}/ko/man1/*.1*
+%exclude  %{_mandir}/ko/man1/login.1*
 %lang(ko) %{_mandir}/ko/man8/ctrlaltdel.8*
 %lang(ko) %{_mandir}/ko/man8/dmesg.8*
 %lang(ko) %{_mandir}/ko/man8/fdformat.8*
@@ -1357,22 +1290,8 @@ fi
 
 %lang(nl) %{_mandir}/nl/man1/kill.1*
 
-%lang(pl) %{_mandir}/pl/man1/cal.1*
-%lang(pl) %{_mandir}/pl/man1/col.1*
-%lang(pl) %{_mandir}/pl/man1/colcrt.1*
-%lang(pl) %{_mandir}/pl/man1/colrm.1*
-%lang(pl) %{_mandir}/pl/man1/getopt.1*
-%lang(pl) %{_mandir}/pl/man1/hexdump.1*
-%lang(pl) %{_mandir}/pl/man1/kill.1*
-%lang(pl) %{_mandir}/pl/man1/look.1*
-%lang(pl) %{_mandir}/pl/man1/logger.1*
-%lang(pl) %{_mandir}/pl/man1/more.1*
-%lang(pl) %{_mandir}/pl/man1/rev.1*
-%lang(pl) %{_mandir}/pl/man1/script.1*
-%lang(pl) %{_mandir}/pl/man1/setterm.1*
-%lang(pl) %{_mandir}/pl/man1/ul.1*
-%lang(pl) %{_mandir}/pl/man1/whereis.1*
-%lang(pl) %{_mandir}/pl/man1/write.1*
+%lang(pl) %{_mandir}/pl/man1/*.1*
+%exclude  %{_mandir}/pl/man1/login.1*
 %lang(pl) %{_mandir}/pl/man8/ctrlaltdel.8*
 %lang(pl) %{_mandir}/pl/man8/dmesg.8*
 %lang(pl) %{_mandir}/pl/man8/fdformat.8*
