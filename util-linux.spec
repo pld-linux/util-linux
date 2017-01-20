@@ -1012,7 +1012,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README README.licensing Documentation misc-utils/getopt-parse.{bash,tcsh}
-/etc/terminal-colors.d
+%dir /etc/terminal-colors.d
 
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock*
