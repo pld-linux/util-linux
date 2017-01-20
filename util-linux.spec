@@ -852,7 +852,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security} \
+install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security,terminal-colors.d} \
 	$RPM_BUILD_ROOT{/%{_lib},/var/{lock,lib/libuuid}} \
 	$RPM_BUILD_ROOT{/lib/systemd/pld-helpers.d,%{systemdunitdir}}
 %{?with_dietlibc:install -d $RPM_BUILD_ROOT%{dietlibdir}}
@@ -1012,6 +1012,7 @@ fi
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README README.licensing Documentation misc-utils/getopt-parse.{bash,tcsh}
+/etc/terminal-colors.d
 
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock*
@@ -1192,6 +1193,8 @@ fi
 %{_mandir}/man1/utmpdump.1*
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
+# common for many utilities (hexdump,cal,dmesg,fdisk,cfdisk - not libraries)
+%{_mandir}/man5/terminal-colors.d.5*
 %{_mandir}/man8/addpart.8*
 %{_mandir}/man8/blkdiscard.8*
 %{_mandir}/man8/delpart.8*
@@ -1670,8 +1673,6 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) /%{_lib}/libsmartcols.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/libsmartcols.so.1
-# common for many utilities (hexdump,cal,dmesg,fdisk,cfdisk; also libblkid,libmount?)
-%{_mandir}/man5/terminal-colors.d.5*
 
 %files -n libsmartcols-devel
 %defattr(644,root,root,755)
