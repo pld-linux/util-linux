@@ -1,0 +1,13 @@
+--- util-linux-2.29.2/configure.ac.orig	2017-03-28 17:43:59.234397364 +0200
++++ util-linux-2.29.2/configure.ac	2017-03-28 17:44:12.451063880 +0200
+@@ -460,8 +460,8 @@
+ 
+ AC_CHECK_LIB([rtas], [rtas_get_sysparm], [
+ 	RTAS_LIBS="-lrtas"
+-	AC_DEFINE_UNQUOTED([HAVE_LIBRTAS], [1], [Define if librtas exists]), [],
+-])
++	AC_DEFINE_UNQUOTED([HAVE_LIBRTAS], [1], [Define if librtas exists])]
++)
+ AC_SUBST([RTAS_LIBS])
+ 
+ 

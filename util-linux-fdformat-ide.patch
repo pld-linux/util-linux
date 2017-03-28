@@ -1,5 +1,5 @@
---- util-linux-2.12p/disk-utils/fdformat.8.ide	2005-04-25 11:39:19.528340384 +0200
-+++ util-linux-2.12p/disk-utils/fdformat.8	2005-04-25 11:44:07.189609224 +0200
+--- util-linux-2.29.2/disk-utils/fdformat.8.orig	2017-02-22 11:16:55.235092833 +0100
++++ util-linux-2.29.2/disk-utils/fdformat.8	2017-03-28 16:45:00.661104437 +0200
 @@ -43,6 +43,11 @@
  autodetected earlier.  In this case, use
  .BR setfdprm (8)
@@ -11,13 +11,12 @@
 +
  .SH OPTIONS
  .TP
- \fB\-n\fR, \fB\-\-no\-verify\fR
-@@ -54,6 +58,7 @@
+ \fB\-f\fR, \fB\-\-from\fR \fIN\fR
+@@ -65,6 +70,7 @@
+ .SH "SEE ALSO"
  .BR fd (4),
- .BR setfdprm (8),
+ .BR emkfs (8),
++.BR floppy (8),
  .BR mkfs (8),
--.BR emkfs (8)
-+.BR emkfs (8),
-+.BR floppy (8)
+ .BR setfdprm (8)
  .SH AUTHOR
- Werner Almesberger (almesber@nessie.cs.id.ethz.ch)

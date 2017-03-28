@@ -36,13 +36,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.29
-Release:	2
+Version:	2.29.2
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	07b6845f48a421ad5844aa9d58edb837
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.29/%{name}-%{version}.tar.xz
+# Source0-md5:	63c40c2068fcbb7e1d5c1d281115d973
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -61,7 +61,8 @@ Patch1:		%{name}-fhs.patch
 Patch2:		%{name}-login-lastlog.patch
 Patch3:		%{name}-procpartitions.patch
 Patch4:		su-paths.patch
-Patch5:		%{name}-diet.patch
+Patch5:		%{name}-ac.patch
+Patch6:		%{name}-diet.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -71,6 +72,10 @@ BuildRequires:	gettext-tools >= 0.18.3
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
 BuildRequires:	libcap-ng-devel
+%ifarch ppc ppc64
+# for lscpu
+BuildRequires:	librtas-devel
+%endif
 %{?with_selinux:BuildRequires:	libselinux-devel >= 2.0}
 %{?with_selinux:BuildRequires:	libsepol-devel}
 BuildRequires:	libtool >= 2:2.2
@@ -735,7 +740,8 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%{?with_initrd:%patch5 -p1}
+%patch5 -p1
+%{?with_initrd:%patch6 -p1}
 
 cp -p %{SOURCE10} nologin.c
 
