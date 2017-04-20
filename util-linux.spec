@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.29.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
@@ -826,6 +826,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--bindir=/bin \
 	--sbindir=/sbin \
 	%{!?with_fallocate:--disable-fallocate} \
+	--enable-libmount-support-mtab \
 	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-wall \
