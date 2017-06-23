@@ -36,13 +36,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.29.2
-Release:	2
+Version:	2.30
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.29/%{name}-%{version}.tar.xz
-# Source0-md5:	63c40c2068fcbb7e1d5c1d281115d973
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.30/%{name}-%{version}.tar.xz
+# Source0-md5:	eaa3429150268027908a1b8ae6ee9a62
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -105,6 +105,7 @@ BuildRequires:	glibc-static
 %endif
 Requires:	libblkid = %{version}-%{release}
 Requires:	libfdisk = %{version}-%{release}
+Requires:	libmount = %{version}-%{release}
 %{?with_selinux:Requires:	libselinux >= 2.0}
 Requires:	libsmartcols = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
@@ -954,7 +955,7 @@ install -p initrd/sbin/* $RPM_BUILD_ROOT%{_libdir}/initrd
 ln -s fsck $RPM_BUILD_ROOT%{_libdir}/initrd/e2fsck
 
 # We don't need those
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{cal,col,colcrt,colrm,column,ctrlaltdel,dmesg,flock,fsfreeze,fstrim,getopt,hexdump,ipcmk,ipcrm,ipcs,isosize,logger,lslocks,mcookie,mkfs*,readprofile,renice,rev,rtcwake,script,scriptreplay,setsid,tailf,tunelp,wdctl,whereis}
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/initrd/{cal,col,colcrt,colrm,column,ctrlaltdel,dmesg,flock,fsfreeze,fstrim,getopt,hexdump,ipcmk,ipcrm,ipcs,isosize,logger,lslocks,mcookie,mkfs*,readprofile,renice,rev,rtcwake,script,scriptreplay,setsid,tunelp,wdctl,whereis}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{blkid,mount}.la
 
 %if %{with dietlibc}
@@ -1071,22 +1072,22 @@ fi
 
 %attr(755,root,root) /bin/dmesg
 %attr(755,root,root) /bin/kill
+%attr(755,root,root) /bin/lsblk
 %attr(755,root,root) /bin/more
-
 %attr(755,root,root) /bin/wdctl
 
-%attr(755,root,root) /sbin/chcpu
-%attr(755,root,root) /sbin/ctrlaltdel
 %attr(755,root,root) /sbin/addpart
 %attr(755,root,root) /sbin/blkdiscard
+%attr(755,root,root) /sbin/blkzone
+%attr(755,root,root) /sbin/chcpu
+%attr(755,root,root) /sbin/ctrlaltdel
 %attr(755,root,root) /sbin/delpart
-%attr(755,root,root) /sbin/partx
-%attr(755,root,root) /bin/lsblk
 %attr(755,root,root) /sbin/fsfreeze
 %attr(755,root,root) /sbin/fstrim
 %attr(755,root,root) /sbin/mkfs
 %attr(755,root,root) /sbin/mkfs.swap
 %attr(755,root,root) /sbin/mkswap
+%attr(755,root,root) /sbin/partx
 %attr(755,root,root) /sbin/sulogin
 %attr(755,root,root) /sbin/swaplabel
 %if "%{pld_release}" != "ac"
@@ -1095,14 +1096,16 @@ fi
 %attr(755,root,root) /sbin/wipefs
 %attr(755,root,root) /sbin/zramctl
 %attr(755,root,root) %{_bindir}/cal
+%attr(755,root,root) %{_bindir}/chmem
 %attr(755,root,root) %{_bindir}/chrt
 %attr(755,root,root) %{_bindir}/col
 %attr(755,root,root) %{_bindir}/colcrt
 %attr(755,root,root) %{_bindir}/colrm
 %attr(755,root,root) %{_bindir}/column
 %attr(755,root,root) %{_bindir}/eject
-%attr(755,root,root) %{_bindir}/flock
 %{?with_fallocate:%attr(755,root,root) %{_bindir}/fallocate}
+%attr(755,root,root) %{_bindir}/fincore
+%attr(755,root,root) %{_bindir}/flock
 %attr(755,root,root) %{_bindir}/getopt
 %attr(755,root,root) %{_bindir}/hexdump
 %attr(755,root,root) %{_bindir}/ionice
@@ -1119,6 +1122,7 @@ fi
 %attr(755,root,root) %{_bindir}/lsipc
 %attr(755,root,root) %{_bindir}/lslocks
 %attr(755,root,root) %{_bindir}/lslogins
+%attr(755,root,root) %{_bindir}/lsmem
 %attr(755,root,root) %{_bindir}/lsns
 %attr(755,root,root) %{_bindir}/mesg
 %attr(755,root,root) %{_bindir}/mcookie
@@ -1135,7 +1139,6 @@ fi
 %attr(755,root,root) %{_bindir}/setpriv
 %attr(755,root,root) %{_bindir}/setsid
 %attr(755,root,root) %{_bindir}/setterm
-%attr(755,root,root) %{_bindir}/tailf
 %attr(755,root,root) %{_bindir}/taskset
 %attr(755,root,root) %{_bindir}/ul
 %attr(755,root,root) %{_bindir}/uname26
@@ -1162,6 +1165,7 @@ fi
 %{_mandir}/man1/dmesg.1*
 %{_mandir}/man1/eject.1*
 %{?with_fallocate:%{_mandir}/man1/fallocate.1*}
+%{_mandir}/man1/fincore.1*
 %{_mandir}/man1/flock.1*
 %{_mandir}/man1/getopt.1*
 %{_mandir}/man1/hexdump.1*
@@ -1178,6 +1182,7 @@ fi
 %{_mandir}/man1/lscpu.1*
 %{_mandir}/man1/lsipc.1*
 %{_mandir}/man1/lslogins.1*
+%{_mandir}/man1/lsmem.1*
 %{_mandir}/man1/mcookie.1*
 %{_mandir}/man1/mesg.1*
 %{_mandir}/man1/more.1*
@@ -1193,7 +1198,6 @@ fi
 %{_mandir}/man1/script.1*
 %{_mandir}/man1/scriptreplay.1*
 %{_mandir}/man1/setterm.1*
-%{_mandir}/man1/tailf.1*
 %{_mandir}/man1/taskset.1*
 %{_mandir}/man1/ul.1*
 %{_mandir}/man1/unshare.1*
@@ -1204,11 +1208,13 @@ fi
 %{_mandir}/man5/terminal-colors.d.5*
 %{_mandir}/man8/addpart.8*
 %{_mandir}/man8/blkdiscard.8*
+%{_mandir}/man8/blkzone.8*
 %{_mandir}/man8/delpart.8*
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/lsblk.8*
 %{_mandir}/man8/lsns.8*
 %{_mandir}/man8/chcpu.8*
+%{_mandir}/man8/chmem.8*
 %{_mandir}/man8/ctrlaltdel.8*
 %{_mandir}/man8/fdformat.8*
 %{_mandir}/man8/fsfreeze.8*
