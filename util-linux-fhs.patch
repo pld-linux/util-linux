@@ -4,8 +4,8 @@
  #define _PATH_NOLOGIN_TXT	"/etc/nologin.txt"
  
  #ifndef _PATH_MAILDIR
--#define	_PATH_MAILDIR		"/var/spool/mail"
-+#define	_PATH_MAILDIR		"/var/mail"
+-# define _PATH_MAILDIR		"/var/spool/mail"
++# define _PATH_MAILDIR		"/var/mail"
  #endif
  #define	_PATH_MOTDFILE		"/etc/motd"
  #ifndef _PATH_NOLOGIN

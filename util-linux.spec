@@ -36,13 +36,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.30
+Version:	2.31
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.30/%{name}-%{version}.tar.xz
-# Source0-md5:	eaa3429150268027908a1b8ae6ee9a62
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	5b6821c403c3cc6e7775f74df1882a20
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -118,6 +118,7 @@ Obsoletes:	eject
 Obsoletes:	ionice
 Obsoletes:	linux32
 Obsoletes:	rawdevices
+Obsoletes:	rfkill
 Obsoletes:	schedutils
 Obsoletes:	setarch
 Obsoletes:	sparc32
@@ -784,6 +785,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-libmount \
 	--disable-login \
 	--disable-losetup \
+	--disable-makeinstall-chown \
+	--disable-makeinstall-setuid \
 	--disable-minix \
 	--disable-newgrp \
 	--disable-partx \
@@ -828,6 +831,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--sbindir=/sbin \
 	%{!?with_fallocate:--disable-fallocate} \
 	--enable-libmount-support-mtab \
+	--disable-makeinstall-chown \
+	--disable-makeinstall-setuid \
 	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-wall \
@@ -1134,12 +1139,14 @@ fi
 %attr(755,root,root) %{_bindir}/rename
 %attr(755,root,root) %{_bindir}/renice
 %attr(755,root,root) %{_bindir}/rev
+%attr(755,root,root) %{_bindir}/rfkill
 %attr(755,root,root) %{_bindir}/script
 %attr(755,root,root) %{_bindir}/scriptreplay
 %attr(755,root,root) %{_bindir}/setpriv
 %attr(755,root,root) %{_bindir}/setsid
 %attr(755,root,root) %{_bindir}/setterm
 %attr(755,root,root) %{_bindir}/taskset
+%attr(755,root,root) %{_bindir}/uuidparse
 %attr(755,root,root) %{_bindir}/ul
 %attr(755,root,root) %{_bindir}/uname26
 %attr(755,root,root) %{_bindir}/unshare
@@ -1202,6 +1209,7 @@ fi
 %{_mandir}/man1/ul.1*
 %{_mandir}/man1/unshare.1*
 %{_mandir}/man1/utmpdump.1*
+%{_mandir}/man1/uuidparse.1*
 %{_mandir}/man1/whereis.1*
 %{_mandir}/man1/write.1*
 # common for many utilities (hexdump,cal,dmesg,fdisk,cfdisk - not libraries)
@@ -1226,6 +1234,7 @@ fi
 %{_mandir}/man8/raw.8*
 %{_mandir}/man8/readprofile.8*
 %{_mandir}/man8/resizepart.8*
+%{_mandir}/man8/rfkill.8*
 %{_mandir}/man8/rtcwake.8*
 %{_mandir}/man8/swaplabel.8*
 %if "%{pld_release}" != "ac"
