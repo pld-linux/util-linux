@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.31
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
@@ -63,6 +63,7 @@ Patch3:		%{name}-procpartitions.patch
 Patch4:		su-paths.patch
 Patch5:		%{name}-ac.patch
 Patch6:		%{name}-diet.patch
+Patch7:		%{name}-pl.po.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -744,6 +745,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch4 -p1
 %patch5 -p1
 %{?with_initrd:%patch6 -p1}
+%patch7 -p1
 
 cp -p %{SOURCE10} nologin.c
 

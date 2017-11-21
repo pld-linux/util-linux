@@ -1,0 +1,11 @@
+--- util-linux-2.31/po/pl.po.orig	2017-10-19 13:10:45.291478665 +0200
++++ util-linux-2.31/po/pl.po	2017-11-21 17:21:29.525515998 +0100
+@@ -4272,7 +4272,7 @@
+ "Type 'help' to get more information.\n"
+ msgstr ""
+ "\n"
+-"`%s --help' wyświetli więcej informacji.\n"
++"Polecenie 'help' wyświetli więcej informacji.\n"
+ 
+ #: disk-utils/sfdisk.c:1669
+ msgid "All partitions used."
