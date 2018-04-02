@@ -36,13 +36,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.31
-Release:	2
+Version:	2.32
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	5b6821c403c3cc6e7775f74df1882a20
+# Source0-md5:	e0d8a25853f88cd15ff557e5d8cb4ea7
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -1141,7 +1141,6 @@ fi
 %attr(755,root,root) %{_bindir}/rename
 %attr(755,root,root) %{_bindir}/renice
 %attr(755,root,root) %{_bindir}/rev
-%attr(755,root,root) %{_bindir}/rfkill
 %attr(755,root,root) %{_bindir}/script
 %attr(755,root,root) %{_bindir}/scriptreplay
 %attr(755,root,root) %{_bindir}/setpriv
@@ -1160,6 +1159,7 @@ fi
 %attr(755,root,root) %{_sbindir}/ldattach
 %attr(755,root,root) %{_sbindir}/readprofile
 %attr(755,root,root) %{_sbindir}/resizepart
+%attr(755,root,root) %{_sbindir}/rfkill
 %attr(755,root,root) %{_sbindir}/rtcwake
 
 %{systemdunitdir}/fstrim.service

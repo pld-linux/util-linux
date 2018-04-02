@@ -1,11 +1,14 @@
---- util-linux-2.31/po/pl.po.orig	2017-10-19 13:10:45.291478665 +0200
-+++ util-linux-2.31/po/pl.po	2017-11-21 17:21:29.525515998 +0100
-@@ -4272,7 +4272,7 @@
- "Type 'help' to get more information.\n"
- msgstr ""
- "\n"
--"`%s --help' wyświetli więcej informacji.\n"
-+"Polecenie 'help' wyświetli więcej informacji.\n"
+--- util-linux-2.32/po/pl.po.orig	2018-03-21 15:27:35.315730563 +0100
++++ util-linux-2.32/po/pl.po	2018-04-01 23:39:21.382508628 +0200
+@@ -10563,9 +10563,9 @@
+ msgstr "nie udało się przeanalizować --timeout"
  
- #: disk-utils/sfdisk.c:1669
- msgid "All partitions used."
+ #: misc-utils/uuidd.c:640
+-#, fuzzy, c-format
++#, c-format
+ msgid "socket name too long: %s"
+-msgstr "nazwa woluminu za długa"
++msgstr "nazwa gniazda za długa: %s"
+ 
+ #: misc-utils/uuidd.c:647
+ msgid "Both --socket-activation and --socket specified. Ignoring --socket."
