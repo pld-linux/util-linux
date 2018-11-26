@@ -746,7 +746,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch4 -p1
 %patch5 -p1
 %{?with_initrd:%patch6 -p1}
-#%patch7 -p1
+%patch7 -p1
 
 cp -p %{SOURCE10} nologin.c
 

@@ -1,14 +1,25 @@
---- util-linux-2.32/po/pl.po.orig	2018-03-21 15:27:35.315730563 +0100
-+++ util-linux-2.32/po/pl.po	2018-04-01 23:39:21.382508628 +0200
-@@ -10563,9 +10563,9 @@
- msgstr "nie udało się przeanalizować --timeout"
+--- util-linux-2.33/po/pl.po.orig	2018-11-06 12:13:57.023525535 +0100
++++ util-linux-2.33/po/pl.po	2018-11-26 20:39:09.335888712 +0100
+@@ -11445,9 +11445,9 @@
+ msgstr "%s: ioctl blkdev_get_sectors nie powiódł się"
  
- #: misc-utils/uuidd.c:640
+ #: sys-utils/blkzone.c:184
 -#, fuzzy, c-format
 +#, c-format
- msgid "socket name too long: %s"
--msgstr "nazwa woluminu za długa"
-+msgstr "nazwa gniazda za długa: %s"
+ msgid "%s: offset is greater than or equal to device size"
+-msgstr "%s: offset jest większy niż rozmiar urządzenia"
++msgstr "%s: offset jest większy lub równy rozmiarowi urządzenia"
  
- #: misc-utils/uuidd.c:647
- msgid "Both --socket-activation and --socket specified. Ignoring --socket."
+ #: sys-utils/blkzone.c:188 sys-utils/blkzone.c:262
+ #, c-format
+@@ -12352,9 +12352,8 @@
+ msgstr "napęd CD-ROM nie jest gotowy"
+ 
+ #: sys-utils/eject.c:441
+-#, fuzzy
+ msgid "CD-ROM status command failed"
+-msgstr "polecenie wysunięcia CD-ROM-u nie powiodło się"
++msgstr "polecenie sprawdzenia stanu CD-ROM-u nie powiodło się"
+ 
+ #: sys-utils/eject.c:481
+ msgid "CD-ROM select speed command failed"
