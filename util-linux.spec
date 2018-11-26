@@ -37,7 +37,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.33
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
@@ -89,6 +89,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.671
 BuildRequires:	sed >= 4.0
+BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
 BuildRequires:	xz
@@ -1032,6 +1033,7 @@ fi
 %attr(755,root,root) /sbin/clock
 %attr(755,root,root) /sbin/hwclock*
 %attr(755,root,root) /sbin/nologin
+%{_mandir}/man5/adjtime_config.5*
 %{_mandir}/man8/clock.8*
 %{_mandir}/man8/hwclock.8*
 %{_mandir}/man8/nologin.8*
@@ -1103,6 +1105,7 @@ fi
 %attr(755,root,root) /sbin/wipefs
 %attr(755,root,root) /sbin/zramctl
 %attr(755,root,root) %{_bindir}/cal
+%attr(755,root,root) %{_bindir}/choom
 %attr(755,root,root) %{_bindir}/chmem
 %attr(755,root,root) %{_bindir}/chrt
 %attr(755,root,root) %{_bindir}/col
@@ -1166,6 +1169,7 @@ fi
 %{systemdunitdir}/fstrim.timer
 
 %{_mandir}/man1/cal.1*
+%{_mandir}/man1/choom.1*
 %{_mandir}/man1/chrt.1*
 %{_mandir}/man1/col.1*
 %{_mandir}/man1/colcrt.1*
