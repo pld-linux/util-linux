@@ -6,6 +6,8 @@
 #   - chrt is not built now (because of --disable-schedutils), but it's probably not needed
 #   - fsck is not built now (because of --disable-libmount)
 #   - maybe we want some more now?
+# - agetty: Documentation/releases/v2.32-ReleaseNotes:54:   - add support for /etc/issue.d  [Karel Zak]
+#   https://github.com/karelzak/util-linux/commit/1fc82a1360305f696dc1be6105c9c56a9ea03f52#diff-d7efd2b3dbb10e54185f001dc21d43db
 #
 # Conditional build:
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
