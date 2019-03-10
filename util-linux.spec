@@ -38,13 +38,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.33
-Release:	2
+Version:	2.33.1
+Release:	1
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.33/%{name}-%{version}.tar.xz
-# Source0-md5:	3cdf1c652007610f92076ba4212381a9
+# Source0-md5:	6fcfea2043b5ac188fd3eed56aeb5d90
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
