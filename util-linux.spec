@@ -38,13 +38,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.33.2
+Version:	2.34
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.33/%{name}-%{version}.tar.xz
-# Source0-md5:	91653b90fcbe9c161153e39b8cc69fb5
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.34/%{name}-%{version}.tar.xz
+# Source0-md5:	a78cbeaed9c39094b96a48ba8f891d50
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -748,7 +748,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch4 -p1
 %patch5 -p1
 %{?with_initrd:%patch6 -p1}
-%patch7 -p1
+#%patch7 -p1
 
 cp -p %{SOURCE10} nologin.c
 
@@ -1119,6 +1119,7 @@ fi
 %attr(755,root,root) %{_bindir}/fincore
 %attr(755,root,root) %{_bindir}/flock
 %attr(755,root,root) %{_bindir}/getopt
+%attr(755,root,root) %{_bindir}/hardlink
 %attr(755,root,root) %{_bindir}/hexdump
 %attr(755,root,root) %{_bindir}/ionice
 %attr(755,root,root) %{_bindir}/ipcmk
@@ -1183,6 +1184,7 @@ fi
 %{_mandir}/man1/fincore.1*
 %{_mandir}/man1/flock.1*
 %{_mandir}/man1/getopt.1*
+%{_mandir}/man1/hardlink.1*
 %{_mandir}/man1/hexdump.1*
 %{_mandir}/man1/ionice.1*
 %{_mandir}/man1/ipcrm.1*
