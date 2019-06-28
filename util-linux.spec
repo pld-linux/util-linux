@@ -115,10 +115,12 @@ Requires:	libsmartcols = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
 Provides:	eject = %{version}-%{release}
 Provides:	fdisk
+Provides:	hardlink
 Provides:	linux32
 Provides:	sparc32
 Obsoletes:	cramfs
 Obsoletes:	eject
+Obsoletes:	hardlink
 Obsoletes:	ionice
 Obsoletes:	linux32
 Obsoletes:	rawdevices
@@ -420,7 +422,6 @@ Summary:	Library to handle device identification and token extraction
 Summary(pl.UTF-8):	Biblioteka do obsługi identyfikacji urządzeń
 License:	LGPL v2.1+
 Group:		Libraries
-Requires:	libuuid = %{version}-%{release}
 Obsoletes:	util-linux-ng-libs < 2.20-1
 
 %description -n libblkid
@@ -435,7 +436,6 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki blkid
 License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libblkid = %{version}-%{release}
-Requires:	libuuid-devel = %{version}-%{release}
 Obsoletes:	util-linux-ng-devel < 2.20-1
 
 %description -n libblkid-devel
@@ -450,7 +450,6 @@ Summary(pl.UTF-8):	Statyczna biblioteka do obsługi identyfikacji urządzeń
 License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libblkid-devel = %{version}-%{release}
-Requires:	libuuid-static = %{version}-%{release}
 Obsoletes:	util-linux-ng-static < 2.20-1
 
 %description -n libblkid-static
@@ -466,7 +465,6 @@ Summary(pl.UTF-8):	Statyczna biblioteka dietlibc do obsługi identyfikacji urzą
 License:	LGPL v2.1+
 Group:		Development/Libraries
 Requires:	libblkid-devel = %{version}-%{release}
-Requires:	libuuid-dietlibc = %{version}-%{release}
 
 %description -n libblkid-dietlibc
 Library to handle device identification and token extraction - static
