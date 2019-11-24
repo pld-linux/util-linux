@@ -39,7 +39,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.34
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
@@ -66,6 +66,7 @@ Patch4:		su-paths.patch
 Patch5:		%{name}-ac.patch
 Patch6:		%{name}-diet.patch
 Patch7:		%{name}-pl.po.patch
+Patch8:		%{name}-completion-gawk.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.60
@@ -727,6 +728,7 @@ Summary(pl.UTF-8):	Bashowe dopełnianie parametrów dla poleceń z pakietu util-
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
+Requires:	gawk
 %if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
 %endif
@@ -747,6 +749,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch5 -p1
 %{?with_initrd:%patch6 -p1}
 #%patch7 -p1
+%patch8 -p1
 
 cp -p %{SOURCE10} nologin.c
 
