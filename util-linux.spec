@@ -38,13 +38,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.34
-Release:	5
-License:	GPL v2+
+Version:	2.35.1
+Release:	1
+License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.34/%{name}-%{version}.tar.xz
-# Source0-md5:	a78cbeaed9c39094b96a48ba8f891d50
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.35/%{name}-%{version}.tar.xz
+# Source0-md5:	7f64882f631225f0295ca05080cee1bf
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -90,7 +90,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python3-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
-BuildRequires:	rpmbuild(macros) >= 1.671
+BuildRequires:	rpmbuild(macros) >= 1.673
 BuildRequires:	sed >= 4.0
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
@@ -208,6 +208,7 @@ uygulamaları ve logger gibi sistem programları sayılabilir.
 %package -n blockdev
 Summary:	Support for blockdev
 Summary(pl.UTF-8):	Obsługa blockdev
+License:	GPL v2+
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires(post,preun,postun):	systemd-units >= 38
@@ -233,6 +234,7 @@ Summary(pl.UTF-8):	Program do konfiguracji urządzenia blokowego loopback
 Summary(ru.UTF-8):	Программы для настройки loopback-устройств
 Summary(tr.UTF-8):	Yerel-çevrim aygıtlarının kurulması ve ayarlanması için programlar
 Summary(uk.UTF-8):	Програми для конфігурації loopback-пристроїв
+License:	GPL v2+
 Group:		Applications/System
 Requires:	libsmartcols = %{version}-%{release}
 
@@ -302,6 +304,7 @@ Summary(pl.UTF-8):	Programy do montowania i odmontowywania systemów plików
 Summary(ru.UTF-8):	Программы для монтирования и размонтирования файловых систем
 Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
+License:	GPL v2+
 Group:		Applications/System
 Requires:	libmount = %{version}-%{release}
 Requires:	libsmartcols = %{version}-%{release}
@@ -392,6 +395,7 @@ Paralel bağlantı noktası sürücüsünü ayarlar.
 %package -n login
 Summary:	login is used when signing onto a system
 Summary(pl.UTF-8):	login jest używany do rozpoczęcia pracy w systemie
+License:	GPL v2+
 Group:		Applications/System
 Requires:	pam >= %{pam_ver}
 Obsoletes:	heimdal-login
@@ -409,6 +413,7 @@ do przełączania z jednego użytkownika na innego w każdym momencie
 %package -n agetty
 Summary:	Alternative Linux getty
 Summary(pl.UTF-8):	Alternatywny getty
+License:	GPL v2+
 Group:		Applications/System
 Requires:	login
 
@@ -535,7 +540,7 @@ dietlibc.
 %package -n uuidd
 Summary:	Helper daemon to guarantee uniqueness of time-based UUIDs
 Summary(pl.UTF-8):	Pomocniczy demon gwarantujący unikalność UUID-ów opartych na czasie
-License:	GPL v2
+License:	GPL v2+
 Group:		Daemons
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
@@ -660,6 +665,7 @@ Wiązania Pythona 3.x do biblioteki libmount.
 %package -n fsck
 Summary:	Check and repair a Linux file system
 Summary(pl.UTF-8):	Sprawdzanie i naprawa linuksowego systemu plików
+License:	GPL v2+
 Group:		Applications/System
 Requires:	libblkid = %{version}-%{release}
 
@@ -672,7 +678,7 @@ Sprawdzanie i naprawa linuksowego systemu plików.
 %package -n libsmartcols
 Summary:	Library to handle tables and trees
 Summary(pl.UTF-8):	Biblioteka do obsługi tabelek i drzewek
-License:	LGPL
+License:	LGPL v2+
 Group:		Libraries
 
 %description -n libsmartcols
@@ -684,7 +690,7 @@ Biblioteka do obsługi tabelek i drzewek.
 %package -n libsmartcols-devel
 Summary:	Header files for smartcols library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki smartcols
-License:	LGPL
+License:	LGPL v2+
 Group:		Development/Libraries
 Requires:	libsmartcols = %{version}-%{release}
 
@@ -697,7 +703,7 @@ Pliki nagłówkowe biblioteki smartcols.
 %package -n libsmartcols-static
 Summary:	Static version of smartcols library
 Summary(pl.UTF-8):	Statyczna wersja biblioteki smartcols
-License:	LGPL
+License:	LGPL v2+
 Group:		Development/Libraries
 Requires:	libsmartcols-devel = %{version}-%{release}
 
@@ -710,6 +716,7 @@ Statyczna wersja biblioteki smartcols.
 %package initrd
 Summary:	blkid - initrd version
 Summary(pl.UTF-8):	blkid - wersja dla initrd
+License:	GPL v2+
 Group:		Base
 Obsoletes:	util-linux-ng-initrd < 2.20-1
 Conflicts:	geninitrd < 10000.10
@@ -725,6 +732,7 @@ etykietę lub UUID - statycznie skonsolidowane na potrzeby initrd.
 %package -n bash-completion-util-linux
 Summary:	bash completion for util-linux commands
 Summary(pl.UTF-8):	Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux
+License:	GPL v2+
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
@@ -949,7 +957,8 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 	$RPM_BUILD_ROOT%{_mandir}/man8/{vigr,vipw}.8 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,chkdupexe,ddate,reset}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
+	$RPM_BUILD_ROOT%{_mandir}/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8 \
+	$RPM_BUILD_ROOT%{bash_compdir}/{chfn,chsh,newgrp}
 
 %ifarch sparc sparcv9 sparc64
 # programs not built on sparc
@@ -1149,6 +1158,7 @@ fi
 %attr(755,root,root) %{_bindir}/renice
 %attr(755,root,root) %{_bindir}/rev
 %attr(755,root,root) %{_bindir}/script
+%attr(755,root,root) %{_bindir}/scriptlive
 %attr(755,root,root) %{_bindir}/scriptreplay
 %attr(755,root,root) %{_bindir}/setpriv
 %attr(755,root,root) %{_bindir}/setsid
@@ -1214,6 +1224,7 @@ fi
 %{_mandir}/man1/setpriv.1*
 %{_mandir}/man1/setsid.1*
 %{_mandir}/man1/script.1*
+%{_mandir}/man1/scriptlive.1*
 %{_mandir}/man1/scriptreplay.1*
 %{_mandir}/man1/setterm.1*
 %{_mandir}/man1/taskset.1*
@@ -1664,4 +1675,104 @@ fi
 
 %files -n bash-completion-util-linux
 %defattr(644,root,root,755)
-/usr/share/bash-completion/completions/*
+%{bash_compdir}/addpart
+%{bash_compdir}/blkdiscard
+%{bash_compdir}/blkid
+%{bash_compdir}/blkzone
+%{bash_compdir}/blockdev
+%{bash_compdir}/cal
+%{bash_compdir}/cfdisk
+%{bash_compdir}/chcpu
+%{bash_compdir}/chmem
+%{bash_compdir}/chrt
+%{bash_compdir}/col
+%{bash_compdir}/colcrt
+%{bash_compdir}/colrm
+%{bash_compdir}/column
+%{bash_compdir}/ctrlaltdel
+%{bash_compdir}/delpart
+%{bash_compdir}/dmesg
+%{bash_compdir}/eject
+%{bash_compdir}/fallocate
+%{bash_compdir}/fdformat
+%{bash_compdir}/fdisk
+%{bash_compdir}/fincore
+%{bash_compdir}/findfs
+%{bash_compdir}/findmnt
+%{bash_compdir}/flock
+%{bash_compdir}/fsck
+%{bash_compdir}/fsck.cramfs
+%{bash_compdir}/fsck.minix
+%{bash_compdir}/fsfreeze
+%{bash_compdir}/fstrim
+%{bash_compdir}/getopt
+%{bash_compdir}/hexdump
+%{bash_compdir}/hwclock
+%{bash_compdir}/ionice
+%{bash_compdir}/ipcmk
+%{bash_compdir}/ipcrm
+%{bash_compdir}/ipcs
+%{bash_compdir}/isosize
+%{bash_compdir}/last
+%{bash_compdir}/ldattach
+%{bash_compdir}/logger
+%{bash_compdir}/look
+%{bash_compdir}/losetup
+%{bash_compdir}/lsblk
+%{bash_compdir}/lscpu
+%{bash_compdir}/lsipc
+%{bash_compdir}/lslocks
+%{bash_compdir}/lslogins
+%{bash_compdir}/lsmem
+%{bash_compdir}/lsns
+%{bash_compdir}/mcookie
+%{bash_compdir}/mesg
+%{bash_compdir}/mkfs
+%{bash_compdir}/mkfs.bfs
+%{bash_compdir}/mkfs.cramfs
+%{bash_compdir}/mkfs.minix
+%{bash_compdir}/mkswap
+%{bash_compdir}/more
+%{bash_compdir}/mount
+%{bash_compdir}/mountpoint
+%{bash_compdir}/namei
+%{bash_compdir}/nsenter
+%{bash_compdir}/partx
+%{bash_compdir}/pg
+%{bash_compdir}/pivot_root
+%{bash_compdir}/prlimit
+%{bash_compdir}/raw
+%{bash_compdir}/readprofile
+%{bash_compdir}/rename
+%{bash_compdir}/renice
+%{bash_compdir}/resizepart
+%{bash_compdir}/rev
+%{bash_compdir}/rfkill
+%{bash_compdir}/rtcwake
+%{bash_compdir}/runuser
+%{bash_compdir}/script
+%{bash_compdir}/scriptlive
+%{bash_compdir}/scriptreplay
+%{bash_compdir}/setarch
+%{bash_compdir}/setpriv
+%{bash_compdir}/setsid
+%{bash_compdir}/setterm
+%{bash_compdir}/sfdisk
+%{bash_compdir}/su
+%{bash_compdir}/swaplabel
+%{bash_compdir}/swapoff
+%{bash_compdir}/swapon
+%{bash_compdir}/taskset
+%{bash_compdir}/tunelp
+%{bash_compdir}/ul
+%{bash_compdir}/umount
+%{bash_compdir}/unshare
+%{bash_compdir}/utmpdump
+%{bash_compdir}/uuidd
+%{bash_compdir}/uuidgen
+%{bash_compdir}/uuidparse
+%{bash_compdir}/wdctl
+%{bash_compdir}/whereis
+%{bash_compdir}/wipefs
+%{bash_compdir}/write
+%{bash_compdir}/zramctl
