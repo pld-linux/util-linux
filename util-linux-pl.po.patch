@@ -1,25 +1,115 @@
---- util-linux-2.33/po/pl.po.orig	2018-11-06 12:13:57.023525535 +0100
-+++ util-linux-2.33/po/pl.po	2018-11-26 20:39:09.335888712 +0100
-@@ -11445,9 +11445,9 @@
- msgstr "%s: ioctl blkdev_get_sectors nie powiódł się"
+--- util-linux-2.35.2/po/pl.po.orig	2020-06-04 17:28:22.850886931 +0200
++++ util-linux-2.35.2/po/pl.po	2020-06-04 17:28:29.597517048 +0200
+@@ -3990,12 +3990,12 @@
+ #: disk-utils/sfdisk.c:526
+ #, c-format
+ msgid "cannot read at offset: %zu; continue"
+-msgstr ""
++msgstr "nie można odczytać spod offsetu: %zu; kontynuacja"
  
- #: sys-utils/blkzone.c:184
+ #: disk-utils/sfdisk.c:537
+ #, c-format
+ msgid "cannot write at offset: %zu; continue"
+-msgstr ""
++msgstr "nie można zapisać pod offset: %zu; kontynuacja"
+ 
+ #: disk-utils/sfdisk.c:566
+ #, c-format
+@@ -4008,18 +4008,18 @@
+ msgstr "Przeniesiono %ju z %ju sektorów (%.3f%%)."
+ 
+ #: disk-utils/sfdisk.c:589
 -#, fuzzy, c-format
 +#, c-format
- msgid "%s: offset is greater than or equal to device size"
--msgstr "%s: offset jest większy niż rozmiar urządzenia"
-+msgstr "%s: offset jest większy lub równy rozmiarowi urządzenia"
+ msgid "Moved %ju from %ju sectors (%.0f%%)."
+-msgstr "Przeniesiono %ju z %ju sektorów (%.3f%%)."
++msgstr "Przeniesiono %ju z %ju sektorów (%.0f%%)."
  
- #: sys-utils/blkzone.c:188 sys-utils/blkzone.c:262
+ #: disk-utils/sfdisk.c:603
+ msgid "Your data has not been moved (--no-act)."
+ msgstr "Dane nie zostały przeniesione (--no-act)."
+ 
+ #: disk-utils/sfdisk.c:605
+-#, fuzzy, c-format
++#, c-format
+ msgid "%zu I/O errors detected!"
+-msgstr "Wykryto %d błąd."
++msgstr "Wykryto błędy we/wy (liczba: %zu)!"
+ 
+ #: disk-utils/sfdisk.c:608
  #, c-format
-@@ -12352,9 +12352,8 @@
- msgstr "napęd CD-ROM nie jest gotowy"
+@@ -4361,9 +4361,8 @@
+ "Stara sytuacja:"
  
- #: sys-utils/eject.c:441
+ #: disk-utils/sfdisk.c:1745
 -#, fuzzy
- msgid "CD-ROM status command failed"
--msgstr "polecenie wysunięcia CD-ROM-u nie powiodło się"
-+msgstr "polecenie sprawdzenia stanu CD-ROM-u nie powiodło się"
+ msgid "failed to set script header"
+-msgstr "nie udało się przydzielić nagłówka skryptu"
++msgstr "nie udało się ustawić nagłówka skryptu"
  
- #: sys-utils/eject.c:481
- msgid "CD-ROM select speed command failed"
+ #: disk-utils/sfdisk.c:1750
+ #, c-format
+@@ -4393,7 +4392,7 @@
+ #: disk-utils/sfdisk.c:1791
+ #, c-format
+ msgid "Unknown script header '%s' -- ignore."
+-msgstr ""
++msgstr "Nieznany nagłówek skryptu '%s' - zignorowano."
+ 
+ #: disk-utils/sfdisk.c:1803
+ msgid "Done.\n"
+@@ -12797,9 +12796,8 @@
+ msgstr "użycie urządzenia domyślnego `%s'"
+ 
+ #: sys-utils/eject.c:891
+-#, fuzzy
+ msgid "unable to find device"
+-msgstr "%s: nie udało się odnaleźć urządzenia"
++msgstr "nie udało się odnaleźć urządzenia"
+ 
+ #: sys-utils/eject.c:893
+ #, c-format
+@@ -13351,24 +13349,22 @@
+ "Ustawienie RTC na %ld (%ld + %d; refsystime = %ld.%06ld)\n"
+ 
+ #: sys-utils/hwclock.c:684
+-#, fuzzy
+ msgid "Calling settimeofday(NULL, 0) to lock the warp_clock function."
+ msgstr "Wywoływanie settimeofday(NULL, 0) w celu zablokowania funkcji warp_clock."
+ 
+ #: sys-utils/hwclock.c:687
+-#, fuzzy, c-format
+ msgid "Calling settimeofday(NULL, %d) to set the kernel timezone.\n"
+-msgstr "Wywoływanie settimeofday(NULL, 0) w celu zablokowania funkcji warp_clock."
++msgstr "Wywoływanie settimeofday(NULL, %d) w celu ustawienia strefy czasowej jądra.\n"
+ 
+ #: sys-utils/hwclock.c:691
+-#, fuzzy, c-format
++#, c-format
+ msgid "Calling settimeofday(NULL, %d) to warp System time, set PCIL and the kernel tz.\n"
+-msgstr "Wywoływanie settimeofday(NULL, %d) w celu ustawienia persistent_clock_is_local.\n"
++msgstr "Wywoływanie settimeofday(NULL, %d) w przekręcenia czasu systemowego, ustawienia PCIL i strefy czasowej jądra.\n"
+ 
+ #: sys-utils/hwclock.c:696
+-#, fuzzy, c-format
++#, c-format
+ msgid "Calling settimeofday(%ld.%06ld, NULL) to set the System time.\n"
+-msgstr "Wywoływanie settimeofday(%ld.%06ld, %d)\n"
++msgstr "Wywoływanie settimeofday(%ld.%06ld, NULL) w celu ustawienia czasu systemowego.\n"
+ 
+ #: sys-utils/hwclock.c:718
+ msgid "settimeofday() failed"
+@@ -20476,13 +20472,3 @@
+ #: text-utils/ul.c:629
+ msgid "Input line too long."
+ msgstr "Linia wejściowa zbyt długa."
+-
+-#, c-format
+-#~ msgid "Calling settimeofday(NULL, %d) "
+-#~ msgstr "Wywoływanie settimeofday(NULL, %d) "
+-
+-#~ msgid "to set the kernel timezone."
+-#~ msgstr "w celu ustawienia strefy czasowej jądra."
+-
+-#~ msgid "to warp System time."
+-#~ msgstr "w celu przekręcenia czasu systemowego."
