@@ -38,13 +38,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.35.2
+Version:	2.36
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.35/%{name}-%{version}.tar.xz
-# Source0-md5:	248a4d0810c9193e0e9a4bb3f26b93d8
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.36/%{name}-%{version}.tar.xz
+# Source0-md5:	fe7c0f7e439f08970e462c9d44599903
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -1133,6 +1133,7 @@ fi
 %attr(755,root,root) %{_bindir}/ipcmk
 %attr(755,root,root) %{_bindir}/ipcrm
 %attr(755,root,root) %{_bindir}/ipcs
+%attr(755,root,root) %{_bindir}/irqtop
 %attr(755,root,root) %{_bindir}/isosize
 %attr(755,root,root) %{_bindir}/line
 %attr(755,root,root) %{_bindir}/last
@@ -1141,6 +1142,7 @@ fi
 %attr(755,root,root) %{_bindir}/look
 %attr(755,root,root) %{_bindir}/lscpu
 %attr(755,root,root) %{_bindir}/lsipc
+%attr(755,root,root) %{_bindir}/lsirq
 %attr(755,root,root) %{_bindir}/lslocks
 %attr(755,root,root) %{_bindir}/lslogins
 %attr(755,root,root) %{_bindir}/lsmem
@@ -1199,6 +1201,7 @@ fi
 %{_mandir}/man1/ipcrm.1*
 %{_mandir}/man1/ipcmk.1*
 %{_mandir}/man1/ipcs.1*
+%{_mandir}/man1/irqtop.1*
 %{_mandir}/man1/kill.1*
 %{_mandir}/man1/last.1*
 %{_mandir}/man1/lastb.1*
@@ -1207,6 +1210,7 @@ fi
 %{_mandir}/man1/look.1*
 %{_mandir}/man1/lscpu.1*
 %{_mandir}/man1/lsipc.1*
+%{_mandir}/man1/lsirq.1*
 %{_mandir}/man1/lslogins.1*
 %{_mandir}/man1/lsmem.1*
 %{_mandir}/man1/mcookie.1*
@@ -1710,6 +1714,7 @@ fi
 %{bash_compdir}/ipcmk
 %{bash_compdir}/ipcrm
 %{bash_compdir}/ipcs
+%{bash_compdir}/irqtop
 %{bash_compdir}/isosize
 %{bash_compdir}/last
 %{bash_compdir}/ldattach
@@ -1719,6 +1724,7 @@ fi
 %{bash_compdir}/lsblk
 %{bash_compdir}/lscpu
 %{bash_compdir}/lsipc
+%{bash_compdir}/lsirq
 %{bash_compdir}/lslocks
 %{bash_compdir}/lslogins
 %{bash_compdir}/lsmem
