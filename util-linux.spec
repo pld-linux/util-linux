@@ -1,5 +1,5 @@
 # TODO
-# - remote chfn/chsh (BR: libuser >= 0.58)? - but PLD uses pwdutils/shadow implementation currently
+# - remove chfn/chsh (BR: libuser >= 0.58)? - but PLD uses pwdutils/shadow implementation currently
 # - verify initrd tools set:
 #   - I've taken list from 2.21.3 package, but there was no explicit list, so
 #     there are probably some unneeded tools
