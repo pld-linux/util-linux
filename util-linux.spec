@@ -89,7 +89,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python3-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
-BuildRequires:	rpmbuild(macros) >= 1.673
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
 BuildRequires:	systemd-devel >= 1:209
 BuildRequires:	tar >= 1:1.22
@@ -736,9 +736,7 @@ Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
 Requires:	gawk
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description -n bash-completion-util-linux
 Bash completion for util-linux commands.
