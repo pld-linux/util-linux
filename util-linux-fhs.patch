@@ -1,17 +1,19 @@
---- util-linux-2.30/include/pathnames.h.orig	2017-02-23 13:19:13.927424206 +0100
-+++ util-linux-2.30/include/pathnames.h	2017-06-22 21:40:58.287666726 +0200
-@@ -41,7 +41,7 @@
+diff -urNp -x '*.orig' util-linux-2.36.2.org/include/pathnames.h util-linux-2.36.2/include/pathnames.h
+--- util-linux-2.36.2.org/include/pathnames.h	2021-02-12 12:32:01.736988771 +0100
++++ util-linux-2.36.2/include/pathnames.h	2021-02-28 14:21:31.543044005 +0100
+@@ -39,7 +39,7 @@
  #define _PATH_NOLOGIN_TXT	"/etc/nologin.txt"
  
  #ifndef _PATH_MAILDIR
 -# define _PATH_MAILDIR		"/var/spool/mail"
 +# define _PATH_MAILDIR		"/var/mail"
  #endif
- #define	_PATH_MOTDFILE		"/etc/motd"
+ #define	_PATH_MOTDFILE		"/usr/share/misc/motd:/run/motd:/etc/motd"
  #ifndef _PATH_NOLOGIN
---- util-linux-2.21/login-utils/login.1~	2012-02-10 15:45:52.000000000 +0200
-+++ util-linux-2.21/login-utils/login.1	2012-03-05 18:07:04.386917212 +0200
-@@ -223,7 +223,7 @@
+diff -urNp -x '*.orig' util-linux-2.36.2.org/login-utils/login.1 util-linux-2.36.2/login-utils/login.1
+--- util-linux-2.36.2.org/login-utils/login.1	2021-02-12 12:32:01.748988728 +0100
++++ util-linux-2.36.2/login-utils/login.1	2021-02-28 14:21:31.543044005 +0100
+@@ -347,7 +347,7 @@ the superuser logs in.  ENV_ROOTPATH tak
  .I /var/run/utmp
  .I /var/log/wtmp
  .I /var/log/lastlog

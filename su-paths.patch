@@ -1,8 +1,9 @@
---- coreutils-4.5.3/login-utils/su-common.c.orig	Sun Oct 27 21:57:03 2002
-+++ coreutils-4.5.3/login-utils/su-common.c	Sun Oct 27 22:15:05 2002
-@@ -154,6 +154,15 @@
- # define DEFAULT_ROOT_LOGIN_PATH "/usr/ucb:/bin:/usr/bin:/etc"
- #endif
+diff -urNp -x '*.orig' util-linux-2.36.2.org/login-utils/su-common.c util-linux-2.36.2/login-utils/su-common.c
+--- util-linux-2.36.2.org/login-utils/su-common.c	2021-02-12 12:32:01.749988723 +0100
++++ util-linux-2.36.2/login-utils/su-common.c	2021-02-28 14:22:27.508126765 +0100
+@@ -100,6 +100,15 @@ UL_DEBUG_DEFINE_MASKNAMES(su) = UL_DEBUG
+ 
+ #define is_pam_failure(_rc)	((_rc) != PAM_SUCCESS)
  
 +/* The default paths which get set are both bogus and oddly influenced
 +    by <paths.h> and -D on the commands line. Just to be clear, we'll set

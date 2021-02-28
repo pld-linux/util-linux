@@ -1,30 +1,26 @@
-Mount has to read /proc/partitions in one gulp. It doesn't. Failed for me 
-after a hard powerdown (oops) and the resulting fsck-the-world frenzy on 
-startup, before the mount -a. Failure cause is identical (getting out of 
-sync with the text at the 1K boundary), but failure mode not quite so 
-drastic as it doesn't bail out like fsck does.
-
---- util-linux-2.11y/disk-utils/blockdev.c.procpartitions	2002-03-08 17:57:02.000000000 -0500
-+++ util-linux-2.11y/disk-utils/blockdev.c	2003-01-13 14:28:41.000000000 -0500
-@@ -290,6 +290,7 @@
- 	char ptname[200];
+diff -urNp -x '*.orig' util-linux-2.36.2.org/disk-utils/blockdev.c util-linux-2.36.2/disk-utils/blockdev.c
+--- util-linux-2.36.2.org/disk-utils/blockdev.c	2021-02-02 16:41:37.962357499 +0100
++++ util-linux-2.36.2/disk-utils/blockdev.c	2021-02-28 14:22:07.717508138 +0100
+@@ -431,6 +431,7 @@ static void report_all_devices(void)
+ 	char ptname[200 + 1];
  	char device[210];
  	int ma, mi, sz;
 +	char iobuf[32*1024];
  
- 	procpt = fopen(PROC_PARTITIONS, "r");
- 	if (!procpt) {
-@@ -297,6 +298,7 @@
- 			progname, PROC_PARTITIONS);
- 		exit(1);
+ 	procpt = fopen(_PATH_PROC_PARTITIONS, "r");
+ 	if (!procpt)
+@@ -444,6 +445,7 @@ static void report_all_devices(void)
+ 		sprintf(device, "/dev/%s", ptname);
+ 		report_device(device, 1);
  	}
 +	setvbuf(procpt, iobuf, _IOFBF, sizeof(iobuf));
  
- 	while (fgets(line, sizeof(line), procpt)) {
- 		if (sscanf (line, " %d %d %d %[^\n ]",
---- util-linux-2.26/disk-utils/fdisk-list.c.orig	2015-02-10 10:49:46.346584245 +0100
-+++ util-linux-2.26/disk-utils/fdisk-list.c	2015-02-23 21:04:01.522730338 +0100
-@@ -198,6 +198,7 @@
+ 	fclose(procpt);
+ }
+diff -urNp -x '*.orig' util-linux-2.36.2.org/disk-utils/fdisk-list.c util-linux-2.36.2/disk-utils/fdisk-list.c
+--- util-linux-2.36.2.org/disk-utils/fdisk-list.c	2021-02-12 12:32:01.733988782 +0100
++++ util-linux-2.36.2/disk-utils/fdisk-list.c	2021-02-28 14:22:07.717508138 +0100
+@@ -320,6 +320,7 @@ done:
  char *next_proc_partition(FILE **f)
  {
  	char line[128 + 1];
@@ -32,7 +28,7 @@ drastic as it doesn't bail out like fsck does.
  
  	if (!*f) {
  		*f = fopen(_PATH_PROC_PARTITIONS, "r");
-@@ -205,6 +206,7 @@
+@@ -327,6 +328,7 @@ char *next_proc_partition(FILE **f)
  			warn(_("cannot open %s"), _PATH_PROC_PARTITIONS);
  			return NULL;
  		}
