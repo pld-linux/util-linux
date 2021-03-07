@@ -736,7 +736,7 @@ Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
 Requires:	bash-completion >= 2.0
 Requires:	gawk
-%{?noarchpackage}
+BuildArch:	noarch
 
 %description -n bash-completion-util-linux
 Bash completion for util-linux commands.
