@@ -14,6 +14,7 @@
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
 %bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
+%bcond_without	systemd		# systemd
 %if "%{pld_release}" == "ac"
 %bcond_with	initrd		# don't build initrd version
 %bcond_with	fallocate	# fallocate utility (needs glibc 2.11 to compile)
@@ -91,7 +92,7 @@ BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	sed >= 4.0
-BuildRequires:	systemd-devel >= 1:209
+%{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
 BuildRequires:	xz
@@ -867,7 +868,9 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--with-bashcompletiondir=/usr/share/bash-completion/completions \
 	--with-selinux%{!?with_selinux:=no} \
 	--with-smack \
-	--with-readline
+	--with-readline \
+	%{!?with_systemd:--without-systemd}
+
 
 %{__make}
 
@@ -1177,8 +1180,10 @@ fi
 %attr(755,root,root) %{_sbindir}/rfkill
 %attr(755,root,root) %{_sbindir}/rtcwake
 
+%if %{with systemd}
 %{systemdunitdir}/fstrim.service
 %{systemdunitdir}/fstrim.timer
+%endif
 
 %{_mandir}/man1/cal.1*
 %{_mandir}/man1/choom.1*
@@ -1585,8 +1590,10 @@ fi
 %attr(6755,uuidd,uuidd) %{_sbindir}/uuidd
 %attr(2775,uuidd,uuidd) /var/lib/libuuid
 %{_mandir}/man8/uuidd.8*
+%if %{with systemd}
 %{systemdunitdir}/uuidd.service
 %{systemdunitdir}/uuidd.socket
+%endif
 
 %files -n libfdisk
 %defattr(644,root,root,755)
