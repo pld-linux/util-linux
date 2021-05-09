@@ -484,11 +484,11 @@ Biblioteka do obsługi identyfikacji urządzeń i wydobywania tokenów -
 wersja statyczna dla dietlibc.
 
 %package -n libblkid-apidocs
-Summary:        libblkid API documentation
-Summary(pl.UTF-8):      Dokumentacja API libblkid
-Group:          Documentation
-Requires:       gtk-doc-common
-BuildArch:      noarch
+Summary:	libblkid API documentation
+Summary(pl.UTF-8):	Dokumentacja API libblkid
+Group:		Documentation
+Requires:	gtk-doc-common
+BuildArch:	noarch
 
 %description -n libblkid-apidocs
 libblkid API documentation.
@@ -626,11 +626,11 @@ Static version of fdisk library.
 Statyczna wersja biblioteki fdisk.
 
 %package -n libfdisk-apidocs
-Summary:        libfdisk API documentation
-Summary(pl.UTF-8):      Dokumentacja API libfdisk
-Group:          Documentation
-Requires:       gtk-doc-common
-BuildArch:      noarch
+Summary:	libfdisk API documentation
+Summary(pl.UTF-8):	Dokumentacja API libfdisk
+Group:		Documentation
+Requires:	gtk-doc-common
+BuildArch:	noarch
 
 %description -n libfdisk-apidocs
 libfdisk API documentation.
@@ -679,11 +679,11 @@ Static version of mount library.
 Statyczna wersja biblioteki mount.
 
 %package -n libmount-apidocs
-Summary:        libmount API documentation
-Summary(pl.UTF-8):      Dokumentacja API libmount
-Group:          Documentation
-Requires:       gtk-doc-common
-BuildArch:      noarch
+Summary:	libmount API documentation
+Summary(pl.UTF-8):	Dokumentacja API libmount
+Group:		Documentation
+Requires:	gtk-doc-common
+BuildArch:	noarch
 
 %description -n libmount-apidocs
 libmount API documentation.
@@ -756,11 +756,11 @@ Static version of smartcols library.
 Statyczna wersja biblioteki smartcols.
 
 %package -n libsmartcols-apidocs
-Summary:        libsmartcols API documentation
-Summary(pl.UTF-8):      Dokumentacja API libsmartcols
-Group:          Documentation
-Requires:       gtk-doc-common
-BuildArch:      noarch
+Summary:	libsmartcols API documentation
+Summary(pl.UTF-8):	Dokumentacja API libsmartcols
+Group:		Documentation
+Requires:	gtk-doc-common
+BuildArch:	noarch
 
 %description -n libsmartcols-apidocs
 libsmartcols API documentation.
