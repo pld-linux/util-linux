@@ -12,6 +12,7 @@
 # Conditional build:
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
+%bcond_without	apidocs		# API documentation for libraries
 %bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
 %bcond_without	systemd		# systemd
@@ -40,7 +41,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.36.2
-Release:	2
+Release:	3
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
@@ -73,8 +74,10 @@ BuildRequires:	autoconf >= 2.60
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-tools >= 0.18.3
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
+%if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
+%endif
 BuildRequires:	libcap-ng-devel
 %ifarch ppc ppc64
 # for lscpu
@@ -480,6 +483,19 @@ dietlibc version.
 Biblioteka do obsługi identyfikacji urządzeń i wydobywania tokenów -
 wersja statyczna dla dietlibc.
 
+%package -n libblkid-apidocs
+Summary:        libblkid API documentation
+Summary(pl.UTF-8):      Dokumentacja API libblkid
+Group:          Documentation
+Requires:       gtk-doc-common
+BuildArch:      noarch
+
+%description -n libblkid-apidocs
+libblkid API documentation.
+
+%description -n libblkid-apidocs -l pl.UTF-8
+Dokumentacja API libblkid.
+
 %package -n libuuid
 Summary:	Library for accessing and manipulating UUID
 Summary(pl.UTF-8):	Biblioteka umożliwiająca dostęp i zmiany UUID
@@ -609,6 +625,19 @@ Static version of fdisk library.
 %description -n libfdisk-static -l pl.UTF-8
 Statyczna wersja biblioteki fdisk.
 
+%package -n libfdisk-apidocs
+Summary:        libfdisk API documentation
+Summary(pl.UTF-8):      Dokumentacja API libfdisk
+Group:          Documentation
+Requires:       gtk-doc-common
+BuildArch:      noarch
+
+%description -n libfdisk-apidocs
+libfdisk API documentation.
+
+%description -n libfdisk-apidocs -l pl.UTF-8
+Dokumentacja API libfdisk.
+
 %package -n libmount
 Summary:	Library to handle mounting-related tasks
 Summary(pl.UTF-8):	Biblioteka obsługująca zadania związane z montowaniem
@@ -648,6 +677,19 @@ Static version of mount library.
 
 %description -n libmount-static -l pl.UTF-8
 Statyczna wersja biblioteki mount.
+
+%package -n libmount-apidocs
+Summary:        libmount API documentation
+Summary(pl.UTF-8):      Dokumentacja API libmount
+Group:          Documentation
+Requires:       gtk-doc-common
+BuildArch:      noarch
+
+%description -n libmount-apidocs
+libmount API documentation.
+
+%description -n libmount-apidocs -l pl.UTF-8
+Dokumentacja API libmount.
 
 %package -n python3-libmount
 Summary:	Python 3.x libmount bindings
@@ -712,6 +754,19 @@ Static version of smartcols library.
 
 %description -n libsmartcols-static -l pl.UTF-8
 Statyczna wersja biblioteki smartcols.
+
+%package -n libsmartcols-apidocs
+Summary:        libsmartcols API documentation
+Summary(pl.UTF-8):      Dokumentacja API libsmartcols
+Group:          Documentation
+Requires:       gtk-doc-common
+BuildArch:      noarch
+
+%description -n libsmartcols-apidocs
+libsmartcols API documentation.
+
+%description -n libsmartcols-apidocs -l pl.UTF-8
+Dokumentacja API libsmartcols.
 
 %package initrd
 Summary:	blkid - initrd version
@@ -840,6 +895,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 %configure \
 	--bindir=/bin \
 	--sbindir=/sbin \
+	%{?with_apidocs:--docdir=%{_gtkdocdir}} \
 	%{!?with_fallocate:--disable-fallocate} \
 	--enable-libmount-support-mtab \
 	--disable-makeinstall-chown \
@@ -848,6 +904,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-use-tty-group \
 	--disable-wall \
 	--enable-chfn-chsh \
+	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-kill \
 	--enable-libblkid \
 	--enable-line \
@@ -964,8 +1021,12 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man8/{cfdisk,sfdisk}.8
 %endif
 
+%if %{with apidocs}
 # examples
-%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt/getopt-parse.*sh
+%{__rm} -r $RPM_BUILD_ROOT%{_gtkdocdir}/getopt
+%else
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt
+%endif
 
 %if %{with initrd}
 install -d $RPM_BUILD_ROOT%{_libdir}/initrd
@@ -1560,6 +1621,12 @@ fi
 %{dietlibdir}/libblkid.a
 %endif
 
+%if %{with apidocs}
+%files -n libblkid-apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/libblkid
+%endif
+
 %files -n libuuid
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/uuidgen
@@ -1611,6 +1678,12 @@ fi
 %defattr(644,root,root,755)
 %{_libdir}/libfdisk.a
 
+%if %{with apidocs}
+%files -n libfdisk-apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/libfdisk
+%endif
+
 %files -n libmount
 %defattr(644,root,root,755)
 %doc libmount/COPYING
@@ -1626,6 +1699,12 @@ fi
 %files -n libmount-static
 %defattr(644,root,root,755)
 %{_libdir}/libmount.a
+
+%if %{with apidocs}
+%files -n libmount-apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/libmount
+%endif
 
 %files -n python3-libmount
 %defattr(644,root,root,755)
@@ -1653,6 +1732,12 @@ fi
 %files -n libsmartcols-static
 %defattr(644,root,root,755)
 %{_libdir}/libsmartcols.a
+
+%if %{with apidocs}
+%files -n libsmartcols-apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/libsmartcols
+%endif
 
 %if %{with initrd}
 %files initrd
