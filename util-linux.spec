@@ -67,6 +67,7 @@ Patch3:		%{name}-procpartitions.patch
 Patch4:		su-paths.patch
 Patch5:		%{name}-ac.patch
 Patch6:		%{name}-diet.patch
+Patch7:		%{name}-rtas.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.64
@@ -810,6 +811,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch7 -p1
 %{?with_initrd:%patch6 -p1}
 
 cp -p %{SOURCE10} nologin.c

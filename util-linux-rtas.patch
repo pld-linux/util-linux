@@ -1,0 +1,22 @@
+--- util-linux-2.37/sys-utils/lscpu-cputype.c.orig	2021-05-26 13:32:10.618108196 +0200
++++ util-linux-2.37/sys-utils/lscpu-cputype.c	2021-07-04 15:09:29.174747744 +0200
+@@ -6,6 +6,10 @@
+ 
+ #include "fileutils.h"
+ 
++#if defined(HAVE_LIBRTAS)
++# include <librtas.h>
++#endif
++
+ /* Lookup a pattern and get the value for format  "<pattern> : <key>"
+  */
+ int lookup(char *line, char *pattern, char **value)
+@@ -738,7 +742,7 @@ int lscpu_read_archext(struct lscpu_cxt
+ 		ct->physsockets = strbe16toh(buf, 4);
+ 		ct->physchips = strbe16toh(buf, 6);
+ 		ct->physcoresperchip = strbe16toh(buf, 8);
+-nortas:
++nortas: ;
+ 	}
+ #endif
+ 	return 0;
