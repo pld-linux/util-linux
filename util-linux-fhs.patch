@@ -10,15 +10,14 @@ diff -urNp -x '*.orig' util-linux-2.36.2.org/include/pathnames.h util-linux-2.36
  #endif
  #define	_PATH_MOTDFILE		"/usr/share/misc/motd:/run/motd:/etc/motd"
  #ifndef _PATH_NOLOGIN
-diff -urNp -x '*.orig' util-linux-2.36.2.org/login-utils/login.1 util-linux-2.36.2/login-utils/login.1
---- util-linux-2.36.2.org/login-utils/login.1	2021-02-12 12:32:01.748988728 +0100
-+++ util-linux-2.36.2/login-utils/login.1	2021-02-28 14:21:31.543044005 +0100
-@@ -347,7 +347,7 @@ the superuser logs in.  ENV_ROOTPATH tak
- .I /var/run/utmp
- .I /var/log/wtmp
- .I /var/log/lastlog
--.I /var/spool/mail/*
-+.I /var/mail/*
- .I /etc/motd
- .I /etc/passwd
- .I /etc/nologin
+--- util-linux-2.37/login-utils/login.1.adoc.orig	2021-05-06 12:55:46.912423336 +0200
++++ util-linux-2.37/login-utils/login.1.adoc	2021-07-04 11:07:54.188129931 +0200
+@@ -141,7 +141,7 @@
+ _/var/run/utmp_,
+ _/var/log/wtmp_,
+ _/var/log/lastlog_,
+-_/var/spool/mail/*_,
++_/var/mail/*_,
+ _/etc/motd_,
+ _/etc/passwd_,
+ _/etc/nologin_,

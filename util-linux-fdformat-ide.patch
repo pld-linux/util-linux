@@ -1,23 +1,19 @@
-diff -urNp -x '*.orig' util-linux-2.36.2.org/disk-utils/fdformat.8 util-linux-2.36.2/disk-utils/fdformat.8
---- util-linux-2.36.2.org/disk-utils/fdformat.8	2021-02-02 16:41:37.963357493 +0100
-+++ util-linux-2.36.2/disk-utils/fdformat.8	2021-02-28 14:21:08.782332493 +0100
-@@ -43,6 +43,11 @@ when a non-standard format is being used
- autodetected earlier.  In this case, use
- .BR setfdprm (8)
- to load the disk parameters.
+--- util-linux-2.37/disk-utils/fdformat.8.adoc.orig	2021-05-06 12:55:46.873423530 +0200
++++ util-linux-2.37/disk-utils/fdformat.8.adoc	2021-07-04 11:06:10.579563791 +0200
+@@ -47,6 +47,8 @@
+ 
+ The generic floppy devices, _/dev/fd0_ and _/dev/fd1_, will fail to work with *fdformat* when a non-standard format is being used, or if the format has not been autodetected earlier. In this case, use *setfdprm*(8) to load the disk parameters.
+ 
++For ATAPI IDE floppy driver (also known as LS-120 drives or "Superdisk" drives) you have to use the *floppy*(8).
 +
-+For ATAPI IDE floppy driver (also known as LS-120 drives or "Superdisk"
-+drives) you have to use the
-+.BR floppy (8).
-+
- .SH OPTIONS
- .TP
- \fB\-f\fR, \fB\-\-from\fR \fIN\fR
-@@ -71,6 +76,7 @@ Werner Almesberger (almesber@nessie.cs.i
- .SH SEE ALSO
- .BR fd (4),
- .BR emkfs (8),
-+.BR floppy (8),
- .BR mkfs (8),
- .BR setfdprm (8),
- .BR ufiformat (8)
+ == OPTIONS
+ 
+ *-f*, *--from* _N_::
+@@ -79,6 +81,7 @@
+ 
+ *fd*(4),
+ *emkfs*(8),
++*floppy*(8),
+ *mkfs*(8),
+ *setfdprm*(8),
+ *ufiformat*(8)

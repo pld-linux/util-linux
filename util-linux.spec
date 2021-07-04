@@ -40,13 +40,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.36.2
-Release:	3
+Version:	2.37
+Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.36/%{name}-%{version}.tar.xz
-# Source0-md5:	f78419af679ac9678190ad961eb3cf27
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.37/%{name}-%{version}.tar.xz
+# Source0-md5:	75eb0a648098332d4042f1646eca4069
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -67,10 +67,9 @@ Patch3:		%{name}-procpartitions.patch
 Patch4:		su-paths.patch
 Patch5:		%{name}-ac.patch
 Patch6:		%{name}-diet.patch
-Patch7:		%{name}-pl.po.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
-BuildRequires:	autoconf >= 2.60
+BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-tools >= 0.18.3
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
@@ -83,17 +82,20 @@ BuildRequires:	libcap-ng-devel
 # for lscpu
 BuildRequires:	librtas-devel
 %endif
-%{?with_selinux:BuildRequires:	libselinux-devel >= 2.0}
+%{?with_selinux:BuildRequires:	libselinux-devel >= 2.5}
 %{?with_selinux:BuildRequires:	libsepol-devel}
 BuildRequires:	libtool >= 2:2.2
 BuildRequires:	linux-libc-headers >= 7:2.6.27
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel >= %{pam_ver}
+BuildRequires:	pcre2-posix-devel
 BuildRequires:	pkgconfig
+BuildRequires:	po4a
 BuildRequires:	python3-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpmbuild(macros) >= 1.752
+BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 BuildRequires:	tar >= 1:1.22
@@ -114,7 +116,7 @@ BuildRequires:	glibc-static
 Requires:	libblkid = %{version}-%{release}
 Requires:	libfdisk = %{version}-%{release}
 Requires:	libmount = %{version}-%{release}
-%{?with_selinux:Requires:	libselinux >= 2.0}
+%{?with_selinux:Requires:	libselinux >= 2.5}
 Requires:	libsmartcols = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
 Provides:	eject = %{version}-%{release}
@@ -809,7 +811,6 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch4 -p1
 %patch5 -p1
 %{?with_initrd:%patch6 -p1}
-%patch7 -p1
 
 cp -p %{SOURCE10} nologin.c
 
@@ -904,6 +905,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-use-tty-group \
 	--disable-wall \
 	--enable-chfn-chsh \
+	--enable-fdformat \
 	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-kill \
 	--enable-libblkid \
@@ -912,6 +914,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-login-chown-vcs \
 	--enable-newgrp \
 	--enable-partx \
+	--enable-poman \
 	--enable-pg \
 	--enable-runuser%{!?with_su:=no} \
 	--enable-su%{!?with_su:=no} \
@@ -1010,7 +1013,8 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 %{__rm} $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
 	$RPM_BUILD_ROOT%{_sbindir}/{vigr,vipw} \
 	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh,newgrp}.1 \
-	$RPM_BUILD_ROOT%{_mandir}/man8/{vigr,vipw}.8 \
+	$RPM_BUILD_ROOT%{_mandir}/de/man1/{chsh,wall}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/{,de/}man8/{vigr,vipw}.8 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,chkdupexe,ddate,reset}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8 \
@@ -1023,9 +1027,9 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 
 %if %{with apidocs}
 # examples
-%{__rm} -r $RPM_BUILD_ROOT%{_gtkdocdir}/getopt
+%{__rm} $RPM_BUILD_ROOT%{_gtkdocdir}/getopt-example.{bash,tcsh}
 %else
-%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt-example.{bash,tcsh}
 %endif
 
 %if %{with initrd}
@@ -1099,7 +1103,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README README.licensing Documentation misc-utils/getopt-parse.{bash,tcsh}
+%doc AUTHORS ChangeLog NEWS README README.licensing Documentation misc-utils/getopt-example.{bash,tcsh}
 %dir /etc/terminal-colors.d
 
 %attr(755,root,root) /sbin/clock
@@ -1119,6 +1123,7 @@ fi
 %attr(755,root,root) /sbin/findfs
 %{_mandir}/man8/blkid.8*
 %{_mandir}/man8/findfs.8*
+%lang(de) %{_mandir}/de/man8/findfs.8*
 
 %attr(755,root,root) %{_bindir}/linux*
 %attr(755,root,root) %{_bindir}/setarch
@@ -1226,6 +1231,7 @@ fi
 %attr(755,root,root) %{_bindir}/setsid
 %attr(755,root,root) %{_bindir}/setterm
 %attr(755,root,root) %{_bindir}/taskset
+%attr(755,root,root) %{_bindir}/uclampset
 %attr(755,root,root) %{_bindir}/uuidparse
 %attr(755,root,root) %{_bindir}/ul
 %attr(755,root,root) %{_bindir}/uname26
@@ -1294,6 +1300,7 @@ fi
 %{_mandir}/man1/scriptreplay.1*
 %{_mandir}/man1/setterm.1*
 %{_mandir}/man1/taskset.1*
+%{_mandir}/man1/uclampset.1*
 %{_mandir}/man1/ul.1*
 %{_mandir}/man1/unshare.1*
 %{_mandir}/man1/utmpdump.1*
@@ -1334,10 +1341,36 @@ fi
 %{_mandir}/man8/wipefs.8*
 %{_mandir}/man8/zramctl.8*
 
+%lang(de) %{_mandir}/de/man1/chrt.1*
+%lang(de) %{_mandir}/de/man1/colcrt.1*
+%lang(de) %{_mandir}/de/man1/colrm.1*
+%lang(de) %{_mandir}/de/man1/fincore.1*
+%lang(de) %{_mandir}/de/man1/ionice.1*
+%lang(de) %{_mandir}/de/man1/ipcmk.1*
+%lang(de) %{_mandir}/de/man1/ipcs.1*
+%lang(de) %{_mandir}/de/man1/irqtop.1*
 %lang(de) %{_mandir}/de/man1/kill.1*
+%lang(de) %{_mandir}/de/man1/line.1*
+%lang(de) %{_mandir}/de/man1/lsipc.1*
+%lang(de) %{_mandir}/de/man8/lsns.8*
+%lang(de) %{_mandir}/de/man1/mesg.1*
 %lang(de) %{_mandir}/de/man1/more.1*
+%lang(de) %{_mandir}/de/man1/nsenter.1*
+%lang(de) %{_mandir}/de/man1/renice.1*
+%lang(de) %{_mandir}/de/man1/rev.1*
+%lang(de) %{_mandir}/de/man1/setsid.1*
+%lang(de) %{_mandir}/de/man1/taskset.1*
+%lang(de) %{_mandir}/de/man1/ul.1*
+%lang(de) %{_mandir}/de/man1/whereis.1*
 %lang(de) %{_mandir}/de/man1/write.1*
+%lang(de) %{_mandir}/de/man5/terminal-colors.d.5*
+%lang(de) %{_mandir}/de/man8/addpart.8*
+%lang(de) %{_mandir}/de/man8/ctrlaltdel.8*
+%lang(de) %{_mandir}/de/man8/delpart.8*
 %lang(de) %{_mandir}/de/man8/fdformat.8*
+%lang(de) %{_mandir}/de/man8/isosize.8*
+%lang(de) %{_mandir}/de/man8/ldattach.8*
+%lang(de) %{_mandir}/de/man8/resizepart.8*
 
 %lang(es) %{_mandir}/es/man1/*.1*
 %exclude  %{_mandir}/es/man1/login.1*
@@ -1428,6 +1461,14 @@ fi
 %{_mandir}/man8/mkfs.minix.8*
 %{_mandir}/man8/mkfs.8*
 
+%lang(de) %{_mandir}/de/man8/fdisk.8*
+%ifnarch sparc sparc64
+%lang(de) %{_mandir}/de/man8/cfdisk.8*
+%endif
+%lang(de) %{_mandir}/de/man8/fsck.minix.8*
+%lang(de) %{_mandir}/de/man8/mkfs.bfs.8*
+%lang(de) %{_mandir}/de/man8/mkfs.8*
+
 %lang(es) %{_mandir}/es/man8/fdisk.8*
 %lang(es) %{_mandir}/es/man8/fsck.minix.8*
 %lang(es) %{_mandir}/es/man8/mkfs.minix.8*
@@ -1473,6 +1514,8 @@ fi
 %attr(755,root,root) /sbin/mkfs.bfs
 %{_mandir}/man8/fsck.cramfs.8*
 %{_mandir}/man8/mkfs.cramfs.8*
+%lang(de) %{_mandir}/de/man8/fsck.cramfs.8*
+%lang(de) %{_mandir}/de/man8/mkfs.cramfs.8*
 
 %if %{with su}
 %attr(755,root,root) /bin/runuser
@@ -1494,6 +1537,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/blockdev
 %attr(755,root,root) /sbin/blockdev
 %{_mandir}/man8/blockdev.8*
+%lang(de) %{_mandir}/de/man8/blockdev.8*
 %lang(ja) %{_mandir}/ja/man8/blockdev.8*
 %{systemdunitdir}/blockdev.service
 %attr(755,root,root) /lib/systemd/pld-helpers.d/blockdev.sh
@@ -1520,6 +1564,8 @@ fi
 %lang(cs) %{_mandir}/cs/man5/fstab.5*
 
 %lang(de) %{_mandir}/de/man5/fstab.5*
+%lang(de) %{_mandir}/de/man1/mountpoint.1*
+%lang(de) %{_mandir}/de/man8/pivot_root.8*
 
 %lang(es) %{_mandir}/es/man5/fstab.5*
 %lang(es) %{_mandir}/es/man8/mount.8*
@@ -1610,6 +1656,7 @@ fi
 %{_includedir}/blkid
 %{_pkgconfigdir}/blkid.pc
 %{_mandir}/man3/libblkid.3*
+%lang(de) %{_mandir}/de/man3/libblkid.3*
 
 %files -n libblkid-static
 %defattr(644,root,root,755)
@@ -1641,6 +1688,7 @@ fi
 %{_includedir}/uuid
 %{_pkgconfigdir}/uuid.pc
 %{_mandir}/man3/uuid*.3*
+%lang(de) %{_mandir}/de/man3/uuid*.3*
 
 %files -n libuuid-static
 %defattr(644,root,root,755)
@@ -1858,6 +1906,7 @@ fi
 %{bash_compdir}/swapon
 %{bash_compdir}/taskset
 %{bash_compdir}/tunelp
+%{bash_compdir}/uclampset
 %{bash_compdir}/ul
 %{bash_compdir}/umount
 %{bash_compdir}/unshare
