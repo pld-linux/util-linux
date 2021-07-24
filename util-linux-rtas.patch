@@ -11,12 +11,3 @@
  /* Lookup a pattern and get the value for format  "<pattern> : <key>"
   */
  int lookup(char *line, char *pattern, char **value)
-@@ -738,7 +742,7 @@ int lscpu_read_archext(struct lscpu_cxt
- 		ct->physsockets = strbe16toh(buf, 4);
- 		ct->physchips = strbe16toh(buf, 6);
- 		ct->physcoresperchip = strbe16toh(buf, 8);
--nortas:
-+nortas: ;
- 	}
- #endif
- 	return 0;
