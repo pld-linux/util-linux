@@ -89,7 +89,6 @@ BuildRequires:	libtool >= 2:2.2
 BuildRequires:	linux-libc-headers >= 7:2.6.27
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel >= %{pam_ver}
-BuildRequires:	pcre2-posix-devel
 BuildRequires:	pkgconfig
 BuildRequires:	po4a
 BuildRequires:	python3-devel
