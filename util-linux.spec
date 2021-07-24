@@ -1847,6 +1847,7 @@ fi
 %{bash_compdir}/fsfreeze
 %{bash_compdir}/fstrim
 %{bash_compdir}/getopt
+%{bash_compdir}/hardlink
 %{bash_compdir}/hexdump
 %{bash_compdir}/hwclock
 %{bash_compdir}/ionice
