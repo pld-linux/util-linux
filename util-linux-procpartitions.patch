@@ -10,7 +10,7 @@ diff -urNp -x '*.orig' util-linux-2.36.2.org/disk-utils/blockdev.c util-linux-2.
  	procpt = fopen(_PATH_PROC_PARTITIONS, "r");
  	if (!procpt)
 @@ -444,6 +445,7 @@ static void report_all_devices(void)
- 		sprintf(device, "/dev/%s", ptname);
+ 		snprintf(device, sizeof(device), "/dev/%s", ptname);
  		report_device(device, 1);
  	}
 +	setvbuf(procpt, iobuf, _IOFBF, sizeof(iobuf));

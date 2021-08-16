@@ -40,13 +40,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.37.1
+Version:	2.37.2
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.37/%{name}-%{version}.tar.xz
-# Source0-md5:	6d244f0f59247e9109f47d6e5dd0556b
+# Source0-md5:	d659bf7cd417d93dc609872f6334b019
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -72,7 +72,7 @@ URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.10
-BuildRequires:	gettext-tools >= 0.18.3
+BuildRequires:	gettext-tools >= 0.21
 %{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.10
