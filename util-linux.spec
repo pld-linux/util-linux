@@ -40,13 +40,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.37.2
+Version:	2.37.3
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.37/%{name}-%{version}.tar.xz
-# Source0-md5:	d659bf7cd417d93dc609872f6334b019
+# Source0-md5:	36fe209806ede050ce124e4a2e6e66d4
 Source1:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -948,7 +948,6 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security,terminal-co
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
-%{__mv} $RPM_BUILD_ROOT/sbin/raw $RPM_BUILD_ROOT%{_bindir}
 
 install -p nologin $RPM_BUILD_ROOT/sbin
 cp -p %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
@@ -1018,7 +1017,7 @@ echo '.so man8/swapon.8' > $RPM_BUILD_ROOT%{_mandir}/pl/man8/swapoff.8
 	$RPM_BUILD_ROOT%{_mandir}/{,de/}man8/{vigr,vipw}.8 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man1/{arch,chkdupexe,ddate,reset}.1 \
 	$RPM_BUILD_ROOT%{_mandir}/*/man5/nfs.5 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,rdev,rootflags,vidmode}.8 \
 	$RPM_BUILD_ROOT%{bash_compdir}/{chfn,chsh,newgrp}
 
 %ifarch sparc sparcv9 sparc64
@@ -1221,7 +1220,6 @@ fi
 %attr(755,root,root) %{_bindir}/nsenter
 %attr(755,root,root) %{_bindir}/pg
 %attr(755,root,root) %{_bindir}/prlimit
-%attr(755,root,root) %{_bindir}/raw
 %attr(755,root,root) %{_bindir}/rename
 %attr(755,root,root) %{_bindir}/renice
 %attr(755,root,root) %{_bindir}/rev
@@ -1327,7 +1325,6 @@ fi
 %{_mandir}/man8/ldattach.8*
 %{_mandir}/man8/lslocks.8*
 %{_mandir}/man8/mkswap.8*
-%{_mandir}/man8/raw.8*
 %{_mandir}/man8/readprofile.8*
 %{_mandir}/man8/resizepart.8*
 %{_mandir}/man8/rfkill.8*
@@ -1885,7 +1882,6 @@ fi
 %{bash_compdir}/pg
 %{bash_compdir}/pivot_root
 %{bash_compdir}/prlimit
-%{bash_compdir}/raw
 %{bash_compdir}/readprofile
 %{bash_compdir}/rename
 %{bash_compdir}/renice
