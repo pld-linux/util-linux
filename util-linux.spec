@@ -124,19 +124,19 @@ Provides:	fdisk
 Provides:	hardlink
 Provides:	linux32
 Provides:	sparc32
-Obsoletes:	cramfs
-Obsoletes:	eject
-Obsoletes:	hardlink
-Obsoletes:	ionice
-Obsoletes:	linux32
-Obsoletes:	rawdevices
-Obsoletes:	rfkill
-Obsoletes:	schedutils
-Obsoletes:	setarch
-Obsoletes:	sparc32
-Obsoletes:	util-linux-chkdupexe
+Obsoletes:	cramfs < 1.2
+Obsoletes:	eject < 2.2
+Obsoletes:	hardlink < 1.1
+Obsoletes:	ionice < 0.2
+Obsoletes:	linux32 < 1.1
+Obsoletes:	rawdevices < 2.14
+Obsoletes:	rfkill < 1.1
+Obsoletes:	schedutils < 1.4
+Obsoletes:	setarch < 1.8
+Obsoletes:	sparc32 < 1.2
+Obsoletes:	util-linux-chkdupexe < 2.23
 Obsoletes:	util-linux-ng < 2.20-1
-Obsoletes:	util-linux-suids
+Obsoletes:	util-linux-suid < 2.9o-10
 Conflicts:	SysVinit-tools < 2.88-15
 Conflicts:	e2fsprogs < 1.41.8-5
 Conflicts:	rc-scripts < 0.4.9-2
