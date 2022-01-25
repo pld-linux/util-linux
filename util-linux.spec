@@ -813,6 +813,9 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch7 -p1
 %{?with_initrd:%patch6 -p1}
 
+# obsolete utility
+%{__rm} man/ja/man8/raw.8
+
 cp -p %{SOURCE10} nologin.c
 
 %{__rm} po/stamp-po
@@ -902,6 +905,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-libmount-support-mtab \
 	--disable-makeinstall-chown \
 	--disable-makeinstall-setuid \
+	--disable-raw \
 	--disable-silent-rules \
 	--disable-use-tty-group \
 	--disable-wall \
@@ -970,7 +974,7 @@ cp -p %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/runuser-l
 :> $RPM_BUILD_ROOT%{_sysconfdir}/blkid.tab
 
 for lib in blkid fdisk mount smartcols uuid; do
-	mv $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so.* $RPM_BUILD_ROOT/%{_lib}
+	%{__mv} $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so.* $RPM_BUILD_ROOT/%{_lib}
 	ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/lib${lib}.so.*.*.*) \
 		 $RPM_BUILD_ROOT%{_libdir}/lib${lib}.so
 done
@@ -996,7 +1000,7 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 done
 # it's been moved from man1 to man8
 for d in es ja ko ; do
-	mv -f $RPM_BUILD_ROOT%{_mandir}/$d/man1/readprofile.1 \
+	%{__mv} $RPM_BUILD_ROOT%{_mandir}/$d/man1/readprofile.1 \
 		$RPM_BUILD_ROOT%{_mandir}/$d/man8/readprofile.8
 	%{__sed} -i -e 's/READPROFILE 1/READPROFILE 8/' $RPM_BUILD_ROOT%{_mandir}/$d/man8/readprofile.8
 done
