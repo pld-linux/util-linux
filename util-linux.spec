@@ -982,7 +982,6 @@ cp -p %{SOURCE9} $RPM_BUILD_ROOT/etc/pam.d/runuser-l
 %endif
 
 :> $RPM_BUILD_ROOT/etc/security/blacklist.login
-:> $RPM_BUILD_ROOT/var/lock/wtmpxlock
 :> $RPM_BUILD_ROOT%{_sysconfdir}/blkid.tab
 
 for lib in blkid fdisk mount smartcols uuid; do
@@ -1002,7 +1001,6 @@ echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/de/man8/clock.8
 echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/fr/man8/clock.8
 echo '.so man8/hwclock.8' > $RPM_BUILD_ROOT%{_mandir}/sr/man8/clock.8
 
-ln -s utmpdump $RPM_BUILD_ROOT%{_bindir}/utmpx-dump
 ln -s mkswap $RPM_BUILD_ROOT/sbin/mkfs.swap
 
 # install non-english man pages, but prefer upstream translations over Source1
@@ -1318,13 +1316,10 @@ fi
 
 # login-utils/utmpdump
 %attr(755,root,root) %{_bindir}/utmpdump
-%attr(755,root,root) %{_bindir}/utmpx-dump
 %{_mandir}/man1/utmpdump.1*
 %lang(de) %{_mandir}/de/man1/utmpdump.1*
 %lang(fr) %{_mandir}/fr/man1/utmpdump.1*
 %lang(sr) %{_mandir}/sr/man1/utmpdump.1*
-# no longer used?
-%ghost /var/lock/wtmpxlock
 
 # login-utils/runuser,su
 %if %{with su}
