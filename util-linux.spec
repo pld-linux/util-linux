@@ -929,7 +929,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-write \
 	--with-python=3 \
 	--with-audit \
-	--with-bashcompletiondir=/usr/share/bash-completion/completions \
+	--with-bashcompletiondir=%{bash_compdir} \
 	--with-selinux%{!?with_selinux:=no} \
 	--with-smack \
 	--with-readline \
