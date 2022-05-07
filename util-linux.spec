@@ -810,10 +810,27 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 	man/*/man5/nfs.5 \
 	man/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
 
-# it's been moved from man1 to man8
+# adjust page numbers
+for d in fr ja ko pl ; do
+	%{__mv} man/$d/man8/dmesg.8 man/$d/man1/dmesg.1
+	%{__sed} -i -e 's/DMESG 8/DMESG 1/' man/$d/man1/dmesg.1
+done
+for d in es fr ja ko pl ; do
+	%{__mv} man/$d/man8/ipcrm.8 man/$d/man1/ipcrm.1
+	%{__sed} -i -e 's/IPCRM 8/IPCRM 1/;s/ipcs (8)/ipcs (1)/' man/$d/man1/ipcrm.1
+	%{__mv} man/$d/man8/ipcs.8 man/$d/man1/ipcs.1
+	%{__sed} -i -e 's/IPCS 8/IPCS 1/;s/ipcrm (8)/ipcrm (1)/' man/$d/man1/ipcs.1
+done
+for d in es ja ko pl ; do
+	%{__mv} man/$d/man8/renice.8 man/$d/man1/renice.1
+	%{__sed} -i -e 's/RENICE 8/RENICE 1/' man/$d/man1/renice.1
+done
+for d in es fr it ja ko ; do
+	%{__mv} man/$d/man8/setsid.8 man/$d/man1/setsid.1
+	%{__sed} -i -e 's/SETSID 8/SETSID 1/' man/$d/man1/setsid.1
+done
 for d in es ja ko ; do
-	%{__mv} man/$d/man1/readprofile.1 \
-		man/$d/man8/readprofile.8
+	%{__mv} man/$d/man1/readprofile.1 man/$d/man8/readprofile.8
 	%{__sed} -i -e 's/READPROFILE 1/READPROFILE 8/' man/$d/man8/readprofile.8
 done
 
@@ -1553,19 +1570,17 @@ fi
 %lang(de) %{_mandir}/de/man1/ipcmk.1*
 %lang(de) %{_mandir}/de/man1/ipcrm.1*
 %lang(de) %{_mandir}/de/man1/ipcs.1*
-%lang(es) %{_mandir}/es/man8/ipcrm.8*
-%lang(es) %{_mandir}/es/man8/ipcs.8*
+%lang(es) %{_mandir}/es/man1/ipcrm.1*
+%lang(es) %{_mandir}/es/man1/ipcs.1*
 %lang(fr) %{_mandir}/fr/man1/ipcmk.1*
 %lang(fr) %{_mandir}/fr/man1/ipcrm.1*
 %lang(fr) %{_mandir}/fr/man1/ipcs.1*
-%lang(fr) %{_mandir}/fr/man8/ipcrm.8*
-%lang(fr) %{_mandir}/fr/man8/ipcs.8*
-%lang(ja) %{_mandir}/ja/man8/ipcrm.8*
-%lang(ja) %{_mandir}/ja/man8/ipcs.8*
-%lang(ko) %{_mandir}/ko/man8/ipcrm.8*
-%lang(ko) %{_mandir}/ko/man8/ipcs.8*
-%lang(pl) %{_mandir}/pl/man8/ipcrm.8*
-%lang(pl) %{_mandir}/pl/man8/ipcs.8*
+%lang(ja) %{_mandir}/ja/man1/ipcrm.1*
+%lang(ja) %{_mandir}/ja/man1/ipcs.1*
+%lang(ko) %{_mandir}/ko/man1/ipcrm.1*
+%lang(ko) %{_mandir}/ko/man1/ipcs.1*
+%lang(pl) %{_mandir}/pl/man1/ipcrm.1*
+%lang(pl) %{_mandir}/pl/man1/ipcs.1*
 %lang(sr) %{_mandir}/sr/man1/ipcmk.1*
 %lang(sr) %{_mandir}/sr/man1/ipcrm.1*
 %lang(sr) %{_mandir}/sr/man1/ipcs.1*
@@ -1593,11 +1608,10 @@ fi
 %{_mandir}/man1/renice.1*
 %lang(de) %{_mandir}/de/man1/renice.1*
 %lang(es) %{_mandir}/es/man1/renice.1*
-%lang(es) %{_mandir}/es/man8/renice.8*
 %lang(fr) %{_mandir}/fr/man1/renice.1*
-%lang(ja) %{_mandir}/ja/man8/renice.8*
-%lang(ko) %{_mandir}/ko/man8/renice.8*
-%lang(pl) %{_mandir}/pl/man8/renice.8*
+%lang(ja) %{_mandir}/ja/man1/renice.1*
+%lang(ko) %{_mandir}/ko/man1/renice.1*
+%lang(pl) %{_mandir}/pl/man1/renice.1*
 %lang(sr) %{_mandir}/sr/man1/renice.1*
 
 # sys-utils/rfkill
@@ -1611,12 +1625,10 @@ fi
 %{_mandir}/man1/setsid.1*
 %lang(de) %{_mandir}/de/man1/setsid.1*
 %lang(es) %{_mandir}/es/man1/setsid.1*
-%lang(es) %{_mandir}/es/man8/setsid.8*
 %lang(fr) %{_mandir}/fr/man1/setsid.1*
-%lang(fr) %{_mandir}/fr/man8/setsid.8*
-%lang(it) %{_mandir}/it/man8/setsid.8*
-%lang(ja) %{_mandir}/ja/man8/setsid.8*
-%lang(ko) %{_mandir}/ko/man8/setsid.8*
+%lang(it) %{_mandir}/it/man1/setsid.1*
+%lang(ja) %{_mandir}/ja/man1/setsid.1*
+%lang(ko) %{_mandir}/ko/man1/setsid.1*
 %lang(sr) %{_mandir}/sr/man1/setsid.1*
 
 # sys-utils/readprofile
@@ -1645,10 +1657,9 @@ fi
 %{_mandir}/man1/dmesg.1*
 %lang(de) %{_mandir}/de/man1/dmesg.1*
 %lang(fr) %{_mandir}/fr/man1/dmesg.1*
-%lang(fr) %{_mandir}/fr/man8/dmesg.8*
-%lang(ja) %{_mandir}/ja/man8/dmesg.8*
-%lang(ko) %{_mandir}/ko/man8/dmesg.8*
-%lang(pl) %{_mandir}/pl/man8/dmesg.8*
+%lang(ja) %{_mandir}/ja/man1/dmesg.1*
+%lang(ko) %{_mandir}/ko/man1/dmesg.1*
+%lang(pl) %{_mandir}/pl/man1/dmesg.1*
 %lang(sr) %{_mandir}/sr/man1/dmesg.1*
 
 # sys-utils/ctrlaltdel
