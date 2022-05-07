@@ -10,25 +10,16 @@
 #   https://github.com/karelzak/util-linux/commit/1fc82a1360305f696dc1be6105c9c56a9ea03f52#diff-d7efd2b3dbb10e54185f001dc21d43db
 #
 # Conditional build:
+%bcond_with	initrd		# initrd version
 %bcond_with	uClibc		# link initrd version with static glibc instead of uClibc
 %bcond_without	dietlibc	# link initrd version with dietlibc instead of uClibc
 %bcond_without	apidocs		# API documentation for libraries
 %bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
-%bcond_without	systemd		# systemd
-%if "%{pld_release}" == "ac"
-%bcond_with	initrd		# don't build initrd version
-%bcond_with	fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%else
-%bcond_with	initrd		# don't build initrd version
+%bcond_without	systemd		# systemd support
 %bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
-%endif
 
-%if "%{pld_release}" == "ac"
-%define		pam_ver 0.79.0
-%else
 %define		pam_ver 1:1.1.8-5
-%endif
 
 Summary:	Collection of basic system utilities for Linux
 Summary(de.UTF-8):	Sammlung von grundlegenden Systemdienstprogrammen für Linux
@@ -1205,9 +1196,7 @@ fi
 %attr(755,root,root) /sbin/partx
 %attr(755,root,root) /sbin/sulogin
 %attr(755,root,root) /sbin/swaplabel
-%if "%{pld_release}" != "ac"
 %attr(755,root,root) /sbin/switch_root
-%endif
 %attr(755,root,root) /sbin/wipefs
 %attr(755,root,root) /sbin/zramctl
 %attr(755,root,root) %{_bindir}/cal
@@ -1359,9 +1348,7 @@ fi
 %{_mandir}/man8/rfkill.8*
 %{_mandir}/man8/rtcwake.8*
 %{_mandir}/man8/swaplabel.8*
-%if "%{pld_release}" != "ac"
 %{_mandir}/man8/switch_root.8*
-%endif
 %{_mandir}/man8/sulogin.8*
 %{_mandir}/man8/uname26.8*
 %{_mandir}/man8/wdctl.8*
