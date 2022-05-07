@@ -83,6 +83,7 @@ BuildRequires:	po4a
 BuildRequires:	python3-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
