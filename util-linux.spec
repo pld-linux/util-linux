@@ -897,35 +897,36 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 
 # raw is obsolete
 # wall is packaged in SysVinit-tools
+# chfn,chsh,newgrp,vigr,vipw packaged in pwdutils / shadow
 %configure \
 	--bindir=/bin \
 	--sbindir=/sbin \
 	%{?with_apidocs:--docdir=%{_gtkdocdir}} \
-	--enable-libmount-support-mtab \
-	--disable-makeinstall-chown \
-	--disable-makeinstall-setuid \
-	--disable-raw \
-	--disable-silent-rules \
-	--disable-use-tty-group \
-	--disable-wall \
-	--enable-chfn-chsh \
+	--disable-chfn-chsh \
 	--enable-fdformat \
 	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-kill \
 	--enable-libblkid \
+	--enable-libmount-support-mtab \
 	--enable-line \
 	--enable-login \
 	--enable-login-chown-vcs \
-	--enable-newgrp \
+	--disable-makeinstall-chown \
+	--disable-makeinstall-setuid \
+	--disable-newgrp \
 	--enable-partx \
 	--enable-poman \
 	--enable-pg \
+	--disable-raw \
 	--enable-runuser%{!?with_su:=no} \
+	--disable-silent-rules \
 	--enable-su%{!?with_su:=no} \
 	--enable-sulogin \
 	--enable-tunelp \
+	--disable-use-tty-group \
 	--enable-utmpdump \
-	--enable-vipw \
+	--disable-vipw \
+	--disable-wall \
 	--enable-write \
 	--with-python=3 \
 	--with-audit \
@@ -1002,18 +1003,11 @@ done
 
 # obsolete
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man8/raw.8
-
 # packaged in SysVinit-tools
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/wall.1
-
 # packaged in pwdutils / shadow
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/{chfn,chsh,newgrp} \
-	$RPM_BUILD_ROOT%{_sbindir}/{vigr,vipw} \
-	$RPM_BUILD_ROOT%{_mandir}/man1/{chfn,chsh,newgrp}.1 \
-	$RPM_BUILD_ROOT%{_mandir}/man8/{vigr,vipw}.8 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,newgrp}.1 \
-	$RPM_BUILD_ROOT%{_mandir}/*/man8/{vigr,vipw}.8 \
-	$RPM_BUILD_ROOT%{bash_compdir}/{chfn,chsh,newgrp}
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/*/man1/{chfn,chsh,newgrp}.1 \
+	$RPM_BUILD_ROOT%{_mandir}/*/man8/{vigr,vipw}.8
 
 %ifarch sparc sparcv9 sparc64
 # programs not built on sparc
