@@ -1,0 +1,1379 @@
+asciidoctor generates wrong filenames if command is not separated by exactly " - ".
+Also, fix command name in sr mkfs.cramfs man page.
+
+--- util-linux-2.38/po-man/de.po.orig	2022-05-06 12:39:35.593155682 +0200
++++ util-linux-2.38/po-man/de.po	2022-05-06 19:34:39.514906227 +0200
+@@ -618,7 +618,7 @@ msgstr "blockdev(8)"
+ #. type: Plain text
+ #: ../disk-utils/blockdev.8.adoc:18
+ msgid "blockdev - call block device ioctls from the command line"
+-msgstr "blockdev – Blockgeräte mit Ioctls über die Befehlszeile steuern"
++msgstr "blockdev - Blockgeräte mit Ioctls über die Befehlszeile steuern"
+ 
+ #. type: Plain text
+ #: ../disk-utils/blockdev.8.adoc:22
+--- util-linux-2.38/po-man/fr.po.orig	2022-05-06 12:39:39.873132496 +0200
++++ util-linux-2.38/po-man/fr.po	2022-05-06 21:54:08.466234392 +0200
+@@ -639,7 +639,7 @@ msgstr "blockdev(8)"
+ #: ../disk-utils/blockdev.8.adoc:18
+ msgid "blockdev - call block device ioctls from the command line"
+ msgstr ""
+-"blockdev – Appeler les ioctls pour périphériques bloc en ligne de commande"
++"blockdev - Appeler les ioctls pour périphériques bloc en ligne de commande"
+ 
+ #. type: Plain text
+ #: ../disk-utils/blockdev.8.adoc:22
+@@ -1121,7 +1121,7 @@ msgstr "cfdisk(8)"
+ #. type: Plain text
+ #: ../disk-utils/cfdisk.8.adoc:26
+ msgid "cfdisk - display or manipulate a disk partition table"
+-msgstr "cfdisk – Afficher ou manipuler une table de partitions de disque"
++msgstr "cfdisk - Afficher ou manipuler une table de partitions de disque"
+ 
+ #. type: Plain text
+ #: ../disk-utils/cfdisk.8.adoc:30
+@@ -3830,7 +3830,7 @@ msgstr "fsck.minix(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.minix.8.adoc:16
+ msgid "fsck.minix - check consistency of Minix filesystem"
+-msgstr "fsck.minix – Vérifier l'intégrité d'un système de fichiers MINIX"
++msgstr "fsck.minix - Vérifier l'intégrité d'un système de fichiers MINIX"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.minix.8.adoc:20
+@@ -12459,7 +12459,7 @@ msgstr "blkid(8)"
+ #. type: Plain text
+ #: ../misc-utils/blkid.8.adoc:15
+ msgid "blkid - locate/print block device attributes"
+-msgstr "blkid – Trouver ou afficher les attributs de périphérique en mode bloc"
++msgstr "blkid - Trouver ou afficher les attributs de périphérique en mode bloc"
+ 
+ #. type: Plain text
+ #: ../misc-utils/blkid.8.adoc:19
+@@ -13946,7 +13946,7 @@ msgstr "findmnt(8)"
+ #. type: Plain text
+ #: ../misc-utils/findmnt.8.adoc:13
+ msgid "findmnt - find a filesystem"
+-msgstr "findmnt – Trouver un système de fichiers"
++msgstr "findmnt - Trouver un système de fichiers"
+ 
+ #. type: Plain text
+ #: ../misc-utils/findmnt.8.adoc:17
+@@ -22630,7 +22630,7 @@ msgstr "blkdiscard(8)"
+ #. type: Plain text
+ #: ../sys-utils/blkdiscard.8.adoc:12
+ msgid "blkdiscard - discard sectors on a device"
+-msgstr "blkdiscard – Abandonner des secteurs sur un périphérique"
++msgstr "blkdiscard - Abandonner des secteurs sur un périphérique"
+ 
+ #. type: Plain text
+ #: ../sys-utils/blkdiscard.8.adoc:16
+@@ -23604,7 +23604,7 @@ msgstr "ctrlaltdel(8)"
+ #. type: Plain text
+ #: ../sys-utils/ctrlaltdel.8.adoc:16
+ msgid "ctrlaltdel - set the function of the Ctrl-Alt-Del combination"
+-msgstr "ctrlaltdel – Configurer le comportement de la combinaison Ctrl-Alt-Del"
++msgstr "ctrlaltdel - Configurer le comportement de la combinaison Ctrl-Alt-Del"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ctrlaltdel.8.adoc:20
+@@ -26118,7 +26118,7 @@ msgstr "fstrim(8)"
+ #: ../sys-utils/fstrim.8.adoc:12
+ msgid "fstrim - discard unused blocks on a mounted filesystem"
+ msgstr ""
+-"fstrim – Abandonner les blocs non utilisés d'un système de fichiers monté"
++"fstrim - Abandonner les blocs non utilisés d'un système de fichiers monté"
+ 
+ #. type: Plain text
+ #: ../sys-utils/fstrim.8.adoc:16
+@@ -26465,7 +26465,7 @@ msgstr "hwclock(8)"
+ #. type: Plain text
+ #: ../sys-utils/hwclock.8.adoc:20
+ msgid "hwclock - time clocks utility"
+-msgstr "hwclock – utilitaire d’horloges"
++msgstr "hwclock - utilitaire d’horloges"
+ 
+ #. type: Plain text
+ #: ../sys-utils/hwclock.8.adoc:24
+@@ -42571,7 +42571,7 @@ msgstr "unshare(1)"
+ #. type: Plain text
+ #: ../sys-utils/unshare.1.adoc:12
+ msgid "unshare - run program in new namespaces"
+-msgstr "unshare – Exécuter un programme dans de nouveaux espaces de noms"
++msgstr "unshare - Exécuter un programme dans de nouveaux espaces de noms"
+ 
+ #. type: Plain text
+ #: ../sys-utils/unshare.1.adoc:16
+@@ -43999,7 +43999,7 @@ msgstr "agetty(8)"
+ #. type: Plain text
+ #: ../term-utils/agetty.8.adoc:12
+ msgid "agetty - alternative Linux getty"
+-msgstr "agetty – getty alternatif pour Linux"
++msgstr "agetty - getty alternatif pour Linux"
+ 
+ #. type: Plain text
+ #: ../term-utils/agetty.8.adoc:16
+--- util-linux-2.38/po-man/sr.po.orig	2022-05-06 12:39:42.133120252 +0200
++++ util-linux-2.38/po-man/sr.po	2022-05-06 22:30:15.634493835 +0200
+@@ -302,7 +302,7 @@ msgstr "НАЗИВ"
+ #. type: Plain text
+ #: ../disk-utils/addpart.8.adoc:18
+ msgid "addpart - tell the kernel about the existence of a partition"
+-msgstr "addpart – говори кернелу о постојању партиције"
++msgstr "addpart - говори кернелу о постојању партиције"
+ 
+ #. type: Title ==
+ #: ../disk-utils/addpart.8.adoc:19 ../disk-utils/blockdev.8.adoc:19
+@@ -604,7 +604,7 @@ msgstr "blockdev(8)"
+ #. type: Plain text
+ #: ../disk-utils/blockdev.8.adoc:18
+ msgid "blockdev - call block device ioctls from the command line"
+-msgstr "blockdev – позива „ioctls“ блок уређаја са линије наредби"
++msgstr "blockdev - позива „ioctls“ блок уређаја са линије наредби"
+ 
+ #. type: Plain text
+ #: ../disk-utils/blockdev.8.adoc:22
+@@ -1081,7 +1081,7 @@ msgstr "cfdisk(8)"
+ #. type: Plain text
+ #: ../disk-utils/cfdisk.8.adoc:26
+ msgid "cfdisk - display or manipulate a disk partition table"
+-msgstr "cfdisk – приказује или управља партиционом табелом диска"
++msgstr "cfdisk - приказује или управља партиционом табелом диска"
+ 
+ #. type: Plain text
+ #: ../disk-utils/cfdisk.8.adoc:30
+@@ -1685,7 +1685,7 @@ msgstr "delpart(8)"
+ #. type: Plain text
+ #: ../disk-utils/delpart.8.adoc:18
+ msgid "delpart - tell the kernel to forget about a partition"
+-msgstr "delpart – говори кернелу да заборави о партицији"
++msgstr "delpart - говори кернелу да заборави о партицији"
+ 
+ #. type: Plain text
+ #: ../disk-utils/delpart.8.adoc:22
+@@ -1726,7 +1726,7 @@ msgstr "fdformat(8)"
+ #. type: Plain text
+ #: ../disk-utils/fdformat.8.adoc:16
+ msgid "fdformat - low-level format a floppy disk"
+-msgstr "fdformat – форматирање ниског нивоа флопи дискете"
++msgstr "fdformat - форматирање ниског нивоа флопи дискете"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fdformat.8.adoc:20
+@@ -1927,7 +1927,7 @@ msgstr "fdisk(8)"
+ #. type: Plain text
+ #: ../disk-utils/fdisk.8.adoc:20
+ msgid "fdisk - manipulate disk partition table"
+-msgstr "fdisk – управља партиционом табелом диска"
++msgstr "fdisk - управља партиционом табелом диска"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fdisk.8.adoc:24
+@@ -2860,7 +2860,7 @@ msgstr "fsck(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.8.adoc:16
+ msgid "fsck - check and repair a Linux filesystem"
+-msgstr "fsck – проверава и поправља систем датотека Линукса"
++msgstr "fsck - проверава и поправља систем датотека Линукса"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.8.adoc:20
+@@ -3629,7 +3629,7 @@ msgstr "fsck.cramfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.cramfs.8.adoc:12
+ msgid "fsck.cramfs - fsck compressed ROM file system"
+-msgstr "fsck.cramfs – „fsck“-ом сажет ROM систем датотека"
++msgstr "fsck.cramfs - „fsck“-ом сажет ROM систем датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.cramfs.8.adoc:16
+@@ -3780,7 +3780,7 @@ msgstr "fsck.minix(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.minix.8.adoc:16
+ msgid "fsck.minix - check consistency of Minix filesystem"
+-msgstr "fsck.minix – проверава доследност Миникс система датотека"
++msgstr "fsck.minix - проверава доследност Миникс система датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.minix.8.adoc:20
+@@ -4034,7 +4034,7 @@ msgstr "isosize(8)"
+ #. type: Plain text
+ #: ../disk-utils/isosize.8.adoc:12
+ msgid "isosize - output the length of an iso9660 filesystem"
+-msgstr "isosize – исписује дужину iso9660 система датотека"
++msgstr "isosize - исписује дужину iso9660 система датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/isosize.8.adoc:16
+@@ -4136,7 +4136,7 @@ msgstr "mkfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.8.adoc:12
+ msgid "mkfs - build a Linux filesystem"
+-msgstr "mkfs – гради Линукс систем датотека"
++msgstr "mkfs - гради Линукс систем датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.8.adoc:16
+@@ -4316,7 +4316,7 @@ msgstr "mkfs.bfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.bfs.8.adoc:16
+ msgid "mkfs.bfs - make an SCO bfs filesystem"
+-msgstr "mkfs.bfs – прави „SCO bfs“ систем датотека"
++msgstr "mkfs.bfs - прави „SCO bfs“ систем датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.bfs.8.adoc:20
+@@ -4424,7 +4424,7 @@ msgstr "mkfs.cramfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.cramfs.8.adoc:12
+ msgid "mkfs.cramfs - make compressed ROM file system"
+-msgstr "makefs.cramfs – прави сажети ROM систем датотека"
++msgstr "mkfs.cramfs - прави сажети ROM систем датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.cramfs.8.adoc:16
+@@ -4621,7 +4621,7 @@ msgstr "mkfs.minix(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.minix.8.adoc:19
+ msgid "mkfs.minix - make a Minix filesystem"
+-msgstr "mkfs.minix – прави Миникс систем датотека"
++msgstr "mkfs.minix - прави Миникс систем датотека"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.minix.8.adoc:23
+@@ -4833,7 +4833,7 @@ msgstr "mkswap(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkswap.8.adoc:16
+ msgid "mkswap - set up a Linux swap area"
+-msgstr "mkswap – поставља област Линукс разменске области"
++msgstr "mkswap - поставља област Линукс разменске области"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkswap.8.adoc:20
+@@ -5188,7 +5188,7 @@ msgstr "partx(8)"
+ msgid ""
+ "partx - tell the kernel about the presence and numbering of on-disk "
+ "partitions"
+-msgstr "partx – говори кернелу о присуству и броју партиција на диску"
++msgstr "partx - говори кернелу о присуству и броју партиција на диску"
+ 
+ #. type: Plain text
+ #: ../disk-utils/partx.8.adoc:23
+@@ -5620,7 +5620,7 @@ msgstr "raw(8)"
+ #. type: Plain text
+ #: ../disk-utils/raw.8.adoc:12
+ msgid "raw - bind a Linux raw character device"
+-msgstr "raw – свезује Линукс сирови знаковни уређај"
++msgstr "raw - свезује Линукс сирови знаковни уређај"
+ 
+ #. type: Plain text
+ #: ../disk-utils/raw.8.adoc:16
+@@ -5800,7 +5800,7 @@ msgstr "resizepart(8)"
+ #. type: Plain text
+ #: ../disk-utils/resizepart.8.adoc:18
+ msgid "resizepart - tell the kernel about the new size of a partition"
+-msgstr "resizepart – говори кернелу о новој величини партиције"
++msgstr "resizepart - говори кернелу о новој величини партиције"
+ 
+ #. type: Plain text
+ #: ../disk-utils/resizepart.8.adoc:22
+@@ -5857,7 +5857,7 @@ msgstr "sfdisk(8)"
+ #. type: Plain text
+ #: ../disk-utils/sfdisk.8.adoc:27
+ msgid "sfdisk - display or manipulate a disk partition table"
+-msgstr "sfdisk – приказује или управља партиционом табелом диска"
++msgstr "sfdisk - приказује или управља партиционом табелом диска"
+ 
+ #. type: Plain text
+ #: ../disk-utils/sfdisk.8.adoc:31
+@@ -7692,7 +7692,7 @@ msgstr "swaplabel(8)"
+ #. type: Plain text
+ #: ../disk-utils/swaplabel.8.adoc:16
+ msgid "swaplabel - print or change the label or UUID of a swap area"
+-msgstr "swaplabel – исписује или мења натпис или УУИД разменске области"
++msgstr "swaplabel - исписује или мења натпис или УУИД разменске области"
+ 
+ #. type: Plain text
+ #: ../disk-utils/swaplabel.8.adoc:20
+@@ -7787,7 +7787,7 @@ msgstr "Формати датотеке"
+ #. type: Plain text
+ #: ../lib/terminal-colors.d.5.adoc:20
+ msgid "terminal-colors.d - configure output colorization for various utilities"
+-msgstr "terminal-colors.d – подешава обојавање излаза за разне алатке"
++msgstr "terminal-colors.d - подешава обојавање излаза за разне алатке"
+ 
+ #. type: Plain text
+ #: ../lib/terminal-colors.d.5.adoc:24
+@@ -8220,7 +8220,7 @@ msgstr "Програмерско упу�
+ #. type: Plain text
+ #: ../libblkid/libblkid.3.adoc:19
+ msgid "libblkid - block device identification library"
+-msgstr "libblkid – идентификациона библиотека блок уређаја"
++msgstr "libblkid - идентификациона библиотека блок уређаја"
+ 
+ #. type: Plain text
+ #: ../libblkid/libblkid.3.adoc:23
+@@ -8418,7 +8418,7 @@ msgstr "uuid(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid.3.adoc:44
+ msgid "uuid - DCE compatible Universally Unique Identifier library"
+-msgstr "uuid – DCE саобразна библиотека Универзалног Јединственог Одредника"
++msgstr "uuid - DCE саобразна библиотека Универзалног Јединственог Одредника"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid.3.adoc:48 ../libuuid/man/uuid_clear.3.adoc:48
+@@ -8545,7 +8545,7 @@ msgstr "uuid_clear(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_clear.3.adoc:44
+ msgid "uuid_clear - reset value of UUID variable to the NULL value"
+-msgstr "uuid_clear – враћа вредност УУИД променљиве на вредност НИШТА"
++msgstr "uuid_clear - враћа вредност УУИД променљиве на вредност НИШТА"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_clear.3.adoc:50
+@@ -8620,7 +8620,7 @@ msgstr "uuid_compare(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_compare.3.adoc:44
+ msgid "uuid_compare - compare whether two UUIDs are the same"
+-msgstr "uuid_compare – упоређује да ли су два УУИД-а иста"
++msgstr "uuid_compare - упоређује да ли су два УУИД-а иста"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_compare.3.adoc:50
+@@ -8713,7 +8713,7 @@ msgstr "uuid_copy(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_copy.3.adoc:44
+ msgid "uuid_copy - copy a UUID value"
+-msgstr "uuid_copy – умножава УУИД врдност"
++msgstr "uuid_copy - умножава УУИД врдност"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_copy.3.adoc:50
+@@ -8795,7 +8795,7 @@ msgid ""
+ "uuid_generate_time_safe - create a new unique UUID value"
+ msgstr ""
+ "uuid_generate, uuid_generate_random, uuid_generate_time, "
+-"uuid_generate_time_safe – ствара нову јединствену УУИД вредност"
++"uuid_generate_time_safe - ствара нову јединствену УУИД вредност"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_generate.3.adoc:57
+@@ -9017,7 +9017,7 @@ msgstr "uuid_is_null(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_is_null.3.adoc:44
+ msgid "uuid_is_null - compare the value of the UUID to the NULL value"
+-msgstr "uuid_is_null – упоређује вредност УУИД-а са вредношћу НИШТА"
++msgstr "uuid_is_null - упоређује вредност УУИД-а са вредношћу НИШТА"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_is_null.3.adoc:50
+@@ -9096,7 +9096,7 @@ msgstr "uuid_parse(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_parse.3.adoc:44
+ msgid "uuid_parse - convert an input UUID string into binary representation"
+-msgstr "uuid_parse – претвара улазну УУИД ниску у бинарно представљање"
++msgstr "uuid_parse - претвара улазну УУИД ниску у бинарно представљање"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_parse.3.adoc:51
+@@ -9209,7 +9209,7 @@ msgstr "uuid_time(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_time.3.adoc:44
+ msgid "uuid_time - extract the time at which the UUID was created"
+-msgstr "uuid_time – извлачи време када је УУИД створен"
++msgstr "uuid_time - извлачи време када је УУИД створен"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_time.3.adoc:50
+@@ -9307,7 +9307,7 @@ msgstr "uuid_unparse(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_unparse.3.adoc:44
+ msgid "uuid_unparse - convert a UUID from binary representation to a string"
+-msgstr "uuid_unparse – претвара УУИД из бинарног представљања у ниску"
++msgstr "uuid_unparse - претвара УУИД из бинарног представљања у ниску"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_unparse.3.adoc:52
+@@ -9426,7 +9426,7 @@ msgstr "Корисничке наред�
+ #. type: Plain text
+ #: ../login-utils/chfn.1.adoc:20
+ msgid "chfn - change your finger information"
+-msgstr "chfn – мења ваше контакт информације"
++msgstr "chfn - мења ваше контакт информације"
+ 
+ #. type: Plain text
+ #: ../login-utils/chfn.1.adoc:24
+@@ -9612,7 +9612,7 @@ msgstr "chsh(1)"
+ #. type: Plain text
+ #: ../login-utils/chsh.1.adoc:20
+ msgid "chsh - change your login shell"
+-msgstr "chsh – мења вашу шкољку пријављивања"
++msgstr "chsh - мења вашу шкољку пријављивања"
+ 
+ #. type: Plain text
+ #: ../login-utils/chsh.1.adoc:24
+@@ -9716,7 +9716,7 @@ msgstr "last(1)"
+ #. type: Plain text
+ #: ../login-utils/last.1.adoc:29
+ msgid "last, lastb - show a listing of last logged in users"
+-msgstr "last, lastb – приказује списак последњих пријављених корисника"
++msgstr "last, lastb - приказује списак последњих пријављених корисника"
+ 
+ #. type: Plain text
+ #: ../login-utils/last.1.adoc:33
+@@ -10056,7 +10056,7 @@ msgstr "login(1)"
+ #. type: Plain text
+ #: ../login-utils/login.1.adoc:16
+ msgid "login - begin session on the system"
+-msgstr "login – започиње сесију на систему"
++msgstr "login - започиње сесију на систему"
+ 
+ #. type: Plain text
+ #: ../login-utils/login.1.adoc:20
+@@ -10672,7 +10672,7 @@ msgstr "lslogins(1)"
+ #. type: Plain text
+ #: ../login-utils/lslogins.1.adoc:14
+ msgid "lslogins - display information about known users in the system"
+-msgstr "lslogins – приказује податке о познатим корисницима на систему"
++msgstr "lslogins - приказује податке о познатим корисницима на систему"
+ 
+ #. type: Plain text
+ #: ../login-utils/lslogins.1.adoc:18
+@@ -11156,7 +11156,7 @@ msgstr "newgrp(1)"
+ #. type: Plain text
+ #: ../login-utils/newgrp.1.adoc:14
+ msgid "newgrp - log in to a new group"
+-msgstr "newgrp – пријављује се у нову групу"
++msgstr "newgrp - пријављује се у нову групу"
+ 
+ #. type: Plain text
+ #: ../login-utils/newgrp.1.adoc:18
+@@ -11209,7 +11209,7 @@ msgstr "nologin(8)"
+ #. type: Plain text
+ #: ../login-utils/nologin.8.adoc:12
+ msgid "nologin - politely refuse a login"
+-msgstr "nologin – учтиво одбија пријављивање"
++msgstr "nologin - учтиво одбија пријављивање"
+ 
+ #. type: Plain text
+ #: ../login-utils/nologin.8.adoc:16
+@@ -11348,7 +11348,7 @@ msgstr "runuser(1)"
+ #. type: Plain text
+ #: ../login-utils/runuser.1.adoc:12
+ msgid "runuser - run a command with substitute user and group ID"
+-msgstr "runuser – покреће наредбу са заменским корисником и ИД-ом групе"
++msgstr "runuser - покреће наредбу са заменским корисником и ИД-ом групе"
+ 
+ #. type: Plain text
+ #: ../login-utils/runuser.1.adoc:16
+@@ -11843,7 +11843,7 @@ msgstr "su(1)"
+ #. type: Plain text
+ #: ../login-utils/su.1.adoc:13
+ msgid "su - run a command with substitute user and group ID"
+-msgstr "su – покреће наредбу са заменским корисником и ИД-ом групе"
++msgstr "su - покреће наредбу са заменским корисником и ИД-ом групе"
+ 
+ #. type: Plain text
+ #: ../login-utils/su.1.adoc:17
+@@ -12211,7 +12211,7 @@ msgstr "sulogin(8)"
+ #. type: Plain text
+ #: ../login-utils/sulogin.8.adoc:31
+ msgid "sulogin - single-user login"
+-msgstr "sulogin – пријављивање једног корисника"
++msgstr "sulogin - пријављивање једног корисника"
+ 
+ #. type: Plain text
+ #: ../login-utils/sulogin.8.adoc:35
+@@ -12360,7 +12360,7 @@ msgstr "utmpdump(1)"
+ #. type: Plain text
+ #: ../login-utils/utmpdump.1.adoc:29
+ msgid "utmpdump - dump UTMP and WTMP files in raw format"
+-msgstr "utmpdump – исписује „UTMP“ и „WTMP“ датотеке у сировом формату"
++msgstr "utmpdump - исписује „UTMP“ и „WTMP“ датотеке у сировом формату"
+ 
+ #. type: Plain text
+ #: ../login-utils/utmpdump.1.adoc:33
+@@ -12523,7 +12523,7 @@ msgstr "vipw(8)"
+ #. type: Plain text
+ #: ../login-utils/vipw.8.adoc:46
+ msgid "vipw, vigr - edit the password or group file"
+-msgstr "vipw, vigr – уређује датотеку лозинке или групе"
++msgstr "vipw, vigr - уређује датотеку лозинке или групе"
+ 
+ #. type: Plain text
+ #: ../login-utils/vipw.8.adoc:50
+@@ -12610,7 +12610,7 @@ msgstr "blkid(8)"
+ #. type: Plain text
+ #: ../misc-utils/blkid.8.adoc:15
+ msgid "blkid - locate/print block device attributes"
+-msgstr "blkid – налази/исписује атрибуте блок уређаја"
++msgstr "blkid - налази/исписује атрибуте блок уређаја"
+ 
+ #. type: Plain text
+ #: ../misc-utils/blkid.8.adoc:19
+@@ -13415,7 +13415,7 @@ msgstr "cal(1)"
+ #. type: Plain text
+ #: ../misc-utils/cal.1.adoc:50
+ msgid "cal - display a calendar"
+-msgstr "cal приказује календар"
++msgstr "cal - приказује календар"
+ 
+ #. type: Plain text
+ #: ../misc-utils/cal.1.adoc:54
+@@ -13878,7 +13878,7 @@ msgstr "fincore(1)"
+ #. type: Plain text
+ #: ../misc-utils/fincore.1.adoc:18
+ msgid "fincore - count pages of file contents in core"
+-msgstr "fincore – броји странице садржаја датотеке у језгру"
++msgstr "fincore - броји странице садржаја датотеке у језгру"
+ 
+ #. type: Plain text
+ #: ../misc-utils/fincore.1.adoc:22
+@@ -13993,7 +13993,7 @@ msgstr "findfs(8)"
+ #. type: Plain text
+ #: ../misc-utils/findfs.8.adoc:14
+ msgid "findfs - find a filesystem by label or UUID"
+-msgstr "findfs – налази систем датотека по натпису или УУИД-у"
++msgstr "findfs - налази систем датотека по натпису или УУИД-у"
+ 
+ #. type: Plain text
+ #: ../misc-utils/findfs.8.adoc:18
+@@ -14132,7 +14132,7 @@ msgstr "findmnt(8)"
+ #. type: Plain text
+ #: ../misc-utils/findmnt.8.adoc:13
+ msgid "findmnt - find a filesystem"
+-msgstr "findmnt – налази систем датотека"
++msgstr "findmnt - налази систем датотека"
+ 
+ #. type: Plain text
+ #: ../misc-utils/findmnt.8.adoc:17
+@@ -15061,7 +15061,7 @@ msgstr "getopt(1)"
+ #. type: Plain text
+ #: ../misc-utils/getopt.1.adoc:13
+ msgid "getopt - parse command options (enhanced)"
+-msgstr "getopt – обрађује опције наредбе (побољшано)"
++msgstr "getopt - обрађује опције наредбе (побољшано)"
+ 
+ #. type: Plain text
+ #: ../misc-utils/getopt.1.adoc:17
+@@ -15790,7 +15790,7 @@ msgstr "hardlink(1)"
+ #. type: Plain text
+ #: ../misc-utils/hardlink.1.adoc:18
+ msgid "hardlink - link multiple copies of a file"
+-msgstr "hardlink – повезује више примерака датотеке"
++msgstr "hardlink - повезује више примерака датотеке"
+ 
+ #. type: Plain text
+ #: ../misc-utils/hardlink.1.adoc:22
+@@ -16215,7 +16215,7 @@ msgstr "kill(1)"
+ #. type: Plain text
+ #: ../misc-utils/kill.1.adoc:17
+ msgid "kill - terminate a process"
+-msgstr "kill – окончава процес"
++msgstr "kill - окончава процес"
+ 
+ #. type: Plain text
+ #: ../misc-utils/kill.1.adoc:21
+@@ -16646,7 +16646,7 @@ msgstr "logger(1)"
+ #. type: Plain text
+ #: ../misc-utils/logger.1.adoc:46
+ msgid "logger - enter messages into the system log"
+-msgstr "logger – уноси поруке у дневник система"
++msgstr "logger - уноси поруке у дневник система"
+ 
+ #. type: Plain text
+ #: ../misc-utils/logger.1.adoc:50
+@@ -17527,7 +17527,7 @@ msgstr "look(1)"
+ #. type: Plain text
+ #: ../misc-utils/look.1.adoc:46
+ msgid "look - display lines beginning with a given string"
+-msgstr "look – приказује редове који почињу датом ниском"
++msgstr "look - приказује редове који почињу датом ниском"
+ 
+ #. type: Plain text
+ #: ../misc-utils/look.1.adoc:50
+@@ -17711,7 +17711,7 @@ msgstr "lsblk(8)"
+ #. type: Plain text
+ #: ../misc-utils/lsblk.8.adoc:12
+ msgid "lsblk - list block devices"
+-msgstr "lsblk – исписује блок уређаје"
++msgstr "lsblk - исписује блок уређаје"
+ 
+ #. type: Plain text
+ #: ../misc-utils/lsblk.8.adoc:16
+@@ -19569,7 +19569,7 @@ msgstr "lslocks(8)"
+ #. type: Plain text
+ #: ../misc-utils/lslocks.8.adoc:23
+ msgid "lslocks - list local system locks"
+-msgstr "lslocks – исписује закључавања локалног система"
++msgstr "lslocks - исписује закључавања локалног система"
+ 
+ #. type: Plain text
+ #: ../misc-utils/lslocks.8.adoc:27
+@@ -19811,7 +19811,7 @@ msgstr "mcookie(1)"
+ #. type: Plain text
+ #: ../misc-utils/mcookie.1.adoc:14
+ msgid "mcookie - generate magic cookies for xauth"
+-msgstr "mcookie – ствара магичне колачиће за „xauth“"
++msgstr "mcookie - ствара магичне колачиће за „xauth“"
+ 
+ #. type: Plain text
+ #: ../misc-utils/mcookie.1.adoc:18
+@@ -19928,7 +19928,7 @@ msgstr "namei(1)"
+ #. type: Plain text
+ #: ../misc-utils/namei.1.adoc:12
+ msgid "namei - follow a pathname until a terminal point is found"
+-msgstr "namei – прати назив путање све док не нађе тачку терминала"
++msgstr "namei - прати назив путање све док не нађе тачку терминала"
+ 
+ #. type: Plain text
+ #: ../misc-utils/namei.1.adoc:16
+@@ -20097,7 +20097,7 @@ msgstr "rename(1)"
+ #. type: Plain text
+ #: ../misc-utils/rename.1.adoc:14
+ msgid "rename - rename files"
+-msgstr "rename – преименуе датотеке"
++msgstr "rename - преименуе датотеке"
+ 
+ #. type: Plain text
+ #: ../misc-utils/rename.1.adoc:18
+@@ -20311,7 +20311,7 @@ msgstr "uuidd(8)"
+ #. type: Plain text
+ #: ../misc-utils/uuidd.8.adoc:16
+ msgid "uuidd - UUID generation daemon"
+-msgstr "uuidd – позадинац УУИД стварања"
++msgstr "uuidd - позадинац УУИД стварања"
+ 
+ #. type: Plain text
+ #: ../misc-utils/uuidd.8.adoc:20
+@@ -20544,7 +20544,7 @@ msgstr "uuidgen(1)"
+ #. type: Plain text
+ #: ../misc-utils/uuidgen.1.adoc:16
+ msgid "uuidgen - create a new UUID value"
+-msgstr "uuidgen – прави нову УУИД вредност"
++msgstr "uuidgen - прави нову УУИД вредност"
+ 
+ #. type: Plain text
+ #: ../misc-utils/uuidgen.1.adoc:20
+@@ -20730,7 +20730,7 @@ msgstr "uuidparse(1)"
+ #. type: Plain text
+ #: ../misc-utils/uuidparse.1.adoc:14
+ msgid "uuidparse - a utility to parse unique identifiers"
+-msgstr "uuidparse – помагало за обраду јединствених одредника"
++msgstr "uuidparse - помагало за обраду јединствених одредника"
+ 
+ #. type: Plain text
+ #: ../misc-utils/uuidparse.1.adoc:18
+@@ -20875,7 +20875,7 @@ msgstr "whereis(1)"
+ msgid ""
+ "whereis - locate the binary, source, and manual page files for a command"
+ msgstr ""
+-"whereis – налази извршне, изворне и датотеке страница упутства за наредбу"
++"whereis - налази извршне, изворне и датотеке страница упутства за наредбу"
+ 
+ #. type: Plain text
+ #: ../misc-utils/whereis.1.adoc:50
+@@ -21104,7 +21104,7 @@ msgstr "wipefs(8)"
+ #. type: Plain text
+ #: ../misc-utils/wipefs.8.adoc:14
+ msgid "wipefs - wipe a signature from a device"
+-msgstr "wipefs – брише потпис са уређаја"
++msgstr "wipefs - брише потпис са уређаја"
+ 
+ #. type: Plain text
+ #: ../misc-utils/wipefs.8.adoc:18
+@@ -21389,7 +21389,7 @@ msgstr "chrt(1)"
+ #. type: Plain text
+ #: ../schedutils/chrt.1.adoc:37
+ msgid "chrt - manipulate the real-time attributes of a process"
+-msgstr "chrt – управља стварновременским атрибутима процеса"
++msgstr "chrt - управља стварновременским атрибутима процеса"
+ 
+ #. type: Plain text
+ #: ../schedutils/chrt.1.adoc:41
+@@ -21770,7 +21770,7 @@ msgstr "ionice(1)"
+ #. type: Plain text
+ #: ../schedutils/ionice.1.adoc:13
+ msgid "ionice - set or get process I/O scheduling class and priority"
+-msgstr "ionice – поставља или добавља класу У/И заказивања и предности процеса"
++msgstr "ionice - поставља или добавља класу У/И заказивања и предности процеса"
+ 
+ #. type: Plain text
+ #: ../schedutils/ionice.1.adoc:17
+@@ -22090,7 +22090,7 @@ msgstr "taskset(1)"
+ #. type: Plain text
+ #: ../schedutils/taskset.1.adoc:36
+ msgid "taskset - set or retrieve a process's CPU affinity"
+-msgstr "taskset – поставља или довлачи склоност процесора процеса"
++msgstr "taskset - поставља или довлачи склоност процесора процеса"
+ 
+ #. type: Plain text
+ #: ../schedutils/taskset.1.adoc:40
+@@ -22377,7 +22377,7 @@ msgstr "uclampset(1)"
+ msgid ""
+ "uclampset - manipulate the utilization clamping attributes of the system or "
+ "a process"
+-msgstr "uclampset – управља атрибутима уотребног стезања система или процеса"
++msgstr "uclampset - управља атрибутима уотребног стезања система или процеса"
+ 
+ #. type: Plain text
+ #: ../schedutils/uclampset.1.adoc:42
+@@ -22615,7 +22615,7 @@ msgstr "adjtime_config(5)"
+ msgid ""
+ "adjtime_config - information about hardware clock setting and drift factor"
+ msgstr ""
+-"adjtime_config – информација о поставци хардверског сата и чиниоцу одступања"
++"adjtime_config - информација о поставци хардверског сата и чиниоцу одступања"
+ 
+ #. type: Plain text
+ #: ../sys-utils/adjtime_config.5.adoc:16 ../sys-utils/adjtime_config.5.adoc:53
+@@ -22789,7 +22789,7 @@ msgstr "blkdiscard(8)"
+ #. type: Plain text
+ #: ../sys-utils/blkdiscard.8.adoc:12
+ msgid "blkdiscard - discard sectors on a device"
+-msgstr "blkdiscard – одбацује секторе на уређају"
++msgstr "blkdiscard - одбацује секторе на уређају"
+ 
+ #. type: Plain text
+ #: ../sys-utils/blkdiscard.8.adoc:16
+@@ -22958,7 +22958,7 @@ msgstr "blkzone(8)"
+ #. type: Plain text
+ #: ../sys-utils/blkzone.8.adoc:12
+ msgid "blkzone - run zone command on a device"
+-msgstr "blkzone – покреће зонску наредбу на уређају"
++msgstr "blkzone - покреће зонску наредбу на уређају"
+ 
+ #. type: Plain text
+ #: ../sys-utils/blkzone.8.adoc:16
+@@ -23276,7 +23276,7 @@ msgstr "chcpu(8)"
+ #. type: Plain text
+ #: ../sys-utils/chcpu.8.adoc:12
+ msgid "chcpu - configure CPUs"
+-msgstr "chcpu – подешава процесоре"
++msgstr "chcpu - подешава процесоре"
+ 
+ #. type: Plain text
+ #: ../sys-utils/chcpu.8.adoc:16
+@@ -23474,7 +23474,7 @@ msgstr "chmem(8)"
+ #. type: Plain text
+ #: ../sys-utils/chmem.8.adoc:12
+ msgid "chmem - configure memory"
+-msgstr "chmem – подешава меморију"
++msgstr "chmem - подешава меморију"
+ 
+ #. type: Plain text
+ #: ../sys-utils/chmem.8.adoc:16
+@@ -23728,7 +23728,7 @@ msgstr "choom(1)"
+ #. type: Plain text
+ #: ../sys-utils/choom.1.adoc:12
+ msgid "choom - display and adjust OOM-killer score."
+-msgstr "choom – приказује и дотерује резултат OOM-убице."
++msgstr "choom - приказује и дотерује резултат OOM-убице."
+ 
+ #. type: Plain text
+ #: ../sys-utils/choom.1.adoc:14
+@@ -23882,7 +23882,7 @@ msgstr "ctrlaltdel(8)"
+ #. type: Plain text
+ #: ../sys-utils/ctrlaltdel.8.adoc:16
+ msgid "ctrlaltdel - set the function of the Ctrl-Alt-Del combination"
+-msgstr "ctrlaltdel – поставља функцију комбинације Ктрл-Алт-Дел"
++msgstr "ctrlaltdel - поставља функцију комбинације Ктрл-Алт-Дел"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ctrlaltdel.8.adoc:20
+@@ -23980,7 +23980,7 @@ msgstr "dmesg(1)"
+ #. type: Plain text
+ #: ../sys-utils/dmesg.1.adoc:16
+ msgid "dmesg - print or control the kernel ring buffer"
+-msgstr "dmesg – исписује или контролише међумеморију кернел прстена"
++msgstr "dmesg - исписује или контролише међумеморију кернел прстена"
+ 
+ #. type: Plain text
+ #: ../sys-utils/dmesg.1.adoc:20
+@@ -24639,7 +24639,7 @@ msgstr "eject(1)"
+ #. type: Plain text
+ #: ../sys-utils/eject.1.adoc:20
+ msgid "eject - eject removable media"
+-msgstr "eject – избацује уклоњиви медиј"
++msgstr "eject - избацује уклоњиви медиј"
+ 
+ #. type: Plain text
+ #: ../sys-utils/eject.1.adoc:22
+@@ -25095,7 +25095,7 @@ msgstr "fallocate(1)"
+ #. type: Plain text
+ #: ../sys-utils/fallocate.1.adoc:12
+ msgid "fallocate - preallocate or deallocate space to a file"
+-msgstr "fallocate – унапред додељује или поништава доделу простора датотеци"
++msgstr "fallocate - унапред додељује или поништава доделу простора датотеци"
+ 
+ #. type: Plain text
+ #: ../sys-utils/fallocate.1.adoc:16
+@@ -25431,7 +25431,7 @@ msgstr "flock(1)"
+ #. type: Plain text
+ #: ../sys-utils/flock.1.adoc:37
+ msgid "flock - manage locks from shell scripts"
+-msgstr "flock – управља закључавањима из скрипти шкољке"
++msgstr "flock - управља закључавањима из скрипти шкољке"
+ 
+ #. type: Plain text
+ #: ../sys-utils/flock.1.adoc:41
+@@ -25826,7 +25826,7 @@ msgstr "fsfreeze(8)"
+ #: ../sys-utils/fsfreeze.8.adoc:12
+ msgid "fsfreeze - suspend access to a filesystem (Ext3/4, ReiserFS, JFS, XFS)"
+ msgstr ""
+-"fsfreeze – обуставља приступ систему датотека (Ext3/4, ReiserFS, JFS, XFS)"
++"fsfreeze - обуставља приступ систему датотека (Ext3/4, ReiserFS, JFS, XFS)"
+ 
+ #. type: Plain text
+ #: ../sys-utils/fsfreeze.8.adoc:16
+@@ -26017,7 +26017,7 @@ msgstr "fstab(5)"
+ #. type: Plain text
+ #: ../sys-utils/fstab.5.adoc:46
+ msgid "fstab - static information about the filesystems"
+-msgstr "fstab – непроменљиве информације о системима датотека"
++msgstr "fstab - непроменљиве информације о системима датотека"
+ 
+ #. type: Plain text
+ #: ../sys-utils/fstab.5.adoc:54
+@@ -26405,7 +26405,7 @@ msgstr "fstrim(8)"
+ #. type: Plain text
+ #: ../sys-utils/fstrim.8.adoc:12
+ msgid "fstrim - discard unused blocks on a mounted filesystem"
+-msgstr "fstrim – oдбацује некоришћене блокове на прикаченом систему датотека"
++msgstr "fstrim - oдбацује некоришћене блокове на прикаченом систему датотека"
+ 
+ #. type: Plain text
+ #: ../sys-utils/fstrim.8.adoc:16
+@@ -26739,7 +26739,7 @@ msgstr "hwclock(8)"
+ #. type: Plain text
+ #: ../sys-utils/hwclock.8.adoc:20
+ msgid "hwclock - time clocks utility"
+-msgstr "hwclock – помагало временских сатова"
++msgstr "hwclock - помагало временских сатова"
+ 
+ #. type: Plain text
+ #: ../sys-utils/hwclock.8.adoc:24
+@@ -28710,7 +28710,7 @@ msgstr "ipcmk(1)"
+ #. type: Plain text
+ #: ../sys-utils/ipcmk.1.adoc:16
+ msgid "ipcmk - make various IPC resources"
+-msgstr "ipcmk – прави разна IPC изворишта"
++msgstr "ipcmk - прави разна IPC изворишта"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ipcmk.1.adoc:20
+@@ -28816,7 +28816,7 @@ msgstr "ipcrm(1)"
+ #. type: Plain text
+ #: ../sys-utils/ipcrm.1.adoc:17
+ msgid "ipcrm - remove certain IPC resources"
+-msgstr "ipcrm – уклања одређена IPC изворишта"
++msgstr "ipcrm - уклања одређена IPC изворишта"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ipcrm.1.adoc:21
+@@ -29045,7 +29045,7 @@ msgstr "ipcs(1)"
+ #. type: Plain text
+ #: ../sys-utils/ipcs.1.adoc:16
+ msgid "ipcs - show information on IPC facilities"
+-msgstr "ipcs – приказује информације о IPC помагалима"
++msgstr "ipcs - приказује информације о IPC помагалима"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ipcs.1.adoc:20
+@@ -29279,7 +29279,7 @@ msgstr "irqtop(1)"
+ #. type: Plain text
+ #: ../sys-utils/irqtop.1.adoc:12
+ msgid "irqtop - utility to display kernel interrupt information"
+-msgstr "irqtop – помагало за приказ информација о прекидима кернела"
++msgstr "irqtop - помагало за приказ информација о прекидима кернела"
+ 
+ #. type: Plain text
+ #: ../sys-utils/irqtop.1.adoc:16
+@@ -29432,7 +29432,7 @@ msgstr "ldattach(8)"
+ #. type: Plain text
+ #: ../sys-utils/ldattach.8.adoc:16
+ msgid "ldattach - attach a line discipline to a serial line"
+-msgstr "ldattach – качи дисциплину реда на серијски ред"
++msgstr "ldattach - качи дисциплину реда на серијски ред"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ldattach.8.adoc:20
+@@ -29836,7 +29836,7 @@ msgstr "losetup(8)"
+ #. type: Plain text
+ #: ../sys-utils/losetup.8.adoc:12
+ msgid "losetup - set up and control loop devices"
+-msgstr "losetup – поставља и контролише уређаје петље"
++msgstr "losetup - поставља и контролише уређаје петље"
+ 
+ #. type: Plain text
+ #: ../sys-utils/losetup.8.adoc:16
+@@ -30332,7 +30332,7 @@ msgstr "lscpu(1)"
+ #. type: Plain text
+ #: ../sys-utils/lscpu.1.adoc:12
+ msgid "lscpu - display information about the CPU architecture"
+-msgstr "lscpu – приказује информације о архитектури процесора"
++msgstr "lscpu - приказује информације о архитектури процесора"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lscpu.1.adoc:16
+@@ -30720,7 +30720,7 @@ msgstr "lsipc(1)"
+ msgid ""
+ "lsipc - show information on IPC facilities currently employed in the system"
+ msgstr ""
+-"lsipc – приказује информације о IPC помагалима тренутно запосленим на систему"
++"lsipc - приказује информације о IPC помагалима тренутно запосленим на систему"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsipc.1.adoc:16
+@@ -30817,7 +30817,7 @@ msgstr "lsirq(1)"
+ #. type: Plain text
+ #: ../sys-utils/lsirq.1.adoc:12
+ msgid "lsirq - utility to display kernel interrupt information"
+-msgstr "lsirq – помагало за приказ информација о прекидима кернела"
++msgstr "lsirq - помагало за приказ информација о прекидима кернела"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsirq.1.adoc:16
+@@ -30858,7 +30858,7 @@ msgstr "lsmem(1)"
+ #: ../sys-utils/lsmem.1.adoc:12
+ msgid "lsmem - list the ranges of available memory with their online status"
+ msgstr ""
+-"lsmem – исписује опсеге доступне меморије са њиховим стањима присутности"
++"lsmem - исписује опсеге доступне меморије са њиховим стањима присутности"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsmem.1.adoc:16
+@@ -31047,7 +31047,7 @@ msgstr "lsns(8)"
+ #. type: Plain text
+ #: ../sys-utils/lsns.8.adoc:17
+ msgid "lsns - list namespaces"
+-msgstr "lsns – исписује називне просторе"
++msgstr "lsns - исписује називне просторе"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsns.8.adoc:21
+@@ -31233,7 +31233,7 @@ msgstr "mount(8)"
+ #. type: Plain text
+ #: ../sys-utils/mount.8.adoc:43
+ msgid "mount - mount a filesystem"
+-msgstr "mount – прикачиње систем датотека"
++msgstr "mount - прикачиње систем датотека"
+ 
+ #. type: Plain text
+ #: ../sys-utils/mount.8.adoc:47
+@@ -37995,7 +37995,7 @@ msgstr "mountpoint(1)"
+ #. type: Plain text
+ #: ../sys-utils/mountpoint.1.adoc:12
+ msgid "mountpoint - see if a directory or file is a mountpoint"
+-msgstr "mountpoint – проверава да ли је директоријум или датотека тачка качења"
++msgstr "mountpoint - проверава да ли је директоријум или датотека тачка качења"
+ 
+ #. type: Plain text
+ #: ../sys-utils/mountpoint.1.adoc:16
+@@ -38106,7 +38106,7 @@ msgstr "nsenter(1)"
+ #. type: Plain text
+ #: ../sys-utils/nsenter.1.adoc:12
+ msgid "nsenter - run program in different namespaces"
+-msgstr "nsenter – извршава програм у различитим називним просторима"
++msgstr "nsenter - извршава програм у различитим називним просторима"
+ 
+ #. type: Plain text
+ #: ../sys-utils/nsenter.1.adoc:16
+@@ -38748,7 +38748,7 @@ msgstr "pivot_root(8)"
+ #. type: Plain text
+ #: ../sys-utils/pivot_root.8.adoc:12
+ msgid "pivot_root - change the root filesystem"
+-msgstr "pivot_root – мења корени систем датотека"
++msgstr "pivot_root - мења корени систем датотека"
+ 
+ #. type: Plain text
+ #: ../sys-utils/pivot_root.8.adoc:16
+@@ -38898,7 +38898,7 @@ msgstr "prlimit(1)"
+ #. type: Plain text
+ #: ../sys-utils/prlimit.1.adoc:18
+ msgid "prlimit - get and set process resource limits"
+-msgstr "prlimit – добавља и поставља ограничења изворишта процеса"
++msgstr "prlimit - добавља и поставља ограничења изворишта процеса"
+ 
+ #. type: Plain text
+ #: ../sys-utils/prlimit.1.adoc:22
+@@ -39308,7 +39308,7 @@ msgstr "readprofile(8)"
+ #. type: Plain text
+ #: ../sys-utils/readprofile.8.adoc:12
+ msgid "readprofile - read kernel profiling information"
+-msgstr "readprofile – чита информације профилисања кернела"
++msgstr "readprofile - чита информације профилисања кернела"
+ 
+ #. type: Plain text
+ #: ../sys-utils/readprofile.8.adoc:16
+@@ -39670,7 +39670,7 @@ msgstr "renice(1)"
+ #. type: Plain text
+ #: ../sys-utils/renice.1.adoc:46
+ msgid "renice - alter priority of running processes"
+-msgstr "renice – мења предност радних процеса"
++msgstr "renice - мења предност радних процеса"
+ 
+ #. type: Plain text
+ #: ../sys-utils/renice.1.adoc:50
+@@ -39816,7 +39816,7 @@ msgstr "rfkill(8)"
+ #. type: Plain text
+ #: ../sys-utils/rfkill.8.adoc:12
+ msgid "rfkill - tool for enabling and disabling wireless devices"
+-msgstr "rfkill – алат за укључивање или искључивање бежичних уређаја"
++msgstr "rfkill - алат за укључивање или искључивање бежичних уређаја"
+ 
+ #. type: Plain text
+ #: ../sys-utils/rfkill.8.adoc:16
+@@ -40001,7 +40001,7 @@ msgstr "rtcwake(8)"
+ #: ../sys-utils/rtcwake.8.adoc:12
+ msgid "rtcwake - enter a system sleep state until specified wakeup time"
+ msgstr ""
+-"rtcwake – улази у стање спавања система све до наведеног времена буђења"
++"rtcwake - улази у стање спавања система све до наведеног времена буђења"
+ 
+ #. type: Plain text
+ #: ../sys-utils/rtcwake.8.adoc:16
+@@ -40441,7 +40441,7 @@ msgid ""
+ "setarch - change reported architecture in new program environment and/or set "
+ "personality flags"
+ msgstr ""
+-"setarch – мења извештену архитектуру у новом окружењу програма и/или "
++"setarch - мења извештену архитектуру у новом окружењу програма и/или "
+ "поставља опцију персоналности"
+ 
+ #. type: Plain text
+@@ -40740,7 +40740,7 @@ msgstr "setpriv(1)"
+ #. type: Plain text
+ #: ../sys-utils/setpriv.1.adoc:12
+ msgid "setpriv - run a program with different Linux privilege settings"
+-msgstr "setpriv – покреће програм са различитим поставкама Линукс привилегија"
++msgstr "setpriv - покреће програм са различитим поставкама Линукс привилегија"
+ 
+ #. type: Plain text
+ #: ../sys-utils/setpriv.1.adoc:16
+@@ -41223,7 +41223,7 @@ msgstr "setsid(1)"
+ #. type: Plain text
+ #: ../sys-utils/setsid.1.adoc:14
+ msgid "setsid - run a program in a new session"
+-msgstr "setsid – покреће програм у новој сесији"
++msgstr "setsid - покреће програм у новој сесији"
+ 
+ #. type: Plain text
+ #: ../sys-utils/setsid.1.adoc:18
+@@ -41296,7 +41296,7 @@ msgstr "swapon(8)"
+ msgid ""
+ "swapon, swapoff - enable/disable devices and files for paging and swapping"
+ msgstr ""
+-"swapon, swapoff – укључује/искључује уређаје и датотеке зарад страничења и "
++"swapon, swapoff - укључује/искључује уређаје и датотеке зарад страничења и "
+ "размењивања"
+ 
+ #. type: Plain text
+@@ -41777,7 +41777,7 @@ msgstr "switch_root(8)"
+ msgid ""
+ "switch_root - switch to another filesystem as the root of the mount tree"
+ msgstr ""
+-"switch_root – пребацује се на други систем датотека као корен стабла качења"
++"switch_root - пребацује се на други систем датотека као корен стабла качења"
+ 
+ #. type: Plain text
+ #: ../sys-utils/switch_root.8.adoc:16
+@@ -41853,7 +41853,7 @@ msgstr "tunelp(8)"
+ #. type: Plain text
+ #: ../sys-utils/tunelp.8.adoc:12
+ msgid "tunelp - set various parameters for the lp device"
+-msgstr "tunelp – поставља разне параметре за линијски штампач"
++msgstr "tunelp - поставља разне параметре за линијски штампач"
+ 
+ #. type: Plain text
+ #: ../sys-utils/tunelp.8.adoc:16
+@@ -42130,7 +42130,7 @@ msgstr "umount(8)"
+ #. type: Plain text
+ #: ../sys-utils/umount.8.adoc:37
+ msgid "umount - unmount filesystems"
+-msgstr "umount – oткачиње системе датотека"
++msgstr "umount - oткачиње системе датотека"
+ 
+ #. type: Plain text
+ #: ../sys-utils/umount.8.adoc:41
+@@ -42704,7 +42704,7 @@ msgstr "unshare(1)"
+ #. type: Plain text
+ #: ../sys-utils/unshare.1.adoc:12
+ msgid "unshare - run program in new namespaces"
+-msgstr "unshare – извршава програм у новим називним просторима"
++msgstr "unshare - извршава програм у новим називним просторима"
+ 
+ #. type: Plain text
+ #: ../sys-utils/unshare.1.adoc:16
+@@ -43661,7 +43661,7 @@ msgstr "wdctl(8)"
+ #. type: Plain text
+ #: ../sys-utils/wdctl.8.adoc:12
+ msgid "wdctl - show hardware watchdog status"
+-msgstr "wdctl – приказује стање чувара хардвера"
++msgstr "wdctl - приказује стање чувара хардвера"
+ 
+ #. type: Plain text
+ #: ../sys-utils/wdctl.8.adoc:16
+@@ -43842,7 +43842,7 @@ msgstr "zramctl(8)"
+ #. type: Plain text
+ #: ../sys-utils/zramctl.8.adoc:12
+ msgid "zramctl - set up and control zram devices"
+-msgstr "zramctl – подешава и контролише „zram“ уређаје"
++msgstr "zramctl - подешава и контролише „zram“ уређаје"
+ 
+ #. type: Labeled list
+ #: ../sys-utils/zramctl.8.adoc:15
+@@ -44098,7 +44098,7 @@ msgstr "agetty(8)"
+ #. type: Plain text
+ #: ../term-utils/agetty.8.adoc:12
+ msgid "agetty - alternative Linux getty"
+-msgstr "agetty – заменска Линукс „getty“"
++msgstr "agetty - заменска Линукс „getty“"
+ 
+ #. type: Plain text
+ #: ../term-utils/agetty.8.adoc:16
+@@ -45614,7 +45614,7 @@ msgstr "mesg(1)"
+ #. type: Plain text
+ #: ../term-utils/mesg.1.adoc:46
+ msgid "mesg - display (or do not display) messages from other users"
+-msgstr "mesg – приказује (или не приказује) поруке од других корисника"
++msgstr "mesg - приказује (или не приказује) поруке од других корисника"
+ 
+ #. type: Plain text
+ #: ../term-utils/mesg.1.adoc:50
+@@ -45786,7 +45786,7 @@ msgstr "script(1)"
+ #. type: Plain text
+ #: ../term-utils/script.1.adoc:47
+ msgid "script - make typescript of terminal session"
+-msgstr "script – прави скрипту врсте сесије терминала"
++msgstr "script - прави скрипту врсте сесије терминала"
+ 
+ #. type: Plain text
+ #: ../term-utils/script.1.adoc:51
+@@ -46290,7 +46290,7 @@ msgstr "scriptlive(1)"
+ #: ../term-utils/scriptlive.1.adoc:13
+ msgid "scriptlive - re-run session typescripts, using timing information"
+ msgstr ""
+-"scriptlive – поново покреће скрипту исписа сесије, користећи информације "
++"scriptlive - поново покреће скрипту исписа сесије, користећи информације "
+ "временисања"
+ 
+ #. type: Plain text
+@@ -46465,7 +46465,7 @@ msgstr "scriptreplay(1)"
+ #: ../term-utils/scriptreplay.1.adoc:13
+ msgid "scriptreplay - play back typescripts, using timing information"
+ msgstr ""
+-"scriptreplay – поново пушта скрипту исписа терминала, користећи информације "
++"scriptreplay - поново пушта скрипту исписа терминала, користећи информације "
+ "временисања"
+ 
+ #. type: Plain text
+@@ -46697,7 +46697,7 @@ msgstr "setterm(1)"
+ #. type: Plain text
+ #: ../term-utils/setterm.1.adoc:19
+ msgid "setterm - set terminal attributes"
+-msgstr "setterm – поставља атрибуте терминала"
++msgstr "setterm - поставља атрибуте терминала"
+ 
+ #. type: Plain text
+ #: ../term-utils/setterm.1.adoc:23
+@@ -47392,7 +47392,7 @@ msgstr "wall(1)"
+ #. type: Plain text
+ #: ../term-utils/wall.1.adoc:47
+ msgid "wall - write a message to all users"
+-msgstr "wall – пише поруку свим корисницима"
++msgstr "wall - пише поруку свим корисницима"
+ 
+ #. type: Plain text
+ #: ../term-utils/wall.1.adoc:51
+@@ -47532,7 +47532,7 @@ msgstr "write(1)"
+ #. type: Plain text
+ #: ../term-utils/write.1.adoc:49
+ msgid "write - send a message to another user"
+-msgstr "write – шаље поруку другом коринику"
++msgstr "write - шаље поруку другом коринику"
+ 
+ #. type: Plain text
+ #: ../term-utils/write.1.adoc:51
+@@ -47681,7 +47681,7 @@ msgstr "col(1)"
+ #. type: Plain text
+ #: ../text-utils/col.1.adoc:49
+ msgid "col - filter reverse line feeds from input"
+-msgstr "col – филтрира обратне уводе реда са улаза"
++msgstr "col - филтрира обратне уводе реда са улаза"
+ 
+ #. type: Plain text
+ #: ../text-utils/col.1.adoc:53
+@@ -48001,7 +48001,7 @@ msgstr "colcrt(1)"
+ #. type: Plain text
+ #: ../text-utils/colcrt.1.adoc:47
+ msgid "colcrt - filter nroff output for CRT previewing"
+-msgstr "colcrt – филтрира „nroff“ излаз за CRT претпреглед"
++msgstr "colcrt - филтрира „nroff“ излаз за CRT претпреглед"
+ 
+ #. type: Plain text
+ #: ../text-utils/colcrt.1.adoc:51
+@@ -48175,7 +48175,7 @@ msgstr "colrm(1)"
+ #. type: Plain text
+ #: ../text-utils/colrm.1.adoc:46
+ msgid "colrm - remove columns from a file"
+-msgstr "colrm – уклања колоне из датотеке"
++msgstr "colrm - уклања колоне из датотеке"
+ 
+ #. type: Plain text
+ #: ../text-utils/colrm.1.adoc:50
+@@ -48271,7 +48271,7 @@ msgstr "column(1)"
+ #. type: Plain text
+ #: ../text-utils/column.1.adoc:46
+ msgid "column - columnate lists"
+-msgstr "column – ствара спискове колонама"
++msgstr "column - ствара спискове колонама"
+ 
+ #. type: Plain text
+ #: ../text-utils/column.1.adoc:50
+@@ -48840,7 +48840,7 @@ msgstr "hexdump(1)"
+ msgid ""
+ "hexdump - display file contents in hexadecimal, decimal, octal, or ascii"
+ msgstr ""
+-"hexdump – приказује садржаје датотека у хексадецималном, децималном, "
++"hexdump - приказује садржаје датотека у хексадецималном, децималном, "
+ "окталном или аскри запису"
+ 
+ #. type: Plain text
+@@ -49678,7 +49678,7 @@ msgstr "line(1)"
+ #. type: Plain text
+ #: ../text-utils/line.1.adoc:13
+ msgid "line - read one line"
+-msgstr "line – чита један ред"
++msgstr "line - чита један ред"
+ 
+ #. type: Plain text
+ #: ../text-utils/line.1.adoc:17
+@@ -49747,7 +49747,7 @@ msgstr "more(1)"
+ #. type: Plain text
+ #: ../text-utils/more.1.adoc:49
+ msgid "more - file perusal filter for crt viewing"
+-msgstr "more – филтер прочитавања датотеке за ЦРТ приказивање"
++msgstr "more - филтер прочитавања датотеке за ЦРТ приказивање"
+ 
+ #. type: Plain text
+ #: ../text-utils/more.1.adoc:53
+@@ -50284,7 +50284,7 @@ msgstr "pg(1)"
+ #. type: Plain text
+ #: ../text-utils/pg.1.adoc:13
+ msgid "pg - browse pagewise through text files"
+-msgstr "pg – разгледајте странично датотеке текста"
++msgstr "pg - разгледајте странично датотеке текста"
+ 
+ #. type: Plain text
+ #: ../text-utils/pg.1.adoc:17
+@@ -50764,7 +50764,7 @@ msgstr "rev(1)"
+ #. type: Plain text
+ #: ../text-utils/rev.1.adoc:46
+ msgid "rev - reverse lines characterwise"
+-msgstr "rev – обрће редове у складу са знаковима"
++msgstr "rev - обрће редове у складу са знаковима"
+ 
+ #. type: Plain text
+ #: ../text-utils/rev.1.adoc:50
+@@ -50846,7 +50846,7 @@ msgstr "ul(1)"
+ #. type: Plain text
+ #: ../text-utils/ul.1.adoc:46
+ msgid "ul - do underlining"
+-msgstr "ul – ради подвлачење"
++msgstr "ul - ради подвлачење"
+ 
+ #. type: Plain text
+ #: ../text-utils/ul.1.adoc:50
+--- util-linux-2.38/po-man/uk.po.orig	2022-05-06 12:39:42.769783470 +0200
++++ util-linux-2.38/po-man/uk.po	2022-05-06 22:31:55.403953337 +0200
+@@ -301,7 +301,7 @@ msgstr "НАЗВА"
+ #. type: Plain text
+ #: ../disk-utils/addpart.8.adoc:18
+ msgid "addpart - tell the kernel about the existence of a partition"
+-msgstr "addpart — повідомляє ядру про існування розділу"
++msgstr "addpart - повідомляє ядру про існування розділу"
+ 
+ #. type: Title ==
+ #: ../disk-utils/addpart.8.adoc:19 ../disk-utils/blockdev.8.adoc:19
+@@ -606,7 +606,7 @@ msgstr "blockdev(8)"
+ #: ../disk-utils/blockdev.8.adoc:18
+ msgid "blockdev - call block device ioctls from the command line"
+ msgstr ""
+-"blockdev — викликати керування введенням-виведенням блокового пристрою з "
++"blockdev - викликати керування введенням-виведенням блокового пристрою з "
+ "командного рядка"
+ 
+ #. type: Plain text
+@@ -1091,7 +1091,7 @@ msgstr "cfdisk(8)"
+ #. type: Plain text
+ #: ../disk-utils/cfdisk.8.adoc:26
+ msgid "cfdisk - display or manipulate a disk partition table"
+-msgstr "cfdisk — показ таблиці розділів диска або керування нею"
++msgstr "cfdisk - показ таблиці розділів диска або керування нею"
+ 
+ #. type: Plain text
+ #: ../disk-utils/cfdisk.8.adoc:30
+@@ -1680,7 +1680,7 @@ msgstr "delpart(8)"
+ #. type: Plain text
+ #: ../disk-utils/delpart.8.adoc:18
+ msgid "delpart - tell the kernel to forget about a partition"
+-msgstr "delpart — наказати ядру забути про розділ"
++msgstr "delpart - наказати ядру забути про розділ"
+ 
+ #. type: Plain text
+ #: ../disk-utils/delpart.8.adoc:22
+@@ -1721,7 +1721,7 @@ msgstr "fdformat(8)"
+ #. type: Plain text
+ #: ../disk-utils/fdformat.8.adoc:16
+ msgid "fdformat - low-level format a floppy disk"
+-msgstr "fdformat — низькорівневе форматування дискети"
++msgstr "fdformat - низькорівневе форматування дискети"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fdformat.8.adoc:20
+@@ -3319,7 +3319,7 @@ msgstr "fsck.cramfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.cramfs.8.adoc:12
+ msgid "fsck.cramfs - fsck compressed ROM file system"
+-msgstr "fsck.cramfs – виконати fsck над стиснутою файловою системою ROM"
++msgstr "fsck.cramfs - виконати fsck над стиснутою файловою системою ROM"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.cramfs.8.adoc:16
+@@ -3688,7 +3688,7 @@ msgstr "isosize(8)"
+ #. type: Plain text
+ #: ../disk-utils/isosize.8.adoc:12
+ msgid "isosize - output the length of an iso9660 filesystem"
+-msgstr "isosize — виведення довжини файлової системи iso9660"
++msgstr "isosize - виведення довжини файлової системи iso9660"
+ 
+ #. type: Plain text
+ #: ../disk-utils/isosize.8.adoc:16
+@@ -9707,7 +9707,7 @@ msgstr "newgrp(1)"
+ #. type: Plain text
+ #: ../login-utils/newgrp.1.adoc:14
+ msgid "newgrp - log in to a new group"
+-msgstr "newgrp — вхід до нової групи"
++msgstr "newgrp - вхід до нової групи"
+ 
+ #. type: Plain text
+ #: ../login-utils/newgrp.1.adoc:18
+@@ -41578,7 +41578,7 @@ msgstr "line(1)"
+ #. type: Plain text
+ #: ../text-utils/line.1.adoc:13
+ msgid "line - read one line"
+-msgstr "line — читання одного рядка"
++msgstr "line - читання одного рядка"
+ 
+ #. type: Plain text
+ #: ../text-utils/line.1.adoc:17
+@@ -42589,7 +42589,7 @@ msgstr "rev(1)"
+ #. type: Plain text
+ #: ../text-utils/rev.1.adoc:46
+ msgid "rev - reverse lines characterwise"
+-msgstr "rev — посимвольне обертання рядків"
++msgstr "rev - посимвольне обертання рядків"
+ 
+ #. type: Plain text
+ #: ../text-utils/rev.1.adoc:50
