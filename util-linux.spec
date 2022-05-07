@@ -46,8 +46,6 @@ Source6:	su.pamd
 Source7:	su-l.pamd
 Source8:	runuser.pamd
 Source9:	runuser-l.pamd
-Source10:	nologin.c
-Source11:	nologin.8
 Source12:	blockdev.service
 Source13:	blockdev.sh
 Patch0:		%{name}-fdformat-ide.patch
@@ -818,8 +816,6 @@ for d in es ja ko ; do
 	%{__sed} -i -e 's/READPROFILE 1/READPROFILE 8/' man/$d/man8/readprofile.8
 done
 
-cp -p %{SOURCE10} nologin.c
-
 %{__rm} po/stamp-po
 
 %build
@@ -941,8 +937,6 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 
 %{__make}
 
-%{__cc} %{rpmldflags} %{rpmcflags} %{rpmcppflags} nologin.c -o nologin
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security,terminal-colors.d} \
@@ -954,9 +948,6 @@ install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security,terminal-co
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
-
-install -p nologin $RPM_BUILD_ROOT/sbin
-cp -p %{SOURCE11} $RPM_BUILD_ROOT%{_mandir}/man8
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/login
 install -p %{SOURCE3} $RPM_BUILD_ROOT/etc/rc.d/init.d/blockdev
