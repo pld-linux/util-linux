@@ -109,7 +109,7 @@ Requires:	libmount = %{version}-%{release}
 %{?with_selinux:Requires:	libselinux >= 2.5}
 Requires:	libsmartcols = %{version}-%{release}
 # for uuidparse
-Requires:	libuuid= %{version}-%{release}
+Requires:	libuuid = %{version}-%{release}
 Requires:	pam >= %{pam_ver}
 Provides:	eject = %{version}-%{release}
 Provides:	fdisk
