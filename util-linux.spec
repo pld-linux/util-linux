@@ -17,7 +17,6 @@
 %bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
 %bcond_without	systemd		# systemd support
-%bcond_without	fallocate	# fallocate utility (needs glibc 2.11 to compile)
 
 %define		pam_ver 1:1.1.8-5
 
@@ -64,7 +63,8 @@ BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-tools >= 0.21
-%{?with_fallocate:BuildRequires:	glibc-devel >= 6:2.11}
+# for fallocate
+BuildRequires:	glibc-devel >= 6:2.11
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
@@ -905,7 +905,6 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--bindir=/bin \
 	--sbindir=/sbin \
 	%{?with_apidocs:--docdir=%{_gtkdocdir}} \
-	%{!?with_fallocate:--disable-fallocate} \
 	--enable-libmount-support-mtab \
 	--disable-makeinstall-chown \
 	--disable-makeinstall-setuid \
@@ -1208,7 +1207,7 @@ fi
 %attr(755,root,root) %{_bindir}/colrm
 %attr(755,root,root) %{_bindir}/column
 %attr(755,root,root) %{_bindir}/eject
-%{?with_fallocate:%attr(755,root,root) %{_bindir}/fallocate}
+%attr(755,root,root) %{_bindir}/fallocate
 %attr(755,root,root) %{_bindir}/fincore
 %attr(755,root,root) %{_bindir}/flock
 %attr(755,root,root) %{_bindir}/getopt
@@ -1278,7 +1277,7 @@ fi
 %{_mandir}/man1/column.1*
 %{_mandir}/man1/dmesg.1*
 %{_mandir}/man1/eject.1*
-%{?with_fallocate:%{_mandir}/man1/fallocate.1*}
+%{_mandir}/man1/fallocate.1*
 %{_mandir}/man1/fincore.1*
 %{_mandir}/man1/flock.1*
 %{_mandir}/man1/getopt.1*
@@ -1363,7 +1362,7 @@ fi
 %lang(de) %{_mandir}/de/man1/column.1*
 %lang(de) %{_mandir}/de/man1/dmesg.1*
 %lang(de) %{_mandir}/de/man1/eject.1*
-%{?with_fallocate:%lang(de) %{_mandir}/de/man1/fallocate.1*}
+%lang(de) %{_mandir}/de/man1/fallocate.1*
 %lang(de) %{_mandir}/de/man1/fincore.1*
 %lang(de) %{_mandir}/de/man1/flock.1*
 %lang(de) %{_mandir}/de/man1/getopt.1*
@@ -1474,7 +1473,7 @@ fi
 %lang(fr) %{_mandir}/fr/man1/chrt.1*
 %lang(fr) %{_mandir}/fr/man1/col.1*
 %lang(fr) %{_mandir}/fr/man1/dmesg.1*
-%{?with_fallocate:%lang(fr) %{_mandir}/fr/man1/fallocate.1*}
+%lang(fr) %{_mandir}/fr/man1/fallocate.1*
 %lang(fr) %{_mandir}/fr/man1/flock.1*
 %lang(fr) %{_mandir}/fr/man1/getopt.1*
 %lang(fr) %{_mandir}/fr/man1/ionice.1*
@@ -1646,7 +1645,7 @@ fi
 %lang(sr) %{_mandir}/sr/man1/column.1*
 %lang(sr) %{_mandir}/sr/man1/dmesg.1*
 %lang(sr) %{_mandir}/sr/man1/eject.1*
-%{?with_fallocate:%lang(sr) %{_mandir}/sr/man1/fallocate.1*}
+%lang(sr) %{_mandir}/sr/man1/fallocate.1*
 %lang(sr) %{_mandir}/sr/man1/fincore.1*
 %lang(sr) %{_mandir}/sr/man1/flock.1*
 %lang(sr) %{_mandir}/sr/man1/getopt.1*
