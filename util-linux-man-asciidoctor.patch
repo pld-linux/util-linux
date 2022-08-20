@@ -1,5 +1,5 @@
 asciidoctor generates wrong filenames if command is not separated by exactly " - ".
-Also, fix command name in sr mkfs.cramfs man page.
+Also, fix command name in fr/chfn and sr/mkfs.cramfs man page.
 
 --- util-linux-2.38/po-man/de.po.orig	2022-05-06 12:39:35.593155682 +0200
 +++ util-linux-2.38/po-man/de.po	2022-05-06 19:34:39.514906227 +0200
@@ -12,9 +12,9 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/blockdev.8.adoc:22
---- util-linux-2.38/po-man/fr.po.orig	2022-05-06 12:39:39.873132496 +0200
-+++ util-linux-2.38/po-man/fr.po	2022-05-06 21:54:08.466234392 +0200
-@@ -639,7 +639,7 @@ msgstr "blockdev(8)"
+--- util-linux-2.38.1/po-man/fr.po.orig	2022-08-04 10:48:11.307135024 +0200
++++ util-linux-2.38.1/po-man/fr.po	2022-08-20 17:58:52.724813839 +0200
+@@ -645,7 +645,7 @@ msgstr "blockdev(8)"
  #: ../disk-utils/blockdev.8.adoc:18
  msgid "blockdev - call block device ioctls from the command line"
  msgstr ""
@@ -23,7 +23,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/blockdev.8.adoc:22
-@@ -1121,7 +1121,7 @@ msgstr "cfdisk(8)"
+@@ -1127,7 +1127,7 @@ msgstr "cfdisk(8)"
  #. type: Plain text
  #: ../disk-utils/cfdisk.8.adoc:26
  msgid "cfdisk - display or manipulate a disk partition table"
@@ -32,7 +32,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/cfdisk.8.adoc:30
-@@ -3830,7 +3830,7 @@ msgstr "fsck.minix(8)"
+@@ -3828,7 +3828,7 @@ msgstr "fsck.minix(8)"
  #. type: Plain text
  #: ../disk-utils/fsck.minix.8.adoc:16
  msgid "fsck.minix - check consistency of Minix filesystem"
@@ -41,7 +41,16 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/fsck.minix.8.adoc:20
-@@ -12459,7 +12459,7 @@ msgstr "blkid(8)"
+@@ -9460,7 +9460,7 @@ msgstr "Commandes de l'utilisateur"
+ #. type: Plain text
+ #: ../login-utils/chfn.1.adoc:20
+ msgid "chfn - change your finger information"
+-msgstr "chfm - changer vos informations d'identification"
++msgstr "chfn - changer vos informations d'identification"
+ 
+ #. type: Plain text
+ #: ../login-utils/chfn.1.adoc:24
+@@ -12565,7 +12565,7 @@ msgstr "blkid(8)"
  #. type: Plain text
  #: ../misc-utils/blkid.8.adoc:15
  msgid "blkid - locate/print block device attributes"
@@ -50,7 +59,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../misc-utils/blkid.8.adoc:19
-@@ -13946,7 +13946,7 @@ msgstr "findmnt(8)"
+@@ -14052,7 +14052,7 @@ msgstr "findmnt(8)"
  #. type: Plain text
  #: ../misc-utils/findmnt.8.adoc:13
  msgid "findmnt - find a filesystem"
@@ -59,7 +68,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../misc-utils/findmnt.8.adoc:17
-@@ -22630,7 +22630,7 @@ msgstr "blkdiscard(8)"
+@@ -22762,7 +22762,7 @@ msgstr "blkdiscard(8)"
  #. type: Plain text
  #: ../sys-utils/blkdiscard.8.adoc:12
  msgid "blkdiscard - discard sectors on a device"
@@ -68,7 +77,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../sys-utils/blkdiscard.8.adoc:16
-@@ -23604,7 +23604,7 @@ msgstr "ctrlaltdel(8)"
+@@ -23748,7 +23748,7 @@ msgstr "ctrlaltdel(8)"
  #. type: Plain text
  #: ../sys-utils/ctrlaltdel.8.adoc:16
  msgid "ctrlaltdel - set the function of the Ctrl-Alt-Del combination"
@@ -77,7 +86,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../sys-utils/ctrlaltdel.8.adoc:20
-@@ -26118,7 +26118,7 @@ msgstr "fstrim(8)"
+@@ -26266,7 +26266,7 @@ msgstr "fstrim(8)"
  #: ../sys-utils/fstrim.8.adoc:12
  msgid "fstrim - discard unused blocks on a mounted filesystem"
  msgstr ""
@@ -86,7 +95,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../sys-utils/fstrim.8.adoc:16
-@@ -26465,7 +26465,7 @@ msgstr "hwclock(8)"
+@@ -26613,7 +26613,7 @@ msgstr "hwclock(8)"
  #. type: Plain text
  #: ../sys-utils/hwclock.8.adoc:20
  msgid "hwclock - time clocks utility"
@@ -95,7 +104,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../sys-utils/hwclock.8.adoc:24
-@@ -42571,7 +42571,7 @@ msgstr "unshare(1)"
+@@ -42725,7 +42725,7 @@ msgstr "unshare(1)"
  #. type: Plain text
  #: ../sys-utils/unshare.1.adoc:12
  msgid "unshare - run program in new namespaces"
@@ -104,7 +113,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../sys-utils/unshare.1.adoc:16
-@@ -43999,7 +43999,7 @@ msgstr "agetty(8)"
+@@ -44153,7 +44153,7 @@ msgstr "agetty(8)"
  #. type: Plain text
  #: ../term-utils/agetty.8.adoc:12
  msgid "agetty - alternative Linux getty"
@@ -1285,9 +1294,9 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../text-utils/ul.1.adoc:50
---- util-linux-2.38/po-man/uk.po.orig	2022-05-06 12:39:42.769783470 +0200
-+++ util-linux-2.38/po-man/uk.po	2022-05-06 22:31:55.403953337 +0200
-@@ -301,7 +301,7 @@ msgstr "НАЗВА"
+--- util-linux-2.38.1/po-man/uk.po.orig	2022-08-04 10:48:12.614128571 +0200
++++ util-linux-2.38.1/po-man/uk.po	2022-08-20 18:19:04.794914158 +0200
+@@ -306,7 +306,7 @@ msgstr "НАЗВА"
  #. type: Plain text
  #: ../disk-utils/addpart.8.adoc:18
  msgid "addpart - tell the kernel about the existence of a partition"
@@ -1296,7 +1305,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Title ==
  #: ../disk-utils/addpart.8.adoc:19 ../disk-utils/blockdev.8.adoc:19
-@@ -606,7 +606,7 @@ msgstr "blockdev(8)"
+@@ -611,7 +611,7 @@ msgstr "blockdev(8)"
  #: ../disk-utils/blockdev.8.adoc:18
  msgid "blockdev - call block device ioctls from the command line"
  msgstr ""
@@ -1305,7 +1314,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  "командного рядка"
  
  #. type: Plain text
-@@ -1091,7 +1091,7 @@ msgstr "cfdisk(8)"
+@@ -1096,7 +1096,7 @@ msgstr "cfdisk(8)"
  #. type: Plain text
  #: ../disk-utils/cfdisk.8.adoc:26
  msgid "cfdisk - display or manipulate a disk partition table"
@@ -1314,7 +1323,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/cfdisk.8.adoc:30
-@@ -1680,7 +1680,7 @@ msgstr "delpart(8)"
+@@ -1685,7 +1685,7 @@ msgstr "delpart(8)"
  #. type: Plain text
  #: ../disk-utils/delpart.8.adoc:18
  msgid "delpart - tell the kernel to forget about a partition"
@@ -1323,7 +1332,7 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/delpart.8.adoc:22
-@@ -1721,7 +1721,7 @@ msgstr "fdformat(8)"
+@@ -1726,7 +1726,7 @@ msgstr "fdformat(8)"
  #. type: Plain text
  #: ../disk-utils/fdformat.8.adoc:16
  msgid "fdformat - low-level format a floppy disk"
@@ -1332,7 +1341,25 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/fdformat.8.adoc:20
-@@ -3319,7 +3319,7 @@ msgstr "fsck.cramfs(8)"
+@@ -1915,7 +1915,7 @@ msgstr "fdisk(8)"
+ #. type: Plain text
+ #: ../disk-utils/fdisk.8.adoc:20
+ msgid "fdisk - manipulate disk partition table"
+-msgstr "fdisk — керування таблицею розділів диска"
++msgstr "fdisk - керування таблицею розділів диска"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fdisk.8.adoc:24
+@@ -2836,7 +2836,7 @@ msgstr "fsck(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.8.adoc:16
+ msgid "fsck - check and repair a Linux filesystem"
+-msgstr "fsck — перевірка і виправлення файлової системи Linux"
++msgstr "fsck - перевірка і виправлення файлової системи Linux"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.8.adoc:20
+@@ -3620,7 +3620,7 @@ msgstr "fsck.cramfs(8)"
  #. type: Plain text
  #: ../disk-utils/fsck.cramfs.8.adoc:12
  msgid "fsck.cramfs - fsck compressed ROM file system"
@@ -1341,7 +1368,16 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/fsck.cramfs.8.adoc:16
-@@ -3688,7 +3688,7 @@ msgstr "isosize(8)"
+@@ -3773,7 +3773,7 @@ msgstr "fsck.minix(8)"
+ #. type: Plain text
+ #: ../disk-utils/fsck.minix.8.adoc:16
+ msgid "fsck.minix - check consistency of Minix filesystem"
+-msgstr "fsck.minix — перевірка цілісності файлової системи Minix"
++msgstr "fsck.minix - перевірка цілісності файлової системи Minix"
+ 
+ #. type: Plain text
+ #: ../disk-utils/fsck.minix.8.adoc:20
+@@ -4021,7 +4021,7 @@ msgstr "isosize(8)"
  #. type: Plain text
  #: ../disk-utils/isosize.8.adoc:12
  msgid "isosize - output the length of an iso9660 filesystem"
@@ -1350,7 +1386,142 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../disk-utils/isosize.8.adoc:16
-@@ -9707,7 +9707,7 @@ msgstr "newgrp(1)"
+@@ -4125,7 +4125,7 @@ msgstr "mkfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.8.adoc:12
+ msgid "mkfs - build a Linux filesystem"
+-msgstr "mkfs — побудова файлової системи Linux"
++msgstr "mkfs - побудова файлової системи Linux"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.8.adoc:16
+@@ -4304,7 +4304,7 @@ msgstr "mkfs.bfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.bfs.8.adoc:16
+ msgid "mkfs.bfs - make an SCO bfs filesystem"
+-msgstr "mkfs.bfs – створити файлову систему bfs SCO"
++msgstr "mkfs.bfs - створити файлову систему bfs SCO"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.bfs.8.adoc:20
+@@ -4409,7 +4409,7 @@ msgstr "mkfs.cramfs(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.cramfs.8.adoc:12
+ msgid "mkfs.cramfs - make compressed ROM file system"
+-msgstr "mkfs.cramfs — створити стиснену файлову систему ROM"
++msgstr "mkfs.cramfs - створити стиснену файлову систему ROM"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.cramfs.8.adoc:16
+@@ -4608,7 +4608,7 @@ msgstr "mkfs.minix(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkfs.minix.8.adoc:19
+ msgid "mkfs.minix - make a Minix filesystem"
+-msgstr "mkfs.minix — створення файлових систем Minix"
++msgstr "mkfs.minix - створення файлових систем Minix"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkfs.minix.8.adoc:23
+@@ -4817,7 +4817,7 @@ msgstr "mkswap(8)"
+ #. type: Plain text
+ #: ../disk-utils/mkswap.8.adoc:16
+ msgid "mkswap - set up a Linux swap area"
+-msgstr "mkswap — налаштовування області резервної пам'яті Linux"
++msgstr "mkswap - налаштовування області резервної пам'яті Linux"
+ 
+ #. type: Plain text
+ #: ../disk-utils/mkswap.8.adoc:20
+@@ -5174,7 +5174,7 @@ msgstr "partx(8)"
+ msgid ""
+ "partx - tell the kernel about the presence and numbering of on-disk "
+ "partitions"
+-msgstr "partx — повідомлення ядру щодо наявності і нумерації розділів на диску"
++msgstr "partx - повідомлення ядру щодо наявності і нумерації розділів на диску"
+ 
+ #. type: Plain text
+ #: ../disk-utils/partx.8.adoc:23
+@@ -5610,7 +5610,7 @@ msgstr "raw(8)"
+ #. type: Plain text
+ #: ../disk-utils/raw.8.adoc:12
+ msgid "raw - bind a Linux raw character device"
+-msgstr "raw — прив'язування простого символьного пристрою Linux"
++msgstr "raw - прив'язування простого символьного пристрою Linux"
+ 
+ #. type: Plain text
+ #: ../disk-utils/raw.8.adoc:16
+@@ -7359,7 +7359,7 @@ msgstr "swaplabel(8)"
+ #. type: Plain text
+ #: ../disk-utils/swaplabel.8.adoc:16
+ msgid "swaplabel - print or change the label or UUID of a swap area"
+-msgstr "swaplabel — показ або зміна мітки або UUID області резервної пам'яті"
++msgstr "swaplabel - показ або зміна мітки або UUID області резервної пам'яті"
+ 
+ #. type: Plain text
+ #: ../disk-utils/swaplabel.8.adoc:20
+@@ -7799,7 +7799,7 @@ msgstr "Підручник програ�
+ #. type: Plain text
+ #: ../libblkid/libblkid.3.adoc:19
+ msgid "libblkid - block device identification library"
+-msgstr "libblkid — бібліотека ідентифікації блокових пристроїв"
++msgstr "libblkid - бібліотека ідентифікації блокових пристроїв"
+ 
+ #. type: Plain text
+ #: ../libblkid/libblkid.3.adoc:23
+@@ -7994,7 +7994,7 @@ msgstr "uuid(3)"
+ #: ../libuuid/man/uuid.3.adoc:44
+ msgid "uuid - DCE compatible Universally Unique Identifier library"
+ msgstr ""
+-"uuid — бібліотека сумісних із DCE для роботи із універсальними унікальними "
++"uuid - бібліотека сумісних із DCE для роботи із універсальними унікальними "
+ "ідентифікаторами"
+ 
+ #. type: Plain text
+@@ -8287,7 +8287,7 @@ msgstr "uuid_copy(3)"
+ #. type: Plain text
+ #: ../libuuid/man/uuid_copy.3.adoc:44
+ msgid "uuid_copy - copy a UUID value"
+-msgstr "uuid_copy — копіювання значення UUID"
++msgstr "uuid_copy - копіювання значення UUID"
+ 
+ #. type: Plain text
+ #: ../libuuid/man/uuid_copy.3.adoc:50
+@@ -8895,7 +8895,7 @@ msgstr "Команди користув�
+ #. type: Plain text
+ #: ../login-utils/chfn.1.adoc:20
+ msgid "chfn - change your finger information"
+-msgstr "chfn — зміна даних щодо вашого відбитка"
++msgstr "chfn - зміна даних щодо вашого відбитка"
+ 
+ #. type: Plain text
+ #: ../login-utils/chfn.1.adoc:24
+@@ -9081,7 +9081,7 @@ msgstr "chsh(1)"
+ #. type: Plain text
+ #: ../login-utils/chsh.1.adoc:20
+ msgid "chsh - change your login shell"
+-msgstr "chsh — зміна оболонки для входу до системи"
++msgstr "chsh - зміна оболонки для входу до системи"
+ 
+ #. type: Plain text
+ #: ../login-utils/chsh.1.adoc:24
+@@ -9186,7 +9186,7 @@ msgstr "last(1)"
+ #: ../login-utils/last.1.adoc:29
+ msgid "last, lastb - show a listing of last logged in users"
+ msgstr ""
+-"last, lastb — виведення списку користувачів, які входили до системи останніми"
++"last, lastb - виведення списку користувачів, які входили до системи останніми"
+ 
+ #. type: Plain text
+ #: ../login-utils/last.1.adoc:33
+@@ -10034,7 +10034,7 @@ msgstr "lslogins(1)"
+ #. type: Plain text
+ #: ../login-utils/lslogins.1.adoc:14
+ msgid "lslogins - display information about known users in the system"
+-msgstr "lslogins — виведення відомостей щодо відомих користувачів у системі"
++msgstr "lslogins - виведення відомостей щодо відомих користувачів у системі"
+ 
+ #. type: Plain text
+ #: ../login-utils/lslogins.1.adoc:18
+@@ -10505,7 +10505,7 @@ msgstr "newgrp(1)"
  #. type: Plain text
  #: ../login-utils/newgrp.1.adoc:14
  msgid "newgrp - log in to a new group"
@@ -1359,7 +1530,601 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../login-utils/newgrp.1.adoc:18
-@@ -41578,7 +41578,7 @@ msgstr "line(1)"
+@@ -10559,7 +10559,7 @@ msgstr "nologin(8)"
+ #. type: Plain text
+ #: ../login-utils/nologin.8.adoc:12
+ msgid "nologin - politely refuse a login"
+-msgstr "nologin — ввічлива відмова у вході до системи"
++msgstr "nologin - ввічлива відмова у вході до системи"
+ 
+ #. type: Plain text
+ #: ../login-utils/nologin.8.adoc:16
+@@ -10698,7 +10698,7 @@ msgstr "runuser(1)"
+ #. type: Plain text
+ #: ../login-utils/runuser.1.adoc:12
+ msgid "runuser - run a command with substitute user and group ID"
+-msgstr "runuser — запуск команди від імені іншого користувача та групи"
++msgstr "runuser - запуск команди від імені іншого користувача та групи"
+ 
+ #. type: Plain text
+ #: ../login-utils/runuser.1.adoc:16
+@@ -11182,7 +11182,7 @@ msgstr "su(1)"
+ #. type: Plain text
+ #: ../login-utils/su.1.adoc:13
+ msgid "su - run a command with substitute user and group ID"
+-msgstr "su — запуск команди від імені іншого користувача та групи"
++msgstr "su - запуск команди від імені іншого користувача та групи"
+ 
+ #. type: Plain text
+ #: ../login-utils/su.1.adoc:17
+@@ -11534,7 +11534,7 @@ msgstr "sulogin(8)"
+ #. type: Plain text
+ #: ../login-utils/sulogin.8.adoc:31
+ msgid "sulogin - single-user login"
+-msgstr "sulogin — однокористувацький вхід до системи"
++msgstr "sulogin - однокористувацький вхід до системи"
+ 
+ #. type: Plain text
+ #: ../login-utils/sulogin.8.adoc:35
+@@ -11684,7 +11684,7 @@ msgstr "utmpdump(1)"
+ #: ../login-utils/utmpdump.1.adoc:29
+ msgid "utmpdump - dump UTMP and WTMP files in raw format"
+ msgstr ""
+-"utmpdump — створення дампу файлів UTMP і WTMP у форматі даних без обробки."
++"utmpdump - створення дампу файлів UTMP і WTMP у форматі даних без обробки."
+ 
+ #. type: Plain text
+ #: ../login-utils/utmpdump.1.adoc:33
+@@ -11848,7 +11848,7 @@ msgstr "vipw(8)"
+ #. type: Plain text
+ #: ../login-utils/vipw.8.adoc:46
+ msgid "vipw, vigr - edit the password or group file"
+-msgstr "vipw, vigr — редагування файла паролів або груп"
++msgstr "vipw, vigr - редагування файла паролів або груп"
+ 
+ #. type: Plain text
+ #: ../login-utils/vipw.8.adoc:50
+@@ -12984,7 +12984,7 @@ msgstr "fincore(1)"
+ #. type: Plain text
+ #: ../misc-utils/fincore.1.adoc:18
+ msgid "fincore - count pages of file contents in core"
+-msgstr "fincore — обчислення кількості сторінок вмісту файла у ядрі"
++msgstr "fincore - обчислення кількості сторінок вмісту файла у ядрі"
+ 
+ #. type: Plain text
+ #: ../misc-utils/fincore.1.adoc:22
+@@ -13101,7 +13101,7 @@ msgstr "findfs(8)"
+ #. type: Plain text
+ #: ../misc-utils/findfs.8.adoc:14
+ msgid "findfs - find a filesystem by label or UUID"
+-msgstr "findfs — пошук файлової системи за міткою або UUID"
++msgstr "findfs - пошук файлової системи за міткою або UUID"
+ 
+ #. type: Plain text
+ #: ../misc-utils/findfs.8.adoc:18
+@@ -14559,7 +14559,7 @@ msgstr "hardlink(1)"
+ #. type: Plain text
+ #: ../misc-utils/hardlink.1.adoc:18
+ msgid "hardlink - link multiple copies of a file"
+-msgstr "hardlink — пов'язування посиланнями декількох копій файла"
++msgstr "hardlink - пов'язування посиланнями декількох копій файла"
+ 
+ #. type: Plain text
+ #: ../misc-utils/hardlink.1.adoc:22
+@@ -15017,7 +15017,7 @@ msgstr "kill(1)"
+ #. type: Plain text
+ #: ../misc-utils/kill.1.adoc:17
+ msgid "kill - terminate a process"
+-msgstr "kill — переривання процесу"
++msgstr "kill - переривання процесу"
+ 
+ #. type: Plain text
+ #: ../misc-utils/kill.1.adoc:21
+@@ -15444,7 +15444,7 @@ msgstr "logger(1)"
+ #. type: Plain text
+ #: ../misc-utils/logger.1.adoc:46
+ msgid "logger - enter messages into the system log"
+-msgstr "logger — вписування повідомлень до журналу системи"
++msgstr "logger - вписування повідомлень до журналу системи"
+ 
+ #. type: Plain text
+ #: ../misc-utils/logger.1.adoc:50
+@@ -16289,7 +16289,7 @@ msgstr "look(1)"
+ #. type: Plain text
+ #: ../misc-utils/look.1.adoc:46
+ msgid "look - display lines beginning with a given string"
+-msgstr "look — показ рядків, що починаються із заданого рядка"
++msgstr "look - показ рядків, що починаються із заданого рядка"
+ 
+ #. type: Plain text
+ #: ../misc-utils/look.1.adoc:50
+@@ -16463,7 +16463,7 @@ msgstr "lsblk(8)"
+ #. type: Plain text
+ #: ../misc-utils/lsblk.8.adoc:12
+ msgid "lsblk - list block devices"
+-msgstr "lsblk — виведення списку блокових пристроїв"
++msgstr "lsblk - виведення списку блокових пристроїв"
+ 
+ #. type: Plain text
+ #: ../misc-utils/lsblk.8.adoc:16
+@@ -17047,7 +17047,7 @@ msgstr "lsfd(1)"
+ #. type: Plain text
+ #: ../misc-utils/lsfd.1.adoc:18
+ msgid "lsfd - list file descriptors"
+-msgstr "lsfd — виведення списку дескрипторів файлів"
++msgstr "lsfd - виведення списку дескрипторів файлів"
+ 
+ #. type: Plain text
+ #: ../misc-utils/lsfd.1.adoc:22
+@@ -18251,7 +18251,7 @@ msgstr "lslocks(8)"
+ #. type: Plain text
+ #: ../misc-utils/lslocks.8.adoc:23
+ msgid "lslocks - list local system locks"
+-msgstr "lslocks — виведення списку блокувань у локальній системі"
++msgstr "lslocks - виведення списку блокувань у локальній системі"
+ 
+ #. type: Plain text
+ #: ../misc-utils/lslocks.8.adoc:27
+@@ -18494,7 +18494,7 @@ msgstr "mcookie(1)"
+ #. type: Plain text
+ #: ../misc-utils/mcookie.1.adoc:14
+ msgid "mcookie - generate magic cookies for xauth"
+-msgstr "mcookie — створення контрольних кук для xauth"
++msgstr "mcookie - створення контрольних кук для xauth"
+ 
+ #. type: Plain text
+ #: ../misc-utils/mcookie.1.adoc:18
+@@ -18615,7 +18615,7 @@ msgstr "namei(1)"
+ #. type: Plain text
+ #: ../misc-utils/namei.1.adoc:12
+ msgid "namei - follow a pathname until a terminal point is found"
+-msgstr "namei — перехід за шляхом, доки не буде знайдено кінцеву точку"
++msgstr "namei - перехід за шляхом, доки не буде знайдено кінцеву точку"
+ 
+ #. type: Plain text
+ #: ../misc-utils/namei.1.adoc:16
+@@ -18786,7 +18786,7 @@ msgstr "rename(1)"
+ #. type: Plain text
+ #: ../misc-utils/rename.1.adoc:14
+ msgid "rename - rename files"
+-msgstr "rename — перейменування файлів"
++msgstr "rename - перейменування файлів"
+ 
+ #. type: Plain text
+ #: ../misc-utils/rename.1.adoc:18
+@@ -19002,7 +19002,7 @@ msgstr "uuidd(8)"
+ #. type: Plain text
+ #: ../misc-utils/uuidd.8.adoc:16
+ msgid "uuidd - UUID generation daemon"
+-msgstr "uuidd — фонова служба створення UUID"
++msgstr "uuidd - фонова служба створення UUID"
+ 
+ #. type: Plain text
+ #: ../misc-utils/uuidd.8.adoc:20
+@@ -19238,7 +19238,7 @@ msgstr "uuidgen(1)"
+ #. type: Plain text
+ #: ../misc-utils/uuidgen.1.adoc:16
+ msgid "uuidgen - create a new UUID value"
+-msgstr "uuidgen — створення значення UUID"
++msgstr "uuidgen - створення значення UUID"
+ 
+ #. type: Plain text
+ #: ../misc-utils/uuidgen.1.adoc:20
+@@ -19426,7 +19426,7 @@ msgstr "uuidparse(1)"
+ #. type: Plain text
+ #: ../misc-utils/uuidparse.1.adoc:14
+ msgid "uuidparse - a utility to parse unique identifiers"
+-msgstr "uuidparse — допоміжна програма для обробки унікальних ідентифікаторів"
++msgstr "uuidparse - допоміжна програма для обробки унікальних ідентифікаторів"
+ 
+ #. type: Plain text
+ #: ../misc-utils/uuidparse.1.adoc:18
+@@ -19556,7 +19556,7 @@ msgstr "whereis(1)"
+ msgid ""
+ "whereis - locate the binary, source, and manual page files for a command"
+ msgstr ""
+-"whereis — визначення місця виконуваних файлів, коду та сторінки підручника "
++"whereis - визначення місця виконуваних файлів, коду та сторінки підручника "
+ "програми"
+ 
+ #. type: Plain text
+@@ -19778,7 +19778,7 @@ msgstr "wipefs(8)"
+ #. type: Plain text
+ #: ../misc-utils/wipefs.8.adoc:14
+ msgid "wipefs - wipe a signature from a device"
+-msgstr "wipefs — витирання підпису з пристрою"
++msgstr "wipefs - витирання підпису з пристрою"
+ 
+ #. type: Plain text
+ #: ../misc-utils/wipefs.8.adoc:18
+@@ -20065,7 +20065,7 @@ msgstr "chrt(1)"
+ #. type: Plain text
+ #: ../schedutils/chrt.1.adoc:37
+ msgid "chrt - manipulate the real-time attributes of a process"
+-msgstr "chrt — керування атрибутами роботи у режимі реального часу процесу"
++msgstr "chrt - керування атрибутами роботи у режимі реального часу процесу"
+ 
+ #. type: Plain text
+ #: ../schedutils/chrt.1.adoc:41
+@@ -20459,7 +20459,7 @@ msgstr "ionice(1)"
+ #: ../schedutils/ionice.1.adoc:13
+ msgid "ionice - set or get process I/O scheduling class and priority"
+ msgstr ""
+-"ionice — встановлення або отримання класу і пріоритетності планування "
++"ionice - встановлення або отримання класу і пріоритетності планування "
+ "введення-виведення процесів"
+ 
+ #. type: Plain text
+@@ -20796,7 +20796,7 @@ msgstr "taskset(1)"
+ #: ../schedutils/taskset.1.adoc:36
+ msgid "taskset - set or retrieve a process's CPU affinity"
+ msgstr ""
+-"taskset — встановлення або отримання спорідненості процесу до процесорів"
++"taskset - встановлення або отримання спорідненості процесу до процесорів"
+ 
+ #. type: Plain text
+ #: ../schedutils/taskset.1.adoc:40
+@@ -21833,7 +21833,7 @@ msgstr "chcpu(8)"
+ #. type: Plain text
+ #: ../sys-utils/chcpu.8.adoc:12
+ msgid "chcpu - configure CPUs"
+-msgstr "chcpu — налаштовування процесорів"
++msgstr "chcpu - налаштовування процесорів"
+ 
+ #. type: Plain text
+ #: ../sys-utils/chcpu.8.adoc:16
+@@ -22033,7 +22033,7 @@ msgstr "chmem(8)"
+ #. type: Plain text
+ #: ../sys-utils/chmem.8.adoc:12
+ msgid "chmem - configure memory"
+-msgstr "chmem — налаштовування пам'яті"
++msgstr "chmem - налаштовування пам'яті"
+ 
+ #. type: Plain text
+ #: ../sys-utils/chmem.8.adoc:16
+@@ -22294,7 +22294,7 @@ msgstr "choom(1)"
+ #: ../sys-utils/choom.1.adoc:12
+ msgid "choom - display and adjust OOM-killer score."
+ msgstr ""
+-"choom — показ і коригування рейтингу завершення процесу через перевищення "
++"choom - показ і коригування рейтингу завершення процесу через перевищення "
+ "обсягу пам'яті."
+ 
+ #. type: Plain text
+@@ -22452,7 +22452,7 @@ msgstr "ctrlaltdel(8)"
+ #. type: Plain text
+ #: ../sys-utils/ctrlaltdel.8.adoc:16
+ msgid "ctrlaltdel - set the function of the Ctrl-Alt-Del combination"
+-msgstr "ctrlaltdel — встановлення режиму роботи комбінації клавіш Ctrl-Alt-Del"
++msgstr "ctrlaltdel - встановлення режиму роботи комбінації клавіш Ctrl-Alt-Del"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ctrlaltdel.8.adoc:20
+@@ -22554,7 +22554,7 @@ msgstr "dmesg(1)"
+ #: ../sys-utils/dmesg.1.adoc:16
+ msgid "dmesg - print or control the kernel ring buffer"
+ msgstr ""
+-"dmesg — виведення стану буфера кільцевої обробки ядра та керування ним."
++"dmesg - виведення стану буфера кільцевої обробки ядра та керування ним."
+ 
+ #. type: Plain text
+ #: ../sys-utils/dmesg.1.adoc:20
+@@ -23596,7 +23596,7 @@ msgstr "fallocate(1)"
+ #: ../sys-utils/fallocate.1.adoc:12
+ msgid "fallocate - preallocate or deallocate space to a file"
+ msgstr ""
+-"fallocate — попередньо отримати місце у файлі або скасувати отримання місця "
++"fallocate - попередньо отримати місце у файлі або скасувати отримання місця "
+ "у файлі"
+ 
+ #. type: Plain text
+@@ -24251,7 +24251,7 @@ msgstr "fsfreeze(8)"
+ #: ../sys-utils/fsfreeze.8.adoc:12
+ msgid "fsfreeze - suspend access to a filesystem (Ext3/4, ReiserFS, JFS, XFS)"
+ msgstr ""
+-"fsfreeze — призупинення доступу до файлової системи (Ext3/4, ReiserFS, JFS, "
++"fsfreeze - призупинення доступу до файлової системи (Ext3/4, ReiserFS, JFS, "
+ "XFS)"
+ 
+ #. type: Plain text
+@@ -24812,7 +24812,7 @@ msgstr "fstrim(8)"
+ #: ../sys-utils/fstrim.8.adoc:12
+ msgid "fstrim - discard unused blocks on a mounted filesystem"
+ msgstr ""
+-"fstrim — відкидання невикористаних блоків на змонтованій файловій системі"
++"fstrim - відкидання невикористаних блоків на змонтованій файловій системі"
+ 
+ #. type: Plain text
+ #: ../sys-utils/fstrim.8.adoc:16
+@@ -26628,7 +26628,7 @@ msgstr "ipcmk(1)"
+ #. type: Plain text
+ #: ../sys-utils/ipcmk.1.adoc:16
+ msgid "ipcmk - make various IPC resources"
+-msgstr "ipcmk — створення різноманітних ресурсів IPC"
++msgstr "ipcmk - створення різноманітних ресурсів IPC"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ipcmk.1.adoc:20
+@@ -26734,7 +26734,7 @@ msgstr "ipcrm(1)"
+ #. type: Plain text
+ #: ../sys-utils/ipcrm.1.adoc:17
+ msgid "ipcrm - remove certain IPC resources"
+-msgstr "ipcrm — вилучення певних ресурсів IPC"
++msgstr "ipcrm - вилучення певних ресурсів IPC"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ipcrm.1.adoc:21
+@@ -26970,7 +26970,7 @@ msgstr "ipcs(1)"
+ #. type: Plain text
+ #: ../sys-utils/ipcs.1.adoc:16
+ msgid "ipcs - show information on IPC facilities"
+-msgstr "ipcs — показ відомостей щодо можливостей IPC"
++msgstr "ipcs - показ відомостей щодо можливостей IPC"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ipcs.1.adoc:20
+@@ -27208,7 +27208,7 @@ msgstr "irqtop(1)"
+ #. type: Plain text
+ #: ../sys-utils/irqtop.1.adoc:12
+ msgid "irqtop - utility to display kernel interrupt information"
+-msgstr "irqtop — допоміжна програма для показу даних щодо переривань ядра"
++msgstr "irqtop - допоміжна програма для показу даних щодо переривань ядра"
+ 
+ #. type: Plain text
+ #: ../sys-utils/irqtop.1.adoc:16
+@@ -27366,7 +27366,7 @@ msgstr "ldattach(8)"
+ #. type: Plain text
+ #: ../sys-utils/ldattach.8.adoc:16
+ msgid "ldattach - attach a line discipline to a serial line"
+-msgstr "ldattach — прив'язка порядку обслуговування для послідовної лінії"
++msgstr "ldattach - прив'язка порядку обслуговування для послідовної лінії"
+ 
+ #. type: Plain text
+ #: ../sys-utils/ldattach.8.adoc:20
+@@ -27769,7 +27769,7 @@ msgstr "losetup(8)"
+ #. type: Plain text
+ #: ../sys-utils/losetup.8.adoc:12
+ msgid "losetup - set up and control loop devices"
+-msgstr "losetup — налаштувати петльові пристрої або керувати ними"
++msgstr "losetup - налаштувати петльові пристрої або керувати ними"
+ 
+ #. type: Plain text
+ #: ../sys-utils/losetup.8.adoc:16
+@@ -28263,7 +28263,7 @@ msgstr "lscpu(1)"
+ #. type: Plain text
+ #: ../sys-utils/lscpu.1.adoc:12
+ msgid "lscpu - display information about the CPU architecture"
+-msgstr "lscpu — виведення даних щодо архітектури процесорів"
++msgstr "lscpu - виведення даних щодо архітектури процесорів"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lscpu.1.adoc:16
+@@ -28650,7 +28650,7 @@ msgstr "lsipc(1)"
+ #: ../sys-utils/lsipc.1.adoc:12
+ msgid ""
+ "lsipc - show information on IPC facilities currently employed in the system"
+-msgstr "lsipc — виведення даних щодо можливостей IPC, які залучено у системі"
++msgstr "lsipc - виведення даних щодо можливостей IPC, які залучено у системі"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsipc.1.adoc:16
+@@ -28751,7 +28751,7 @@ msgstr "lsirq(1)"
+ #. type: Plain text
+ #: ../sys-utils/lsirq.1.adoc:12
+ msgid "lsirq - utility to display kernel interrupt information"
+-msgstr "lsirq — допоміжна програма для показу даних щодо переривань ядра"
++msgstr "lsirq - допоміжна програма для показу даних щодо переривань ядра"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsirq.1.adoc:16
+@@ -28792,7 +28792,7 @@ msgstr "lsmem(1)"
+ #: ../sys-utils/lsmem.1.adoc:12
+ msgid "lsmem - list the ranges of available memory with their online status"
+ msgstr ""
+-"lsmem — виведення списку діапазонів доступної пам'яті із даними щодо їхнього "
++"lsmem - виведення списку діапазонів доступної пам'яті із даними щодо їхнього "
+ "стану роботи"
+ 
+ #. type: Plain text
+@@ -28974,7 +28974,7 @@ msgstr "lsns(8)"
+ #. type: Plain text
+ #: ../sys-utils/lsns.8.adoc:17
+ msgid "lsns - list namespaces"
+-msgstr "lsns — виведення списку просторів назв"
++msgstr "lsns - виведення списку просторів назв"
+ 
+ #. type: Plain text
+ #: ../sys-utils/lsns.8.adoc:21
+@@ -29163,7 +29163,7 @@ msgstr "mount(8)"
+ #. type: Plain text
+ #: ../sys-utils/mount.8.adoc:43
+ msgid "mount - mount a filesystem"
+-msgstr "mount — змонтувати файлову систему"
++msgstr "mount - змонтувати файлову систему"
+ 
+ #. type: Plain text
+ #: ../sys-utils/mount.8.adoc:47
+@@ -35872,7 +35872,7 @@ msgstr "mountpoint(1)"
+ #. type: Plain text
+ #: ../sys-utils/mountpoint.1.adoc:12
+ msgid "mountpoint - see if a directory or file is a mountpoint"
+-msgstr "mountpoint — визначення, чи є каталог чи файл точкою монтування"
++msgstr "mountpoint - визначення, чи є каталог чи файл точкою монтування"
+ 
+ #. type: Plain text
+ #: ../sys-utils/mountpoint.1.adoc:16
+@@ -36528,7 +36528,7 @@ msgstr "pivot_root(8)"
+ #. type: Plain text
+ #: ../sys-utils/pivot_root.8.adoc:12
+ msgid "pivot_root - change the root filesystem"
+-msgstr "pivot_root — зміна кореневої файлової системи"
++msgstr "pivot_root - зміна кореневої файлової системи"
+ 
+ #. type: Plain text
+ #: ../sys-utils/pivot_root.8.adoc:16
+@@ -36683,7 +36683,7 @@ msgstr "prlimit(1)"
+ #. type: Plain text
+ #: ../sys-utils/prlimit.1.adoc:18
+ msgid "prlimit - get and set process resource limits"
+-msgstr "prlimit — отримання і встановлення обмежень ресурсів для процесів"
++msgstr "prlimit - отримання і встановлення обмежень ресурсів для процесів"
+ 
+ #. type: Plain text
+ #: ../sys-utils/prlimit.1.adoc:22
+@@ -37400,7 +37400,7 @@ msgstr "renice(1)"
+ #. type: Plain text
+ #: ../sys-utils/renice.1.adoc:46
+ msgid "renice - alter priority of running processes"
+-msgstr "renice — зміна пріоритетності запущених процесів"
++msgstr "renice - зміна пріоритетності запущених процесів"
+ 
+ #. type: Plain text
+ #: ../sys-utils/renice.1.adoc:50
+@@ -37552,7 +37552,7 @@ msgstr "rfkill(8)"
+ #. type: Plain text
+ #: ../sys-utils/rfkill.8.adoc:12
+ msgid "rfkill - tool for enabling and disabling wireless devices"
+-msgstr "rfkill — інструмент для вмикання або вимикання бездротових пристроїв"
++msgstr "rfkill - інструмент для вмикання або вимикання бездротових пристроїв"
+ 
+ #. type: Plain text
+ #: ../sys-utils/rfkill.8.adoc:16
+@@ -38090,7 +38090,7 @@ msgid ""
+ "setarch - change reported architecture in new program environment and/or set "
+ "personality flags"
+ msgstr ""
+-"setarch — зміна архітектуру, яку повідомляє система, у новому програмному "
++"setarch - зміна архітектуру, яку повідомляє система, у новому програмному "
+ "середовищі і/або встановити прапорці індивідуальності"
+ 
+ #. type: Plain text
+@@ -38392,7 +38392,7 @@ msgstr "setpriv(1)"
+ #. type: Plain text
+ #: ../sys-utils/setpriv.1.adoc:12
+ msgid "setpriv - run a program with different Linux privilege settings"
+-msgstr "setpriv — запуск програми із іншими параметрами прав доступу у Linux"
++msgstr "setpriv - запуск програми із іншими параметрами прав доступу у Linux"
+ 
+ #. type: Plain text
+ #: ../sys-utils/setpriv.1.adoc:16
+@@ -38887,7 +38887,7 @@ msgstr "setsid(1)"
+ #. type: Plain text
+ #: ../sys-utils/setsid.1.adoc:14
+ msgid "setsid - run a program in a new session"
+-msgstr "setsid — запуск програми у новому сеансі"
++msgstr "setsid - запуск програми у новому сеансі"
+ 
+ #. type: Plain text
+ #: ../sys-utils/setsid.1.adoc:18
+@@ -38960,7 +38960,7 @@ msgstr "swapon(8)"
+ msgid ""
+ "swapon, swapoff - enable/disable devices and files for paging and swapping"
+ msgstr ""
+-"swapon, swapoff — вимикання пристроїв і файлів для поділу на сторінки і "
++"swapon, swapoff - вимикання пристроїв і файлів для поділу на сторінки і "
+ "резервування"
+ 
+ #. type: Plain text
+@@ -39444,7 +39444,7 @@ msgstr "switch_root(8)"
+ msgid ""
+ "switch_root - switch to another filesystem as the root of the mount tree"
+ msgstr ""
+-"switch_root — перемикання на іншу файлову систему як кореневу у ієрархії "
++"switch_root - перемикання на іншу файлову систему як кореневу у ієрархії "
+ "монтування"
+ 
+ #. type: Plain text
+@@ -39753,7 +39753,7 @@ msgstr "umount(8)"
+ #. type: Plain text
+ #: ../sys-utils/umount.8.adoc:37
+ msgid "umount - unmount filesystems"
+-msgstr "mount — демонтувати файлову систему"
++msgstr "umount - демонтувати файлову систему"
+ 
+ #. type: Plain text
+ #: ../sys-utils/umount.8.adoc:41
+@@ -40992,7 +40992,7 @@ msgstr "wdctl(8)"
+ #. type: Plain text
+ #: ../sys-utils/wdctl.8.adoc:12
+ msgid "wdctl - show hardware watchdog status"
+-msgstr "wdctl — поза стану апаратного сторожового таймера"
++msgstr "wdctl - поза стану апаратного сторожового таймера"
+ 
+ #. type: Plain text
+ #: ../sys-utils/wdctl.8.adoc:16
+@@ -42671,7 +42671,7 @@ msgstr "mesg(1)"
+ #. type: Plain text
+ #: ../term-utils/mesg.1.adoc:46
+ msgid "mesg - display (or do not display) messages from other users"
+-msgstr "mesg — показ (або заборона показу) повідомлень від інших користувачів"
++msgstr "mesg - показ (або заборона показу) повідомлень від інших користувачів"
+ 
+ #. type: Plain text
+ #: ../term-utils/mesg.1.adoc:50
+@@ -43234,7 +43234,7 @@ msgstr "scriptlive(1)"
+ #: ../term-utils/scriptlive.1.adoc:13
+ msgid "scriptlive - re-run session typescripts, using timing information"
+ msgstr ""
+-"scriptlive — повторний запуск скриптів введення з використанням даних щодо "
++"scriptlive - повторний запуск скриптів введення з використанням даних щодо "
+ "часу"
+ 
+ #. type: Plain text
+@@ -43408,7 +43408,7 @@ msgstr "scriptreplay(1)"
+ #: ../term-utils/scriptreplay.1.adoc:13
+ msgid "scriptreplay - play back typescripts, using timing information"
+ msgstr ""
+-"scriptreplay — відтворення скриптів введення термінала з використанням даних "
++"scriptreplay - відтворення скриптів введення термінала з використанням даних "
+ "щодо розкладу"
+ 
+ #. type: Plain text
+@@ -43603,7 +43603,7 @@ msgstr "setterm(1)"
+ #. type: Plain text
+ #: ../term-utils/setterm.1.adoc:19
+ msgid "setterm - set terminal attributes"
+-msgstr "setterm — встановлення атрибутів термінала"
++msgstr "setterm - встановлення атрибутів термінала"
+ 
+ #. type: Plain text
+ #: ../term-utils/setterm.1.adoc:23
+@@ -44312,7 +44312,7 @@ msgstr "wall(1)"
+ #. type: Plain text
+ #: ../term-utils/wall.1.adoc:47
+ msgid "wall - write a message to all users"
+-msgstr "wall — написання повідомлень усім користувачам"
++msgstr "wall - написання повідомлень усім користувачам"
+ 
+ #. type: Plain text
+ #: ../term-utils/wall.1.adoc:51
+@@ -44457,7 +44457,7 @@ msgstr "write(1)"
+ #. type: Plain text
+ #: ../term-utils/write.1.adoc:49
+ msgid "write - send a message to another user"
+-msgstr "write — надсилання повідомлень іншому користувачеві"
++msgstr "write - надсилання повідомлень іншому користувачеві"
+ 
+ #. type: Plain text
+ #: ../term-utils/write.1.adoc:51
+@@ -44917,7 +44917,7 @@ msgstr "colcrt(1)"
+ #: ../text-utils/colcrt.1.adoc:47
+ msgid "colcrt - filter nroff output for CRT previewing"
+ msgstr ""
+-"colcrt — фільтрування виведених даних nroff для попереднього перегляду CRT."
++"colcrt - фільтрування виведених даних nroff для попереднього перегляду CRT."
+ 
+ #. type: Plain text
+ #: ../text-utils/colcrt.1.adoc:51
+@@ -45081,7 +45081,7 @@ msgstr "colrm(1)"
+ #. type: Plain text
+ #: ../text-utils/colrm.1.adoc:46
+ msgid "colrm - remove columns from a file"
+-msgstr "colrm — вилучення стовпчиків з файла"
++msgstr "colrm - вилучення стовпчиків з файла"
+ 
+ #. type: Plain text
+ #: ../text-utils/colrm.1.adoc:50
+@@ -46412,7 +46412,7 @@ msgstr "line(1)"
  #. type: Plain text
  #: ../text-utils/line.1.adoc:13
  msgid "line - read one line"
@@ -1368,7 +2133,16 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../text-utils/line.1.adoc:17
-@@ -42589,7 +42589,7 @@ msgstr "rev(1)"
+@@ -46482,7 +46482,7 @@ msgstr "more(1)"
+ #. type: Plain text
+ #: ../text-utils/more.1.adoc:49
+ msgid "more - file perusal filter for crt viewing"
+-msgstr "more — фільтр уважного читання файлів для перегляду на моніторах."
++msgstr "more - фільтр уважного читання файлів для перегляду на моніторах."
+ 
+ #. type: Plain text
+ #: ../text-utils/more.1.adoc:53
+@@ -47485,7 +47485,7 @@ msgstr "rev(1)"
  #. type: Plain text
  #: ../text-utils/rev.1.adoc:46
  msgid "rev - reverse lines characterwise"
@@ -1377,3 +2151,12 @@ Also, fix command name in sr mkfs.cramfs man page.
  
  #. type: Plain text
  #: ../text-utils/rev.1.adoc:50
+@@ -47563,7 +47563,7 @@ msgstr "ul(1)"
+ #. type: Plain text
+ #: ../text-utils/ul.1.adoc:46
+ msgid "ul - do underlining"
+-msgstr "ul — виконання підкреслювання"
++msgstr "ul - виконання підкреслювання"
+ 
+ #. type: Plain text
+ #: ../text-utils/ul.1.adoc:50
