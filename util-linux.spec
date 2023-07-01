@@ -30,13 +30,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.38.1
-Release:	2
+Version:	2.39.1
+Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.38/%{name}-%{version}.tar.xz
-# Source0-md5:	cd11456f4ddd31f7fbfdd9488c0c0d02
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.39/%{name}-%{version}.tar.xz
+# Source0-md5:	c542cd7c0726254e4b3006a9b428201a
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -79,7 +79,7 @@ BuildRequires:	linux-libc-headers >= 7:2.6.27
 BuildRequires:	ncurses-devel >= 5.0
 BuildRequires:	pam-devel >= %{pam_ver}
 BuildRequires:	pkgconfig
-BuildRequires:	po4a
+BuildRequires:	po4a >= 0.56
 BuildRequires:	python3-devel
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
@@ -1009,7 +1009,9 @@ for d in cs de es fi fr hu id it ja ko nl pl ; do
 		if [ -d man/$d/$m ]; then
 			install -d $RPM_BUILD_ROOT%{_mandir}/$d/$m
 			for f in man/$d/$m/* ; do
-				if [ ! -f $RPM_BUILD_ROOT%{_mandir}/$d/$m/$(basename $f) ]; then
+				if [ -f $RPM_BUILD_ROOT%{_mandir}/$d/$m/$(basename $f) ]; then
+					echo "$f : ALREADY EXISTS"
+				else
 					cp -p "$f" $RPM_BUILD_ROOT%{_mandir}/$d/$m
 				fi
 			done
@@ -1115,6 +1117,7 @@ fi
 %lang(de) %{_mandir}/de/man5/terminal-colors.d.5*
 %lang(fr) %{_mandir}/fr/man5/terminal-colors.d.5*
 %lang(sr) %{_mandir}/sr/man5/terminal-colors.d.5*
+%lang(uk) %{_mandir}/uk/man5/terminal-colors.d.5*
 
 # disk-utils/mkfs
 %attr(755,root,root) /sbin/mkfs
@@ -1261,6 +1264,7 @@ fi
 %lang(sr) %{_mandir}/sr/man8/cfdisk.8*
 %lang(sr) %{_mandir}/sr/man8/sfdisk.8*
 %lang(uk) %{_mandir}/uk/man8/cfdisk.8*
+%lang(uk) %{_mandir}/uk/man8/sfdisk.8*
 %endif
 
 # disk-utils/partx
@@ -1346,6 +1350,7 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/pam.d/su-l
 %{_mandir}/man1/runuser.1*
 %{_mandir}/man1/su.1*
+%lang(cs) %{_mandir}/cs/man1/su.1*
 %lang(de) %{_mandir}/de/man1/runuser.1*
 %lang(de) %{_mandir}/de/man1/su.1*
 %lang(fr) %{_mandir}/fr/man1/runuser.1*
@@ -1374,6 +1379,11 @@ fi
 %lang(ko) %{_mandir}/ko/man1/cal.1*
 %lang(pl) %{_mandir}/pl/man1/cal.1*
 %lang(sr) %{_mandir}/sr/man1/cal.1*
+%lang(uk) %{_mandir}/uk/man1/cal.1*
+
+# misc-utils/fadvise
+%attr(755,root,root) %{_bindir}/fadvise
+%{_mandir}/man1/fadvise.1*
 
 # misc-utils/logger
 %attr(755,root,root) %{_bindir}/logger
@@ -1388,7 +1398,7 @@ fi
 %lang(sr) %{_mandir}/sr/man1/logger.1*
 %lang(uk) %{_mandir}/uk/man1/logger.1*
 
-# misc/utils/look
+# misc-utils/look
 %attr(755,root,root) %{_bindir}/look
 %{_mandir}/man1/look.1*
 %lang(de) %{_mandir}/de/man1/look.1*
@@ -1420,6 +1430,15 @@ fi
 %lang(sr) %{_mandir}/sr/man1/namei.1*
 %lang(uk) %{_mandir}/uk/man1/namei.1*
 
+# misc-utils/pipesz
+%attr(755,root,root) /bin/pipesz
+%{_mandir}/man1/pipesz.1*
+
+# misc-utils/waitpid
+%attr(755,root,root) %{_bindir}/waitpid
+%{_mandir}/man1/waitpid.1*
+%lang(de) %{_mandir}/de/man1/waitpid.1*
+
 # misc-utils/whereis
 %attr(755,root,root) %{_bindir}/whereis
 %{_mandir}/man1/whereis.1*
@@ -1446,7 +1465,6 @@ fi
 %attr(755,root,root) /bin/lsblk
 %{_mandir}/man8/lsblk.8*
 %lang(de) %{_mandir}/de/man8/lsblk.8*
-%lang(fr) %{_mandir}/fr/man8/lsblk.8*
 %lang(sr) %{_mandir}/sr/man8/lsblk.8*
 %lang(uk) %{_mandir}/uk/man8/lsblk.8*
 
@@ -1464,6 +1482,7 @@ fi
 %lang(de) %{_mandir}/de/man8/blkid.8*
 %lang(fr) %{_mandir}/fr/man8/blkid.8*
 %lang(sr) %{_mandir}/sr/man8/blkid.8*
+%lang(uk) %{_mandir}/uk/man8/blkid.8*
 
 # misc-utils/findfs
 %attr(755,root,root) /sbin/findfs
@@ -1515,6 +1534,7 @@ fi
 %lang(ko) %{_mandir}/ko/man1/getopt.1*
 %lang(pl) %{_mandir}/pl/man1/getopt.1*
 %lang(sr) %{_mandir}/sr/man1/getopt.1*
+%lang(uk) %{_mandir}/uk/man1/getopt.1*
 
 # misc-utils/fincore
 %attr(755,root,root) %{_bindir}/fincore
@@ -1527,19 +1547,18 @@ fi
 %attr(755,root,root) %{_bindir}/hardlink
 %{_mandir}/man1/hardlink.1*
 %lang(de) %{_mandir}/de/man1/hardlink.1*
+%lang(sr) %{_mandir}/sr/man1/hardlink.1*
 %lang(uk) %{_mandir}/uk/man1/hardlink.1*
 
 # misc-utils/lsfd
 %attr(755,root,root) /bin/lsfd
 %{_mandir}/man1/lsfd.1*
 %lang(de) %{_mandir}/de/man1/lsfd.1*
-%lang(uk) %{_mandir}/uk/man1/lsfd.1*
 
 # schedutils/chrt
 %attr(755,root,root) %{_bindir}/chrt
 %{_mandir}/man1/chrt.1*
 %lang(de) %{_mandir}/de/man1/chrt.1*
-%lang(fr) %{_mandir}/fr/man1/chrt.1*
 %lang(sr) %{_mandir}/sr/man1/chrt.1*
 %lang(uk) %{_mandir}/uk/man1/chrt.1*
 
@@ -1555,15 +1574,18 @@ fi
 %attr(755,root,root) %{_bindir}/taskset
 %{_mandir}/man1/taskset.1*
 %lang(de) %{_mandir}/de/man1/taskset.1*
-%lang(fr) %{_mandir}/fr/man1/taskset.1*
-%lang(sr) %{_mandir}/sr/man1/taskset.1*
-%lang(uk) %{_mandir}/uk/man1/taskset.1*
 
 # schedutils/uclampset
 %attr(755,root,root) %{_bindir}/uclampset
 %{_mandir}/man1/uclampset.1*
 %lang(de) %{_mandir}/de/man1/uclampset.1*
 %lang(sr) %{_mandir}/sr/man1/uclampset.1*
+%lang(uk) %{_mandir}/uk/man1/uclampset.1*
+
+# sys-utils/blkpr
+%attr(755,root,root) /sbin/blkpr
+%{_mandir}/man8/blkpr.8*
+%lang(de) %{_mandir}/de/man8/blkpr.8*
 
 # sys-utils/lsmem
 %attr(755,root,root) %{_bindir}/lsmem
@@ -1647,12 +1669,9 @@ fi
 %{_mandir}/man1/renice.1*
 %lang(de) %{_mandir}/de/man1/renice.1*
 %lang(es) %{_mandir}/es/man1/renice.1*
-%lang(fr) %{_mandir}/fr/man1/renice.1*
 %lang(ja) %{_mandir}/ja/man1/renice.1*
 %lang(ko) %{_mandir}/ko/man1/renice.1*
 %lang(pl) %{_mandir}/pl/man1/renice.1*
-%lang(sr) %{_mandir}/sr/man1/renice.1*
-%lang(uk) %{_mandir}/uk/man1/renice.1*
 
 # sys-utils/rfkill
 %attr(755,root,root) %{_sbindir}/rfkill
@@ -1682,6 +1701,7 @@ fi
 %lang(ja) %{_mandir}/ja/man8/readprofile.8*
 %lang(ko) %{_mandir}/ko/man8/readprofile.8*
 %lang(sr) %{_mandir}/sr/man8/readprofile.8*
+%lang(uk) %{_mandir}/uk/man8/readprofile.8*
 
 # sys-utils/fstrim
 %attr(755,root,root) /sbin/fstrim
@@ -1733,12 +1753,14 @@ fi
 %lang(de) %{_mandir}/de/man8/blkdiscard.8*
 %lang(fr) %{_mandir}/fr/man8/blkdiscard.8*
 %lang(sr) %{_mandir}/sr/man8/blkdiscard.8*
+%lang(uk) %{_mandir}/uk/man8/blkdiscard.8*
 
 # sys-utils/blkzone
 %attr(755,root,root) /sbin/blkzone
 %{_mandir}/man8/blkzone.8*
 %lang(de) %{_mandir}/de/man8/blkzone.8*
 %lang(sr) %{_mandir}/sr/man8/blkzone.8*
+%lang(uk) %{_mandir}/uk/man8/blkzone.8*
 
 # sys-utils/ldattach
 %attr(755,root,root) %{_sbindir}/ldattach
@@ -1754,6 +1776,7 @@ fi
 %lang(de) %{_mandir}/de/man8/rtcwake.8*
 %lang(fr) %{_mandir}/fr/man8/rtcwake.8*
 %lang(sr) %{_mandir}/sr/man8/rtcwake.8*
+%lang(uk) %{_mandir}/uk/man8/rtcwake.8*
 
 # sys-utils/setarch
 %attr(755,root,root) %{_bindir}/linux32
@@ -1832,6 +1855,7 @@ fi
 %{_mandir}/man8/zramctl.8*
 %lang(de) %{_mandir}/de/man8/zramctl.8*
 %lang(sr) %{_mandir}/sr/man8/zramctl.8*
+%lang(uk) %{_mandir}/uk/man8/zramctl.8*
 
 # sys-utils/prlimit
 %attr(755,root,root) %{_bindir}/prlimit
@@ -1892,7 +1916,6 @@ fi
 %attr(755,root,root) %{_bindir}/unshare
 %{_mandir}/man1/unshare.1*
 %lang(de) %{_mandir}/de/man1/unshare.1*
-%lang(fr) %{_mandir}/fr/man1/unshare.1*
 %lang(sr) %{_mandir}/sr/man1/unshare.1*
 
 # sys-utils/nsenter
@@ -1901,6 +1924,7 @@ fi
 %lang(de) %{_mandir}/de/man1/nsenter.1*
 %lang(fr) %{_mandir}/fr/man1/nsenter.1*
 %lang(sr) %{_mandir}/sr/man1/nsenter.1*
+%lang(uk) %{_mandir}/uk/man1/nsenter.1*
 
 # sys-utils/hwclock
 %attr(755,root,root) /sbin/clock
@@ -1920,6 +1944,7 @@ fi
 %lang(sr) %{_mandir}/sr/man5/adjtime_config.5*
 %lang(sr) %{_mandir}/sr/man8/clock.8*
 %lang(sr) %{_mandir}/sr/man8/hwclock.8*
+%lang(uk) %{_mandir}/uk/man5/adjtime_config.5*
 
 # sys-utils/serpriv
 %attr(755,root,root) %{_bindir}/setpriv
@@ -1975,6 +2000,7 @@ fi
 # term-utils/write
 %attr(2755,root,tty) %{_bindir}/write
 %{_mandir}/man1/write.1*
+%lang(cs) %{_mandir}/cs/man1/write.1*
 %lang(de) %{_mandir}/de/man1/write.1*
 %lang(es) %{_mandir}/es/man1/write.1*
 %lang(fi) %{_mandir}/fi/man1/write.1*
@@ -2019,10 +2045,9 @@ fi
 %lang(sr) %{_mandir}/sr/man1/col.1*
 %lang(sr) %{_mandir}/sr/man1/colcrt.1*
 %lang(sr) %{_mandir}/sr/man1/colrm.1*
-%lang(sr) %{_mandir}/sr/man1/column.1*
+%lang(uk) %{_mandir}/uk/man1/col.1*
 %lang(uk) %{_mandir}/uk/man1/colcrt.1*
 %lang(uk) %{_mandir}/uk/man1/colrm.1*
-%lang(uk) %{_mandir}/uk/man1/column.1*
 
 # text-utils/hexdump
 %attr(755,root,root) %{_bindir}/hexdump
@@ -2039,7 +2064,6 @@ fi
 %{_mandir}/man1/rev.1*
 %lang(de) %{_mandir}/de/man1/rev.1*
 %lang(es) %{_mandir}/es/man1/rev.1*
-%lang(fr) %{_mandir}/fr/man1/rev.1*
 %lang(ja) %{_mandir}/ja/man1/rev.1*
 %lang(ko) %{_mandir}/ko/man1/rev.1*
 %lang(pl) %{_mandir}/pl/man1/rev.1*
@@ -2110,6 +2134,7 @@ fi
 %lang(de) %{_mandir}/de/man8/findmnt.8*
 %lang(fr) %{_mandir}/fr/man8/findmnt.8*
 %lang(sr) %{_mandir}/sr/man8/findmnt.8*
+%lang(uk) %{_mandir}/uk/man8/findmnt.8*
 
 # sys-utils/mount
 %attr(4755,root,root) /bin/mount
@@ -2221,12 +2246,14 @@ fi
 %{_mandir}/man1/login.1*
 %lang(de) %{_mandir}/de/man1/login.1*
 %lang(es) %{_mandir}/es/man1/login.1*
+%lang(fr) %{_mandir}/fr/man1/login.1*
 %lang(hu) %{_mandir}/hu/man1/login.1*
 %lang(id) %{_mandir}/id/man1/login.1*
 %lang(ja) %{_mandir}/ja/man1/login.1*
 %lang(ko) %{_mandir}/ko/man1/login.1*
 %lang(pl) %{_mandir}/pl/man1/login.1*
 %lang(sr) %{_mandir}/sr/man1/login.1*
+%lang(uk) %{_mandir}/uk/man1/login.1*
 
 %files -n agetty
 %defattr(644,root,root,755)
@@ -2250,9 +2277,6 @@ fi
 %{_pkgconfigdir}/blkid.pc
 %{_mandir}/man3/libblkid.3*
 %lang(de) %{_mandir}/de/man3/libblkid.3*
-%lang(fr) %{_mandir}/fr/man3/libblkid.3*
-%lang(sr) %{_mandir}/sr/man3/libblkid.3*
-%lang(uk) %{_mandir}/uk/man3/libblkid.3*
 
 %files -n libblkid-static
 %defattr(644,root,root,755)
@@ -2447,6 +2471,7 @@ fi
 %{bash_compdir}/delpart
 %{bash_compdir}/dmesg
 %{bash_compdir}/eject
+%{bash_compdir}/fadvise
 %{bash_compdir}/fallocate
 %{bash_compdir}/fdformat
 %{bash_compdir}/fdisk
@@ -2497,6 +2522,7 @@ fi
 %{bash_compdir}/nsenter
 %{bash_compdir}/partx
 %{bash_compdir}/pg
+%{bash_compdir}/pipesz
 %{bash_compdir}/pivot_root
 %{bash_compdir}/prlimit
 %{bash_compdir}/readprofile
@@ -2529,6 +2555,7 @@ fi
 %{bash_compdir}/uuidd
 %{bash_compdir}/uuidgen
 %{bash_compdir}/uuidparse
+%{bash_compdir}/waitpid
 %{bash_compdir}/wdctl
 %{bash_compdir}/whereis
 %{bash_compdir}/wipefs
