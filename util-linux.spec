@@ -785,7 +785,7 @@ Summary(pl.UTF-8):	Bashowe dopełnianie parametrów dla poleceń z pakietu util-
 License:	GPL v2+
 Group:		Applications/Shells
 Requires:	%{name} = %{version}-%{release}
-Requires:	bash-completion >= 2.0
+Requires:	bash-completion >= 1:2.0
 Requires:	gawk
 BuildArch:	noarch
 
