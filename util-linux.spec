@@ -30,13 +30,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.39.1
+Version:	2.39.2
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.39/%{name}-%{version}.tar.xz
-# Source0-md5:	c542cd7c0726254e4b3006a9b428201a
+# Source0-md5:	2feb3e7c306f336a3d22a182dfffc942
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -1385,6 +1385,7 @@ fi
 # misc-utils/fadvise
 %attr(755,root,root) %{_bindir}/fadvise
 %{_mandir}/man1/fadvise.1*
+%lang(sr) %{_mandir}/sr/man1/fadvise.1*
 
 # misc-utils/logger
 %attr(755,root,root) %{_bindir}/logger
@@ -1434,11 +1435,13 @@ fi
 # misc-utils/pipesz
 %attr(755,root,root) /bin/pipesz
 %{_mandir}/man1/pipesz.1*
+%lang(sr) %{_mandir}/sr/man1/pipesz.1*
 
 # misc-utils/waitpid
 %attr(755,root,root) %{_bindir}/waitpid
 %{_mandir}/man1/waitpid.1*
 %lang(de) %{_mandir}/de/man1/waitpid.1*
+%lang(sr) %{_mandir}/sr/man1/waitpid.1*
 
 # misc-utils/whereis
 %attr(755,root,root) %{_bindir}/whereis
@@ -1555,6 +1558,7 @@ fi
 %attr(755,root,root) /bin/lsfd
 %{_mandir}/man1/lsfd.1*
 %lang(de) %{_mandir}/de/man1/lsfd.1*
+%lang(sr) %{_mandir}/sr/man1/lsfd.1*
 
 # schedutils/chrt
 %attr(755,root,root) %{_bindir}/chrt
@@ -1575,6 +1579,7 @@ fi
 %attr(755,root,root) %{_bindir}/taskset
 %{_mandir}/man1/taskset.1*
 %lang(de) %{_mandir}/de/man1/taskset.1*
+%lang(sr) %{_mandir}/sr/man1/taskset.1*
 
 # schedutils/uclampset
 %attr(755,root,root) %{_bindir}/uclampset
@@ -1587,6 +1592,7 @@ fi
 %attr(755,root,root) /sbin/blkpr
 %{_mandir}/man8/blkpr.8*
 %lang(de) %{_mandir}/de/man8/blkpr.8*
+%lang(sr) %{_mandir}/sr/man8/blkpr.8*
 
 # sys-utils/lsmem
 %attr(755,root,root) %{_bindir}/lsmem
@@ -1673,6 +1679,7 @@ fi
 %lang(ja) %{_mandir}/ja/man1/renice.1*
 %lang(ko) %{_mandir}/ko/man1/renice.1*
 %lang(pl) %{_mandir}/pl/man1/renice.1*
+%lang(sr) %{_mandir}/sr/man1/renice.1*
 
 # sys-utils/rfkill
 %attr(755,root,root) %{_sbindir}/rfkill
@@ -2046,6 +2053,7 @@ fi
 %lang(sr) %{_mandir}/sr/man1/col.1*
 %lang(sr) %{_mandir}/sr/man1/colcrt.1*
 %lang(sr) %{_mandir}/sr/man1/colrm.1*
+%lang(sr) %{_mandir}/sr/man1/column.1*
 %lang(uk) %{_mandir}/uk/man1/col.1*
 %lang(uk) %{_mandir}/uk/man1/colcrt.1*
 %lang(uk) %{_mandir}/uk/man1/colrm.1*
@@ -2278,6 +2286,7 @@ fi
 %{_pkgconfigdir}/blkid.pc
 %{_mandir}/man3/libblkid.3*
 %lang(de) %{_mandir}/de/man3/libblkid.3*
+%lang(sr) %{_mandir}/sr/man3/libblkid.3*
 
 %files -n libblkid-static
 %defattr(644,root,root,755)
