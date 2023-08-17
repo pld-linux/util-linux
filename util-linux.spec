@@ -81,6 +81,7 @@ BuildRequires:	pam-devel >= %{pam_ver}
 BuildRequires:	pkgconfig
 BuildRequires:	po4a >= 0.56
 BuildRequires:	python3-devel
+BuildRequires:	python3-modules
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-build >= 4.6
