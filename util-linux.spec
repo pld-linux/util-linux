@@ -30,13 +30,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.39.2
+Version:	2.39.3
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.39/%{name}-%{version}.tar.xz
-# Source0-md5:	2feb3e7c306f336a3d22a182dfffc942
+# Source0-md5:	f3591e6970c017bb4bcd24ae762a98f5
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -53,7 +53,6 @@ Patch1:		%{name}-fhs.patch
 Patch2:		%{name}-login-lastlog.patch
 Patch3:		%{name}-procpartitions.patch
 Patch4:		su-paths.patch
-Patch5:		%{name}-ac.patch
 Patch6:		%{name}-diet.patch
 Patch7:		%{name}-man-asciidoctor.patch
 URL:		https://github.com/karelzak/util-linux
@@ -802,7 +801,6 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 %patch7 -p1
 %{?with_initrd:%patch6 -p1}
 
