@@ -30,13 +30,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.39.3
+Version:	2.40
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
-Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.39/%{name}-%{version}.tar.xz
-# Source0-md5:	f3591e6970c017bb4bcd24ae762a98f5
+Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.40/%{name}-%{version}.tar.xz
+# Source0-md5:	46d1423122d310dfd022c799e1e4e259
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -807,7 +807,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 # obsolete programs, remove non-english man pages
 %{__rm} man/*/man1/{arch,chkdupexe,ddate,reset}.1 \
 	man/*/man5/nfs.5 \
-	man/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,raw,rdev,rootflags,vidmode}.8
+	man/*/man8/{cytune,elvtune,setfdprm,sln,ramsize,rdev,rootflags,vidmode}.8
 
 # adjust page numbers
 for d in fr ja ko pl ; do
@@ -1259,7 +1259,6 @@ fi
 %lang(ja) %{_mandir}/ja/man8/cfdisk.8*
 %lang(ja) %{_mandir}/ja/man8/sfdisk.8*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/cfdisk.8*
-%lang(pt_BR) %{_mandir}/pt_BR/man8/sfdisk.8*
 %lang(sr) %{_mandir}/sr/man8/cfdisk.8*
 %lang(sr) %{_mandir}/sr/man8/sfdisk.8*
 %lang(uk) %{_mandir}/uk/man8/cfdisk.8*
@@ -1276,26 +1275,19 @@ fi
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/resizepart.8*
 %lang(de) %{_mandir}/de/man8/addpart.8*
-%lang(de) %{_mandir}/de/man8/delpart.8*
 %lang(de) %{_mandir}/de/man8/partx.8*
 %lang(de) %{_mandir}/de/man8/resizepart.8*
 %lang(es) %{_mandir}/es/man8/addpart.8*
-%lang(es) %{_mandir}/es/man8/delpart.8*
-%lang(es) %{_mandir}/es/man8/resizepart.8*
 %lang(fr) %{_mandir}/fr/man8/addpart.8*
-%lang(fr) %{_mandir}/fr/man8/delpart.8*
 %lang(fr) %{_mandir}/fr/man8/partx.8*
 %lang(fr) %{_mandir}/fr/man8/resizepart.8*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/addpart.8*
-%lang(pt_BR) %{_mandir}/pt_BR/man8/delpart.8*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/partx.8*
 %lang(pt_BR) %{_mandir}/pt_BR/man8/resizepart.8*
 %lang(sr) %{_mandir}/sr/man8/addpart.8*
-%lang(sr) %{_mandir}/sr/man8/delpart.8*
 %lang(sr) %{_mandir}/sr/man8/partx.8*
 %lang(sr) %{_mandir}/sr/man8/resizepart.8*
 %lang(uk) %{_mandir}/uk/man8/addpart.8*
-%lang(uk) %{_mandir}/uk/man8/delpart.8*
 %lang(uk) %{_mandir}/uk/man8/partx.8*
 %lang(uk) %{_mandir}/uk/man8/resizepart.8*
 
@@ -1306,8 +1298,6 @@ fi
 %{_mandir}/man1/lastb.1*
 %lang(de) %{_mandir}/de/man1/last.1*
 %lang(de) %{_mandir}/de/man1/lastb.1*
-%lang(es) %{_mandir}/es/man1/last.1*
-%lang(es) %{_mandir}/es/man1/lastb.1*
 %lang(fr) %{_mandir}/fr/man1/last.1*
 %lang(fr) %{_mandir}/fr/man1/lastb.1*
 %lang(sr) %{_mandir}/sr/man1/last.1*
@@ -1319,16 +1309,12 @@ fi
 %attr(755,root,root) /sbin/sulogin
 %{_mandir}/man8/sulogin.8*
 %lang(de) %{_mandir}/de/man8/sulogin.8*
-%lang(fr) %{_mandir}/fr/man8/sulogin.8*
 %lang(sr) %{_mandir}/sr/man8/sulogin.8*
 %lang(uk) %{_mandir}/uk/man8/sulogin.8*
 
 # login-utils/nologin
 %attr(755,root,root) /sbin/nologin
 %{_mandir}/man8/nologin.8*
-%lang(de) %{_mandir}/de/man8/nologin.8*
-%lang(sr) %{_mandir}/sr/man8/nologin.8*
-%lang(uk) %{_mandir}/uk/man8/nologin.8*
 
 # login-utils/utmpdump
 %attr(755,root,root) %{_bindir}/utmpdump
@@ -1380,16 +1366,25 @@ fi
 %lang(sr) %{_mandir}/sr/man1/cal.1*
 %lang(uk) %{_mandir}/uk/man1/cal.1*
 
+# misc-utils/enosys
+%attr(755,root,root) %{_bindir}/enosys
+%{_mandir}/man1/enosys.1*
+%lang(de) %{_mandir}/de/man1/enosys.1*
+
+# misc-utils/exch
+%attr(755,root,root) %{_bindir}/exch
+%{_mandir}/man1/exch.1*
+
 # misc-utils/fadvise
 %attr(755,root,root) %{_bindir}/fadvise
 %{_mandir}/man1/fadvise.1*
+%lang(de) %{_mandir}/de/man1/fadvise.1*
 %lang(sr) %{_mandir}/sr/man1/fadvise.1*
 
 # misc-utils/logger
 %attr(755,root,root) %{_bindir}/logger
 %{_mandir}/man1/logger.1*
 %lang(de) %{_mandir}/de/man1/logger.1*
-%lang(fr) %{_mandir}/fr/man1/logger.1*
 %lang(hu) %{_mandir}/hu/man1/logger.1*
 %lang(id) %{_mandir}/id/man1/logger.1*
 %lang(ja) %{_mandir}/ja/man1/logger.1*
@@ -1455,20 +1450,24 @@ fi
 %lang(sr) %{_mandir}/sr/man1/whereis.1*
 %lang(uk) %{_mandir}/uk/man1/whereis.1*
 
-# misc-utils/lslocks
-%attr(755,root,root) %{_bindir}/lslocks
-%{_mandir}/man8/lslocks.8*
-%lang(de) %{_mandir}/de/man8/lslocks.8*
-%lang(fr) %{_mandir}/fr/man8/lslocks.8*
-%lang(sr) %{_mandir}/sr/man8/lslocks.8*
-%lang(uk) %{_mandir}/uk/man8/lslocks.8*
-
 # misc-utils/lsblk
 %attr(755,root,root) /bin/lsblk
 %{_mandir}/man8/lsblk.8*
 %lang(de) %{_mandir}/de/man8/lsblk.8*
 %lang(sr) %{_mandir}/sr/man8/lsblk.8*
 %lang(uk) %{_mandir}/uk/man8/lsblk.8*
+
+# misc-utils/lsclocks
+%attr(755,root,root) %{_bindir}/lsclocks
+%{_mandir}/man1/lsclocks.1*
+%lang(de) %{_mandir}/de/man1/lsclocks.1*
+%lang(uk) %{_mandir}/uk/man1/lsclocks.1*
+
+# misc-utils/lslocks
+%attr(755,root,root) %{_bindir}/lslocks
+%{_mandir}/man8/lslocks.8*
+%lang(de) %{_mandir}/de/man8/lslocks.8*
+%lang(uk) %{_mandir}/uk/man8/lslocks.8*
 
 # misc-utils/uuidparse
 %attr(755,root,root) %{_bindir}/uuidparse
@@ -1556,7 +1555,7 @@ fi
 %attr(755,root,root) /bin/lsfd
 %{_mandir}/man1/lsfd.1*
 %lang(de) %{_mandir}/de/man1/lsfd.1*
-%lang(sr) %{_mandir}/sr/man1/lsfd.1*
+%lang(uk) %{_mandir}/uk/man1/lsfd.1*
 
 # schedutils/chrt
 %attr(755,root,root) %{_bindir}/chrt
@@ -1576,15 +1575,11 @@ fi
 # schedutils/taskset
 %attr(755,root,root) %{_bindir}/taskset
 %{_mandir}/man1/taskset.1*
-%lang(de) %{_mandir}/de/man1/taskset.1*
-%lang(sr) %{_mandir}/sr/man1/taskset.1*
 
 # schedutils/uclampset
 %attr(755,root,root) %{_bindir}/uclampset
 %{_mandir}/man1/uclampset.1*
 %lang(de) %{_mandir}/de/man1/uclampset.1*
-%lang(sr) %{_mandir}/sr/man1/uclampset.1*
-%lang(uk) %{_mandir}/uk/man1/uclampset.1*
 
 # sys-utils/blkpr
 %attr(755,root,root) /sbin/blkpr
@@ -1717,7 +1712,6 @@ fi
 %endif
 %{_mandir}/man8/fstrim.8*
 %lang(de) %{_mandir}/de/man8/fstrim.8*
-%lang(fr) %{_mandir}/fr/man8/fstrim.8*
 %lang(sr) %{_mandir}/sr/man8/fstrim.8*
 %lang(uk) %{_mandir}/uk/man8/fstrim.8*
 
@@ -1749,7 +1743,6 @@ fi
 %attr(755,root,root) /sbin/fsfreeze
 %{_mandir}/man8/fsfreeze.8*
 %lang(de) %{_mandir}/de/man8/fsfreeze.8*
-%lang(fr) %{_mandir}/fr/man8/fsfreeze.8*
 %lang(sr) %{_mandir}/sr/man8/fsfreeze.8*
 %lang(uk) %{_mandir}/uk/man8/fsfreeze.8*
 
@@ -1757,7 +1750,6 @@ fi
 %attr(755,root,root) /sbin/blkdiscard
 %{_mandir}/man8/blkdiscard.8*
 %lang(de) %{_mandir}/de/man8/blkdiscard.8*
-%lang(fr) %{_mandir}/fr/man8/blkdiscard.8*
 %lang(sr) %{_mandir}/sr/man8/blkdiscard.8*
 %lang(uk) %{_mandir}/uk/man8/blkdiscard.8*
 
@@ -1850,6 +1842,10 @@ fi
 %{_mandir}/man8/sparc64.8*
 %endif
 
+# sys-utils/setpgid
+%attr(755,root,root) %{_bindir}/setpgid
+%{_mandir}/man1/setpgid.1*
+
 # sys-utils/eject
 %attr(755,root,root) %{_bindir}/eject
 %{_mandir}/man1/eject.1*
@@ -1867,8 +1863,6 @@ fi
 %attr(755,root,root) %{_bindir}/prlimit
 %{_mandir}/man1/prlimit.1*
 %lang(de) %{_mandir}/de/man1/prlimit.1*
-%lang(fr) %{_mandir}/fr/man1/prlimit.1*
-%lang(sr) %{_mandir}/sr/man1/prlimit.1*
 %lang(uk) %{_mandir}/uk/man1/prlimit.1*
 
 # sys-utils/lsns
@@ -1882,7 +1876,6 @@ fi
 %attr(755,root,root) %{_bindir}/lscpu
 %{_mandir}/man1/lscpu.1*
 %lang(de) %{_mandir}/de/man1/lscpu.1*
-%lang(fr) %{_mandir}/fr/man1/lscpu.1*
 %lang(sr) %{_mandir}/sr/man1/lscpu.1*
 %lang(uk) %{_mandir}/uk/man1/lscpu.1*
 
@@ -1913,10 +1906,6 @@ fi
 # sys-utils/switch_root
 %attr(755,root,root) /sbin/switch_root
 %{_mandir}/man8/switch_root.8*
-%lang(de) %{_mandir}/de/man8/switch_root.8*
-%lang(fr) %{_mandir}/fr/man8/switch_root.8*
-%lang(sr) %{_mandir}/sr/man8/switch_root.8*
-%lang(uk) %{_mandir}/uk/man8/switch_root.8*
 
 # sys-utils/unshare
 %attr(755,root,root) %{_bindir}/unshare
@@ -1956,8 +1945,6 @@ fi
 %attr(755,root,root) %{_bindir}/setpriv
 %{_mandir}/man1/setpriv.1*
 %lang(de) %{_mandir}/de/man1/setpriv.1*
-%lang(sr) %{_mandir}/sr/man1/setpriv.1*
-%lang(uk) %{_mandir}/uk/man1/setpriv.1*
 
 # term-utils/script,scriptreplay,scriptlive
 %attr(755,root,root) %{_bindir}/script
@@ -1970,7 +1957,6 @@ fi
 %lang(de) %{_mandir}/de/man1/scriptlive.1*
 %lang(de) %{_mandir}/de/man1/scriptreplay.1*
 %lang(es) %{_mandir}/es/man1/script.1*
-%lang(fr) %{_mandir}/fr/man1/script.1*
 %lang(fr) %{_mandir}/fr/man1/scriptreplay.1*
 %lang(id) %{_mandir}/id/man1/script.1*
 %lang(ja) %{_mandir}/ja/man1/script.1*
@@ -2045,6 +2031,7 @@ fi
 %lang(ko) %{_mandir}/ko/man1/colcrt.1*
 %lang(ko) %{_mandir}/ko/man1/colrm.1*
 %lang(ko) %{_mandir}/ko/man1/column.1*
+%lang(uk) %{_mandir}/uk/man1/column.1*
 %lang(pl) %{_mandir}/pl/man1/col.1*
 %lang(pl) %{_mandir}/pl/man1/colcrt.1*
 %lang(pl) %{_mandir}/pl/man1/colrm.1*
@@ -2052,7 +2039,6 @@ fi
 %lang(sr) %{_mandir}/sr/man1/colcrt.1*
 %lang(sr) %{_mandir}/sr/man1/colrm.1*
 %lang(sr) %{_mandir}/sr/man1/column.1*
-%lang(uk) %{_mandir}/uk/man1/col.1*
 %lang(uk) %{_mandir}/uk/man1/colcrt.1*
 %lang(uk) %{_mandir}/uk/man1/colrm.1*
 
@@ -2080,12 +2066,7 @@ fi
 # text-utils/line
 %attr(755,root,root) %{_bindir}/line
 %{_mandir}/man1/line.1*
-%lang(de) %{_mandir}/de/man1/line.1*
-%lang(es) %{_mandir}/es/man1/line.1*
-%lang(fr) %{_mandir}/fr/man1/line.1*
 %lang(ja) %{_mandir}/ja/man1/line.1*
-%lang(sr) %{_mandir}/sr/man1/line.1*
-%lang(uk) %{_mandir}/uk/man1/line.1*
 
 # text-utils/more,pg
 %attr(755,root,root) /bin/more
@@ -2139,7 +2120,6 @@ fi
 %attr(755,root,root) /bin/findmnt
 %{_mandir}/man8/findmnt.8*
 %lang(de) %{_mandir}/de/man8/findmnt.8*
-%lang(fr) %{_mandir}/fr/man8/findmnt.8*
 %lang(sr) %{_mandir}/sr/man8/findmnt.8*
 %lang(uk) %{_mandir}/uk/man8/findmnt.8*
 
@@ -2209,7 +2189,6 @@ fi
 %attr(755,root,root) /bin/mountpoint
 %{_mandir}/man1/mountpoint.1*
 %lang(de) %{_mandir}/de/man1/mountpoint.1*
-%lang(fr) %{_mandir}/fr/man1/mountpoint.1*
 %lang(sr) %{_mandir}/sr/man1/mountpoint.1*
 %lang(uk) %{_mandir}/uk/man1/mountpoint.1*
 
@@ -2347,6 +2326,7 @@ fi
 %lang(sr) %{_mandir}/sr/man8/uuidd.8*
 %lang(uk) %{_mandir}/uk/man8/uuidd.8*
 %if %{with systemd}
+%{systemdtmpfilesdir}/uuidd-tmpfiles.conf
 %{systemdunitdir}/uuidd.service
 %{systemdunitdir}/uuidd.socket
 %endif
@@ -2416,6 +2396,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) /%{_lib}/libsmartcols.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/libsmartcols.so.1
+%{_mandir}/man5/scols-filter.5*
 
 %files -n libsmartcols-devel
 %defattr(644,root,root,755)
@@ -2479,6 +2460,8 @@ fi
 %{bash_compdir}/delpart
 %{bash_compdir}/dmesg
 %{bash_compdir}/eject
+%{bash_compdir}/enosys
+%{bash_compdir}/exch
 %{bash_compdir}/fadvise
 %{bash_compdir}/fallocate
 %{bash_compdir}/fdformat
@@ -2546,6 +2529,7 @@ fi
 %{bash_compdir}/scriptreplay
 %{bash_compdir}/setarch
 %{bash_compdir}/setpriv
+%{bash_compdir}/setpgid
 %{bash_compdir}/setsid
 %{bash_compdir}/setterm
 %{bash_compdir}/sfdisk
