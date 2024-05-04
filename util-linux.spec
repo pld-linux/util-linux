@@ -17,6 +17,7 @@
 %bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
 %bcond_without	systemd		# systemd support
+%bcond_with	lastlog2	# y2038 safe lastlog
 
 %define		pam_ver 1:1.1.8-5
 
@@ -87,6 +88,7 @@ BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
+%{?with_lastlog2:BuildRequires:	sqlite3-devel}
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
@@ -868,6 +870,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--disable-cramfs \
 	--disable-kill \
 	--disable-ldattach \
+	--disable-liblastlog2 \
 	--disable-libmount \
 	--disable-login \
 	--disable-losetup \
@@ -924,6 +927,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	%{?with_apidocs:--enable-gtk-doc} \
 	--enable-kill \
 	--enable-libblkid \
+	%{__enable_disable lastlog2 liblastlog2} \
 	--enable-libmount-support-mtab \
 	--enable-line \
 	--enable-login \
