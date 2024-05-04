@@ -2495,6 +2495,7 @@ fi
 %{bash_compdir}/look
 %{bash_compdir}/losetup
 %{bash_compdir}/lsblk
+%{bash_compdir}/lsclocks
 %{bash_compdir}/lscpu
 %{bash_compdir}/lsipc
 %{bash_compdir}/lsirq
