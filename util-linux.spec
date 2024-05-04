@@ -928,7 +928,6 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--enable-kill \
 	--enable-libblkid \
 	%{__enable_disable lastlog2 liblastlog2} \
-	--enable-libmount-support-mtab \
 	--enable-line \
 	--enable-login \
 	--enable-login-chown-vcs \
