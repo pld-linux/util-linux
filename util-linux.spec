@@ -17,7 +17,7 @@
 %bcond_without	selinux		# SELinux support
 %bcond_without	su		# su/runuser programs
 %bcond_without	systemd		# systemd support
-%bcond_with	lastlog2	# y2038 safe lastlog
+%bcond_without	lastlog2	# y2038 safe lastlog
 
 %define		pam_ver 1:1.1.8-5
 
@@ -63,6 +63,10 @@ BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-tools >= 0.21
 # for fallocate
 BuildRequires:	glibc-devel >= 6:2.11
+%if %{with lastlog2}
+# _TIME_BITS=64
+BuildRequires:	glibc-devel >= 6:2.34
+%endif
 %if %{with apidocs}
 BuildRequires:	gtk-doc >= 1.10
 BuildRequires:	gtk-doc-automake >= 1.10
@@ -88,7 +92,7 @@ BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	ruby-asciidoctor
 BuildRequires:	sed >= 4.0
-%{?with_lastlog2:BuildRequires:	sqlite3-devel}
+%{?with_lastlog2:BuildRequires:	sqlite3-devel >= 3}
 %{?with_systemd:BuildRequires:	systemd-devel >= 1:209}
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	udev-devel
@@ -764,6 +768,97 @@ libsmartcols API documentation.
 %description -n libsmartcols-apidocs -l pl.UTF-8
 Dokumentacja API libsmartcols.
 
+%package -n lastlog2
+Summary:	Y2038 safe version of lastlog
+Summary(pl.UTF-8):	Wersja usługi lastlog bezpieczna pod kątem Y2038
+Group:		Libraries
+
+%description -n lastlog2
+The standard /var/log/lastlog implementation using lastlog.h from
+glibc uses a 32bit time_t in struct lastlog on bi-arch systems like
+x86-64 (so which can execute 64bit and 32bit binaries). So even if you
+have a pure 64bit system, on many architectures using glibc you have a
+Y2038 problem.
+
+Additional, /var/log/lastlog can become really huge if there are big
+UIDs in use on the system. Since it is a sparse file, this is normally
+not a problem, but depending on the filesystem or the tools used for
+backup, this can become a real problem.
+
+Since there are only few applications which really support lastlog,
+the data is also not always correct.
+
+lastlog2 tries to solve this problems:
+- It's using sqlite3 as database backend.
+- Data is only collected via a PAM module, so that every tools can
+  make use of it, without modifying existing packages.
+- The output is as compatible as possible with the old lastlog
+  implementation.
+- The old /var/log/lastlog file can be imported into the new database.
+- The size of the database depends on the amount of users, not how big
+  the biggest UID is.
+
+%description -n lastlog2 -l pl.UTF-8
+Standardowa implementacja /var/log/lastlog z użyciem lastlog.h z glibc
+wykorzystuje 32-bitowy time_t w strukturze lastlog na systemach
+wieloarchitekturowych, takich jak x86-64 (który może wykonywać binaria
+64- i 32-bitowe). Przez to nawet na czysto 64-bitowym systemie, na
+wielu architekturach wykorzystujących glibc można napotkać problem
+roku 2038.
+
+Ponadto /var/log/lastlog może stać się bardzo duży, jeśli w systemie
+używane są duże UID-y. Ponieważ jest to plik rzadki, zwykle nie jest
+to problem, ale może być w zależności od używanego systemu plików i
+narzędzi do wykonywania kopii zapasowych.
+
+Ponieważ tylko kilka aplikacji tak naprawdę obsługuje lastlog, dane
+nie muszą być zawsze poprawne.
+
+lastlog2 próbuje rozwiązać te problemy:
+- wykorzystuje sqlite3 jako backend bazy danych
+- dane są zbierane tylko przez moduł PAM, więc wszystkie narzędzia
+  mogą go używać bez dodatkowych modyfikacji
+- wyjście jest zgodne ze starą implementacją lastlog na ile to możliwe
+- stary plik /var/log/lastlog można zaimportować do nowej bazy danych
+- rozmiar bazy danych zależy od liczby użytkowników, a nie najwyższej
+  wartości UID-a
+
+%package -n lastlog2-devel
+Summary:	Header files for lastlog2 library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki lastlog2
+Group:		Development/Libraries
+Requires:	lastlog2 = %{version}-%{release}
+
+%description -n lastlog2-devel
+Header files for lastlog2 library.
+
+%description -n lastlog2-devel -l pl.UTF-8
+Pliki nagłówkowe biblioteki lastlog2.
+
+%package -n lastlog2-static
+Summary:	Static lastlog2 library
+Summary(pl.UTF-8):	Statyczna biblioteka lastlog2
+Group:		Development/Libraries
+Requires:	lastlog2-devel = %{version}-%{release}
+
+%description -n lastlog2-static
+Static lastlog2 library.
+
+%description -n lastlog2-static -l pl.UTF-8
+Statyczna biblioteka lastlog2.
+
+%package -n pam-pam_lastlog2
+Summary:	PAM module to display date of last login
+Summary(pl.UTF-8):	Moduł PAM do wyświetlania daty ostatniego logowania
+Group:		Base
+Requires:	lastlog2 = %{version}-%{release}
+
+%description -n pam-pam_lastlog2
+PAM module to display date of last login.
+
+%description -n pam-pam_lastlog2 -l pl.UTF-8
+Moduł PAM do wyświetlania daty ostatniego logowania.
+
 %package initrd
 Summary:	blkid - initrd version
 Summary(pl.UTF-8):	blkid - wersja dla initrd
@@ -956,7 +1051,8 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	--with-readline \
 	%{!?with_systemd:--without-systemd}
 
-%{__make}
+%{__make} \
+	securelibdir=/%{_lib}/security
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -968,7 +1064,8 @@ install -d $RPM_BUILD_ROOT%{dietlibdir}
 %endif
 
 %{__make} -j1 install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	securelibdir=/%{_lib}/security
 
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 
@@ -1043,6 +1140,13 @@ done
 %{__rm} $RPM_BUILD_ROOT%{_docdir}/%{name}/getopt-example.{bash,tcsh}
 %endif
 
+%if %{with lastlog2}
+install -d $RPM_BUILD_ROOT/var/lib/lastlog
+:> $RPM_BUILD_ROOT/var/lib/lastlog/lastlog2.db
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/liblastlog2.la
+%{__rm} $RPM_BUILD_ROOT/%{_lib}/security/pam_lastlog2.la
+%endif
+
 %if %{with initrd}
 install -d $RPM_BUILD_ROOT%{_libdir}/initrd
 install -p initrd/bin/* $RPM_BUILD_ROOT%{_libdir}/initrd
@@ -1111,6 +1215,9 @@ fi
 
 %post	-n libsmartcols -p /sbin/ldconfig
 %postun -n libsmartcols -p /sbin/ldconfig
+
+%post	-n lastlog2 -p /sbin/ldconfig
+%postun -n lastlog2 -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -2425,6 +2532,35 @@ fi
 %defattr(644,root,root,755)
 %{_gtkdocdir}/libsmartcols
 %endif
+
+%files -n lastlog2
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/lastlog2
+%attr(755,root,root) %{_libdir}/liblastlog2.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/liblastlog2.so.2
+%{bash_compdir}/lastlog2
+%{_mandir}/man8/lastlog2.8*
+%{systemdunitdir}/lastlog2-import.service
+%{systemdtmpfilesdir}/lastlog2-tmpfiles.conf
+%dir /var/lib/lastlog
+%ghost /var/lib/lastlog/lastlog2.db
+
+%files -n lastlog2-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liblastlog2.so
+%{_includedir}/liblastlog2
+%{_pkgconfigdir}/lastlog2.pc
+%{_mandir}/man3/lastlog2.3*
+%{_mandir}/man3/ll2_*.3*
+
+%files -n lastlog2-static
+%defattr(644,root,root,755)
+%{_libdir}/liblastlog2.a
+
+%files -n pam-pam_lastlog2
+%defattr(644,root,root,755)
+%attr(755,root,root) /%{_lib}/security/pam_lastlog2.so
+%{_mandir}/man8/pam_lastlog2.8*
 
 %if %{with initrd}
 %files initrd
