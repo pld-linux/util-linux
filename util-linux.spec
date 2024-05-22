@@ -963,9 +963,11 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{pam.d,rc.d/init.d,sysconfig,security,terminal-colors.d} \
 	$RPM_BUILD_ROOT{/%{_lib},/var/{lock,lib/libuuid}} \
 	$RPM_BUILD_ROOT{/lib/systemd/pld-helpers.d,%{systemdunitdir}}
-%{?with_dietlibc:install -d $RPM_BUILD_ROOT%{dietlibdir}}
+%if %{with initrd} && %{with dietlibc}
+install -d $RPM_BUILD_ROOT%{dietlibdir}
+%endif
 
-%{__make} install \
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
@@ -1278,6 +1280,7 @@ fi
 %{_mandir}/man8/partx.8*
 %{_mandir}/man8/resizepart.8*
 %lang(de) %{_mandir}/de/man8/addpart.8*
+%lang(de) %{_mandir}/de/man8/delpart.8*
 %lang(de) %{_mandir}/de/man8/partx.8*
 %lang(de) %{_mandir}/de/man8/resizepart.8*
 %lang(es) %{_mandir}/es/man8/addpart.8*
@@ -1318,6 +1321,7 @@ fi
 # login-utils/nologin
 %attr(755,root,root) /sbin/nologin
 %{_mandir}/man8/nologin.8*
+%lang(de) %{_mandir}/de/man8/nologin.8*
 
 # login-utils/utmpdump
 %attr(755,root,root) %{_bindir}/utmpdump
@@ -1377,6 +1381,7 @@ fi
 # misc-utils/exch
 %attr(755,root,root) %{_bindir}/exch
 %{_mandir}/man1/exch.1*
+%lang(de) %{_mandir}/de/man1/exch.1*
 
 # misc-utils/fadvise
 %attr(755,root,root) %{_bindir}/fadvise
@@ -1431,6 +1436,7 @@ fi
 # misc-utils/pipesz
 %attr(755,root,root) /bin/pipesz
 %{_mandir}/man1/pipesz.1*
+%lang(de) %{_mandir}/de/man1/pipesz.1*
 %lang(sr) %{_mandir}/sr/man1/pipesz.1*
 
 # misc-utils/waitpid
@@ -1578,6 +1584,7 @@ fi
 # schedutils/taskset
 %attr(755,root,root) %{_bindir}/taskset
 %{_mandir}/man1/taskset.1*
+%lang(de) %{_mandir}/de/man1/taskset.1*
 
 # schedutils/uclampset
 %attr(755,root,root) %{_bindir}/uclampset
@@ -1909,6 +1916,7 @@ fi
 # sys-utils/switch_root
 %attr(755,root,root) /sbin/switch_root
 %{_mandir}/man8/switch_root.8*
+%lang(de) %{_mandir}/de/man8/switch_root.8*
 
 # sys-utils/unshare
 %attr(755,root,root) %{_bindir}/unshare
@@ -2069,6 +2077,7 @@ fi
 # text-utils/line
 %attr(755,root,root) %{_bindir}/line
 %{_mandir}/man1/line.1*
+%lang(de) %{_mandir}/de/man1/line.1*
 %lang(ja) %{_mandir}/ja/man1/line.1*
 
 # text-utils/more,pg
