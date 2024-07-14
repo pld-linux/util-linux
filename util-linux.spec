@@ -31,13 +31,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.40.1
+Version:	2.40.2
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.40/%{name}-%{version}.tar.xz
-# Source0-md5:	42ca7b92a3d77087de362f43ac29a3df
+# Source0-md5:	88faefc8fefced097e58142077a3d14e
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -1052,7 +1052,7 @@ export CPPFLAGS="%{rpmcppflags} -I/usr/include/ncurses -DHAVE_LSEEK64_PROTOTYPE 
 	%{!?with_systemd:--without-systemd}
 
 %{__make} \
-	securelibdir=/%{_lib}/security
+	usrsecurelib_execdir=/%{_lib}/security
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -1065,7 +1065,7 @@ install -d $RPM_BUILD_ROOT%{dietlibdir}
 
 %{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	securelibdir=/%{_lib}/security
+	usrsecurelib_execdir=/%{_lib}/security
 
 %{__mv} $RPM_BUILD_ROOT%{_sbindir}/{addpart,delpart,partx} $RPM_BUILD_ROOT/sbin
 
@@ -1250,7 +1250,6 @@ fi
 %{_mandir}/man8/mkswap.8*
 %lang(de) %{_mandir}/de/man8/mkswap.8*
 %lang(es) %{_mandir}/es/man8/mkswap.8*
-%lang(fr) %{_mandir}/fr/man8/mkswap.8*
 %lang(hu) %{_mandir}/hu/man8/mkswap.8*
 %lang(it) %{_mandir}/it/man8/mkswap.8*
 %lang(ja) %{_mandir}/ja/man8/mkswap.8*
