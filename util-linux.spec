@@ -2539,8 +2539,10 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/liblastlog2.so.2
 %{bash_compdir}/lastlog2
 %{_mandir}/man8/lastlog2.8*
+%if %{with systemd}
 %{systemdunitdir}/lastlog2-import.service
 %{systemdtmpfilesdir}/lastlog2-tmpfiles.conf
+%endif
 %dir /var/lib/lastlog
 %ghost /var/lib/lastlog/lastlog2.db
 
