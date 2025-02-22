@@ -893,13 +893,13 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 
 %prep
 %setup -q -a1
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch7 -p1
-%{?with_initrd:%patch6 -p1}
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+%patch -P3 -p1
+%patch -P4 -p1
+%patch -P7 -p1
+%{?with_initrd:%patch -P6 -p1}
 
 # obsolete programs, remove non-english man pages
 %{__rm} man/*/man1/{arch,chkdupexe,ddate,reset}.1 \
