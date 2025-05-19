@@ -86,6 +86,9 @@ BuildRequires:	pkgconfig
 BuildRequires:	po4a >= 0.56
 BuildRequires:	python3-devel
 BuildRequires:	python3-modules
+%if %{_ver_ge %py3_ver 3.12}
+BuildRequires: python3-setuptools
+%endif
 BuildRequires:	readline-devel
 BuildRequires:	rpm >= 4.4.9-56
 BuildRequires:	rpm-build >= 4.6
