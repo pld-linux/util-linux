@@ -32,7 +32,7 @@ Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
 Version:	2.41
-Release:	1
+Release:	2
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
@@ -55,6 +55,7 @@ Patch2:		%{name}-login-lastlog.patch
 Patch4:		su-paths.patch
 Patch6:		%{name}-diet.patch
 Patch7:		%{name}-man-asciidoctor.patch
+Patch8:		mount-no-canonicalize.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.64
@@ -897,6 +898,7 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch -P2 -p1
 %patch -P4 -p1
 %patch -P7 -p1
+%patch -P8 -p1
 %{?with_initrd:%patch -P6 -p1}
 
 # obsolete programs, remove non-english man pages
