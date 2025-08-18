@@ -31,13 +31,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.41
-Release:	2
+Version:	2.41.1
+Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.41/%{name}-%{version}.tar.xz
-# Source0-md5:	e666a34b03554c18a1073347b16661ce
+# Source0-md5:	7e5e68845e2f347cf96f5448165f1764
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -55,7 +55,6 @@ Patch2:		%{name}-login-lastlog.patch
 Patch4:		su-paths.patch
 Patch6:		%{name}-diet.patch
 Patch7:		%{name}-man-asciidoctor.patch
-Patch8:		mount-no-canonicalize.patch
 URL:		https://github.com/karelzak/util-linux
 BuildRequires:	audit-libs-devel >= 1.0.6
 BuildRequires:	autoconf >= 2.64
@@ -901,7 +900,6 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch -P2 -p1
 %patch -P4 -p1
 %patch -P7 -p1
-%patch -P8 -p1
 %{?with_initrd:%patch -P6 -p1}
 
 # obsolete programs, remove non-english man pages
@@ -1533,8 +1531,10 @@ fi
 # misc-utils/enosys
 %attr(755,root,root) %{_bindir}/enosys
 %{_mandir}/man1/enosys.1*
+%lang(de) %{_mandir}/de/man1/enosys.1*
 %lang(pl) %{_mandir}/pl/man1/enosys.1*
 %lang(ro) %{_mandir}/ro/man1/enosys.1*
+%lang(sr) %{_mandir}/sr/man1/enosys.1*
 %lang(uk) %{_mandir}/uk/man1/enosys.1*
 
 # misc-utils/exch
@@ -1781,6 +1781,7 @@ fi
 %attr(755,root,root) %{_bindir}/coresched
 %{_mandir}/man1/coresched.1*
 %lang(ro) %{_mandir}/ro/man1/coresched.1*
+%lang(sr) %{_mandir}/sr/man1/coresched.1*
 
 # schedutils/ionice
 %attr(755,root,root) %{_bindir}/ionice
@@ -1853,6 +1854,8 @@ fi
 %{_mandir}/man1/ipcmk.1*
 %{_mandir}/man1/ipcrm.1*
 %{_mandir}/man1/ipcs.1*
+%lang(de) %{_mandir}/de/man1/ipcmk.1*
+%lang(de) %{_mandir}/de/man1/ipcrm.1*
 %lang(de) %{_mandir}/de/man1/ipcs.1*
 %lang(es) %{_mandir}/es/man1/ipcrm.1*
 %lang(es) %{_mandir}/es/man1/ipcs.1*
@@ -1868,6 +1871,8 @@ fi
 %lang(ro) %{_mandir}/ro/man1/ipcmk.1*
 %lang(ro) %{_mandir}/ro/man1/ipcrm.1*
 %lang(ro) %{_mandir}/ro/man1/ipcs.1*
+%lang(sr) %{_mandir}/sr/man1/ipcmk.1*
+%lang(sr) %{_mandir}/sr/man1/ipcrm.1*
 %lang(sr) %{_mandir}/sr/man1/ipcs.1*
 %lang(uk) %{_mandir}/uk/man1/ipcmk.1*
 %lang(uk) %{_mandir}/uk/man1/ipcrm.1*
@@ -2093,7 +2098,9 @@ fi
 # sys-utils/setpgid
 %attr(755,root,root) %{_bindir}/setpgid
 %{_mandir}/man1/setpgid.1*
+%lang(de) %{_mandir}/de/man1/setpgid.1*
 %lang(ro) %{_mandir}/ro/man1/setpgid.1*
+%lang(sr) %{_mandir}/sr/man1/setpgid.1*
 %lang(uk) %{_mandir}/uk/man1/setpgid.1*
 
 # sys-utils/eject
@@ -2115,7 +2122,9 @@ fi
 # sys-utils/prlimit
 %attr(755,root,root) %{_bindir}/prlimit
 %{_mandir}/man1/prlimit.1*
+%lang(de) %{_mandir}/de/man1/prlimit.1*
 %lang(ro) %{_mandir}/ro/man1/prlimit.1*
+%lang(sr) %{_mandir}/sr/man1/prlimit.1*
 %lang(uk) %{_mandir}/uk/man1/prlimit.1*
 
 # sys-utils/lsns
@@ -2175,7 +2184,9 @@ fi
 # sys-utils/unshare
 %attr(755,root,root) %{_bindir}/unshare
 %{_mandir}/man1/unshare.1*
+%lang(de) %{_mandir}/de/man1/unshare.1*
 %lang(ro) %{_mandir}/ro/man1/unshare.1*
+%lang(sr) %{_mandir}/sr/man1/unshare.1*
 
 # sys-utils/nsenter
 %attr(755,root,root) %{_bindir}/nsenter
@@ -2224,6 +2235,7 @@ fi
 %{_mandir}/man1/scriptreplay.1*
 %lang(de) %{_mandir}/de/man1/script.1*
 %lang(de) %{_mandir}/de/man1/scriptlive.1*
+%lang(de) %{_mandir}/de/man1/scriptreplay.1*
 %lang(es) %{_mandir}/es/man1/script.1*
 %lang(id) %{_mandir}/id/man1/script.1*
 %lang(ja) %{_mandir}/ja/man1/script.1*
@@ -2234,18 +2246,21 @@ fi
 %lang(ro) %{_mandir}/ro/man1/scriptreplay.1*
 %lang(sr) %{_mandir}/sr/man1/script.1*
 %lang(sr) %{_mandir}/sr/man1/scriptlive.1*
+%lang(sr) %{_mandir}/sr/man1/scriptreplay.1*
 %lang(uk) %{_mandir}/uk/man1/scriptlive.1*
 %lang(uk) %{_mandir}/uk/man1/scriptreplay.1*
 
 # term-utils/setterm
 %attr(755,root,root) %{_bindir}/setterm
 %{_mandir}/man1/setterm.1*
+%lang(de) %{_mandir}/de/man1/setterm.1*
 %lang(es) %{_mandir}/es/man1/setterm.1*
 %lang(hu) %{_mandir}/hu/man1/setterm.1*
 %lang(ja) %{_mandir}/ja/man1/setterm.1*
 %lang(ko) %{_mandir}/ko/man1/setterm.1*
 %lang(pl) %{_mandir}/pl/man1/setterm.1*
 %lang(ro) %{_mandir}/ro/man1/setterm.1*
+%lang(sr) %{_mandir}/sr/man1/setterm.1*
 %lang(uk) %{_mandir}/uk/man1/setterm.1*
 
 # term-utils/mesg
@@ -2277,7 +2292,9 @@ fi
 # text-utils/bits
 %attr(755,root,root) %{_bindir}/bits
 %{_mandir}/man1/bits.1*
+%lang(de) %{_mandir}/de/man1/bits.1*
 %lang(ro) %{_mandir}/ro/man1/bits.1*
+%lang(sr) %{_mandir}/sr/man1/bits.1*
 
 # text-utils/col,colcrt,colrm,column
 %attr(755,root,root) %{_bindir}/col
@@ -2291,6 +2308,7 @@ fi
 %lang(de) %{_mandir}/de/man1/col.1*
 %lang(de) %{_mandir}/de/man1/colcrt.1*
 %lang(de) %{_mandir}/de/man1/colrm.1*
+%lang(de) %{_mandir}/de/man1/column.1*
 %lang(es) %{_mandir}/es/man1/colrm.1*
 %lang(es) %{_mandir}/es/man1/column.1*
 %lang(fi) %{_mandir}/fi/man1/column.1*
@@ -2308,16 +2326,17 @@ fi
 %lang(ro) %{_mandir}/ro/man1/colcrt.1*
 %lang(ro) %{_mandir}/ro/man1/colrm.1*
 %lang(ro) %{_mandir}/ro/man1/column.1*
-%lang(uk) %{_mandir}/uk/man1/column.1*
 %lang(pl) %{_mandir}/pl/man1/col.1*
 %lang(pl) %{_mandir}/pl/man1/colcrt.1*
 %lang(pl) %{_mandir}/pl/man1/colrm.1*
 %lang(sr) %{_mandir}/sr/man1/col.1*
 %lang(sr) %{_mandir}/sr/man1/colcrt.1*
 %lang(sr) %{_mandir}/sr/man1/colrm.1*
+%lang(sr) %{_mandir}/sr/man1/column.1*
 %lang(uk) %{_mandir}/uk/man1/col.1*
 %lang(uk) %{_mandir}/uk/man1/colcrt.1*
 %lang(uk) %{_mandir}/uk/man1/colrm.1*
+%lang(uk) %{_mandir}/uk/man1/column.1*
 
 # text-utils/hexdump
 %attr(755,root,root) %{_bindir}/hexdump
@@ -2712,6 +2731,7 @@ fi
 %{_mandir}/man5/scols-filter.5*
 %lang(fr) %{_mandir}/fr/man5/scols-filter.5*
 %lang(ro) %{_mandir}/ro/man5/scols-filter.5*
+%lang(sr) %{_mandir}/sr/man5/scols-filter.5*
 
 %files -n libsmartcols-devel
 %defattr(644,root,root,755)
@@ -2736,7 +2756,9 @@ fi
 %attr(755,root,root) %ghost %{_libdir}/liblastlog2.so.2
 %{bash_compdir}/lastlog2
 %{_mandir}/man8/lastlog2.8*
+%lang(de) %{_mandir}/de/man8/lastlog2.8*
 %lang(ro) %{_mandir}/ro/man8/lastlog2.8*
+%lang(sr) %{_mandir}/sr/man8/lastlog2.8*
 %if %{with systemd}
 %{systemdunitdir}/lastlog2-import.service
 %{systemdtmpfilesdir}/lastlog2-tmpfiles.conf
@@ -2751,8 +2773,12 @@ fi
 %{_pkgconfigdir}/lastlog2.pc
 %{_mandir}/man3/lastlog2.3*
 %{_mandir}/man3/ll2_*.3*
+%lang(de) %{_mandir}/de/man3/lastlog2.3*
+%lang(de) %{_mandir}/de/man3/ll2_*.3*
 %lang(ro) %{_mandir}/ro/man3/lastlog2.3*
 %lang(ro) %{_mandir}/ro/man3/ll2_*.3*
+%lang(sr) %{_mandir}/sr/man3/lastlog2.3*
+%lang(sr) %{_mandir}/sr/man3/ll2_*.3*
 
 %files -n lastlog2-static
 %defattr(644,root,root,755)
@@ -2762,7 +2788,9 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) /%{_lib}/security/pam_lastlog2.so
 %{_mandir}/man8/pam_lastlog2.8*
+%lang(de) %{_mandir}/de/man8/pam_lastlog2.8*
 %lang(ro) %{_mandir}/ro/man8/pam_lastlog2.8*
+%lang(sr) %{_mandir}/sr/man8/pam_lastlog2.8*
 
 %if %{with initrd}
 %files initrd
