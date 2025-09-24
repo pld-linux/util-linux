@@ -33,11 +33,11 @@ Also, fix command name in fr/chfn and sr/mkfs.cramfs man page.
  #. type: Plain text
  #: ../disk-utils/mkfs.bfs.8.adoc:20
 @@ -24276,7 +24276,7 @@ msgid ""
- "uclampset - manipulate the utilization clamping attributes of the system or "
- "a process"
- msgstr ""
--"uclampset — керування атрибутами обмеження використання системи або процесу"
-+"uclampset - керування атрибутами обмеження використання системи або процесу"
+ #. type: Plain text
+ #: ../schedutils/uclampset.1.adoc:38
+ msgid "uclampset - manipulate the utilization clamping attributes of the system or a process"
+-msgstr "uclampset — керування атрибутами обмеження використання системи або процесу"
++msgstr "uclampset - керування атрибутами обмеження використання системи або процесу"
  
  #. type: Plain text
  #: ../schedutils/uclampset.1.adoc:42

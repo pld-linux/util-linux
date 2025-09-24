@@ -31,13 +31,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.41.1
+Version:	2.41.2
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.41/%{name}-%{version}.tar.xz
-# Source0-md5:	7e5e68845e2f347cf96f5448165f1764
+# Source0-md5:	a2a3281ce76821c4bc28794fdf9d3994
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -1493,6 +1493,7 @@ fi
 %{_mandir}/man1/su.1*
 %lang(de) %{_mandir}/de/man1/runuser.1*
 %lang(de) %{_mandir}/de/man1/su.1*
+%lang(es) %{_mandir}/es/man1/su.1*
 %lang(fr) %{_mandir}/fr/man1/runuser.1*
 %lang(pl) %{_mandir}/pl/man1/runuser.1*
 %lang(pl) %{_mandir}/pl/man1/su.1*
@@ -1780,6 +1781,7 @@ fi
 # schedutils/coresched
 %attr(755,root,root) %{_bindir}/coresched
 %{_mandir}/man1/coresched.1*
+%lang(de) %{_mandir}/de/man1/coresched.1*
 %lang(ro) %{_mandir}/ro/man1/coresched.1*
 %lang(sr) %{_mandir}/sr/man1/coresched.1*
 
@@ -1820,6 +1822,7 @@ fi
 %attr(755,root,root) %{_bindir}/lsmem
 %{_mandir}/man1/lsmem.1*
 %lang(de) %{_mandir}/de/man1/lsmem.1*
+%lang(pl) %{_mandir}/pl/man1/lsmem.1*
 %lang(ro) %{_mandir}/ro/man1/lsmem.1*
 %lang(sr) %{_mandir}/sr/man1/lsmem.1*
 %lang(uk) %{_mandir}/uk/man1/lsmem.1*
@@ -1828,6 +1831,7 @@ fi
 %{_mandir}/man8/chmem.8*
 %attr(755,root,root) %{_bindir}/chmem
 %lang(de) %{_mandir}/de/man8/chmem.8*
+%lang(pl) %{_mandir}/pl/man8/chmem.8*
 %lang(ro) %{_mandir}/ro/man8/chmem.8*
 %lang(sr) %{_mandir}/sr/man8/chmem.8*
 %lang(uk) %{_mandir}/uk/man8/chmem.8*
@@ -1836,6 +1840,7 @@ fi
 %attr(755,root,root) %{_bindir}/flock
 %{_mandir}/man1/flock.1*
 %lang(de) %{_mandir}/de/man1/flock.1*
+%lang(pl) %{_mandir}/pl/man1/flock.1*
 %lang(ro) %{_mandir}/ro/man1/flock.1*
 %lang(sr) %{_mandir}/sr/man1/flock.1*
 
@@ -1843,6 +1848,7 @@ fi
 %attr(755,root,root) %{_bindir}/choom
 %{_mandir}/man1/choom.1*
 %lang(de) %{_mandir}/de/man1/choom.1*
+%lang(pl) %{_mandir}/pl/man1/choom.1*
 %lang(ro) %{_mandir}/ro/man1/choom.1*
 %lang(sr) %{_mandir}/sr/man1/choom.1*
 %lang(uk) %{_mandir}/uk/man1/choom.1*
@@ -1882,6 +1888,7 @@ fi
 %attr(755,root,root) %{_bindir}/irqtop
 %{_mandir}/man1/irqtop.1*
 %lang(de) %{_mandir}/de/man1/irqtop.1*
+%lang(pl) %{_mandir}/pl/man1/irqtop.1*
 %lang(ro) %{_mandir}/ro/man1/irqtop.1*
 %lang(sr) %{_mandir}/sr/man1/irqtop.1*
 %lang(uk) %{_mandir}/uk/man1/irqtop.1*
@@ -1898,6 +1905,7 @@ fi
 %attr(755,root,root) %{_bindir}/lsipc
 %{_mandir}/man1/lsipc.1*
 %lang(de) %{_mandir}/de/man1/lsipc.1*
+%lang(pl) %{_mandir}/pl/man1/lsipc.1*
 %lang(ro) %{_mandir}/ro/man1/lsipc.1*
 %lang(sr) %{_mandir}/sr/man1/lsipc.1*
 %lang(uk) %{_mandir}/uk/man1/lsipc.1*
@@ -1918,6 +1926,7 @@ fi
 %attr(755,root,root) %{_sbindir}/rfkill
 %{_mandir}/man8/rfkill.8*
 %lang(de) %{_mandir}/de/man8/rfkill.8*
+%lang(pl) %{_mandir}/pl/man8/rfkill.8*
 %lang(ro) %{_mandir}/ro/man8/rfkill.8*
 %lang(sr) %{_mandir}/sr/man8/rfkill.8*
 %lang(uk) %{_mandir}/uk/man8/rfkill.8*
@@ -2115,6 +2124,7 @@ fi
 %attr(755,root,root) /sbin/zramctl
 %{_mandir}/man8/zramctl.8*
 %lang(de) %{_mandir}/de/man8/zramctl.8*
+%lang(pl) %{_mandir}/pl/man8/zramctl.8*
 %lang(ro) %{_mandir}/ro/man8/zramctl.8*
 %lang(sr) %{_mandir}/sr/man8/zramctl.8*
 %lang(uk) %{_mandir}/uk/man8/zramctl.8*
@@ -2131,6 +2141,7 @@ fi
 %attr(755,root,root) %{_bindir}/lsns
 %{_mandir}/man8/lsns.8*
 %lang(de) %{_mandir}/de/man8/lsns.8*
+%lang(pl) %{_mandir}/pl/man8/lsns.8*
 %lang(ro) %{_mandir}/ro/man8/lsns.8*
 %lang(sr) %{_mandir}/sr/man8/lsns.8*
 %lang(uk) %{_mandir}/uk/man8/lsns.8*
@@ -2149,6 +2160,7 @@ fi
 %{_mandir}/man8/chcpu.8*
 %lang(de) %{_mandir}/de/man8/chcpu.8*
 %lang(fr) %{_mandir}/fr/man8/chcpu.8*
+%lang(pl) %{_mandir}/pl/man8/chcpu.8*
 %lang(ro) %{_mandir}/ro/man8/chcpu.8*
 %lang(sr) %{_mandir}/sr/man8/chcpu.8*
 %lang(uk) %{_mandir}/uk/man8/chcpu.8*
@@ -2168,6 +2180,7 @@ fi
 %{_mandir}/man1/fallocate.1*
 %lang(de) %{_mandir}/de/man1/fallocate.1*
 %lang(fr) %{_mandir}/fr/man1/fallocate.1*
+%lang(pl) %{_mandir}/pl/man1/fallocate.1*
 %lang(ro) %{_mandir}/ro/man1/fallocate.1*
 %lang(sr) %{_mandir}/sr/man1/fallocate.1*
 %lang(uk) %{_mandir}/uk/man1/fallocate.1*
@@ -2322,13 +2335,14 @@ fi
 %lang(ko) %{_mandir}/ko/man1/colcrt.1*
 %lang(ko) %{_mandir}/ko/man1/colrm.1*
 %lang(ko) %{_mandir}/ko/man1/column.1*
+%lang(pl) %{_mandir}/pl/man1/col.1*
+%lang(pl) %{_mandir}/pl/man1/colcrt.1*
+%lang(pl) %{_mandir}/pl/man1/colrm.1*
+%lang(pl) %{_mandir}/pl/man1/column.1*
 %lang(ro) %{_mandir}/ro/man1/col.1*
 %lang(ro) %{_mandir}/ro/man1/colcrt.1*
 %lang(ro) %{_mandir}/ro/man1/colrm.1*
 %lang(ro) %{_mandir}/ro/man1/column.1*
-%lang(pl) %{_mandir}/pl/man1/col.1*
-%lang(pl) %{_mandir}/pl/man1/colcrt.1*
-%lang(pl) %{_mandir}/pl/man1/colrm.1*
 %lang(sr) %{_mandir}/sr/man1/col.1*
 %lang(sr) %{_mandir}/sr/man1/colcrt.1*
 %lang(sr) %{_mandir}/sr/man1/colrm.1*
@@ -2515,6 +2529,7 @@ fi
 %lang(de) %{_mandir}/de/man8/pivot_root.8*
 %lang(fr) %{_mandir}/fr/man8/pivot_root.8*
 %lang(ja) %{_mandir}/ja/man8/pivot_root.8*
+%lang(pl) %{_mandir}/pl/man8/pivot_root.8*
 %lang(ro) %{_mandir}/ro/man8/pivot_root.8*
 %lang(sr) %{_mandir}/sr/man8/pivot_root.8*
 %lang(uk) %{_mandir}/uk/man8/pivot_root.8*
@@ -2651,6 +2666,7 @@ fi
 %{_mandir}/man8/uuidd.8*
 %lang(de) %{_mandir}/de/man8/uuidd.8*
 %lang(fr) %{_mandir}/fr/man8/uuidd.8*
+%lang(pl) %{_mandir}/pl/man8/uuidd.8*
 %lang(ro) %{_mandir}/ro/man8/uuidd.8*
 %lang(sr) %{_mandir}/sr/man8/uuidd.8*
 %lang(uk) %{_mandir}/uk/man8/uuidd.8*
@@ -2729,6 +2745,7 @@ fi
 %attr(755,root,root) /%{_lib}/libsmartcols.so.*.*.*
 %attr(755,root,root) %ghost /%{_lib}/libsmartcols.so.1
 %{_mandir}/man5/scols-filter.5*
+%lang(de) %{_mandir}/de/man5/scols-filter.5*
 %lang(fr) %{_mandir}/fr/man5/scols-filter.5*
 %lang(ro) %{_mandir}/ro/man5/scols-filter.5*
 %lang(sr) %{_mandir}/sr/man5/scols-filter.5*
@@ -2777,7 +2794,6 @@ fi
 %lang(de) %{_mandir}/de/man3/ll2_*.3*
 %lang(ro) %{_mandir}/ro/man3/lastlog2.3*
 %lang(ro) %{_mandir}/ro/man3/ll2_*.3*
-%lang(sr) %{_mandir}/sr/man3/lastlog2.3*
 %lang(sr) %{_mandir}/sr/man3/ll2_*.3*
 
 %files -n lastlog2-static
@@ -2829,11 +2845,13 @@ fi
 %{bash_compdir}/cfdisk
 %{bash_compdir}/chcpu
 %{bash_compdir}/chmem
+%{bash_compdir}/choom
 %{bash_compdir}/chrt
 %{bash_compdir}/col
 %{bash_compdir}/colcrt
 %{bash_compdir}/colrm
 %{bash_compdir}/column
+%{bash_compdir}/coresched
 %{bash_compdir}/ctrlaltdel
 %{bash_compdir}/delpart
 %{bash_compdir}/dmesg
