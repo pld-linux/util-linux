@@ -31,13 +31,13 @@ Summary(ru.UTF-8):	Набор базовых системных утилит д�
 Summary(tr.UTF-8):	Temel sistem araçları
 Summary(uk.UTF-8):	Набір базових системних утиліт для Linux
 Name:		util-linux
-Version:	2.41.2
+Version:	2.41.3
 Release:	1
 License:	GPL v2+, GPL v3 (hwclock)
 Group:		Applications/System
 # https://github.com/karelzak/util-linux (GitHub backup)
 Source0:	https://www.kernel.org/pub/linux/utils/util-linux/v2.41/%{name}-%{version}.tar.xz
-# Source0-md5:	a2a3281ce76821c4bc28794fdf9d3994
+# Source0-md5:	d2faa85303dea29e7f6ee40a9465e528
 Source1:	%{name}-non-english-man-pages.tar.bz2
 # Source1-md5:	3c940c7e7fe699eaa2ddb1bffb3de2fe
 Source2:	login.pamd
@@ -2794,6 +2794,7 @@ fi
 %lang(de) %{_mandir}/de/man3/ll2_*.3*
 %lang(ro) %{_mandir}/ro/man3/lastlog2.3*
 %lang(ro) %{_mandir}/ro/man3/ll2_*.3*
+%lang(sr) %{_mandir}/sr/man3/lastlog2.3*
 %lang(sr) %{_mandir}/sr/man3/ll2_*.3*
 
 %files -n lastlog2-static
@@ -2837,8 +2838,10 @@ fi
 %files -n bash-completion-util-linux
 %defattr(644,root,root,755)
 %{bash_compdir}/addpart
+%{bash_compdir}/bits
 %{bash_compdir}/blkdiscard
 %{bash_compdir}/blkid
+%{bash_compdir}/blkpr
 %{bash_compdir}/blkzone
 %{bash_compdir}/blockdev
 %{bash_compdir}/cal
@@ -2890,6 +2893,7 @@ fi
 %{bash_compdir}/lsblk
 %{bash_compdir}/lsclocks
 %{bash_compdir}/lscpu
+%{bash_compdir}/lsfd
 %{bash_compdir}/lsipc
 %{bash_compdir}/lsirq
 %{bash_compdir}/lslocks
