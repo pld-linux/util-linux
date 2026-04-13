@@ -52,7 +52,6 @@ Source13:	blockdev.sh
 Patch0:		%{name}-fdformat-ide.patch
 Patch1:		%{name}-fhs.patch
 Patch2:		%{name}-login-lastlog.patch
-Patch4:		su-paths.patch
 Patch6:		%{name}-diet.patch
 Patch7:		%{name}-man-asciidoctor.patch
 URL:		https://github.com/karelzak/util-linux
@@ -898,7 +897,6 @@ Bashowe dopełnianie parametrów dla poleceń z pakietu util-linux.
 %patch -P0 -p1
 %patch -P1 -p1
 %patch -P2 -p1
-%patch -P4 -p1
 %patch -P7 -p1
 %{?with_initrd:%patch -P6 -p1}
 
