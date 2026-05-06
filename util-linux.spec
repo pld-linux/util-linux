@@ -111,14 +111,14 @@ BuildRequires:	glibc-static
 		%endif
 	%endif
 %endif
-Requires:	libblkid = %{version}-%{release}
-Requires:	libfdisk = %{version}-%{release}
-Requires:	libmount = %{version}-%{release}
-%{?with_selinux:Requires:	libselinux >= 2.5}
-Requires:	libsmartcols = %{version}-%{release}
+Requires:	libblkid%{?_isa} = %{version}-%{release}
+Requires:	libfdisk%{?_isa} = %{version}-%{release}
+Requires:	libmount%{?_isa} = %{version}-%{release}
+%{?with_selinux:Requires:	libselinux%{?_isa} >= 2.5}
+Requires:	libsmartcols%{?_isa} = %{version}-%{release}
 # for uuidparse
-Requires:	libuuid = %{version}-%{release}
-Requires:	pam >= %{pam_ver}
+Requires:	libuuid%{?_isa} = %{version}-%{release}
+Requires:	pam%{?_isa} >= %{pam_ver}
 Provides:	eject = %{version}-%{release}
 Provides:	fdisk
 Provides:	hardlink
@@ -241,7 +241,7 @@ Summary(tr.UTF-8):	Yerel-çevrim aygıtlarının kurulması ve ayarlanması içi
 Summary(uk.UTF-8):	Програми для конфігурації loopback-пристроїв
 License:	GPL v2+
 Group:		Applications/System
-Requires:	libsmartcols = %{version}-%{release}
+Requires:	libsmartcols%{?_isa} = %{version}-%{release}
 
 %description -n losetup
 Linux supports a special block device called the loopback device,
@@ -311,8 +311,8 @@ Summary(tr.UTF-8):	Dosya sistemlerini bağlamak ve çözmek için programlar
 Summary(uk.UTF-8):	Програми для монтування та розмонтування файлових систем
 License:	GPL v2+
 Group:		Applications/System
-Requires:	libmount = %{version}-%{release}
-Requires:	libsmartcols = %{version}-%{release}
+Requires:	libmount%{?_isa} = %{version}-%{release}
+Requires:	libsmartcols%{?_isa} = %{version}-%{release}
 Conflicts:	SysVinit < 2.86-26
 # C: nfs-utils-common is opposite to http://cvs.pld-linux.org/packages/nfs-utils/nfs-utils.spec?r1=1.165&r2=1.166
 Conflicts:	nfs-utils-common < 1.1.3-3
@@ -402,7 +402,7 @@ Summary:	login is used when signing onto a system
 Summary(pl.UTF-8):	login jest używany do rozpoczęcia pracy w systemie
 License:	GPL v2+
 Group:		Applications/System
-Requires:	pam >= %{pam_ver}
+Requires:	pam%{?_isa} >= %{pam_ver}
 Obsoletes:	heimdal-login
 
 %description -n login
@@ -446,7 +446,7 @@ Summary:	Header files for blkid library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki blkid
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libblkid = %{version}-%{release}
+Requires:	libblkid%{?_isa} = %{version}-%{release}
 Obsoletes:	util-linux-ng-devel < 2.20-1
 
 %description -n libblkid-devel
@@ -460,7 +460,7 @@ Summary:	Static library to handle device identification and token extraction
 Summary(pl.UTF-8):	Statyczna biblioteka do obsługi identyfikacji urządzeń
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libblkid-devel = %{version}-%{release}
+Requires:	libblkid-devel%{?_isa} = %{version}-%{release}
 Obsoletes:	util-linux-ng-static < 2.20-1
 
 %description -n libblkid-static
@@ -475,7 +475,7 @@ Summary:	Static dietlibc library to handle device identification and token extra
 Summary(pl.UTF-8):	Statyczna biblioteka dietlibc do obsługi identyfikacji urządzeń
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libblkid-devel = %{version}-%{release}
+Requires:	libblkid-devel%{?_isa} = %{version}-%{release}
 
 %description -n libblkid-dietlibc
 Library to handle device identification and token extraction - static
@@ -516,7 +516,7 @@ Summary:	Header files for library for accessing and manipulating UUID
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki umożliwiającej dostęp i zmiany UUID
 License:	BSD
 Group:		Development/Libraries
-Requires:	libuuid = %{version}-%{release}
+Requires:	libuuid%{?_isa} = %{version}-%{release}
 Conflicts:	e2fsprogs-devel < 1.34-3
 
 %description -n libuuid-devel
@@ -531,7 +531,7 @@ Summary:	Static library for accessing and manipulating UUID
 Summary(pl.UTF-8):	Statyczna biblioteka umożliwiająca dostęp i zmiany UUID
 License:	BSD
 Group:		Development/Libraries
-Requires:	libuuid-devel = %{version}-%{release}
+Requires:	libuuid-devel%{?_isa} = %{version}-%{release}
 Conflicts:	e2fsprogs-static < 1.34-3
 
 %description -n libuuid-static
@@ -545,7 +545,7 @@ Summary:	Static dietlibc library for accessing and manipulating UUID
 Summary(pl.UTF-8):	Statyczna biblioteka dietlibc umożliwiająca dostęp i zmiany UUID
 License:	BSD
 Group:		Development/Libraries
-Requires:	libuuid-devel = %{version}-%{release}
+Requires:	libuuid-devel%{?_isa} = %{version}-%{release}
 Conflicts:	e2fsprogs-static < 1.34-3
 
 %description -n libuuid-dietlibc
@@ -569,7 +569,7 @@ Requires(pre):	/usr/sbin/groupmod
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
 Requires(post,preun,postun):	systemd-units >= 38
-Requires:	libuuid = %{version}-%{release}
+Requires:	libuuid%{?_isa} = %{version}-%{release}
 Requires:	systemd-units >= 38
 Provides:	group(uuidd)
 Provides:	user(uuidd)
@@ -590,8 +590,8 @@ Summary:	fdisk library
 Summary(pl.UTF-8):	Biblioteka fdisk
 License:	LGPL v2.1+
 Group:		Libraries
-Requires:	libblkid = %{version}-%{release}
-Requires:	libuuid = %{version}-%{release}
+Requires:	libblkid%{?_isa} = %{version}-%{release}
+Requires:	libuuid%{?_isa} = %{version}-%{release}
 
 %description -n libfdisk
 fdisk library.
@@ -604,9 +604,9 @@ Summary:	Header files for fdisk library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki fdisk
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libblkid-devel = %{version}-%{release}
-Requires:	libfdisk = %{version}-%{release}
-Requires:	libuuid-devel = %{version}-%{release}
+Requires:	libblkid-devel%{?_isa} = %{version}-%{release}
+Requires:	libfdisk%{?_isa} = %{version}-%{release}
+Requires:	libuuid-devel%{?_isa} = %{version}-%{release}
 
 %description -n libfdisk-devel
 Header files for fdisk library.
@@ -619,7 +619,7 @@ Summary:	Static version of fdisk library
 Summary(pl.UTF-8):	Statyczna wersja biblioteki fdisk
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libfdisk-devel = %{version}-%{release}
+Requires:	libfdisk-devel%{?_isa} = %{version}-%{release}
 
 %description -n libfdisk-static
 Static version of fdisk library.
@@ -645,7 +645,7 @@ Summary:	Library to handle mounting-related tasks
 Summary(pl.UTF-8):	Biblioteka obsługująca zadania związane z montowaniem
 License:	LGPL v2.1+
 Group:		Libraries
-Requires:	libblkid = %{version}-%{release}
+Requires:	libblkid%{?_isa} = %{version}-%{release}
 
 %description -n libmount
 Library to handle mounting-related tasks.
@@ -658,8 +658,8 @@ Summary:	Header files for mount library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki mount
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libblkid-devel = %{version}-%{release}
-Requires:	libmount = %{version}-%{release}
+Requires:	libblkid-devel%{?_isa} = %{version}-%{release}
+Requires:	libmount%{?_isa} = %{version}-%{release}
 
 %description -n libmount-devel
 Header files for mount library.
@@ -672,7 +672,7 @@ Summary:	Static version of mount library
 Summary(pl.UTF-8):	Statyczna wersja biblioteki mount
 License:	LGPL v2.1+
 Group:		Development/Libraries
-Requires:	libmount-devel = %{version}-%{release}
+Requires:	libmount-devel%{?_isa} = %{version}-%{release}
 
 %description -n libmount-static
 Static version of mount library.
@@ -698,7 +698,7 @@ Summary:	Python 3.x libmount bindings
 Summary(pl.UTF-8):	Wiązania Pythona 3.x do biblioteki libmount
 License:	LGPL v3+
 Group:		Libraries/Python
-Requires:	libmount = %{version}-%{release}
+Requires:	libmount%{?_isa} = %{version}-%{release}
 
 %description -n python3-libmount
 Python 3.x libmount bindings.
@@ -711,7 +711,7 @@ Summary:	Check and repair a Linux file system
 Summary(pl.UTF-8):	Sprawdzanie i naprawa linuksowego systemu plików
 License:	GPL v2+
 Group:		Applications/System
-Requires:	libblkid = %{version}-%{release}
+Requires:	libblkid%{?_isa} = %{version}-%{release}
 
 %description -n fsck
 Check and repair a Linux file system.
@@ -736,7 +736,7 @@ Summary:	Header files for smartcols library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki smartcols
 License:	LGPL v2+
 Group:		Development/Libraries
-Requires:	libsmartcols = %{version}-%{release}
+Requires:	libsmartcols%{?_isa} = %{version}-%{release}
 
 %description -n libsmartcols-devel
 Header files for smartcols library.
@@ -749,7 +749,7 @@ Summary:	Static version of smartcols library
 Summary(pl.UTF-8):	Statyczna wersja biblioteki smartcols
 License:	LGPL v2+
 Group:		Development/Libraries
-Requires:	libsmartcols-devel = %{version}-%{release}
+Requires:	libsmartcols-devel%{?_isa} = %{version}-%{release}
 
 %description -n libsmartcols-static
 Static version of smartcols library.
@@ -829,7 +829,7 @@ lastlog2 próbuje rozwiązać te problemy:
 Summary:	Header files for lastlog2 library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki lastlog2
 Group:		Development/Libraries
-Requires:	lastlog2 = %{version}-%{release}
+Requires:	lastlog2%{?_isa} = %{version}-%{release}
 
 %description -n lastlog2-devel
 Header files for lastlog2 library.
@@ -841,7 +841,7 @@ Pliki nagłówkowe biblioteki lastlog2.
 Summary:	Static lastlog2 library
 Summary(pl.UTF-8):	Statyczna biblioteka lastlog2
 Group:		Development/Libraries
-Requires:	lastlog2-devel = %{version}-%{release}
+Requires:	lastlog2-devel%{?_isa} = %{version}-%{release}
 
 %description -n lastlog2-static
 Static lastlog2 library.
@@ -853,7 +853,7 @@ Statyczna biblioteka lastlog2.
 Summary:	PAM module to display date of last login
 Summary(pl.UTF-8):	Moduł PAM do wyświetlania daty ostatniego logowania
 Group:		Base
-Requires:	lastlog2 = %{version}-%{release}
+Requires:	lastlog2%{?_isa} = %{version}-%{release}
 
 %description -n pam-pam_lastlog2
 PAM module to display date of last login.
