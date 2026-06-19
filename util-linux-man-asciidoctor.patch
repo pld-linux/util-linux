@@ -5,13 +5,13 @@ Also, fix command name in fr/chfn and sr/mkfs.cramfs man page.
 +++ util-linux-2.38/po-man/sr.po	2022-05-06 22:30:15.634493835 +0200
 @@ -13415,7 +13415,7 @@ msgstr "cal(1)"
  #. type: Plain text
- #: ../misc-utils/cal.1.adoc:50
+ #: ../misc-utils/cal.1.adoc:52
  msgid "cal - display a calendar"
 -msgstr "cal приказује календар"
 +msgstr "cal - приказује календар"
  
  #. type: Plain text
- #: ../misc-utils/cal.1.adoc:54
+ #: ../misc-utils/cal.1.adoc:56
 --- util-linux-2.39.1/po-man/uk.po.orig	2022-08-04 10:48:12.614128571 +0200
 +++ util-linux-2.39.1/po-man/uk.po	2022-08-20 18:19:04.794914158 +0200
 @@ -3620,7 +3620,7 @@ msgstr "fsck.cramfs(8)"
@@ -25,28 +25,28 @@ Also, fix command name in fr/chfn and sr/mkfs.cramfs man page.
  #: ../disk-utils/fsck.cramfs.8.adoc:16
 @@ -4304,7 +4304,7 @@ msgstr "mkfs.bfs(8)"
  #. type: Plain text
- #: ../disk-utils/mkfs.bfs.8.adoc:16
+ #: ../disk-utils/mkfs.bfs.8.adoc:18
  msgid "mkfs.bfs - make an SCO bfs filesystem"
 -msgstr "mkfs.bfs – створити файлову систему bfs SCO"
 +msgstr "mkfs.bfs - створити файлову систему bfs SCO"
  
  #. type: Plain text
- #: ../disk-utils/mkfs.bfs.8.adoc:20
-@@ -24276,7 +24276,7 @@ msgid ""
- #. type: Plain text
- #: ../schedutils/uclampset.1.adoc:38
- msgid "uclampset - manipulate the utilization clamping attributes of the system or a process"
--msgstr "uclampset — керування атрибутами обмеження використання системи або процесу"
-+msgstr "uclampset - керування атрибутами обмеження використання системи або процесу"
+ #: ../disk-utils/mkfs.bfs.8.adoc:22
+@@ -24279,7 +24279,7 @@ msgid ""
+ "uclampset - manipulate the utilization clamping attributes of the system or "
+ "a process"
+ msgstr ""
+-"uclampset — керування атрибутами обмеження використання системи або процесу"
++"uclampset - керування атрибутами обмеження використання системи або процесу"
  
  #. type: Plain text
- #: ../schedutils/uclampset.1.adoc:42
+ #: ../schedutils/uclampset.1.adoc:43
 @@ -49061,7 +49061,7 @@ msgstr "col(1)"
  #. type: Plain text
- #: ../text-utils/col.1.adoc:49
+ #: ../text-utils/col.1.adoc:51
  msgid "col - filter reverse line feeds from input"
 -msgstr "col — фільтрування зворотних подач рядків з вхідних даних"
 +msgstr "col - фільтрування зворотних подач рядків з вхідних даних"
  
  #. type: Plain text
- #: ../text-utils/col.1.adoc:53
+ #: ../text-utils/col.1.adoc:55
